@@ -71,8 +71,8 @@ class CompanyController {
     }
     getIngredientsInProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { idProduct } = req.params;
-            (yield database_1.default).query("SELECT * FROM detail_products_ingredients WHERE id_product = ?", [idProduct])
+            const { id } = req.params;
+            (yield database_1.default).query("SELECT * FROM detail_products_ingredients WHERE id_product = ?", [id])
                 .then(dates => {
                 res.status(200).json(dates);
             });

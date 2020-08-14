@@ -56,10 +56,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let ingredient of ingredients | filter:filterPost">                
+                        <tr *ngFor="let ingredient of ingredients | filter:filterPost; let i = index">
                             <td class="align-middle">{{ ingredient.name }}</td>
                             <td>
-                                <input type="number" class="form-control">                            
+                                <input type="number" class="form-control" [(ngModel)]="spendingAmount[i]">
                             </td>                            
                         </tr>
                     </tbody>

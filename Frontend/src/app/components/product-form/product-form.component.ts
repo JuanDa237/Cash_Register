@@ -15,8 +15,14 @@ export class ProductFormComponent implements OnInit {
 
   public product: Product;
   public ingredients: Array<Ingredient>;
+  public spendingAmount: Array<number>;
   public edit: boolean;
   public filterPost: string;
+  
+
+  //New
+  public ingredientsInProduct: Array<IngredientInProduct>;
+  private spendingAmountConst: Array<number>;
 
   constructor(
     private productsService: ProductsService,
@@ -24,8 +30,10 @@ export class ProductFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this.product = null;
-    this.ingredients = null;
+    this.ingredients = null;    
     this.filterPost = "";
+    this.spendingAmount = new Array<number>(1);
+    this.spendingAmountConst = new Array<number>(1);
   }
 
   ngOnInit(): void {
@@ -65,10 +73,38 @@ export class ProductFormComponent implements OnInit {
         this.ingredients = res;
 
         if(this.edit) {
+          
+          this.productsService.getIngredientsInProduct(this.product._id).subscribe(
+            res => {
+              this.ingredientsInProduct = res;                          
 
+              if(this.ingredientsInProduct == null || this.ingredientsInProduct.length == 0) {
+                for(let i = 0; i < this.ingredients.length; i++) {
+                  this.spendingAmount[i] = null;
+                }                
+              }
+              else {
+                for(let i = 0; i < this.ingredients.length; i++) {                                                
+                  for(let y = 0; y < this.ingredientsInProduct.length; y++) {                    
+                    if(this.ingredients[i]._id == this.ingredientsInProduct[y].id_ingredient) {
+                      
+                      this.spendingAmount[i] = this.ingredientsInProduct[y].spendingAmount;
+                    }
+                  }               
+                }
+              }
+              for(let i = 0; i < this.ingredients.length; i++) {                
+                this.spendingAmountConst[i] = this.spendingAmount[i];
+              } 
+            },
+            err => console.log(<any>err)
+          );
         }
         else {
-
+          for(let i = 0; i < this.ingredients.length; i++) {
+            this.spendingAmount[i] = null;
+            this.spendingAmountConst[i] = null;
+          } 
         }
       },
       err => console.log(<any>err)
@@ -86,7 +122,20 @@ export class ProductFormComponent implements OnInit {
           var id: number = res._id[0]._id;                 
 
           for(let i = 0; i < this.ingredients.length; i++) {
-            //Create relations
+            if(this.spendingAmount[i] != null && this.spendingAmount[i] != 0) {
+              
+              //Create Relation
+              let newIngredientInProduct: IngredientInProduct = {
+                id_product: id,
+                id_ingredient: this.ingredients[i]._id,
+                spendingAmount: this.spendingAmount[i]
+              }
+
+              this.productsService.createIngredientInProduct(newIngredientInProduct).subscribe(
+                res => {},
+                err => console.log(<any>err)
+              );
+            }
           }
 
           this.router.navigate(["/products"]);          
@@ -121,6 +170,30 @@ export class ProductFormComponent implements OnInit {
           
           for(let i = 0; i < this.ingredients.length; i++) {
             //Update relations
+            
+            if(this.spendingAmountConst[i] != this.spendingAmount[i]) {
+              
+              if(this.spendingAmount[i] == 0 || this.spendingAmount[i] == null) {
+                //Delete                
+                this.productsService.deleteIngredientInProduct(this.product._id, this.ingredients[i]._id).subscribe(
+                  res => {},
+                  err => console.log(<any>err)
+                );                               
+              }  
+              else if(this.spendingAmountConst[i] == null) {
+                //Create
+                var newIngredientsInProduct: IngredientInProduct = {
+                  id_ingredient: this.ingredients[i]._id,
+                  id_product: this.product._id,
+                  spendingAmount: this.spendingAmount[i]
+                };
+
+                this.productsService.createIngredientInProduct(newIngredientsInProduct).subscribe(
+                  res => {},
+                  err => console.log(<any>err)
+                );                
+              }  
+            }                     
           }
           
           this.productsService.updateProduct(this.product).subscribe(

@@ -56,8 +56,9 @@ class CompanyController {
     }
 
     public async getIngredientsInProduct (req: Request, res: Response): Promise<void> {
-        const { idProduct } = req.params;
-        (await pool).query("SELECT * FROM detail_products_ingredients WHERE id_product = ?", [idProduct])
+        const { id } = req.params;        
+        
+        (await pool).query("SELECT * FROM detail_products_ingredients WHERE id_product = ?", [id])
                     .then(dates => {
                         res.status(200).json(dates);
                     });
