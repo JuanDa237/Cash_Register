@@ -20,7 +20,6 @@ interface Client {
 export class CashRegisterComponent implements OnInit {
 
   public client: Client;
-  public print: boolean;
   public products: Array<Product>;
   public filterPost: string;
   public shoppingCart: Array<Product>;
@@ -33,7 +32,6 @@ export class CashRegisterComponent implements OnInit {
       name: "",
       domicile: false      
     };
-    this.print = true;
     this.products = null;
     this.filterPost = "";
     this.shoppingCart = new Array<Product>(0);
@@ -77,6 +75,8 @@ export class CashRegisterComponent implements OnInit {
   }
 
   public finishOrder(): void {
-    
+    for(var i = 0; i < this.shoppingCart.length; i++) {
+      // subtract ingredients
+    }
   }
 }
