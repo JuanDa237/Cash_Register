@@ -141,12 +141,10 @@ class CompanyController {
                         yield (yield database_1.default).query("SELECT amount FROM ingredients WHERE _id = ?", [idIngredient])
                             .then((date) => __awaiter(this, void 0, void 0, function* () {
                             let newAmount = date[0].amount - spendingAmount;
-                            console.log(newAmount);
                             yield (yield database_1.default).query("UPDATE ingredients SET amount = ? WHERE _id = ?", [newAmount, idIngredient]);
                         }));
                     }
                 }));
-                console.log("-----" + x + "-----");
             }
             res.status(200).json({ message: "Ingredients amount updated successfully." });
         });

@@ -128,15 +128,13 @@ class CompanyController {
                             await (await pool).query("SELECT amount FROM ingredients WHERE _id = ?", [idIngredient])
                                         .then(async (date) => {
                                             
-                                            let newAmount = date[0].amount - spendingAmount;
-                                            console.log(newAmount);                                                                                                                                   
+                                            let newAmount = date[0].amount - spendingAmount;                                                                                                                                                                            
                                             
                                             await (await pool).query("UPDATE ingredients SET amount = ? WHERE _id = ?", [newAmount, idIngredient])                                                     
                                         });                        
                         }
                         
-                    });
-                    console.log("-----" + x + "-----");                    
+                    });                                    
         }
         res.status(200).json({ message: "Ingredients amount updated successfully." });
     }
