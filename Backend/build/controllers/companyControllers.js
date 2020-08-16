@@ -121,27 +121,34 @@ class CompanyController {
             res.status(200).json({ message: "Ingredient updated successfully." });
         });
     }
-    updateAmountIngredients(req, res) {
+    updateIngredientInProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT * FROM detail_products_ingredients WHERE id_product = ?", [id])
-                .then((dates) => __awaiter(this, void 0, void 0, function* () {
-                const ingredientsInProduct = dates;
-                for (var i = 0; i < ingredientsInProduct.length; 0) {
-                    let spendingAmount = ingredientsInProduct[i].spendingAmount;
-                    let idIngredient = ingredientsInProduct[i].id_ingredient;
-                    (yield database_1.default).query("SELECT amount FROM ingredients WHERE _id = ?", [idIngredient])
-                        .then((date) => __awaiter(this, void 0, void 0, function* () {
-                        let newAmount = date[0].amount - spendingAmount;
-                        console.log(newAmount);
-                        (yield database_1.default).query("UPDATE ingredients SET amount = ? WHERE _id = ?", [newAmount, idIngredient])
-                            .then((res) => {
-                            i++;
-                        });
-                    }));
-                }
-                res.status(200).json({ message: "Ingredients amount updated successfully." });
-            }));
+            (yield database_1.default).query("UPDATE detail_products_ingredients SET ? WHERE _id = ?", [req.body, id]);
+            res.status(200).json({ message: "Ingredient in product updated successfully." });
+        });
+    }
+    updateAmountIngredients(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var ids = req.body;
+            for (let x = 0; x < ids.length; x++) {
+                yield (yield database_1.default).query("SELECT id_ingredient, spendingAmount FROM detail_products_ingredients WHERE id_product = ?", [ids[x]])
+                    .then((dates) => __awaiter(this, void 0, void 0, function* () {
+                    const ingredientsInProduct = dates;
+                    for (var i = 0; i < ingredientsInProduct.length; i++) {
+                        let spendingAmount = ingredientsInProduct[i].spendingAmount;
+                        let idIngredient = ingredientsInProduct[i].id_ingredient;
+                        yield (yield database_1.default).query("SELECT amount FROM ingredients WHERE _id = ?", [idIngredient])
+                            .then((date) => __awaiter(this, void 0, void 0, function* () {
+                            let newAmount = date[0].amount - spendingAmount;
+                            console.log(newAmount);
+                            yield (yield database_1.default).query("UPDATE ingredients SET amount = ? WHERE _id = ?", [newAmount, idIngredient]);
+                        }));
+                    }
+                }));
+                console.log("-----" + x + "-----");
+            }
+            res.status(200).json({ message: "Ingredients amount updated successfully." });
         });
     }
     //Delete

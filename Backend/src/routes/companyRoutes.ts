@@ -30,7 +30,8 @@ class CompanyRoutes {
         //Update
         this.router.put("/product/:id", companyController.updateProduct);
         this.router.put("/ingredient/:id", companyController.updateIngredient);
-        this.router.put("/product/ingredients/:id", companyController.updateAmountIngredients);
+        this.router.put("/product/ingredient/:id", companyController.updateIngredientInProduct);
+        this.router.put("/amountIngredients", companyController.updateAmountIngredients);
 
         //Delete
         this.router.delete("/product/:id", companyController.deleteProduct);

@@ -172,13 +172,13 @@ export class ProductFormComponent implements OnInit {
             //Update relations
             
             if(this.spendingAmountConst[i] != this.spendingAmount[i]) {
-              
+            
               if(this.spendingAmount[i] == 0 || this.spendingAmount[i] == null) {
                 //Delete                
                 this.productsService.deleteIngredientInProduct(this.product._id, this.ingredients[i]._id).subscribe(
                   res => {},
                   err => console.log(<any>err)
-                );                               
+                );
               }  
               else if(this.spendingAmountConst[i] == null) {
                 //Create
@@ -191,19 +191,33 @@ export class ProductFormComponent implements OnInit {
                 this.productsService.createIngredientInProduct(newIngredientsInProduct).subscribe(
                   res => {},
                   err => console.log(<any>err)
-                );                
-              }  
-            }                     
-          }
-          
-          this.productsService.updateProduct(this.product).subscribe(
-            res => {
-              this.router.navigate(["/products"]);
+                );
+              }
+              else {
+                //Update
+                var updatedIngredientsInProduct: IngredientInProduct = {
+                  _id: this.ingredientsInProduct[i]._id, 
+                  id_ingredient: this.ingredients[i]._id,
+                  id_product: this.product._id,
+                  spendingAmount: this.spendingAmount[i]
+                };
+
+                this.productsService.updateIngredientInProduct(updatedIngredientsInProduct).subscribe(
+                  res => {},
+                  err => console.log(<any>err)
+                );
+              }
+          }                     
+        }
+        
+        this.productsService.updateProduct(this.product).subscribe(
+          res => {
+            this.router.navigate(["/products"]);
             },
             err => console.log(<any>err)           
           );
         }
-      });      
+      });
     }
   }
 

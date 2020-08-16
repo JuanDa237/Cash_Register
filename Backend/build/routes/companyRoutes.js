@@ -23,7 +23,8 @@ class CompanyRoutes {
         //Update
         this.router.put("/product/:id", companyControllers_1.companyController.updateProduct);
         this.router.put("/ingredient/:id", companyControllers_1.companyController.updateIngredient);
-        this.router.put("/product/ingredients/:id", companyControllers_1.companyController.updateAmountIngredients);
+        this.router.put("/product/ingredient/:id", companyControllers_1.companyController.updateIngredientInProduct);
+        this.router.put("/amountIngredients", companyControllers_1.companyController.updateAmountIngredients);
         //Delete
         this.router.delete("/product/:id", companyControllers_1.companyController.deleteProduct);
         this.router.delete("/ingredient/:id", companyControllers_1.companyController.deleteIngredient);

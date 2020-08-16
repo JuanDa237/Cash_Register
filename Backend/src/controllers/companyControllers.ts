@@ -103,37 +103,46 @@ class CompanyController {
         res.status(200).json({ message: "Ingredient updated successfully." });
     }
 
-    public async updateAmountIngredients (req: Request, res: Response): Promise<void>  {
+    public async updateIngredientInProduct (req: Request, res: Response): Promise<void>  {
         const { id } = req.params;
+        (await pool).query("UPDATE detail_products_ingredients SET ? WHERE _id = ?", [req.body, id]);
+        res.status(200).json({ message: "Ingredient in product updated successfully." });
+    }
+
+    public async updateAmountIngredients (req: Request, res: Response): Promise<void>  {
         
-        (await pool).query("SELECT * FROM detail_products_ingredients WHERE id_product = ?", [id])
+        var ids = req.body;
+        
+        for(let x = 0; x < ids.length; x++) {
+
+            await (await pool).query("SELECT id_ingredient, spendingAmount FROM detail_products_ingredients WHERE id_product = ?", [ids[x]])
                     .then(async (dates) => {
                         
-                        const ingredientsInProduct = dates;                                             
+                        const ingredientsInProduct = dates;                        
                         
-                        for(var i = 0; i < ingredientsInProduct.length; 0) {
+                        for(var i = 0; i < ingredientsInProduct.length; i++) {
                             
                             let spendingAmount = ingredientsInProduct[i].spendingAmount;
                             let idIngredient = ingredientsInProduct[i].id_ingredient;
 
-                            (await pool).query("SELECT amount FROM ingredients WHERE _id = ?", [idIngredient])
-                                        .then(async (date) => {                                            
-                                                                            
-                                            let newAmount = date[0].amount - spendingAmount;
-                                            console.log(newAmount);
+                            await (await pool).query("SELECT amount FROM ingredients WHERE _id = ?", [idIngredient])
+                                        .then(async (date) => {
                                             
-                                            (await pool).query("UPDATE ingredients SET amount = ? WHERE _id = ?", [newAmount, idIngredient])
-                                                        .then((res) => {
-                                                            i++;                                                                
-                                                        });
-                                        });
-                        }                              
-                        res.status(200).json({ message: "Ingredients amount updated successfully." });                        
+                                            let newAmount = date[0].amount - spendingAmount;
+                                            console.log(newAmount);                                                                                                                                   
+                                            
+                                            await (await pool).query("UPDATE ingredients SET amount = ? WHERE _id = ?", [newAmount, idIngredient])                                                     
+                                        });                        
+                        }
+                        
                     });
+                    console.log("-----" + x + "-----");                    
+        }
+        res.status(200).json({ message: "Ingredients amount updated successfully." });
     }
 
     //Delete
-
+    
     public async deleteProduct (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
         (await pool).query("DELETE FROM products WHERE _id = ?", [id]);

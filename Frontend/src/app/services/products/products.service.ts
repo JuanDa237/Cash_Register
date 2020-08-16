@@ -74,8 +74,14 @@ export class ProductsService {
     return this.http.put(this.apiUri + "ingredient/" + ingredient._id, params, { headers: this.headers});
   }
 
-  updateAmountIngredients(id: number): Observable<any> {
-    return this.http.put(this.apiUri + "product/ingredients/" + id, { headers: this.headers});
+  updateIngredientInProduct(ingredientInProduct: IngredientInProduct): Observable<any> {
+    var params = JSON.stringify(ingredientInProduct);
+    return this.http.put(this.apiUri + "product/ingredient/" + ingredientInProduct._id, params, { headers: this.headers});
+  }
+
+  updateAmountIngredients(ids: Array<number>): Observable<any> {
+    var params = JSON.stringify(ids);    
+    return this.http.put(this.apiUri + "amountIngredients", params, { headers: this.headers});
   }
 
   //Delete

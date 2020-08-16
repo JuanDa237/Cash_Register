@@ -75,12 +75,17 @@ export class CashRegisterComponent implements OnInit {
   }
 
   public finishOrder(): void {
+    
+    var products: Array<number> = new Array<number>(0);
+
     for(var i = 0; i < this.shoppingCart.length; i++) {
-      this.productsService.updateAmountIngredients(this.shoppingCart[i]._id).subscribe(
-        res => {},
-        err => console.log(<any>err)
-      );
+      products.push(this.shoppingCart[i]._id);
     }
+
+    this.productsService.updateAmountIngredients(products).subscribe(
+      res => {},
+      err => console.log(<any>err)
+    );
   }
 
   public refreshPage(): void {
