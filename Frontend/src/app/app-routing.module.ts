@@ -10,7 +10,7 @@ import { ErrorComponent } from './components/error/error.component';
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "/products",
+    redirectTo: "/cashRegister",
     pathMatch: "full"
   },
   {

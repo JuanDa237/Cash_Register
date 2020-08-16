@@ -41,7 +41,7 @@
     </div>
     <!-- Table -->
     <div class="table-responsive">
-        <table class="table table-striped table-bordered table-condensed" style="width:100%">
+        <table class="table table-striped table-bordered table-sm" style="width:100%">
         <thead class="text-center">
             <tr>
                 <th>Nombre</th>
@@ -50,9 +50,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let ingredient of ingredients | filter:filterPost">                
+            <tr [ngClass]="{'table-danger': ingredient.amount <= 0 }" *ngFor="let ingredient of ingredients | filter:filterPost">
                 <td class="align-middle">{{ ingredient.name }}</td>
-                <td class="align-middle">{{ ingredient.amount }}</td>
+                <td class="align-middle text-center">{{ ingredient.amount | thousandsPipe }}</td>
                 <td>
                     <div class="text-center">
                         <div class="btn-group">

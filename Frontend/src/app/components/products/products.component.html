@@ -19,7 +19,7 @@
         <tbody>
             <tr *ngFor="let product of products | filter:filterPost">                
                 <td class="align-middle">{{ product.name }}</td>
-                <td class="align-middle">{{ product.price }}</td>
+                <td class="align-middle text-center">{{ product.price | thousandsPipe }}</td>
                 <td>
                     <div class="text-center">
                         <div class="btn-group">
