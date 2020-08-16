@@ -74,6 +74,10 @@ export class ProductsService {
     return this.http.put(this.apiUri + "ingredient/" + ingredient._id, params, { headers: this.headers});
   }
 
+  updateAmountIngredients(id: number): Observable<any> {
+    return this.http.put(this.apiUri + "product/ingredients/" + id, { headers: this.headers});
+  }
+
   //Delete
   deleteProduct(id: number): Observable<any> {
     return this.http.delete(this.apiUri + "product/" + id, { headers: this.headers});

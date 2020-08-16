@@ -103,6 +103,35 @@ class CompanyController {
         res.status(200).json({ message: "Ingredient updated successfully." });
     }
 
+    public async updateAmountIngredients (req: Request, res: Response): Promise<void>  {
+        const { id } = req.params;
+        
+        (await pool).query("SELECT * FROM detail_products_ingredients WHERE id_product = ?", [id])
+                    .then(async (dates) => {
+                        
+                        const ingredientsInProduct = dates;                                             
+                        
+                        for(var i = 0; i < ingredientsInProduct.length; 0) {
+                            
+                            let spendingAmount = ingredientsInProduct[i].spendingAmount;
+                            let idIngredient = ingredientsInProduct[i].id_ingredient;
+
+                            (await pool).query("SELECT amount FROM ingredients WHERE _id = ?", [idIngredient])
+                                        .then(async (date) => {                                            
+                                                                            
+                                            let newAmount = date[0].amount - spendingAmount;
+                                            console.log(newAmount);
+                                            
+                                            (await pool).query("UPDATE ingredients SET amount = ? WHERE _id = ?", [newAmount, idIngredient])
+                                                        .then((res) => {
+                                                            i++;                                                                
+                                                        });
+                                        });
+                        }                              
+                        res.status(200).json({ message: "Ingredients amount updated successfully." });                        
+                    });
+    }
+
     //Delete
 
     public async deleteProduct (req: Request, res: Response): Promise<void> {
