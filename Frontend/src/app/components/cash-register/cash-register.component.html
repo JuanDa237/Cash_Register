@@ -1,7 +1,7 @@
 <div *ngIf="products">
     <div class="card border-dark">
         <div class="card-header text-center">      
-            <h4>Factura De Venta</h4>
+            <h4>Registrar Venta</h4>
         </div>
         <div class="card-body">        
             <div class="card-body">
@@ -66,9 +66,9 @@
                                 </thead>
                                 <tbody *ngIf="shoppingCart">
                                     <tr *ngFor="let product of shoppingCart; let i = index">
-                                        <td>{{ product.name }}</td>
-                                        <td>{{ product.price | thousandsPipe }}</td>
-                                        <td>
+                                        <td class="align-middle">{{ product.name }}</td>
+                                        <td class="align-middle text-center">{{ product.price | thousandsPipe }}</td>
+                                        <td class="text-center">
                                             <button class="btn btn-danger text-center" (click)="deleteProduct(i)"><i class="far fa-minus-square"></i></button>
                                         </td>
                                     </tr>
@@ -99,7 +99,7 @@
                                 <div class="m-2">
                                     <img src="../../../assets/logo.png" class="rounded" style="width: 54px; height: 54px;" alt="Logo">
                                     <h2 class="d-inline-block text-center">Del Perrero</h2>
-                                    <p class="text-muted text-center text-justify border border-dark p-2 my-2">Encuentranos en fulldomi o escribenos al 3135444317 para hacer tus domicilios</p>                                    
+                                    <p class="text-center text-justify border border-dark p-2 my-2">Encuentranos en fulldomi o escribenos al 3135444317 para hacer tus domicilios</p>                                    
                                     <p>                                        
                                         <strong>Nombre:</strong> {{ client.name }} |
                                         <span *ngIf="client.domicile">
@@ -110,7 +110,7 @@
                                             Pedido Local
                                         </span>
                                     </p>                                                                                    
-                                    <table class="table my-2">
+                                    <table class="table table-sm my-2">
                                         <thead>
                                             <th>Producto</th>
                                             <th>Precio</th>

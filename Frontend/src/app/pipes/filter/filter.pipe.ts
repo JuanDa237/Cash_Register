@@ -6,13 +6,24 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
   transform(value: any, arg: any): any {
-    const resultPost = [];
-    for(const post of value) {
-      if(post.name.indexOf(arg) > -1) { //Filter for name
-        resultPost.push(post)
-      }
+    if(arg == "" || arg.length < 3) { //The pipe dont work if the arg .....
+
+      return value;
     }
-    return resultPost;
+    else {
+      
+      const resultPost = []; 
+
+      for(const post of value) {
+        //Filter for name
+        if(post.name.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+          
+          resultPost.push(post)
+        }
+      }
+
+      return resultPost;
+    }
     //I just take this in google.
   }
 }
