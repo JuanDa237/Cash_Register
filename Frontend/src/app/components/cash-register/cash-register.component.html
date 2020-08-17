@@ -62,12 +62,16 @@
                                 <thead>
                                     <th>Nombre</th>
                                     <th>Precio</th>
+                                    <th>Cantidad</th>
                                     <th>Acciones</th>
                                 </thead>
                                 <tbody *ngIf="shoppingCart">
-                                    <tr *ngFor="let product of shoppingCart; let i = index">
-                                        <td class="align-middle">{{ product.name }}</td>
-                                        <td class="align-middle text-center">{{ product.price | thousandsPipe }}</td>
+                                    <tr *ngFor="let productInCart of shoppingCart; let i = index">
+                                        <td class="align-middle">{{ productInCart.product.name }}</td>
+                                        <td class="align-middle text-center">{{ productInCart.product.price | thousandsPipe }}</td>
+                                        <td>
+                                            <input type="number" class="form-control" [(ngModel)]="productInCart.amount" (keydown.enter)="actualizePrice()" (focusout)="actualizePrice()">
+                                        </td>
                                         <td class="text-center">
                                             <button class="btn btn-danger text-center" (click)="deleteProduct(i)"><i class="far fa-minus-square"></i></button>
                                         </td>
@@ -114,11 +118,13 @@
                                         <thead>
                                             <th>Producto</th>
                                             <th>Precio</th>
+                                            <th>Cantidad</th>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let product of shoppingCart">
-                                                <td>{{ product.name }}</td>
-                                                <td>{{ product.price | thousandsPipe }}</td>
+                                            <tr *ngFor="let productInCart of shoppingCart">
+                                                <td>{{ productInCart.product.name }}</td>
+                                                <td>{{ productInCart.product.price | thousandsPipe }}</td>
+                                                <td>{{ productInCart.amount | thousandsPipe }}</td>
                                             </tr>
                                         </tbody>
                                         <tfoot>                                            

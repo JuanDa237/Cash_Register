@@ -3,14 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from "../../services/products/products.service";
 import { Product } from "../../models/product";
 
-//Sweet Alert
-import Swal from 'sweetalert2';
-
 interface Client {  
   name: string;
   domicile: boolean;
   address?: string;
   phoneNumber?: string;
+}
+
+interface productInCart {
+  product: Product;
+  amount: number;
 }
 
 @Component({
@@ -22,7 +24,7 @@ export class CashRegisterComponent implements OnInit {
   public client: Client;
   public products: Array<Product>;
   public filterPost: string;
-  public shoppingCart: Array<Product>;
+  public shoppingCart: Array<productInCart>;
   public totalPrice: number;
 
   constructor(
@@ -34,7 +36,7 @@ export class CashRegisterComponent implements OnInit {
     };
     this.products = null;
     this.filterPost = "";
-    this.shoppingCart = new Array<Product>(0);
+    this.shoppingCart = new Array<productInCart>(0);
     this.totalPrice = 0;
   }
 
@@ -57,7 +59,17 @@ export class CashRegisterComponent implements OnInit {
   //Html methods
 
   public addProduct(product: Product): void {
-    this.shoppingCart.push(product);    
+        
+    const newProduct: productInCart = {
+      product: {
+        _id: product._id,
+        name: product.name,
+        price: product.price
+      },
+      amount: 1      
+    }
+
+    this.shoppingCart.push(newProduct);
     this.actualizePrice();
   }
 
@@ -68,10 +80,32 @@ export class CashRegisterComponent implements OnInit {
 
   private actualizePrice(): void {
     
-    this.totalPrice = 0;
+    this.totalPrice = 0;    
+
     for(var i = 0; i < this.shoppingCart.length; i++) {
-      this.totalPrice += this.shoppingCart[i].price;
-    }
+
+      var amount: number = this.shoppingCart[i].amount;
+      this.shoppingCart[i].product.price = 0;
+
+      if(amount <= 0 || amount == null) {
+
+        this.deleteProduct(i);
+        break;
+      }      
+
+      var id: number = this.shoppingCart[i].product._id;
+
+      var indexProduct = this.products.findIndex(function(product) {
+
+        if(product._id == id)
+          return product;
+      });
+
+      var priceForOne: number = this.products[indexProduct].price;
+
+      this.totalPrice +=  priceForOne * amount;      
+      this.shoppingCart[i].product.price = priceForOne * amount;      
+    }      
   }
 
   public finishOrder(): void {
@@ -79,7 +113,11 @@ export class CashRegisterComponent implements OnInit {
     var products: Array<number> = new Array<number>(0);
 
     for(var i = 0; i < this.shoppingCart.length; i++) {
-      products.push(this.shoppingCart[i]._id);
+      
+      for(var x = 0; x < this.shoppingCart[i].amount; x++) {
+        console.log("Entro");
+        products.push(this.shoppingCart[i].product._id);
+      }      
     }
 
     this.productsService.updateAmountIngredients(products).subscribe(
@@ -95,7 +133,7 @@ export class CashRegisterComponent implements OnInit {
     };
     this.products = null;
     this.filterPost = "";
-    this.shoppingCart = new Array<Product>(0);
+    this.shoppingCart = new Array<productInCart>(0);
     this.totalPrice = 0;
     this.getProducts();
   }
