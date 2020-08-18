@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 import { ProductsService } from "../../services/products/products.service";
 import { Product } from "../../models/product";
+
+//PDF
+import jsPDF from 'jspdf';
 
 interface Client {  
   name: string;
@@ -26,6 +29,7 @@ export class CashRegisterComponent implements OnInit {
   public filterPost: string;
   public shoppingCart: Array<productInCart>;
   public totalPrice: number;
+  @ViewChild("ticket") ticket: ElementRef;
 
   constructor(
     private productsService: ProductsService
@@ -115,7 +119,7 @@ export class CashRegisterComponent implements OnInit {
     for(var i = 0; i < this.shoppingCart.length; i++) {
       
       for(var x = 0; x < this.shoppingCart[i].amount; x++) {
-        console.log("Entro");
+        
         products.push(this.shoppingCart[i].product._id);
       }      
     }
@@ -124,6 +128,27 @@ export class CashRegisterComponent implements OnInit {
       res => {},
       err => console.log(<any>err)
     );
+  }
+
+  public printPDF(): void {
+    
+    var pdf = this.ticket.nativeElement.innerHTML;
+    const doc = new jsPDF('p', 'pt', 'letter');
+
+    var date: Date = new Date();
+    var nameDocument: string = this.client.name + "_" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+
+    const margins = {
+      top: 80,
+      bottom: 60,
+      left: 40,
+      width: 522
+    };
+    
+    doc.fromHTML(pdf, margins.left, margins.top, {}, function () {
+
+      doc.save(nameDocument + ".pdf");
+    }, margins);
   }
 
   public refreshPage(): void {

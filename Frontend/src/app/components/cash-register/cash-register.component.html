@@ -100,7 +100,7 @@
                             </div>
                             <div class="modal-body">
                                 <!-- Ticket -->
-                                <div class="m-2">
+                                <div class="m-2" id="ticket" #ticket>
                                     <img src="../../../assets/logo.png" class="rounded" style="width: 54px; height: 54px;" alt="Logo">
                                     <h2 class="d-inline-block text-center">Del Perrero</h2>
                                     <p class="text-center text-justify border border-dark p-2 my-2">Encuentranos en fulldomi o escribenos al 3135444317 para hacer tus domicilios</p>                                    
@@ -117,26 +117,27 @@
                                     <table class="table table-sm my-2">
                                         <thead>
                                             <th>Producto</th>
-                                            <th>Precio</th>
                                             <th>Cantidad</th>
+                                            <th>Precio</th>
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let productInCart of shoppingCart">
                                                 <td>{{ productInCart.product.name }}</td>
-                                                <td>{{ productInCart.product.price | thousandsPipe }}</td>
                                                 <td>{{ productInCart.amount | thousandsPipe }}</td>
+                                                <td>{{ productInCart.product.price | thousandsPipe }}</td>
                                             </tr>
                                         </tbody>
-                                        <tfoot>                                            
-                                            <th>Total</th>                                          
-                                            <th>{{ totalPrice | thousandsPipe }}</th>                                                                                        
+                                        <tfoot class="font-weight-bold">                                            
+                                            <td>Total</td>
+                                            <td></td>
+                                            <td>{{ totalPrice | thousandsPipe }}</td>
                                         </tfoot>
                                     </table>                                                                        
                                 </div>
                             </div>
                             <div class="modal-footer">                                
                                 <button class="btn btn-info text-center" (click)="refreshPage()" data-dismiss="modal">Salir</button>                                                                                        
-                                <button class="btn btn-info text-center"><i class="fas fa-print"></i> Imprimir</button>                                                                                           
+                                <button class="btn btn-info text-center" (click)="printPDF()"><i class="fas fa-print"></i> Imprimir</button>                                                                                           
                             </div>
                         </div>
                     </div>
