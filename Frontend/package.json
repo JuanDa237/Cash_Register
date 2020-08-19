@@ -24,6 +24,7 @@
     "angular-datatables": "^9.0.2",
     "bootstrap": "^4.5.2",
     "datatables.net": "^1.10.21",
+    "datatables.net-bs4": "^1.10.21",
     "datatables.net-dt": "^1.10.21",
     "html2canvas": "^1.0.0-rc.7",
     "jquery": "^3.5.1",
