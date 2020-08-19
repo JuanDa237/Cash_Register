@@ -4,7 +4,8 @@ import { ProductsService } from "../../services/products/products.service";
 import { Product } from "../../models/product";
 
 //PDF
-import jsPDF from 'jspdf';
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 interface Client {  
   name: string;
@@ -131,24 +132,21 @@ export class CashRegisterComponent implements OnInit {
   }
 
   public printPDF(): void {
-    
-    var pdf = this.ticket.nativeElement.innerHTML;
-    const doc = new jsPDF('p', 'pt', 'letter');
 
-    var date: Date = new Date();
-    var nameDocument: string = this.client.name + "_" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    html2canvas(this.ticket.nativeElement).then((canvas) => {
+      
+      var imgData = canvas.toDataURL("image/png"); //IMG BUG
+      var doc = new jsPDF("p","mm","a4");
+      
+      var imgHeigth = canvas.height * 208 / canvas.width;
 
-    const margins = {
-      top: 80,
-      bottom: 60,
-      left: 40,
-      width: 522
-    };
-    
-    doc.fromHTML(pdf, margins.left, margins.top, {}, function () {
+      doc.addImage(imgData, 0, 0, 208, imgHeigth);
+
+      var date: Date = new Date();
+      var nameDocument: string = this.client.name + "_" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
       doc.save(nameDocument + ".pdf");
-    }, margins);
+    });
   }
 
   public refreshPage(): void {
