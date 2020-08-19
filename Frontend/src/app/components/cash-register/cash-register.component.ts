@@ -7,6 +7,9 @@ import { Product } from "../../models/product";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
+//Datatable
+import { datatableLanguage } from "../../models/datatables/datatables";
+
 interface Client {  
   name: string;
   domicile: boolean;
@@ -27,10 +30,10 @@ export class CashRegisterComponent implements OnInit {
 
   public client: Client;
   public products: Array<Product>;
-  public filterPost: string;
   public shoppingCart: Array<productInCart>;
   public totalPrice: number;
   @ViewChild("ticket") ticket: ElementRef;
+  public dtOptions: DataTables.Settings;
 
   constructor(
     private productsService: ProductsService
@@ -40,13 +43,17 @@ export class CashRegisterComponent implements OnInit {
       domicile: false      
     };
     this.products = null;
-    this.filterPost = "";
     this.shoppingCart = new Array<productInCart>(0);
     this.totalPrice = 0;
   }
 
   ngOnInit(): void {
     this.getProducts();
+
+    //Lenguage Settings
+    this.dtOptions = {
+      "language": datatableLanguage      
+    }
   }
 
   private getProducts() {
@@ -155,7 +162,6 @@ export class CashRegisterComponent implements OnInit {
       domicile: false      
     };
     this.products = null;
-    this.filterPost = "";
     this.shoppingCart = new Array<productInCart>(0);
     this.totalPrice = 0;
     this.getProducts();

@@ -1,9 +1,9 @@
-<div *ngIf="products">
+<div *ngIf="products">    
     <div class="card border-dark">
         <div class="card-header text-center">      
             <h4>Registrar Venta</h4>
         </div>
-        <div class="card-body">        
+        <div class="card-body">     
             <div class="card-body">
                 <!-- Client -->
                 <form #formProduct="ngForm">
@@ -31,19 +31,15 @@
             <div class="row">
                 <div class="col-5">
                     <div class="card-body">
-                        <!-- Products Table -->
-                        <div class="input-group mb-1">
-                            <div class="input-group-prepend"><span class="input-group-text">Buscar</span></div>
-                            <input type="text" class="form-control" placeholder="Nombre" name="filter" [(ngModel)]="filterPost">
-                        </div>
+                        <!-- Products Table -->                        
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-condensed" style="width: 100%">
+                            <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered table-condensed" style="width: 100%">
                                 <thead>
                                     <th>Nombre</th>
                                     <th>Acciones</th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let product of products | filter:filterPost">
+                                    <tr *ngFor="let product of products">
                                         <td>{{ product.name }}</td>
                                         <td class="text-center">
                                             <button class="btn btn-success text-center" (click)="addProduct(product)"><i class="fas fa-plus-circle"></i></button>                                

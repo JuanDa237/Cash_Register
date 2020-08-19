@@ -6,6 +6,9 @@ import { Ingredient } from "../../models/ingredient";
 //Sweet Alert
 import Swal from 'sweetalert2';
 
+//Datatable
+import { datatableLanguage } from "../../models/datatables/datatables";
+
 @Component({
   selector: 'app-ingredients',
   templateUrl: './ingredients.component.html'
@@ -15,7 +18,7 @@ export class IngredientsComponent implements OnInit {
   public ingredients: Array<Ingredient>;
   public ingredient: Ingredient;
   public create: boolean;
-  public filterPost: string;
+  public dtOptions: DataTables.Settings;
 
   constructor(
     private productsService: ProductsService
@@ -25,12 +28,17 @@ export class IngredientsComponent implements OnInit {
       _id: 0,
       name: "",
       amount: 0
-    };
-    this.filterPost = "";
+    };    
   }
 
   ngOnInit(): void {
+    
     this.getIngredients();
+
+    //Lenguage Settings
+    this.dtOptions = {
+      "language": datatableLanguage
+    }
   }
 
   private getIngredients() {

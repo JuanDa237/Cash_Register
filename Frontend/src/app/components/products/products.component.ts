@@ -6,6 +6,9 @@ import { Product } from "../../models/product";
 //Sweet Alert
 import Swal from 'sweetalert2';
 
+//Datatable
+import { datatableLanguage } from "../../models/datatables/datatables";
+
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html'
@@ -14,7 +17,7 @@ export class ProductsComponent implements OnInit {
 
   public products: Array<Product>;
   public product: Product;
-  public filterPost: string;
+  public dtOptions: DataTables.Settings;
 
   constructor(
     private productsService: ProductsService
@@ -25,11 +28,15 @@ export class ProductsComponent implements OnInit {
       name: "",
       price: 0
     };
-    this.filterPost = "";
   }
 
   ngOnInit(): void {
     this.getProducts();
+
+    //Lenguage Settings
+    this.dtOptions = {
+      "language": datatableLanguage      
+    }
   }
 
   private getProducts() {

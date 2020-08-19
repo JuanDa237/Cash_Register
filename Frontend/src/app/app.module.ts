@@ -9,6 +9,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
+//Librarys
+import { DataTablesModule } from 'angular-datatables';
+
 //Components
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CashRegisterComponent } from './components/cash-register/cash-register.component';
@@ -42,7 +45,8 @@ import { ThousandsPipe } from './pipes/thousands/thousands.pipe';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DataTablesModule
   ],
   providers: [ProductsService],
   bootstrap: [AppComponent]
