@@ -45,7 +45,9 @@ export class ProductFormComponent implements OnInit {
 
     //Lenguage Settings
     this.dtOptions = {
-      "language": datatableLanguage
+      "language": datatableLanguage,
+      "lengthChange": false,
+      "info": false
     }
   }
 
