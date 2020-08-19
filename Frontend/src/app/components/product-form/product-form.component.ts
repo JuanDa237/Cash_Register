@@ -5,7 +5,12 @@ import { Product } from "../../models/product";
 import { Ingredient } from "../../models/ingredient";
 import { IngredientInProduct } from "../../models/ingredientInProduct";
 import { ProductsService } from "../../services/products/products.service";
+
+//Sweet Alert
 import Swal from 'sweetalert2';
+
+//Datatable
+import { datatableLanguage } from "../../models/datatables/datatables";
 
 @Component({
   selector: 'app-product-form',
@@ -16,8 +21,8 @@ export class ProductFormComponent implements OnInit {
   public product: Product;
   public ingredients: Array<Ingredient>;
   public spendingAmount: Array<number>;
-  public edit: boolean;
-  public filterPost: string;
+  public edit: boolean;  
+  public dtOptions: DataTables.Settings;
   
 
   //New
@@ -30,14 +35,18 @@ export class ProductFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this.product = null;
-    this.ingredients = null;    
-    this.filterPost = "";
+    this.ingredients = null;
     this.spendingAmount = new Array<number>(1);
     this.spendingAmountConst = new Array<number>(1);
   }
 
   ngOnInit(): void {
     this.getUrlParams();
+
+    //Lenguage Settings
+    this.dtOptions = {
+      "language": datatableLanguage
+    }
   }
 
   private getUrlParams(): void {
