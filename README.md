@@ -31,7 +31,7 @@
 </ul>
 <p>Then go to http://localhost:4200 and use the amazing cash register in a web page.</p>
 <h2>In future updates.</h2>
-<ul>
-    <li>Possibility to print the receipt.</li>    
+<ul>      
     <li>Totally responsive design.</li>
+    <li>Dashboard (Navbar will disappear)</li>
 </ul>

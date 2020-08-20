@@ -1,24 +1,36 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" routerLink="/">
-        <img class="img-fluid img-thumbnail" style="width: 75px;" src="../../assets/logo.png" alt="logo">
-        <p class="h3 d-inline-block pl-3">{{ company }}</p>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" routerLink="/cashRegister">{{ company }}</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky pt-3">
+        <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/cashRegister" routerLinkActive="active">Registradora</a>
+            <a class="nav-link" routerLink="/cashRegister" routerLinkActive="active">
+              <i class="fas fa-cash-register"></i> Registradora
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/products" routerLinkActive="active">Productos</a>
+            <a class="nav-link" routerLink="/products" routerLinkActive="active">
+              <i class="fas fa-boxes"></i> Productos
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/ingredients" routerLinkActive="active">Ingredientes</a>
+            <a class="nav-link" routerLink="/ingredients" routerLinkActive="active">
+              <i class="fas fa-bread-slice"></i> Ingredientes
+            </a>
           </li>
-        </ul>
+        </ul>        
       </div>
-    </div>
-  </nav>
+    </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">      
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>
