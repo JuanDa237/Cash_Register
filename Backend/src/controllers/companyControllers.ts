@@ -6,6 +6,13 @@ class CompanyController {
     
     //Get list
 
+    public async listCategories (req: Request, res: Response): Promise<void> {
+        (await pool).query("SELECT _id, name FROM categories WHERE active = true;")
+                    .then(dates => {
+                        res.status(200).json(dates);
+                    });
+    }
+
     public async listProducts (req: Request, res: Response): Promise<void> {
         (await pool).query("SELECT _id, name, price FROM products WHERE active = true;")
                     .then(dates => {
@@ -27,7 +34,41 @@ class CompanyController {
                     });
     }
 
+    public async listClients (req: Request, res: Response): Promise<void> {
+        (await pool).query("SELECT _id, name, domicile, address, phoneNumber FROM products WHERE active = true;")
+                    .then(dates => {
+                        res.status(200).json(dates);
+                    });
+    }
+
+    public async listTickets (req: Request, res: Response): Promise<void> {
+        (await pool).query("SELECT _id, id_client, total, date  FROM tickets;")
+                    .then(dates => {
+                        res.status(200).json(dates);
+                    });
+    }
+
+    public async listProductsInTickets (req: Request, res: Response): Promise<void> {
+        (await pool).query("SELECT * FROM detail_ticket_products;")
+                    .then(dates => {
+                        res.status(200).json(dates);
+                    });
+    }
+
     //Get one
+
+    public async getOneCategory (req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
+        (await pool).query("SELECT _id, name FROM categories WHERE _id = ? AND active = true;", [id])
+                    .then(dates => {
+                        if(dates != 0) {
+                            return res.status(200).json(dates);
+                        }
+                        else {
+                            return res.status(404).json({ message: "Not found" });
+                        }
+                    });
+    }
 
     public async getOneProduct (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
@@ -62,9 +103,54 @@ class CompanyController {
                     .then(dates => {
                         res.status(200).json(dates);
                     });
-    } 
+    }
+
+    public async getOneClient (req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
+        (await pool).query("SELECT _id, name, domicile, address, phoneNumber FROM clients WHERE _id = ? AND active = true;", [id])
+                    .then(dates => {
+                        if(dates != 0) {
+                            return res.status(200).json(dates);
+                        }
+                        else {
+                            return res.status(404).json({ message: "Not found" });
+                        }
+                    });
+    }
+
+    public async getOneTicket (req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
+        (await pool).query("SELECT _id, id_client, total, date FROM tickets WHERE _id = ? AND active = true;", [id])
+                    .then(dates => {
+                        if(dates != 0) {
+                            return res.status(200).json(dates);
+                        }
+                        else {
+                            return res.status(404).json({ message: "Not found" });
+                        }
+                    });
+    }
+
+    public async getProductsInTicket (req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
+        (await pool).query("SELECT * FROM detail_ticket_products WHERE _id = ? AND active = true;", [id])
+                    .then(dates => {
+                        if(dates != 0) {
+                            return res.status(200).json(dates);
+                        }
+                        else {
+                            return res.status(404).json({ message: "Not found" });
+                        }
+                    });
+    }
 
     //Post
+
+    public async createCategory (req: Request, res: Response): Promise<void> {
+        
+        (await pool).query("INSERT INTO categories SET ?", [req.body]);
+        res.status(200).json({ message: "Saved category." });        
+    }
 
     public async createProduct (req: Request, res: Response): Promise<void> {
         
@@ -91,7 +177,31 @@ class CompanyController {
         res.status(200).json({ message: "Saved ingredient in product." });
     }
 
+    public async createClient (req: Request, res: Response): Promise<void> {
+        
+        (await pool).query("INSERT INTO clients SET ?", [req.body]);
+        res.status(200).json({ message: "Saved client." });        
+    }
+
+    public async createTicket (req: Request, res: Response): Promise<void> {
+        
+        (await pool).query("INSERT INTO tickets SET ?", [req.body]);
+        res.status(200).json({ message: "Saved ticket." });       
+    }
+
+    public async createProductInTicket (req: Request, res: Response): Promise<void> {
+        
+        (await pool).query("INSERT INTO detail_ticket_products SET ?", [req.body]);
+        res.status(200).json({ message: "Saved product in ticket." });        
+    }
+
     //Update
+
+    public async updateCategory (req: Request, res: Response): Promise<void>  {
+        const { id } = req.params;
+        (await pool).query("UPDATE catefories SET ? WHERE _id = ?", [req.body, id]);
+        res.status(200).json({ message: "Category updated successfully." });
+    }
 
     public async updateProduct (req: Request, res: Response): Promise<void>  {
         const { id } = req.params;
@@ -141,7 +251,21 @@ class CompanyController {
         res.status(200).json({ message: "Ingredients amount updated successfully." });
     }
 
+    public async updateClient (req: Request, res: Response): Promise<void>  {
+        const { id } = req.params;
+        (await pool).query("UPDATE clients SET ? WHERE _id = ?", [req.body, id]);
+        res.status(200).json({ message: "Client updated successfully." });
+    }
+
+    //Tickets and relations can't update
+
     //Delete
+
+    public async deleteCategory (req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
+        (await pool).query("UDATE categories SET active = false WHERE _id = ?", [id]);
+        res.status(200).json({ message: "Category eliminated successfully." });
+    }
     
     public async deleteProduct (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
@@ -159,6 +283,12 @@ class CompanyController {
         const { id_product, id_ingredient } = req.params;
         (await pool).query("DELETE FROM detail_products_ingredients WHERE id_product = ? AND id_ingredient = ?", [id_product, id_ingredient]);
         res.status(200).json({ message: "Ingredient in product eliminated successfully." });
+    }
+
+    public async deleteClient (req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
+        (await pool).query("UDATE client SET active = false WHERE _id = ?", [id]);
+        res.status(200).json({ message: "Client eliminated successfully." });
     }
 }
 

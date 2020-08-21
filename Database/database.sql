@@ -1,8 +1,16 @@
 CREATE DATABASE cash_register_db;
 USE cash_register_db;
 
+CREATE TABLE categories (
+    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT true
+);
+
 CREATE TABLE products (
-    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,        
+    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    id_category INT NOT NULL,
+    CONSTRAINT fk_cat_pro FOREIGN KEY (id_category) REFERENCES categories (_id) ON DELETE CASCADE ON UPDATE CASCADE,       
     name VARCHAR(50) NOT NULL,
     price INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
@@ -24,12 +32,21 @@ CREATE TABLE detail_products_ingredients (
     spendingAmount INT NOT NULL
 );
 
-CREATE TABLE tickets (
+CREATE TABLE clients (
     _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    clientName VARCHAR(15) NOT NULL,
+    name VARCHAR(15) NOT NULL,
     domicile BOOLEAN NOT NULL,
     address VARCHAR(20),
-    phoneNumber VARCHAR(20)
+    phoneNumber VARCHAR(20),
+    active BOOLEAN NOT NULL DEFAULT true
+);
+
+CREATE TABLE tickets (
+    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_client INT NOT NULL,
+    CONSTRAINT fk_cli_tic FOREIGN KEY (id_client) REFERENCES clients (_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    total INT NOT NULL,
+    date DATE NOT NULL
 );
 
 CREATE TABLE detail_ticket_products (

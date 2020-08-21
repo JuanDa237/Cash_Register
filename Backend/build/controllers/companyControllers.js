@@ -16,6 +16,14 @@ exports.companyController = void 0;
 const database_1 = __importDefault(require("../database"));
 class CompanyController {
     //Get list
+    listCategories(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            (yield database_1.default).query("SELECT _id, name FROM categories WHERE active = true;")
+                .then(dates => {
+                res.status(200).json(dates);
+            });
+        });
+    }
     listProducts(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             (yield database_1.default).query("SELECT _id, name, price FROM products WHERE active = true;")
@@ -40,7 +48,45 @@ class CompanyController {
             });
         });
     }
+    listClients(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            (yield database_1.default).query("SELECT _id, name, domicile, address, phoneNumber FROM products WHERE active = true;")
+                .then(dates => {
+                res.status(200).json(dates);
+            });
+        });
+    }
+    listTickets(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            (yield database_1.default).query("SELECT _id, id_client, total, date  FROM tickets;")
+                .then(dates => {
+                res.status(200).json(dates);
+            });
+        });
+    }
+    listProductsInTickets(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            (yield database_1.default).query("SELECT * FROM detail_ticket_products;")
+                .then(dates => {
+                res.status(200).json(dates);
+            });
+        });
+    }
     //Get one
+    getOneCategory(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            (yield database_1.default).query("SELECT _id, name FROM categories WHERE _id = ? AND active = true;", [id])
+                .then(dates => {
+                if (dates != 0) {
+                    return res.status(200).json(dates);
+                }
+                else {
+                    return res.status(404).json({ message: "Not found" });
+                }
+            });
+        });
+    }
     getOneProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
@@ -78,7 +124,55 @@ class CompanyController {
             });
         });
     }
+    getOneClient(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            (yield database_1.default).query("SELECT _id, name, domicile, address, phoneNumber FROM clients WHERE _id = ? AND active = true;", [id])
+                .then(dates => {
+                if (dates != 0) {
+                    return res.status(200).json(dates);
+                }
+                else {
+                    return res.status(404).json({ message: "Not found" });
+                }
+            });
+        });
+    }
+    getOneTicket(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            (yield database_1.default).query("SELECT _id, id_client, total, date FROM tickets WHERE _id = ? AND active = true;", [id])
+                .then(dates => {
+                if (dates != 0) {
+                    return res.status(200).json(dates);
+                }
+                else {
+                    return res.status(404).json({ message: "Not found" });
+                }
+            });
+        });
+    }
+    getProductsInTicket(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            (yield database_1.default).query("SELECT * FROM detail_ticket_products WHERE _id = ? AND active = true;", [id])
+                .then(dates => {
+                if (dates != 0) {
+                    return res.status(200).json(dates);
+                }
+                else {
+                    return res.status(404).json({ message: "Not found" });
+                }
+            });
+        });
+    }
     //Post
+    createCategory(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            (yield database_1.default).query("INSERT INTO categories SET ?", [req.body]);
+            res.status(200).json({ message: "Saved category." });
+        });
+    }
     createProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             (yield database_1.default).query("INSERT INTO products SET ?", [req.body])
@@ -106,7 +200,32 @@ class CompanyController {
             res.status(200).json({ message: "Saved ingredient in product." });
         });
     }
+    createClient(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            (yield database_1.default).query("INSERT INTO clients SET ?", [req.body]);
+            res.status(200).json({ message: "Saved client." });
+        });
+    }
+    createTicket(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            (yield database_1.default).query("INSERT INTO tickets SET ?", [req.body]);
+            res.status(200).json({ message: "Saved ticket." });
+        });
+    }
+    createProductInTicket(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            (yield database_1.default).query("INSERT INTO detail_ticket_products SET ?", [req.body]);
+            res.status(200).json({ message: "Saved product in ticket." });
+        });
+    }
     //Update
+    updateCategory(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            (yield database_1.default).query("UPDATE catefories SET ? WHERE _id = ?", [req.body, id]);
+            res.status(200).json({ message: "Category updated successfully." });
+        });
+    }
     updateProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
@@ -149,7 +268,22 @@ class CompanyController {
             res.status(200).json({ message: "Ingredients amount updated successfully." });
         });
     }
+    updateClient(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            (yield database_1.default).query("UPDATE clients SET ? WHERE _id = ?", [req.body, id]);
+            res.status(200).json({ message: "Client updated successfully." });
+        });
+    }
+    //Tickets and relations can't update
     //Delete
+    deleteCategory(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            (yield database_1.default).query("UDATE categories SET active = false WHERE _id = ?", [id]);
+            res.status(200).json({ message: "Category eliminated successfully." });
+        });
+    }
     deleteProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
@@ -169,6 +303,13 @@ class CompanyController {
             const { id_product, id_ingredient } = req.params;
             (yield database_1.default).query("DELETE FROM detail_products_ingredients WHERE id_product = ? AND id_ingredient = ?", [id_product, id_ingredient]);
             res.status(200).json({ message: "Ingredient in product eliminated successfully." });
+        });
+    }
+    deleteClient(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            (yield database_1.default).query("UDATE client SET active = false WHERE _id = ?", [id]);
+            res.status(200).json({ message: "Client eliminated successfully." });
         });
     }
 }
