@@ -18,6 +18,7 @@ import { CashRegisterComponent } from './components/cash-register/cash-register.
 import { ProductsComponent } from './components/products/products.component';
 import { IngredientsComponent } from './components/ingredients/ingredients.component';
 import { ProductFormComponent } from './components/product-form/product-form.component';
+import { CompanyConfigurationComponent } from './components/company-configuration/company-configuration.component';
 import { ErrorComponent } from './components/error/error.component';
 
 //Services
@@ -26,9 +27,6 @@ import { ProductsService } from "./services/products/products.service";
 //Pipes
 import { FilterPipe } from './pipes/filter/filter.pipe';
 import { ThousandsPipe } from './pipes/thousands/thousands.pipe';
-import { CompanyConfigurationComponent } from './components/company-configuration/company-configuration.component';
-
-//Font Awesome
 
 @NgModule({
   declarations: [
