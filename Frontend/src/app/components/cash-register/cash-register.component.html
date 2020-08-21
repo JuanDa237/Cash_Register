@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Registradora</h1>
     </div>
-    <div class="row d-block mb-md-3 ml-sm-1">
+    <div class="row d-block mb-md-3 ml-md-0 ml-2">
         <!-- Client -->
         <form #formProduct="ngForm" class="font-weight-bold">
             <div class="form-group d-md-inline-block float-md-right">
@@ -79,8 +79,8 @@
             </div>
             <div>
                 <!-- Principal Actions -->                                
-                <button class="btn btn-info text-center" (click)="refreshPage()">Cancelar</button>
-                <button class="btn btn-success text-center" data-toggle="modal" data-target="#modal" (click)="finishOrder()" [disabled]="client.name.length <= 0 || shoppingCart.length == 0 ? true : null"><i class="far fa-file"></i> Terminar Pedido</button>
+                <button class="btn btn-info text-center mr-md-2 mb-md-0 mb-1 btn-sm-block" (click)="refreshPage()">Cancelar</button>
+                <button class="btn btn-success text-center btn-sm-block" data-toggle="modal" data-target="#modal" (click)="finishOrder()" [disabled]="client.name.length <= 0 || shoppingCart.length == 0 ? true : null"><i class="far fa-file"></i> Terminar Pedido</button>
             </div>
         </div>
     </div>    

@@ -26,6 +26,7 @@ import { ProductsService } from "./services/products/products.service";
 //Pipes
 import { FilterPipe } from './pipes/filter/filter.pipe';
 import { ThousandsPipe } from './pipes/thousands/thousands.pipe';
+import { CompanyConfigurationComponent } from './components/company-configuration/company-configuration.component';
 
 //Font Awesome
 
@@ -39,7 +40,8 @@ import { ThousandsPipe } from './pipes/thousands/thousands.pipe';
     ErrorComponent,
     FilterPipe,
     ThousandsPipe,
-    CashRegisterComponent
+    CashRegisterComponent,
+    CompanyConfigurationComponent
   ],
   imports: [
     BrowserModule,
