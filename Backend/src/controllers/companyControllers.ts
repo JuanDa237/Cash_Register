@@ -7,14 +7,14 @@ class CompanyController {
     //Get list
 
     public async listProducts (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT * FROM products;")
+        (await pool).query("SELECT _id, name, price FROM products WHERE active = true;")
                     .then(dates => {
                         res.status(200).json(dates);
                     });
     }
 
     public async listIngredients (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT * FROM ingredients;")
+        (await pool).query("SELECT _id, name, amount FROM ingredients WHERE active = true;")
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -31,7 +31,7 @@ class CompanyController {
 
     public async getOneProduct (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT * FROM products WHERE _id = ?", [id])
+        (await pool).query("SELECT _id, name, price FROM products WHERE _id = ? AND active = true;", [id])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);
@@ -44,7 +44,7 @@ class CompanyController {
 
     public async getOneIngredient (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT * FROM ingredients WHERE _id = ?", [id])
+        (await pool).query("SELECT _id, name, amount FROM ingredients WHERE _id = ? AND active = true;", [id])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);
@@ -67,6 +67,7 @@ class CompanyController {
     //Post
 
     public async createProduct (req: Request, res: Response): Promise<void> {
+        
         (await pool).query("INSERT INTO products SET ?", [req.body])
                     .then(async function(value) {
 
@@ -80,8 +81,9 @@ class CompanyController {
     }
 
     public async createIngredient (req: Request, res: Response): Promise<void> {
+        
         (await pool).query("INSERT INTO ingredients SET ?", [req.body]);
-        res.status(200).json({ message: "Saved ingredient." });
+        res.status(200).json({ message: "Saved ingredient." });        
     }
 
     public async createIngredientInProduct (req: Request, res: Response): Promise<void> {        
@@ -125,7 +127,7 @@ class CompanyController {
                             let spendingAmount = ingredientsInProduct[i].spendingAmount;
                             let idIngredient = ingredientsInProduct[i].id_ingredient;
 
-                            await (await pool).query("SELECT amount FROM ingredients WHERE _id = ?", [idIngredient])
+                            await (await pool).query("SELECT amount FROM ingredients WHERE _id = ? AND active = true;", [idIngredient])
                                         .then(async (date) => {
                                             
                                             let newAmount = date[0].amount - spendingAmount;                                                                                                                                                                            
@@ -143,13 +145,13 @@ class CompanyController {
     
     public async deleteProduct (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("DELETE FROM products WHERE _id = ?", [id]);
+        (await pool).query("UDATE products SET active = false WHERE _id = ?", [id]);
         res.status(200).json({ message: "Product eliminated successfully." });
     }
 
     public async deleteIngredient (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("DELETE FROM ingredients WHERE _id = ?", [id]);
+        (await pool).query("UPDATE ingredients SET active = false WHERE _id = ?", [id]);
         res.status(200).json({ message: "Ingredient eliminated successfully." });
     }
 

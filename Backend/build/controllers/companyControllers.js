@@ -18,7 +18,7 @@ class CompanyController {
     //Get list
     listProducts(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT * FROM products;")
+            (yield database_1.default).query("SELECT _id, name, price FROM products WHERE active = true;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -26,7 +26,7 @@ class CompanyController {
     }
     listIngredients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT * FROM ingredients;")
+            (yield database_1.default).query("SELECT _id, name, amount FROM ingredients WHERE active = true;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -44,7 +44,7 @@ class CompanyController {
     getOneProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT * FROM products WHERE _id = ?", [id])
+            (yield database_1.default).query("SELECT _id, name, price FROM products WHERE _id = ? AND active = true;", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -58,7 +58,7 @@ class CompanyController {
     getOneIngredient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT * FROM ingredients WHERE _id = ?", [id])
+            (yield database_1.default).query("SELECT _id, name, amount FROM ingredients WHERE _id = ? AND active = true;", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -138,7 +138,7 @@ class CompanyController {
                     for (var i = 0; i < ingredientsInProduct.length; i++) {
                         let spendingAmount = ingredientsInProduct[i].spendingAmount;
                         let idIngredient = ingredientsInProduct[i].id_ingredient;
-                        yield (yield database_1.default).query("SELECT amount FROM ingredients WHERE _id = ?", [idIngredient])
+                        yield (yield database_1.default).query("SELECT amount FROM ingredients WHERE _id = ? AND active = true;", [idIngredient])
                             .then((date) => __awaiter(this, void 0, void 0, function* () {
                             let newAmount = date[0].amount - spendingAmount;
                             yield (yield database_1.default).query("UPDATE ingredients SET amount = ? WHERE _id = ?", [newAmount, idIngredient]);
@@ -153,14 +153,14 @@ class CompanyController {
     deleteProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("DELETE FROM products WHERE _id = ?", [id]);
+            (yield database_1.default).query("UDATE products SET active = false WHERE _id = ?", [id]);
             res.status(200).json({ message: "Product eliminated successfully." });
         });
     }
     deleteIngredient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("DELETE FROM ingredients WHERE _id = ?", [id]);
+            (yield database_1.default).query("UPDATE ingredients SET active = false WHERE _id = ?", [id]);
             res.status(200).json({ message: "Ingredient eliminated successfully." });
         });
     }
