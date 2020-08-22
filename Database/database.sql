@@ -34,8 +34,7 @@ CREATE TABLE detail_products_ingredients (
 
 CREATE TABLE clients (
     _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(15) NOT NULL,
-    domicile BOOLEAN NOT NULL,
+    name VARCHAR(15) NOT NULL,    
     address VARCHAR(20),
     phoneNumber VARCHAR(20),
     active BOOLEAN NOT NULL DEFAULT true

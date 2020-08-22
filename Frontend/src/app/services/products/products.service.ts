@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 
+import { Category } from "../../models/category";
 import { Product } from "../../models/product";
 import { Ingredient } from "../../models/ingredient";
 import { IngredientInProduct } from "../../models/ingredientInProduct";
+import { Client } from "../../models/client";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +24,11 @@ export class ProductsService {
   }
 
   //Get list
+  
+  getCategories(): Observable<any> {
+    return this.http.get(this.apiUri + "categories", { headers: this.headers});
+  }
+  
   getProducts(): Observable<any> {
     return this.http.get(this.apiUri + "products", { headers: this.headers});
   }
@@ -32,6 +39,14 @@ export class ProductsService {
 
   getIngredientsInProducts(): Observable<any> {
     return this.http.get(this.apiUri + "products/ingredients", { headers: this.headers});
+  }
+
+  getClients(): Observable<any> {
+    return this.http.get(this.apiUri + "clients", { headers: this.headers});
+  }
+
+  getTickets(): Observable<any> {
+    return this.http.get(this.apiUri + "tickets", { headers: this.headers});
   }
 
   //Get one
@@ -48,6 +63,11 @@ export class ProductsService {
   }
 
   //Post
+  saveCategory(newCategory: Category): Observable<any> {
+    let params = JSON.stringify(newCategory);
+    return this.http.post(this.apiUri + "category", params, { headers: this.headers});
+  }
+
   saveProduct(newProduct: Product): Observable<any> {
     let params = JSON.stringify(newProduct);
     return this.http.post(this.apiUri + "product", params, { headers: this.headers});
@@ -63,7 +83,17 @@ export class ProductsService {
     return this.http.post(this.apiUri + "product/ingredient", params, { headers: this.headers});
   }
 
+  saveClient(newClient: Client): Observable<any> {
+    let params = JSON.stringify(newClient);
+    return this.http.post(this.apiUri + "client", params, { headers: this.headers});
+  }
+
   //Update
+  updateCategory(category: Category): Observable<any> {
+    var params = JSON.stringify(category);
+    return this.http.put(this.apiUri + "category/" + category._id, params, { headers: this.headers});
+  }
+
   updateProduct(product: Product): Observable<any> {
     var params = JSON.stringify(product);
     return this.http.put(this.apiUri + "product/" + product._id, params, { headers: this.headers});
@@ -84,7 +114,16 @@ export class ProductsService {
     return this.http.put(this.apiUri + "amountIngredients", params, { headers: this.headers});
   }
 
+  updateClient(client: Client): Observable<any> {
+    var params = JSON.stringify(client);
+    return this.http.put(this.apiUri + "client/" + client._id, params, { headers: this.headers});
+  }
+
   //Delete
+  deleteCategory(id: number): Observable<any> {
+    return this.http.delete(this.apiUri + "category/" + id, { headers: this.headers});
+  }
+
   deleteProduct(id: number): Observable<any> {
     return this.http.delete(this.apiUri + "product/" + id, { headers: this.headers});
   }
@@ -95,5 +134,9 @@ export class ProductsService {
 
   deleteIngredientInProduct(id_product: number, id_ingredient: number): Observable<any> {
     return this.http.delete(this.apiUri + "product/" + id_product + "/" + id_ingredient, { headers: this.headers});
+  }
+
+  deleteClient(id: number): Observable<any> {
+    return this.http.delete(this.apiUri + "client/" + id, { headers: this.headers});
   }
 }

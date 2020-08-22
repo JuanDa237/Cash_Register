@@ -35,7 +35,7 @@ class CompanyController {
     }
 
     public async listClients (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT _id, name, domicile, address, phoneNumber FROM products WHERE active = true;")
+        (await pool).query("SELECT _id, name, address, phoneNumber FROM clients WHERE active = true;")
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -199,7 +199,7 @@ class CompanyController {
 
     public async updateCategory (req: Request, res: Response): Promise<void>  {
         const { id } = req.params;
-        (await pool).query("UPDATE catefories SET ? WHERE _id = ?", [req.body, id]);
+        (await pool).query("UPDATE categories SET ? WHERE _id = ?", [req.body, id]);
         res.status(200).json({ message: "Category updated successfully." });
     }
 

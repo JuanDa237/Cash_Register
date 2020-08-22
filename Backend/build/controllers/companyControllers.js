@@ -50,7 +50,7 @@ class CompanyController {
     }
     listClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT _id, name, domicile, address, phoneNumber FROM products WHERE active = true;")
+            (yield database_1.default).query("SELECT _id, name, address, phoneNumber FROM clients WHERE active = true;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -222,7 +222,7 @@ class CompanyController {
     updateCategory(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("UPDATE catefories SET ? WHERE _id = ?", [req.body, id]);
+            (yield database_1.default).query("UPDATE categories SET ? WHERE _id = ?", [req.body, id]);
             res.status(200).json({ message: "Category updated successfully." });
         });
     }

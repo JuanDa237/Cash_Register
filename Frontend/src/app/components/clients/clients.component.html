@@ -1,0 +1,80 @@
+<div *ngIf="clients">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Clientes</h1>      
+    </div>
+    <div class="mb-4">
+        <button class="btn btn-info btn-block" data-toggle="modal" data-target="#modal" (click)="changeModal()"><i class="fas fa-plus-circle"></i> Crear Cliente</button>        
+    </div>
+    <!-- Modal -->
+    <div>
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ create ? "Crear Cliente" : "Editar Cliente" }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form #formClient="ngForm">
+                            <div class="form-group">
+                                <label for="name">Cliente<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control d-block" name="name" placeholder="Cliente" #name="ngModel" [(ngModel)]="client.name" (keydown.enter)="enterEvent($event)" required>
+                                <div class="span text-white bg-danger p-2 my-1" *ngIf="name.touched && !name.valid">El nombre es obligatorio.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Direccion</label>
+                                <input type="text" class="form-control d-block" name="address" placeholder="Direccion" #address="ngModel" [(ngModel)]="client.address" (keydown.enter)="enterEvent($event)">                                
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber">Telefono</label>
+                                <input type="text" class="form-control d-block" name="phoneNumber" placeholder="Telefono" #phoneNumber="ngModel" [(ngModel)]="client.phoneNumber" (keydown.enter)="enterEvent($event)">                                
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button *ngIf="create" type="button" class="btn btn-success" (click)="createClient()" [disabled]="!formClient.form.valid" data-dismiss="modal">Crear</button>
+                        <button *ngIf="!create" type="button" class="btn btn-success" (click)="updateClient()" [disabled]="!formClient.form.valid" data-dismiss="modal">Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Table -->
+    <div class="table-responsive">
+        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered table-sm" style="width:100%">
+            <thead class="text-center">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let client of clients">
+                    <td class="align-middle">{{ client.name }}</td>
+                    <td class="align-middle">{{ client.address }}</td>                    
+                    <td class="align-middle">{{ client.phoneNumber }}</td>                    
+                    <td>
+                        <div class="text-center">
+                            <div class="btn-group">
+                                <button class="btn btn-info" (click)="changeModal(client._id, client.name, client.address, client.phoneNumber)" data-toggle="modal" data-target="#modal"><i class="far fa-edit"></i></button>
+                                <button class="btn btn-danger" (click)="deleteClient(client._id, client.name, client.address, client.phoneNumber)"><i class="far fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div *ngIf="!clients">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status" style="height: 5rem; width: 5rem;">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
