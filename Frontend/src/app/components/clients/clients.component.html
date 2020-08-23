@@ -20,8 +20,8 @@
                         <form #formClient="ngForm">
                             <div class="form-group">
                                 <label for="name">Cliente<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control d-block" name="name" placeholder="Cliente" #name="ngModel" [(ngModel)]="client.name" (keydown.enter)="enterEvent($event)" required>
-                                <div class="span text-white bg-danger p-2 my-1" *ngIf="name.touched && !name.valid">El nombre es obligatorio.</div>
+                                <input type="text" class="form-control d-block" [ngClass]="{'is-invalid': (name.touched && !name.valid)}" name="name" placeholder="Cliente" #name="ngModel" [(ngModel)]="client.name" (keydown.enter)="enterEvent($event)" required>
+                                <div class="invalid-feedback">El nombre es obligatorio.</div>
                             </div>
                             <div class="form-group">
                                 <label for="address">Direccion</label>

@@ -3,7 +3,7 @@
         <h1 class="h2">Registradora</h1>
     </div>
     <div class="row">        
-        <div class="col-5">
+        <div class="col-md-5 mb-md-0 mb-2">
             <!-- Client Information --><div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h4">Cliente</h1>
             </div>
@@ -29,7 +29,7 @@
                 <button class="btn btn-info btn-block" routerLink="/clients"><i class="fas fa-plus-circle"></i> Crear Cliente</button>
             </div>
         </div>
-        <div class="col-7">
+        <div class="col-md-7">
             <!-- Clients Table -->
             <div class="table-responsive">
                 <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered table-condensed" style="width: 100%">
@@ -104,20 +104,22 @@
                 </table>
             </div>
             <div class="d-block">
-                <p class="h4 text-muted">Total: <span class="strong">{{ totalPrice | thousandsPipe }}</span></p>
-            </div>
-            <div class="row">
-                <!-- Principal Actions -->                                
-                <button class="btn btn-info text-center mr-md-2 mb-md-0 mb-1 btn-sm-block" (click)="refreshPage()">Cancelar</button>
-                <button class="btn btn-success text-center btn-sm-block mr-0 mr-md-2 mb-1 mb-md-0" data-toggle="modal" data-target="#modal" (click)="finishOrder()" [disabled]="client.name.length <= 0 || shoppingCart.length == 0 ? true : null"><i class="far fa-file"></i> Terminar Pedido</button>
-                <div class="d-block d-md-inline-block">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <input type="checkbox" [(ngModel)]="domicile">
+                <div>
+                    <p class="h4 text-dark">Total: <span class="strong text-muted">{{ totalPrice | thousandsPipe }}</span></p>
+                </div>
+                <div>
+                    <!-- Principal Actions -->                                
+                    <button class="btn btn-info text-center mr-md-2 mb-md-0 mb-1 btn-sm-block" (click)="refreshPage()">Cancelar</button>
+                    <button class="btn btn-success text-center btn-sm-block mr-0 mr-md-2 mb-1 mb-md-0" data-toggle="modal" data-target="#modal" (click)="finishOrder()" [disabled]="client.name.length <= 0 || shoppingCart.length == 0 ? true : null"><i class="far fa-file"></i> Terminar Pedido</button>
+                    <div class="d-block d-md-inline-block">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" [(ngModel)]="domicile">
+                                </div>
                             </div>
+                            <input type="text" class="form-control col-6" value="Domicilio" readonly>
                         </div>
-                        <input type="text" class="form-control col-6" value="Domicilio" readonly>
                     </div>
                 </div>
             </div>

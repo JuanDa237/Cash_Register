@@ -20,12 +20,13 @@
                         <form #formIngredient="ngForm">
                             <div class="form-group">
                                 <label for="ingredient">Ingrediente<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control d-block" name="ingredient" placeholder="Ingrediente" #fact="ngModel" [(ngModel)]="ingredient.name" (keydown.enter)="enterEvent($event)" required>
-                                <div class="span text-white bg-danger p-2 my-1" *ngIf="fact.touched && !fact.valid">El nombre es obligatorio.</div>
+                                <input type="text" class="form-control d-block" [ngClass]="{'is-invalid': (name.touched && !name.valid)}" name="ingredient" placeholder="Ingrediente" #name="ngModel" [(ngModel)]="ingredient.name" (keydown.enter)="enterEvent($event)" required>
+                                <div class="invalid-feedback">El nombre es obligatorio.</div>
                             </div>
                             <div class="form-group">
                                 <label for="amount">Cantidad</label>
-                                <input type="number" class="form-control d-block" name="amount" placeholder="Precio" [(ngModel)]="ingredient.amount" (keydown.enter)="enterEvent($event)" required>
+                                <input type="number" class="form-control d-block" [ngClass]="{'is-invalid': (amount.touched && !amount.valid)}" name="amount" placeholder="Precio" #amount="ngModel" [(ngModel)]="ingredient.amount" (keydown.enter)="enterEvent($event)" required>
+                                <div class="invalid-feedback">La cantidad es obligatoria.</div>
                             </div>
                         </form>
                     </div>

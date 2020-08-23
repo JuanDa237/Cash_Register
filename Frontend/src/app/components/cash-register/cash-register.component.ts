@@ -245,7 +245,7 @@ export class CashRegisterComponent implements OnInit {
       doc.addImage(imgData, 0, 0, 208, imgHeigth);
 
       var date: Date = new Date();
-      var nameDocument: string = "clientName" + "_" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+      var nameDocument: string = this.client.name + "_" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
       doc.save(nameDocument + ".pdf");
     });

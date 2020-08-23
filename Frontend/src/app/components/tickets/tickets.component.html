@@ -62,20 +62,26 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let productInTicket of productsInTickets">
-                                            <td class="align-middle" *ngFor="let product of products">
-                                                <span *ngIf="productInTicket.id_ticket == selectedTicketId && product._id == productInTicket.id_product">
-                                                    {{ product.name }}
-                                                </span>                                                                                            
+                                            <td class="align-middle" *ngIf="productInTicket.id_ticket == selectedTicketId">
+                                                <span *ngFor="let product of products">
+                                                    <span *ngIf="product._id == productInTicket.id_product">
+                                                        {{ product.name }}
+                                                    </span>
+                                                </span>
                                             </td>
-                                            <td class="align-middle text-center" *ngFor="let product of products">                                                
-                                                <span *ngIf="productInTicket.id_ticket == selectedTicketId && product._id == productInTicket.id_product">
-                                                    {{ productInTicket.amount | thousandsPipe }}
-                                                </span>                                                
+                                            <td class="align-middle text-center" *ngIf="productInTicket.id_ticket == selectedTicketId">
+                                                <span *ngFor="let product of products">
+                                                    <span *ngIf="product._id == productInTicket.id_product">
+                                                        {{ productInTicket.amount | thousandsPipe }}
+                                                    </span>
+                                                </span>
                                             </td>
-                                            <td class="align-middle text-center" *ngFor="let product of products">                                                
-                                                <span *ngIf="productInTicket.id_ticket == selectedTicketId && product._id == productInTicket.id_product">
-                                                    {{ product.price | thousandsPipe }}
-                                                </span>                                                
+                                            <td class="align-middle text-center" *ngIf="productInTicket.id_ticket == selectedTicketId">
+                                                <span *ngFor="let product of products">
+                                                    <span *ngIf="product._id == productInTicket.id_product">
+                                                        {{ product.price | thousandsPipe }}
+                                                    </span>
+                                                </span>
                                             </td>
                                         </tr>
                                     </tbody>

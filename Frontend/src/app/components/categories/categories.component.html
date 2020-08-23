@@ -20,8 +20,10 @@
                         <form #formCategory="ngForm">
                             <div class="form-group">
                                 <label for="category">Categoria<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control d-block" name="category" placeholder="Categoria" #fact="ngModel" [(ngModel)]="category.name" (keydown.enter)="enterEvent($event)" required>
-                                <div class="span text-white bg-danger p-2 my-1" *ngIf="fact.touched && !fact.valid">El nombre es obligatorio.</div>
+                                <input type="text" class="form-control d-block" [ngClass]="{'is-invalid': (name.touched && !name.valid)}" name="category" placeholder="Categoria" #name="ngModel" [(ngModel)]="category.name" (keydown.enter)="enterEvent($event)" required>
+                                <div class="invalid-feedback">
+                                    El nombre es obligatorio.
+                                </div>
                             </div>
                         </form>
                     </div>
