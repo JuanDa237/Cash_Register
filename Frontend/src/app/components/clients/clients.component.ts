@@ -110,7 +110,7 @@ export class ClientsComponent implements OnInit {
   }
 
   public deleteClient(id?: number, name?: string, address?: string, phoneNumber?: string): void {
-    if(this.validate(id, name, address, phoneNumber)) {
+    if(id != null && name != null && name != "") {
       this.create = false;
       this.client = {
         _id: id,

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ProductsService } from "../../services/products/products.service";
-import { Ticket } from "../../models/ticket";
+import { Product } from "../../models/product";
 import { Client } from "../../models/client";
+import { Ticket } from "../../models/ticket";
+import { ProductInTicket } from "../../models/productInTicket";
 
 //Datatable
 import { datatableLanguage } from "../../models/datatables/datatables";
@@ -13,8 +15,12 @@ import { datatableLanguage } from "../../models/datatables/datatables";
 })
 export class TicketsComponent implements OnInit {
 
-  public tickets: Array<Ticket>;
+  public products: Array<Product>;
   public clients: Array<Client>;
+  public tickets: Array<Ticket>;
+  public productsInTickets: Array<ProductInTicket>;
+  public selectedTicketId: number;
+  public selectedTicketTotal: number;
   public dtOptions: DataTables.Settings;
 
   constructor(
@@ -27,6 +33,8 @@ export class TicketsComponent implements OnInit {
     
     this.getTickets();
     this.getClients();
+    this.getProductInTicket();
+    this.getProducts();
 
     //Lenguage Settings
     this.dtOptions = {
@@ -47,7 +55,7 @@ export class TicketsComponent implements OnInit {
   }
 
   private getClients() {
-    this.productsService.getClients().subscribe(
+    this.productsService.getAllClients().subscribe(
       response => {
         if(response.length >= 0) {
 
@@ -56,11 +64,36 @@ export class TicketsComponent implements OnInit {
       },
       error => console.log(<any>error)
     );
+  }  
+
+  private getProductInTicket() {
+    this.productsService.getProductsInTickets().subscribe(
+      response => {
+        if(response.length >= 0) {
+
+          this.productsInTickets = response;
+        }
+      },
+      error => console.log(<any>error)
+    );
+  }
+
+  private getProducts() {
+    this.productsService.getAllProducts().subscribe(
+      response => {
+        if(response.length >= 0) {
+
+          this.products = response;
+        }
+      },
+      error => console.log(<any>error)
+    );
   }
 
   //Methods for html
   
-  public viewTicket() {
-
+  public viewTicket(id: number, total: number) {
+    this.selectedTicketId = id;
+    this.selectedTicketTotal = total;
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { Category } from "../../models/category";
 import { Product } from "../../models/product";
 import { Ingredient } from "../../models/ingredient";
 import { IngredientInProduct } from "../../models/ingredientInProduct";
@@ -18,16 +19,25 @@ import { datatableLanguage } from "../../models/datatables/datatables";
 })
 export class ProductFormComponent implements OnInit {
 
+  
   public product: Product;
-  public ingredients: Array<Ingredient>;
-  public spendingAmount: Array<number>;
-  public edit: boolean;  
   public dtOptions: DataTables.Settings;
   
-
-  //New
+  //To manage Ingredients
   public ingredientsInProduct: Array<IngredientInProduct>;
   private spendingAmountConst: Array<number>;
+  
+  //To manage Ingredients In Product
+  public spendingAmount: Array<number>;
+  public ingredients: Array<Ingredient>;
+
+  //To manage Category
+  public categoryOfTheProduct;
+  public categories: Array<Category>;
+  public chosenCategory: Category;
+
+  //To know if is a edit page
+  public edit: boolean;
 
   constructor(
     private productsService: ProductsService,
@@ -35,13 +45,16 @@ export class ProductFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this.product = null;
+    this.categoryOfTheProduct = null;
     this.ingredients = null;
     this.spendingAmount = new Array<number>(1);
     this.spendingAmountConst = new Array<number>(1);
+    this.chosenCategory = null;
   }
 
   ngOnInit(): void {
     this.getUrlParams();
+    this.getCategories();
 
     //Lenguage Settings
     this.dtOptions = {
@@ -60,7 +73,16 @@ export class ProductFormComponent implements OnInit {
       this.productsService.getProduct(id).subscribe(
         res => {
           this.product = res[0];
-          this.getIngredients();                  
+          
+          this.productsService.getCategory(this.product.id_category).subscribe(
+            res => {
+              this.categoryOfTheProduct = res[0];
+              this.chosenCategory = this.categoryOfTheProduct;
+
+              this.getIngredients();
+            },
+            err => console.log(<any>err)
+          );          
         },
         err => console.log(<any>err)
       );
@@ -69,7 +91,8 @@ export class ProductFormComponent implements OnInit {
 
       this.edit = false;
       this.product = {
-        _id: 0,      
+        _id: 0,
+        id_category: 0,
         name: "",
         price: 0
       }
@@ -122,6 +145,18 @@ export class ProductFormComponent implements OnInit {
     );
   }
 
+  private getCategories(): void {
+    this.productsService.getCategories().subscribe(
+      response => {
+        if(response.length >= 0) {
+
+          this.categories = response;
+        }
+      },
+      error => console.log(<any>error)
+    );
+  }
+
   //html methods
 
   protected saveNewProduct(): void {
@@ -130,7 +165,7 @@ export class ProductFormComponent implements OnInit {
 
       this.productsService.saveProduct(this.product).subscribe(
         res => {
-          var id: number = res._id[0]._id;                 
+          var id: number = res._id[0]._id;
 
           for(let i = 0; i < this.ingredients.length; i++) {
             if(this.spendingAmount[i] != null && this.spendingAmount[i] != 0) {
@@ -272,4 +307,12 @@ export class ProductFormComponent implements OnInit {
     return false;
   }
 
+  protected onChangeCategory(event: any): void {
+    
+    for(var i = 0; i < this.categories.length; i++) {
+      if(this.categories[i] == this.chosenCategory) {
+        this.product.id_category = this.categories[i]._id;
+      }
+    }
+  }
 }

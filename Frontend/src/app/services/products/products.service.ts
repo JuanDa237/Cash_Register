@@ -7,6 +7,8 @@ import { Product } from "../../models/product";
 import { Ingredient } from "../../models/ingredient";
 import { IngredientInProduct } from "../../models/ingredientInProduct";
 import { Client } from "../../models/client";
+import { Ticket } from 'src/app/models/ticket';
+import { ProductInTicket } from "../../models/productInTicket";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,15 @@ export class ProductsService {
   ) {
     this.headers = new HttpHeaders().set("Content-type", "application/json");
     this.apiUri = "http://localhost:3000/api/";
+  }
+
+  //Get All List
+  getAllProducts(): Observable<any> {
+    return this.http.get(this.apiUri + "all/products", { headers: this.headers});
+  }
+
+  getAllClients(): Observable<any> {
+    return this.http.get(this.apiUri + "all/clients", { headers: this.headers});
   }
 
   //Get list
@@ -49,7 +60,15 @@ export class ProductsService {
     return this.http.get(this.apiUri + "tickets", { headers: this.headers});
   }
 
+  getProductsInTickets(): Observable<any> {
+    return this.http.get(this.apiUri + "tickets/products", { headers: this.headers});
+  }
+
   //Get one
+  getCategory(id: number): Observable<any> {
+    return this.http.get(this.apiUri + "category/" + id, { headers: this.headers});
+  }
+
   getProduct(id: number): Observable<any> {
     return this.http.get(this.apiUri + "product/" + id, { headers: this.headers});
   }
@@ -86,6 +105,16 @@ export class ProductsService {
   saveClient(newClient: Client): Observable<any> {
     let params = JSON.stringify(newClient);
     return this.http.post(this.apiUri + "client", params, { headers: this.headers});
+  }
+
+  saveTicket(newTicket: Ticket): Observable<any> {
+    let params = JSON.stringify(newTicket);
+    return this.http.post(this.apiUri + "ticket", params, { headers: this.headers});
+  }
+
+  createProductInTicket(productInTicket: ProductInTicket): Observable<any> {
+    var params = JSON.stringify(productInTicket);
+    return this.http.post(this.apiUri + "ticket/product", params, { headers: this.headers});
   }
 
   //Update

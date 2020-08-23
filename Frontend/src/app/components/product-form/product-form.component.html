@@ -1,4 +1,4 @@
-<div *ngIf = "product && ingredients">
+<div *ngIf = "product && ingredients && categories">
     <div class="row my-1">
         <a [routerLink]="['/products']" class="btn btn-info float-left">{{ edit ? "Cancelar" : "Volver"}}</a>        
     </div>
@@ -10,7 +10,16 @@
                     Producto
                 </div>
                 <div class="card-body">
-                    <form #formProduct="ngForm">                       
+                    <form #formProduct="ngForm">
+                        <div class="form-group">
+                            <label for="categories">Categoria<span class="text-danger">*</span></label>
+                            <select class="form-control" name="categories" #actualCategory="ngModel" [(ngModel)]="chosenCategory" (ngModelChange)="onChangeCategory($event)" required>
+                                <option *ngIf="!edit" [ngValue]="null">Ninguna</option>                                
+                                <option *ngIf="edit && categoryOfTheProduct" [ngValue]="categoryOfTheProduct">{{ categoryOfTheProduct.name }}</option>
+                                <option *ngFor="let category of categories" [ngValue]="category">{{ category.name }}</option>
+                            </select>                            
+                            <div class="span text-white bg-danger p-2 my-1" *ngIf="!edit && actualCategory.touched && !actualCategory.valid">La categoria es obligatoria.</div>
+                        </div>                    
                         <div class="form-group">
                             <label for="name">Nombre<span class="text-danger">*</span></label>
                             <input type="text" class="form-control d-inline-block" name="name" placeholder="Nombre" #name="ngModel" [(ngModel)]="product.name" required>

@@ -11,7 +11,10 @@ class CompanyRoutes {
     }
 
     routes(): void {
-        
+        //Get All List
+        this.router.get("/all/products", companyController.listAllProducts);
+        this.router.get("/all/clients", companyController.listAllClients);
+
         //Get list    
         this.router.get("/categories", companyController.listCategories);
         this.router.get("/products", companyController.listProducts);
@@ -22,7 +25,7 @@ class CompanyRoutes {
         this.router.get("/tickets/products", companyController.listProductsInTickets);
 
         //Get one
-        this.router.get("/category/:id", companyController.getOneProduct);
+        this.router.get("/category/:id", companyController.getOneCategory);
         this.router.get("/product/:id", companyController.getOneProduct);
         this.router.get("/ingredient/:id", companyController.getOneIngredient);
         this.router.get("/product/ingredients/:id", companyController.getIngredientsInProduct);

@@ -3,6 +3,20 @@ import { Request, Response } from "express";
 import pool from "../database";
 
 class CompanyController {
+    //Get All List
+    public async listAllProducts (req: Request, res: Response): Promise<void> {
+        (await pool).query("SELECT _id, name, price FROM products;")
+                    .then(dates => {
+                        res.status(200).json(dates);
+                    });
+    }
+
+    public async listAllClients (req: Request, res: Response): Promise<void> {
+        (await pool).query("SELECT _id, name, address, phoneNumber FROM clients;")
+                    .then(dates => {
+                        res.status(200).json(dates);
+                    });
+    }
     
     //Get list
 
@@ -42,7 +56,7 @@ class CompanyController {
     }
 
     public async listTickets (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT _id, id_client, total, date  FROM tickets;")
+        (await pool).query("SELECT _id, id_client, total, DATE_FORMAT(date, '%m-%d-%Y') AS date FROM tickets;")
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -72,7 +86,7 @@ class CompanyController {
 
     public async getOneProduct (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT _id, name, price FROM products WHERE _id = ? AND active = true;", [id])
+        (await pool).query("SELECT _id, id_category , name, price FROM products WHERE _id = ? AND active = true;", [id])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);
@@ -185,8 +199,18 @@ class CompanyController {
 
     public async createTicket (req: Request, res: Response): Promise<void> {
         
-        (await pool).query("INSERT INTO tickets SET ?", [req.body]);
-        res.status(200).json({ message: "Saved ticket." });       
+        (await pool).query("INSERT INTO tickets SET ?", [req.body])
+                    .then(async function(value) {
+
+                        (await pool).query("SELECT _id FROM tickets WHERE _id=(SELECT max(_id) FROM tickets);")
+                        .then(dates => {
+
+                            res.status(200).json({
+                                message: "Saved ticket.",
+                                _id: dates
+                            });
+                        });
+                    });;    
     }
 
     public async createProductInTicket (req: Request, res: Response): Promise<void> {
@@ -263,13 +287,13 @@ class CompanyController {
 
     public async deleteCategory (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("UDATE categories SET active = false WHERE _id = ?", [id]);
+        (await pool).query("UPDATE categories SET active = false WHERE _id = ?", [id]);
         res.status(200).json({ message: "Category eliminated successfully." });
     }
     
     public async deleteProduct (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("UDATE products SET active = false WHERE _id = ?", [id]);
+        (await pool).query("UPDATE products SET active = false WHERE _id = ?", [id]);
         res.status(200).json({ message: "Product eliminated successfully." });
     }
 
@@ -281,13 +305,13 @@ class CompanyController {
 
     public async deleteIngredientInProduct (req: Request, res: Response): Promise<void> {
         const { id_product, id_ingredient } = req.params;
-        (await pool).query("DELETE FROM detail_products_ingredients WHERE id_product = ? AND id_ingredient = ?", [id_product, id_ingredient]);
+        (await pool).query("UPDATE detail_products_ingredients SET active = false WHERE id_product = ? AND id_ingredient = ?", [id_product, id_ingredient]);
         res.status(200).json({ message: "Ingredient in product eliminated successfully." });
     }
 
     public async deleteClient (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("UDATE client SET active = false WHERE _id = ?", [id]);
+        (await pool).query("UPDATE clients SET active = false WHERE _id = ?", [id]);
         res.status(200).json({ message: "Client eliminated successfully." });
     }
 }

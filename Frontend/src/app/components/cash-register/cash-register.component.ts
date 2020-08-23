@@ -2,6 +2,9 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 import { ProductsService } from "../../services/products/products.service";
 import { Product } from "../../models/product";
+import { Client } from 'src/app/models/client';
+import { Ticket } from 'src/app/models/ticket';
+import { ProductInTicket } from 'src/app/models/productInTicket';
 
 //PDF
 import jsPDF from "jspdf";
@@ -9,13 +12,6 @@ import html2canvas from "html2canvas";
 
 //Datatable
 import { datatableLanguage } from "../../models/datatables/datatables";
-
-interface Client {  
-  name: string;
-  domicile: boolean;
-  address?: string;
-  phoneNumber?: string;
-}
 
 interface productInCart {
   product: Product;
@@ -29,27 +25,41 @@ interface productInCart {
 })
 export class CashRegisterComponent implements OnInit {
 
-  public client: Client;
+  //Products
   public products: Array<Product>;
   public shoppingCart: Array<productInCart>;
   public totalPrice: number;
+
+  //Ticket
   @ViewChild("ticket") ticket: ElementRef;
+  public domicile: boolean;
+  
+  //Clients
+  public clients: Array<Client>;
+  public client: Client;
+
+  //Datatables
   public dtOptions: DataTables.Settings;
 
   constructor(
     private productsService: ProductsService
   ) {
-    this.client = {
-      name: "",
-      domicile: false      
-    };
     this.products = null;
     this.shoppingCart = new Array<productInCart>(0);
     this.totalPrice = 0;
+    this.clients = null;
+    this.client = {
+      _id: 0,
+      name: "",
+      address: "",
+      phoneNumber: ""
+    };
+    this.domicile = false;
   }
 
   ngOnInit(): void {
     this.getProducts();
+    this.getClients();
 
     //Lenguage Settings
     this.dtOptions = {
@@ -71,6 +81,18 @@ export class CashRegisterComponent implements OnInit {
     );
   }
 
+  private getClients() {
+    this.productsService.getClients().subscribe(
+      response => {
+        if(response.length >= 0) {
+
+          this.clients = response;
+        }
+      },
+      error => console.log(<any>error)
+    );
+  }
+
   //Html methods
 
   public addProduct(product: Product): void {
@@ -78,6 +100,7 @@ export class CashRegisterComponent implements OnInit {
     const newProduct: productInCart = {
       product: {
         _id: product._id,
+        id_category: product.id_category,
         name: product.name,
         price: product.price
       },
@@ -91,6 +114,23 @@ export class CashRegisterComponent implements OnInit {
   public deleteProduct(index: number): void {
     this.shoppingCart.splice(index, 1);
     this.actualizePrice();
+  }
+
+  public choseClient(id: number): void {
+
+    for(var i = 0; i < this.clients.length; i++) {
+      if(this.clients[i]._id == id) {
+        
+        var chosedClient: Client = {
+          _id: id,
+          name: this.clients[i].name,
+          address: this.clients[i].address,
+          phoneNumber: this.clients[i].phoneNumber,
+        }
+
+        this.client = chosedClient;
+      }
+    }    
   }
 
   private actualizePrice(): void {
@@ -123,8 +163,40 @@ export class CashRegisterComponent implements OnInit {
     }      
   }
 
-  public finishOrder(): void {
+  public finishOrder(): void {    
+
+    //Create new ticket
+    var newTicket: Ticket = {
+      id_client: this.client._id,
+      total: this.totalPrice,
+      date: this.actualDate()
+    }
     
+    this.productsService.saveTicket(newTicket).subscribe(
+      res => {        
+        var id: number = res._id[0]._id;
+
+        for(var i = 0; i < this.shoppingCart.length; i++) {
+
+          //Create relations
+          var newProductInTicket: ProductInTicket = {
+            id_ticket: id,
+            id_product: this.shoppingCart[i].product._id,
+            amount: this.shoppingCart[i].amount
+          }          
+
+          this.productsService.createProductInTicket(newProductInTicket).subscribe(
+            res => {},
+            err => console.log(<any>err)
+          );
+        }
+      },
+      err => console.log(<any>err)
+    );
+
+    //Actualize Amount Of Products
+
+    //id products in cart
     var products: Array<number> = new Array<number>(0);
 
     for(var i = 0; i < this.shoppingCart.length; i++) {
@@ -132,13 +204,33 @@ export class CashRegisterComponent implements OnInit {
       for(var x = 0; x < this.shoppingCart[i].amount; x++) {
         
         products.push(this.shoppingCart[i].product._id);
-      }      
+      }
     }
 
     this.productsService.updateAmountIngredients(products).subscribe(
       res => {},
       err => console.log(<any>err)
     );
+  }
+
+  private actualDate(): string {
+    
+    var date: Date = new Date();
+    var year: string, month: string, day: string;
+
+    year = String(date.getFullYear());
+    month = String(date.getMonth() + 1);
+    day = String(date.getDate());
+    
+    if (month.length == 1) {
+      month = "0" + month;
+    }
+    
+    if (day.length == 1) {
+      day = "0" + day;
+    }
+    
+    return year + "-" + month + "-" + day;
   }
 
   public printPDF(): void {
@@ -153,20 +245,26 @@ export class CashRegisterComponent implements OnInit {
       doc.addImage(imgData, 0, 0, 208, imgHeigth);
 
       var date: Date = new Date();
-      var nameDocument: string = this.client.name + "_" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+      var nameDocument: string = "clientName" + "_" + date.getDay() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
       doc.save(nameDocument + ".pdf");
     });
   }
 
-  public refreshPage(): void {
-    this.client = {
-      name: "",
-      domicile: false      
-    };
+  public refreshPage(): void {    
     this.products = null;
     this.shoppingCart = new Array<productInCart>(0);
     this.totalPrice = 0;
+    this.clients = null;
+    this.client = {
+      _id: 0,
+      name: "",
+      address: "",
+      phoneNumber: ""
+    };
+    this.domicile = false;
+
     this.getProducts();
+    this.getClients();
   }
 }

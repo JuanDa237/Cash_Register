@@ -8,6 +8,9 @@ class CompanyRoutes {
         this.routes();
     }
     routes() {
+        //Get All List
+        this.router.get("/all/products", companyControllers_1.companyController.listAllProducts);
+        this.router.get("/all/clients", companyControllers_1.companyController.listAllClients);
         //Get list    
         this.router.get("/categories", companyControllers_1.companyController.listCategories);
         this.router.get("/products", companyControllers_1.companyController.listProducts);
@@ -17,7 +20,7 @@ class CompanyRoutes {
         this.router.get("/tickets", companyControllers_1.companyController.listTickets);
         this.router.get("/tickets/products", companyControllers_1.companyController.listProductsInTickets);
         //Get one
-        this.router.get("/category/:id", companyControllers_1.companyController.getOneProduct);
+        this.router.get("/category/:id", companyControllers_1.companyController.getOneCategory);
         this.router.get("/product/:id", companyControllers_1.companyController.getOneProduct);
         this.router.get("/ingredient/:id", companyControllers_1.companyController.getOneIngredient);
         this.router.get("/product/ingredients/:id", companyControllers_1.companyController.getIngredientsInProduct);

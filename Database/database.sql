@@ -29,7 +29,8 @@ CREATE TABLE detail_products_ingredients (
     id_ingredient INT NOT NULL,
     CONSTRAINT fk_ingredients FOREIGN KEY (id_ingredient) REFERENCES ingredients (_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_products FOREIGN KEY (id_product) REFERENCES products (_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    spendingAmount INT NOT NULL
+    spendingAmount INT NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT true
 );
 
 CREATE TABLE clients (
