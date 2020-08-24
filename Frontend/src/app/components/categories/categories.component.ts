@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProductsService } from "../../services/products/products.service";
+//Models
 import { Category } from "../../models/category";
 
-//Sweet Alert
-import Swal from 'sweetalert2';
+//Services
+import { CategoriesService } from "../../services/categories/categories.service";
 
-//Datatable
-import { datatableLanguage } from "../../models/datatables/datatables";
+//Imports
+import Swal from 'sweetalert2'; //Sweet Alert
+import { datatableLanguage } from "../../models/datatables/datatables"; //Datatable
 
 @Component({
   selector: 'app-categories',
@@ -21,7 +22,7 @@ export class CategoriesComponent implements OnInit {
   public dtOptions: DataTables.Settings;
 
   constructor(
-    private productsService: ProductsService
+    private categoriesService: CategoriesService
   ) {
     this.categories = null;
     this.category = {
@@ -41,7 +42,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   private getCategories(): void {
-    this.productsService.getCategories().subscribe(
+    this.categoriesService.getCategories().subscribe(
       response => {
         if(response.length >= 0) {
 
@@ -71,7 +72,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   public createCategory(): void {
-    this.productsService.saveCategory(this.category).subscribe(
+    this.categoriesService.saveCategory(this.category).subscribe(
       res => {
         Swal.fire({
           position: 'top-end',
@@ -88,7 +89,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   public updateCategory(): void {
-    this.productsService.updateCategory(this.category).subscribe(
+    this.categoriesService.updateCategory(this.category).subscribe(
       res => {
         Swal.fire({
           position: 'top-end',
@@ -120,7 +121,7 @@ export class CategoriesComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.value) {
-          this.productsService.deleteCategory(this.category.id).subscribe(
+          this.categoriesService.deleteCategory(this.category.id).subscribe(
             res => {
               Swal.fire({
                 position: 'top-end',

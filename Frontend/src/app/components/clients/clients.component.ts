@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProductsService } from "../../services/products/products.service";
+//Models
 import { Client } from "../../models/client";
 
-//Sweet Alert
-import Swal from 'sweetalert2';
+//Services
+import { ClientsService } from "../../services/clients/clients.service";
 
-//Datatable
-import { datatableLanguage } from "../../models/datatables/datatables";
+//Imports
+import Swal from 'sweetalert2'; //Sweet Alert
+import { datatableLanguage } from "../../models/datatables/datatables"; //Datatable
 
 @Component({
   selector: 'app-clients',
@@ -21,7 +22,7 @@ export class ClientsComponent implements OnInit {
   public dtOptions: DataTables.Settings;
 
   constructor(
-    private productsService: ProductsService
+    private clientsService: ClientsService
   ) {
     this.clients = null;
     this.client = {
@@ -43,7 +44,7 @@ export class ClientsComponent implements OnInit {
   }
 
   private getClients() {
-    this.productsService.getClients().subscribe(
+    this.clientsService.getClients().subscribe(
       response => {
         if(response.length >= 0) {
 
@@ -77,7 +78,7 @@ export class ClientsComponent implements OnInit {
   }
 
   public createClient(): void {
-    this.productsService.saveClient(this.client).subscribe(
+    this.clientsService.saveClient(this.client).subscribe(
       res => {
         Swal.fire({
           position: 'top-end',
@@ -94,7 +95,7 @@ export class ClientsComponent implements OnInit {
   }
 
   public updateClient(): void {
-    this.productsService.updateClient(this.client).subscribe(
+    this.clientsService.updateClient(this.client).subscribe(
       res => {
         Swal.fire({
           position: 'top-end',
@@ -128,7 +129,7 @@ export class ClientsComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.value) {
-          this.productsService.deleteClient(this.client.id).subscribe(
+          this.clientsService.deleteClient(this.client.id).subscribe(
             res => {
               Swal.fire({
                 position: 'top-end',

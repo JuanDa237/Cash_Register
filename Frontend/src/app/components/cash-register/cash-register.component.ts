@@ -1,17 +1,20 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
-import { ProductsService } from "../../services/products/products.service";
+//Models
 import { Product } from "../../models/product";
 import { Client } from 'src/app/models/client';
 import { Ticket } from 'src/app/models/ticket';
 import { ProductInTicket } from 'src/app/models/productInTicket';
 
-//PDF
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+//Services
+import { ProductsService } from "../../services/products/products.service";
+import { ClientsService } from "../../services/clients/clients.service";
+import { TicketsService } from "../../services/tickets/tickets.service";
 
-//Datatable
-import { datatableLanguage } from "../../models/datatables/datatables";
+//Imports
+import jsPDF from "jspdf"; //PDF
+import html2canvas from "html2canvas"; //PDF styles
+import { datatableLanguage } from "../../models/datatables/datatables"; //Datatable
 
 interface productInCart {
   product: Product;
@@ -42,7 +45,9 @@ export class CashRegisterComponent implements OnInit {
   public dtOptions: DataTables.Settings;
 
   constructor(
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private clientsService: ClientsService,
+    private ticketsService: TicketsService
   ) {
     this.products = null;
     this.shoppingCart = new Array<productInCart>(0);
@@ -82,7 +87,7 @@ export class CashRegisterComponent implements OnInit {
   }
 
   private getClients() {
-    this.productsService.getClients().subscribe(
+    this.clientsService.getClients().subscribe(
       response => {
         if(response.length >= 0) {
 
@@ -172,7 +177,7 @@ export class CashRegisterComponent implements OnInit {
       date: this.actualDate()
     }
     
-    this.productsService.saveTicket(newTicket).subscribe(
+    this.ticketsService.saveTicket(newTicket).subscribe(
       res => {        
         var id: number = res.id[0].id;
 
@@ -185,7 +190,7 @@ export class CashRegisterComponent implements OnInit {
             amount: this.shoppingCart[i].amount
           }
 
-          this.productsService.createProductInTicket(newProductInTicket).subscribe(
+          this.ticketsService.createProductInTicket(newProductInTicket).subscribe(
             res => {},
             err => console.log(<any>err)
           );

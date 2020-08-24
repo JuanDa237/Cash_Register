@@ -25,7 +25,11 @@ import { ClientsComponent } from './components/clients/clients.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
 
 //Services
+import { CategoriesService } from "./services/categories/categories.service";
 import { ProductsService } from "./services/products/products.service";
+import { IngredientsService } from "./services/ingredients/ingredients.service";
+import { TicketsService } from "./services/tickets/tickets.service";
+import { ClientsService } from "./services/clients/clients.service";
 
 //Pipes
 import { FilterPipe } from './pipes/filter/filter.pipe';
@@ -54,7 +58,13 @@ import { ThousandsPipe } from './pipes/thousands/thousands.pipe';
     HttpClientModule,
     DataTablesModule
   ],
-  providers: [ProductsService],
+  providers: [
+    CategoriesService,
+    ProductsService,
+    IngredientsService,
+    TicketsService,
+    ClientsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

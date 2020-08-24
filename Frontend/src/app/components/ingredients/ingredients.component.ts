@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProductsService } from "../../services/products/products.service";
+//Models
 import { Ingredient } from "../../models/ingredient";
 
-//Sweet Alert
-import Swal from 'sweetalert2';
+//Services
+import { IngredientsService } from "../../services/ingredients/ingredients.service";
 
-//Datatable
-import { datatableLanguage } from "../../models/datatables/datatables";
+//Imports
+import Swal from 'sweetalert2'; //Sweet Alert
+import { datatableLanguage } from "../../models/datatables/datatables"; //Datatable
 
 @Component({
   selector: 'app-ingredients',
@@ -21,7 +22,7 @@ export class IngredientsComponent implements OnInit {
   public dtOptions: DataTables.Settings;
 
   constructor(
-    private productsService: ProductsService
+    private ingredientsService: IngredientsService
   ) {
     this.ingredients = null;
     this.ingredient = {
@@ -42,7 +43,7 @@ export class IngredientsComponent implements OnInit {
   }
 
   private getIngredients() {
-    this.productsService.getIngredients().subscribe(
+    this.ingredientsService.getIngredients().subscribe(
       response => {
         if(response.length >= 0) {
 
@@ -74,7 +75,7 @@ export class IngredientsComponent implements OnInit {
   }
 
   public createIngredient(): void {
-    this.productsService.saveIngredient(this.ingredient).subscribe(
+    this.ingredientsService.saveIngredient(this.ingredient).subscribe(
       res => {
         Swal.fire({
           position: 'top-end',
@@ -91,7 +92,7 @@ export class IngredientsComponent implements OnInit {
   }
 
   public updateIngredient(): void {
-    this.productsService.updateIngredient(this.ingredient).subscribe(
+    this.ingredientsService.updateIngredient(this.ingredient).subscribe(
       res => {
         Swal.fire({
           position: 'top-end',
@@ -124,7 +125,7 @@ export class IngredientsComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.value) {
-          this.productsService.deleteIngredient(this.ingredient.id).subscribe(
+          this.ingredientsService.deleteIngredient(this.ingredient.id).subscribe(
             res => {
               Swal.fire({
                 position: 'top-end',

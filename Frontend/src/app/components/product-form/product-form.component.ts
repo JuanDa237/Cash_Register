@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+//Models
 import { Category } from "../../models/category";
 import { Product } from "../../models/product";
 import { Ingredient } from "../../models/ingredient";
 import { IngredientInProduct } from "../../models/ingredientInProduct";
+
+//Services
+import { CategoriesService } from "../../services/categories/categories.service";
 import { ProductsService } from "../../services/products/products.service";
+import { IngredientsService } from "../../services/ingredients/ingredients.service";
 
-//Sweet Alert
-import Swal from 'sweetalert2';
-
-//Datatable
-import { datatableLanguage } from "../../models/datatables/datatables";
+//Imports
+import Swal from 'sweetalert2'; //Sweet Alert
+import { datatableLanguage } from "../../models/datatables/datatables"; //Datatable
 
 @Component({
   selector: 'app-product-form',
@@ -40,7 +43,9 @@ export class ProductFormComponent implements OnInit {
   public edit: boolean;
 
   constructor(
+    private categoriesService: CategoriesService,
     private productsService: ProductsService,
+    private ingredientsService: IngredientsService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
@@ -74,7 +79,7 @@ export class ProductFormComponent implements OnInit {
         res => {
           this.product = res[0];
           
-          this.productsService.getCategory(this.product.idCategory).subscribe(
+          this.categoriesService.getCategory(this.product.idCategory).subscribe(
             res => {
               this.categoryOfTheProduct = res[0];
               this.chosenCategory = this.categoryOfTheProduct;
@@ -102,7 +107,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   private getIngredients(): void {
-    this.productsService.getIngredients().subscribe(
+    this.ingredientsService.getIngredients().subscribe(
       res => {
         this.ingredients = res;
 
@@ -146,7 +151,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   private getCategories(): void {
-    this.productsService.getCategories().subscribe(
+    this.categoriesService.getCategories().subscribe(
       response => {
         if(response.length >= 0) {
 

@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProductsService } from "../../services/products/products.service";
+//Models
 import { Product } from "../../models/product";
 import { Client } from "../../models/client";
 import { Ticket } from "../../models/ticket";
 import { ProductInTicket } from "../../models/productInTicket";
 
-//Datatable
-import { datatableLanguage } from "../../models/datatables/datatables";
+//Services
+import { ProductsService } from "../../services/products/products.service";
+import { ClientsService } from "../../services/clients/clients.service";
+import { TicketsService } from "../../services/tickets/tickets.service";
+
+//Imports
+import { datatableLanguage } from "../../models/datatables/datatables"; //Datatable
 
 @Component({
   selector: 'app-tickets',
@@ -24,7 +29,9 @@ export class TicketsComponent implements OnInit {
   public dtOptions: DataTables.Settings;
 
   constructor(
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private clientsService: ClientsService,
+    private ticketsService: TicketsService
   ) {
     this.tickets = null;        
   }
@@ -43,7 +50,7 @@ export class TicketsComponent implements OnInit {
   }
 
   private getTickets() {
-    this.productsService.getTickets().subscribe(
+    this.ticketsService.getTickets().subscribe(
       response => {
         if(response.length >= 0) {
 
@@ -55,7 +62,7 @@ export class TicketsComponent implements OnInit {
   }
 
   private getClients() {
-    this.productsService.getAllClients().subscribe(
+    this.clientsService.getAllClients().subscribe(
       response => {
         if(response.length >= 0) {
 
@@ -67,7 +74,7 @@ export class TicketsComponent implements OnInit {
   }  
 
   private getProductInTicket() {
-    this.productsService.getProductsInTickets().subscribe(
+    this.ticketsService.getProductsInTickets().subscribe(
       response => {
         if(response.length >= 0) {
 

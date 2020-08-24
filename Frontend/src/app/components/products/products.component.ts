@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProductsService } from "../../services/products/products.service";
+//Models
 import { Product } from "../../models/product";
 
-//Sweet Alert
-import Swal from 'sweetalert2';
+//Services
+import { ProductsService } from "../../services/products/products.service";
 
-//Datatable
-import { datatableLanguage } from "../../models/datatables/datatables";
+//Imports
+import Swal from 'sweetalert2'; //Sweet Alert
+import { datatableLanguage } from "../../models/datatables/datatables"; //Datatable
 
 @Component({
   selector: 'app-products',
