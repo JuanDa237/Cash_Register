@@ -3,7 +3,7 @@ USE cashRegisterDatabase;
 
 CREATE TABLE categories (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
+    name VARCHAR(30) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
 );
 
@@ -11,14 +11,14 @@ CREATE TABLE products (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
     idCategory INT NOT NULL,
     CONSTRAINT fkCategoriyProduct FOREIGN KEY (idCategory) REFERENCES categories (id) ON DELETE CASCADE ON UPDATE CASCADE,       
-    name VARCHAR(50) NOT NULL,
+    name VARCHAR(30) NOT NULL,
     price INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
 );
 
 CREATE TABLE ingredients (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
+    name VARCHAR(30) NOT NULL,
     amount INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
 );
@@ -35,9 +35,9 @@ CREATE TABLE detailProductsIngredients (
 
 CREATE TABLE clients (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(15) NOT NULL,    
-    address VARCHAR(20),
-    phoneNumber VARCHAR(20),
+    name VARCHAR(30) NOT NULL,    
+    address VARCHAR(30),
+    phoneNumber VARCHAR(15),
     active BOOLEAN NOT NULL DEFAULT true
 );
 
@@ -45,16 +45,18 @@ CREATE TABLE tickets (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     idClient INT NOT NULL,
     CONSTRAINT fkClientTicket FOREIGN KEY (idClient) REFERENCES clients (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    date DATE NOT NULL,
     total INT NOT NULL,
-    date DATE NOT NULL
+    homeDelivery BOOLEAN NOT NULL DEFAULT false,
+    priceOfHomeDelivery INT
 );
 
-CREATE TABLE detailTicketProducts (
+CREATE TABLE productsInTickets (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     idTicket INT NOT NULL,
-    idProduct INT NOT NULL,
     CONSTRAINT fkTickets FOREIGN KEY (idTicket) REFERENCES tickets (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fkPro FOREIGN KEY (idProduct) REFERENCES products (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    name VARCHAR(30) NOT NULL,
+    price INT NOT NULL,
     amount INT NOT NULL
 );
 

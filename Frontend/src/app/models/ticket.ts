@@ -1,6 +1,8 @@
 export interface Ticket {
     id?: number;
     idClient: number;
-    total: number;
     date: string;
+    total: number;
+    homeDelivery: boolean;
+    priceOfHomeDelivery: number;
 };

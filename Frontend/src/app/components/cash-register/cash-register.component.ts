@@ -35,7 +35,8 @@ export class CashRegisterComponent implements OnInit {
 
   //Ticket
   @ViewChild("ticket") ticket: ElementRef;
-  public domicile: boolean;
+  public homeDelivery: boolean;
+  public priceOfHomeDelivery: number;
   
   //Clients
   public clients: Array<Client>;
@@ -59,7 +60,8 @@ export class CashRegisterComponent implements OnInit {
       address: "",
       phoneNumber: ""
     };
-    this.domicile = false;
+    this.homeDelivery = false;
+    this.priceOfHomeDelivery = null;
   }
 
   ngOnInit(): void {
@@ -163,18 +165,26 @@ export class CashRegisterComponent implements OnInit {
 
       var priceForOne: number = this.products[indexProduct].price;
 
-      this.totalPrice +=  priceForOne * amount;      
+      this.totalPrice +=  priceForOne * amount;   
       this.shoppingCart[i].product.price = priceForOne * amount;      
-    }      
+    }
+    
+    if(this.homeDelivery) {      
+      this.totalPrice +=  this.priceOfHomeDelivery;
+    }
   }
 
   public finishOrder(): void {    
 
+    this.actualizePrice();
+    
     //Create new ticket
     var newTicket: Ticket = {
       idClient: this.client.id,
+      date: this.actualDate(),
       total: this.totalPrice,
-      date: this.actualDate()
+      homeDelivery: this.homeDelivery,
+      priceOfHomeDelivery: this.priceOfHomeDelivery
     }
     
     this.ticketsService.saveTicket(newTicket).subscribe(
@@ -186,8 +196,9 @@ export class CashRegisterComponent implements OnInit {
           //Create relations
           var newProductInTicket: ProductInTicket = {
             idTicket: id,
-            idProduct: this.shoppingCart[i].product.id,
-            amount: this.shoppingCart[i].amount
+            name: this.shoppingCart[i].product.name,
+            price: this.shoppingCart[i].product.price,
+            amount: this.shoppingCart[i].amount            
           }
 
           this.ticketsService.createProductInTicket(newProductInTicket).subscribe(
@@ -238,6 +249,17 @@ export class CashRegisterComponent implements OnInit {
     return year + "-" + month + "-" + day;
   }
 
+  public priceOfHomeDeliveryChange(): void {
+    if(this.homeDelivery) {
+      
+      this.priceOfHomeDelivery = 0;
+    }
+    else {
+
+      this.priceOfHomeDelivery = null;      
+    }
+  }
+
   public printPDF(): void {
 
     html2canvas(this.ticket.nativeElement).then((canvas) => {
@@ -267,7 +289,8 @@ export class CashRegisterComponent implements OnInit {
       address: "",
       phoneNumber: ""
     };
-    this.domicile = false;
+    this.homeDelivery = false;
+    this.priceOfHomeDelivery = null;
 
     this.getProducts();
     this.getClients();

@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 //Models
-import { Product } from "../../models/product";
 import { Client } from "../../models/client";
 import { Ticket } from "../../models/ticket";
 import { ProductInTicket } from "../../models/productInTicket";
 
 //Services
-import { ProductsService } from "../../services/products/products.service";
 import { ClientsService } from "../../services/clients/clients.service";
 import { TicketsService } from "../../services/tickets/tickets.service";
 
@@ -20,20 +18,25 @@ import { datatableLanguage } from "../../models/datatables/datatables"; //Datata
 })
 export class TicketsComponent implements OnInit {
 
-  public products: Array<Product>;
   public clients: Array<Client>;
   public tickets: Array<Ticket>;
   public productsInTickets: Array<ProductInTicket>;
-  public selectedTicketId: number;
-  public selectedTicketTotal: number;
+  public selectedTicket: Ticket;
   public dtOptions: DataTables.Settings;
 
   constructor(
-    private productsService: ProductsService,
     private clientsService: ClientsService,
-    private ticketsService: TicketsService
+    private ticketsService: TicketsService    
   ) {
-    this.tickets = null;        
+    this.tickets = new Array<Ticket>(0);
+    this.selectedTicket = {
+      id: 0,
+      idClient: 0,
+      date: "",
+      total: 0,
+      homeDelivery: false,
+      priceOfHomeDelivery: 0
+    };
   }
 
   ngOnInit(): void {
@@ -41,7 +44,6 @@ export class TicketsComponent implements OnInit {
     this.getTickets();
     this.getClients();
     this.getProductInTicket();
-    this.getProducts();
 
     //Lenguage Settings
     this.dtOptions = {
@@ -85,22 +87,17 @@ export class TicketsComponent implements OnInit {
     );
   }
 
-  private getProducts() {
-    this.productsService.getAllProducts().subscribe(
-      response => {
-        if(response.length >= 0) {
-
-          this.products = response;
-        }
-      },
-      error => console.log(<any>error)
-    );
-  }
-
   //Methods for html
   
-  public viewTicket(id: number, total: number) {
-    this.selectedTicketId = id;
-    this.selectedTicketTotal = total;
+  public viewTicket(ticket: Ticket) {
+    
+    this.selectedTicket = {
+      id: ticket.id,
+      idClient: ticket.idClient,
+      date: ticket.date,
+      total: ticket.total,
+      homeDelivery: ticket.homeDelivery,
+      priceOfHomeDelivery: ticket.priceOfHomeDelivery
+    }
   }
 }

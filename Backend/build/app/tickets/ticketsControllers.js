@@ -18,7 +18,7 @@ class TicketsControllers {
     //Get list
     listTickets(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, idClient, total, DATE_FORMAT(date, '%m-%d-%Y') AS date FROM tickets;")
+            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(date, '%m-%d-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -26,7 +26,7 @@ class TicketsControllers {
     }
     listProductsInTickets(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT * FROM detailTicketProducts;")
+            (yield database_1.default).query("SELECT * FROM productsInTickets;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -36,7 +36,7 @@ class TicketsControllers {
     getOneTicket(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT id, idClient, total, date FROM tickets WHERE id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(date, '%m-%d-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ?", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -50,7 +50,7 @@ class TicketsControllers {
     getProductsInTicket(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT * FROM detailTicketProducts WHERE id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT * FROM productsInTickets WHERE id = ?", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -81,7 +81,7 @@ class TicketsControllers {
     }
     createProductInTicket(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("INSERT INTO detailTicketProducts SET ?", [req.body]);
+            (yield database_1.default).query("INSERT INTO productsInTickets SET ?", [req.body]);
             res.status(200).json({ message: "Saved product in ticket." });
         });
     }

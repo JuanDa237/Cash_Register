@@ -30,7 +30,7 @@
                     <td>
                         <div class="text-center">
                             <div class="btn-group">                                
-                                <button class="btn btn-info" (click)="viewTicket(ticket.id, ticket.total)" data-toggle="modal" data-target="#modal"><i class="fas fa-eye"></i></button>                                
+                                <button class="btn btn-info" (click)="viewTicket(ticket)" data-toggle="modal" data-target="#modal"><i class="fas fa-eye"></i></button>
                             </div>
                         </div>
                     </td>
@@ -62,39 +62,36 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let productInTicket of productsInTickets">
-                                            <td class="align-middle" *ngIf="productInTicket.idTicket == selectedTicketId">
-                                                <span *ngFor="let product of products">
-                                                    <span *ngIf="product.id == productInTicket.idProduct">
-                                                        {{ product.name }}
-                                                    </span>
-                                                </span>
+                                            <td class="align-middle" *ngIf="productInTicket.idTicket == selectedTicket.id">                                            
+                                                {{ productInTicket.name }}
                                             </td>
-                                            <td class="align-middle text-center" *ngIf="productInTicket.idTicket == selectedTicketId">
-                                                <span *ngFor="let product of products">
-                                                    <span *ngIf="product.id == productInTicket.idProduct">
-                                                        {{ productInTicket.amount | thousandsPipe }}
-                                                    </span>
-                                                </span>
+                                            <td class="align-middle text-center" *ngIf="productInTicket.idTicket == selectedTicket.id">
+                                                {{ productInTicket.amount | thousandsPipe }}
                                             </td>
-                                            <td class="align-middle text-center" *ngIf="productInTicket.idTicket == selectedTicketId">
-                                                <span *ngFor="let product of products">
-                                                    <span *ngIf="product.id == productInTicket.idProduct">
-                                                        {{ product.price * productInTicket.amount | thousandsPipe }}
-                                                    </span>
-                                                </span>
+                                            <td class="align-middle text-center" *ngIf="productInTicket.idTicket == selectedTicket.id">
+                                                {{ productInTicket.price * productInTicket.amount | thousandsPipe }}
                                             </td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
+                                        <tr  *ngIf="selectedTicket.homeDelivery">
+                                            <th>Sub-Total</th>
+                                            <th></th>
+                                            <th class="align-middle text-center">{{ selectedTicket.total -  selectedTicket.priceOfHomeDelivery | thousandsPipe }}</th>
+                                        </tr>
+                                        <tr *ngIf="selectedTicket.homeDelivery">
+                                            <th>Domicilio</th>
+                                            <th></th>
+                                            <td class="align-middle text-center">+ {{ selectedTicket.priceOfHomeDelivery | thousandsPipe }}</td>
+                                        </tr>
                                         <tr>
                                             <th>Total</th>
                                             <th></th>
-                                            <th class="align-middle text-center">{{ selectedTicketTotal | thousandsPipe }}</th>
+                                            <th class="align-middle text-center">{{ selectedTicket.total | thousandsPipe }}</th>
                                         </tr>
                                     </tfoot>
                                 </table>
-                            </div>
-                            <p class="text-muted">El total es fijo, si cambiaste el precio en algun producto puede que no concuerden el total.</p>
+                            </div>                        
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>                                                        

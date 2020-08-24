@@ -115,10 +115,10 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="checkbox" [(ngModel)]="domicile">
+                                    <input type="checkbox" [(ngModel)]="homeDelivery" (change)="priceOfHomeDeliveryChange()">
                                 </div>
                             </div>
-                            <input type="text" class="form-control col-6" value="Domicilio" readonly>
+                            <input type="number" class="form-control col-10" [attr.placeholder]="!homeDelivery ? 'Domicilio' : 'Precio Del Domicilo'" [(ngModel)]="priceOfHomeDelivery" [attr.readonly]="!homeDelivery ? true : null">
                         </div>
                     </div>
                 </div>
@@ -141,7 +141,7 @@
                             <p class="text-center text-justify border border-dark p-2 my-2">Encuentranos en fulldomi o escribenos al 3135444317 para hacer tus domicilios</p>                                    
                             <p>                                        
                                 <strong>Nombre:</strong> {{ client.name }} |
-                                <span *ngIf="domicile">
+                                <span *ngIf="homeDelivery">
                                     <span *ngIf="client.address">
                                         Direccion: {{ client.address }} |
                                     </span>
@@ -149,15 +149,17 @@
                                         Telefono: {{ client.phoneNumber }}
                                     </span>
                                 </span>
-                                <span *ngIf="!domicile">
+                                <span *ngIf="!homeDelivery">
                                     Pedido Local
                                 </span>
                             </p>                                                                                    
                             <table class="table table-sm my-2">
                                 <thead>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio</th>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let productInCart of shoppingCart">
@@ -166,10 +168,22 @@
                                         <td>{{ productInCart.product.price | thousandsPipe }}</td>
                                     </tr>
                                 </tbody>
-                                <tfoot class="font-weight-bold">                                            
-                                    <td>Total</td>
-                                    <td></td>
-                                    <td>{{ totalPrice | thousandsPipe }}</td>
+                                <tfoot class="font-weight-bold">
+                                    <tr *ngIf="homeDelivery">
+                                        <td>Sub-Total</td>
+                                        <td></td>
+                                        <td>{{ totalPrice - priceOfHomeDelivery | thousandsPipe }}</td>
+                                    </tr>
+                                    <tr *ngIf="homeDelivery">
+                                        <td>Domicilio</td>
+                                        <td></td>
+                                        <td>{{ priceOfHomeDelivery | thousandsPipe }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td></td>
+                                        <td>{{ totalPrice | thousandsPipe }}</td>
+                                    </tr>                                       
                                 </tfoot>
                             </table>                                                                        
                         </div>

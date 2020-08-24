@@ -6,14 +6,14 @@ class TicketsControllers {
 
     //Get list
     public async listTickets (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, idClient, total, DATE_FORMAT(date, '%m-%d-%Y') AS date FROM tickets;")
+        (await pool).query("SELECT id, idClient, DATE_FORMAT(date, '%m-%d-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets;")
                     .then(dates => {
                         res.status(200).json(dates);
                     });
     }
 
     public async listProductsInTickets (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT * FROM detailTicketProducts;")
+        (await pool).query("SELECT * FROM productsInTickets;")
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -22,7 +22,7 @@ class TicketsControllers {
     //Get one
     public async getOneTicket (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT id, idClient, total, date FROM tickets WHERE id = ? AND active = true;", [id])
+        (await pool).query("SELECT id, idClient, DATE_FORMAT(date, '%m-%d-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ?", [id])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);
@@ -35,7 +35,7 @@ class TicketsControllers {
 
     public async getProductsInTicket (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT * FROM detailTicketProducts WHERE id = ? AND active = true;", [id])
+        (await pool).query("SELECT * FROM productsInTickets WHERE id = ?", [id])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);
@@ -65,7 +65,7 @@ class TicketsControllers {
 
     public async createProductInTicket (req: Request, res: Response): Promise<void> {
         
-        (await pool).query("INSERT INTO detailTicketProducts SET ?", [req.body]);
+        (await pool).query("INSERT INTO productsInTickets SET ?", [req.body]);
         res.status(200).json({ message: "Saved product in ticket." });        
     }
 }
