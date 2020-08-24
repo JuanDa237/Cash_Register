@@ -6,8 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
-const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
-const companyRoutes_1 = __importDefault(require("./routes/companyRoutes"));
+const indexRoutes_1 = __importDefault(require("./app/index/indexRoutes"));
+const categoriesRoutes_1 = __importDefault(require("./app/categories/categoriesRoutes"));
+const productsRoutes_1 = __importDefault(require("./app/products/productsRoutes"));
+const ingredientsRoutes_1 = __importDefault(require("./app/ingredients/ingredientsRoutes"));
+const ticketsRoutes_1 = __importDefault(require("./app/tickets/ticketsRoutes"));
+const clientsRoutes_1 = __importDefault(require("./app/clients/clientsRoutes"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -23,7 +27,11 @@ class Server {
     }
     routes() {
         this.app.use("/", indexRoutes_1.default);
-        this.app.use("/api", companyRoutes_1.default);
+        this.app.use("/api", categoriesRoutes_1.default);
+        this.app.use("/api", productsRoutes_1.default);
+        this.app.use("/api", ingredientsRoutes_1.default);
+        this.app.use("/api", ticketsRoutes_1.default);
+        this.app.use("/api", clientsRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get("port"), () => {

@@ -2,8 +2,12 @@ import express, { Application } from "express";
 import morgan from "morgan";
 import cors from "cors";
 
-import indexRoutes from "./routes/indexRoutes";
-import companyRoutes from "./routes/companyRoutes";
+import indexRoutes from "./app/index/indexRoutes";
+import categoriesRoutes from "./app/categories/categoriesRoutes";
+import productsRoutes from "./app/products/productsRoutes";
+import ingredientsRoutes from "./app/ingredients/ingredientsRoutes";
+import ticketsRoutes from "./app/tickets/ticketsRoutes";
+import clientsRoutes from "./app/clients/clientsRoutes";
 
 class Server {
     
@@ -25,7 +29,11 @@ class Server {
 
     routes(): void {
         this.app.use("/", indexRoutes);
-        this.app.use("/api", companyRoutes);
+        this.app.use("/api", categoriesRoutes);
+        this.app.use("/api", productsRoutes);
+        this.app.use("/api", ingredientsRoutes);
+        this.app.use("/api", ticketsRoutes);
+        this.app.use("/api", clientsRoutes);
     }
 
     start(): void {
@@ -33,7 +41,6 @@ class Server {
             console.log("Server on port " + this.app.get("port"));
         });
     }
-
 }
 
 const server = new Server();
