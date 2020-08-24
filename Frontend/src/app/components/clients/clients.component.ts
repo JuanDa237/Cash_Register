@@ -25,7 +25,7 @@ export class ClientsComponent implements OnInit {
   ) {
     this.clients = null;
     this.client = {
-      _id: 0,
+      id: 0,
       name: "",
       address: "",
       phoneNumber: ""
@@ -59,7 +59,7 @@ export class ClientsComponent implements OnInit {
     if(this.validate(id, name, address, phoneNumber)) {
       this.create = false;
       this.client = {
-        _id: id,
+        id: id,
         name: name,
         address: address,
         phoneNumber: phoneNumber
@@ -68,7 +68,7 @@ export class ClientsComponent implements OnInit {
     else {
       this.create = true;
       this.client = {
-        _id: 0,
+        id: 0,
         name: "",
         address: "",
         phoneNumber: ""
@@ -113,7 +113,7 @@ export class ClientsComponent implements OnInit {
     if(id != null && name != null && name != "") {
       this.create = false;
       this.client = {
-        _id: id,
+        id: id,
         name: name,
         address: address,
         phoneNumber: phoneNumber
@@ -128,7 +128,7 @@ export class ClientsComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.value) {
-          this.productsService.deleteClient(this.client._id).subscribe(
+          this.productsService.deleteClient(this.client.id).subscribe(
             res => {
               Swal.fire({
                 position: 'top-end',

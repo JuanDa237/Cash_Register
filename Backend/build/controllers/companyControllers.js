@@ -18,7 +18,7 @@ class CompanyController {
     //Get All List
     listAllProducts(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT _id, name, price FROM products;")
+            (yield database_1.default).query("SELECT id, name, price FROM products;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -26,7 +26,7 @@ class CompanyController {
     }
     listAllClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT _id, name, address, phoneNumber FROM clients;")
+            (yield database_1.default).query("SELECT id, name, address, phoneNumber FROM clients;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -35,7 +35,7 @@ class CompanyController {
     //Get list
     listCategories(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT _id, name FROM categories WHERE active = true;")
+            (yield database_1.default).query("SELECT id, name FROM categories WHERE active = true;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -43,7 +43,7 @@ class CompanyController {
     }
     listProducts(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT _id, name, price FROM products WHERE active = true;")
+            (yield database_1.default).query("SELECT id, name, price FROM products WHERE active = true;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -51,7 +51,7 @@ class CompanyController {
     }
     listIngredients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT _id, name, amount FROM ingredients WHERE active = true;")
+            (yield database_1.default).query("SELECT id, name, amount FROM ingredients WHERE active = true;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -59,7 +59,7 @@ class CompanyController {
     }
     listIngredientsInProducts(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT * FROM detail_products_ingredients;")
+            (yield database_1.default).query("SELECT * FROM detailProductsIngredients;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -67,7 +67,7 @@ class CompanyController {
     }
     listClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT _id, name, address, phoneNumber FROM clients WHERE active = true;")
+            (yield database_1.default).query("SELECT id, name, address, phoneNumber FROM clients WHERE active = true;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -75,7 +75,7 @@ class CompanyController {
     }
     listTickets(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT _id, id_client, total, DATE_FORMAT(date, '%m-%d-%Y') AS date FROM tickets;")
+            (yield database_1.default).query("SELECT id, idClient, total, DATE_FORMAT(date, '%m-%d-%Y') AS date FROM tickets;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -83,7 +83,7 @@ class CompanyController {
     }
     listProductsInTickets(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT * FROM detail_ticket_products;")
+            (yield database_1.default).query("SELECT * FROM detailTicketProducts;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -93,7 +93,7 @@ class CompanyController {
     getOneCategory(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT _id, name FROM categories WHERE _id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, name FROM categories WHERE id = ? AND active = true;", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -107,7 +107,7 @@ class CompanyController {
     getOneProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT _id, id_category , name, price FROM products WHERE _id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, idCategory , name, price FROM products WHERE id = ? AND active = true;", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -121,7 +121,7 @@ class CompanyController {
     getOneIngredient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT _id, name, amount FROM ingredients WHERE _id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, name, amount FROM ingredients WHERE id = ? AND active = true;", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -135,7 +135,7 @@ class CompanyController {
     getIngredientsInProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT * FROM detail_products_ingredients WHERE id_product = ?", [id])
+            (yield database_1.default).query("SELECT * FROM detailProductsIngredients WHERE idProduct = ?", [id])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -144,7 +144,7 @@ class CompanyController {
     getOneClient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT _id, name, domicile, address, phoneNumber FROM clients WHERE _id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, name, domicile, address, phoneNumber FROM clients WHERE id = ? AND active = true;", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -158,7 +158,7 @@ class CompanyController {
     getOneTicket(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT _id, id_client, total, date FROM tickets WHERE _id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, idClient, total, date FROM tickets WHERE id = ? AND active = true;", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -172,7 +172,7 @@ class CompanyController {
     getProductsInTicket(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT * FROM detail_ticket_products WHERE _id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT * FROM detailTicketProducts WHERE id = ? AND active = true;", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -195,10 +195,10 @@ class CompanyController {
             (yield database_1.default).query("INSERT INTO products SET ?", [req.body])
                 .then(function (value) {
                 return __awaiter(this, void 0, void 0, function* () {
-                    (yield database_1.default).query("SELECT _id FROM products WHERE _id=(SELECT max(_id) FROM products);").then(dates => {
+                    (yield database_1.default).query("SELECT id FROM products WHERE id=(SELECT max(id) FROM products);").then(dates => {
                         res.status(200).json({
                             message: "Saved product.",
-                            _id: dates
+                            id: dates
                         });
                     });
                 });
@@ -213,7 +213,7 @@ class CompanyController {
     }
     createIngredientInProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("INSERT INTO detail_products_ingredients SET ?", [req.body]);
+            (yield database_1.default).query("INSERT INTO detailProductsIngredients SET ?", [req.body]);
             res.status(200).json({ message: "Saved ingredient in product." });
         });
     }
@@ -228,11 +228,11 @@ class CompanyController {
             (yield database_1.default).query("INSERT INTO tickets SET ?", [req.body])
                 .then(function (value) {
                 return __awaiter(this, void 0, void 0, function* () {
-                    (yield database_1.default).query("SELECT _id FROM tickets WHERE _id=(SELECT max(_id) FROM tickets);")
+                    (yield database_1.default).query("SELECT id FROM tickets WHERE id=(SELECT max(id) FROM tickets);")
                         .then(dates => {
                         res.status(200).json({
                             message: "Saved ticket.",
-                            _id: dates
+                            id: dates
                         });
                     });
                 });
@@ -242,7 +242,7 @@ class CompanyController {
     }
     createProductInTicket(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("INSERT INTO detail_ticket_products SET ?", [req.body]);
+            (yield database_1.default).query("INSERT INTO detailTicketProducts SET ?", [req.body]);
             res.status(200).json({ message: "Saved product in ticket." });
         });
     }
@@ -250,28 +250,28 @@ class CompanyController {
     updateCategory(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("UPDATE categories SET ? WHERE _id = ?", [req.body, id]);
+            (yield database_1.default).query("UPDATE categories SET ? WHERE id = ?", [req.body, id]);
             res.status(200).json({ message: "Category updated successfully." });
         });
     }
     updateProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("UPDATE products SET ? WHERE _id = ?", [req.body, id]);
+            (yield database_1.default).query("UPDATE products SET ? WHERE id = ?", [req.body, id]);
             res.status(200).json({ message: "Product updated successfully." });
         });
     }
     updateIngredient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("UPDATE ingredients SET ? WHERE _id = ?", [req.body, id]);
+            (yield database_1.default).query("UPDATE ingredients SET ? WHERE id = ?", [req.body, id]);
             res.status(200).json({ message: "Ingredient updated successfully." });
         });
     }
     updateIngredientInProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("UPDATE detail_products_ingredients SET ? WHERE _id = ?", [req.body, id]);
+            (yield database_1.default).query("UPDATE detailProductsIngredients SET ? WHERE id = ?", [req.body, id]);
             res.status(200).json({ message: "Ingredient in product updated successfully." });
         });
     }
@@ -279,16 +279,16 @@ class CompanyController {
         return __awaiter(this, void 0, void 0, function* () {
             var ids = req.body;
             for (let x = 0; x < ids.length; x++) {
-                yield (yield database_1.default).query("SELECT id_ingredient, spendingAmount FROM detail_products_ingredients WHERE id_product = ?", [ids[x]])
+                yield (yield database_1.default).query("SELECT idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ?", [ids[x]])
                     .then((dates) => __awaiter(this, void 0, void 0, function* () {
                     const ingredientsInProduct = dates;
                     for (var i = 0; i < ingredientsInProduct.length; i++) {
                         let spendingAmount = ingredientsInProduct[i].spendingAmount;
-                        let idIngredient = ingredientsInProduct[i].id_ingredient;
-                        yield (yield database_1.default).query("SELECT amount FROM ingredients WHERE _id = ? AND active = true;", [idIngredient])
+                        let idIngredient = ingredientsInProduct[i].idIngredient;
+                        yield (yield database_1.default).query("SELECT amount FROM ingredients WHERE id = ? AND active = true;", [idIngredient])
                             .then((date) => __awaiter(this, void 0, void 0, function* () {
                             let newAmount = date[0].amount - spendingAmount;
-                            yield (yield database_1.default).query("UPDATE ingredients SET amount = ? WHERE _id = ?", [newAmount, idIngredient]);
+                            yield (yield database_1.default).query("UPDATE ingredients SET amount = ? WHERE id = ?", [newAmount, idIngredient]);
                         }));
                     }
                 }));
@@ -299,7 +299,7 @@ class CompanyController {
     updateClient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("UPDATE clients SET ? WHERE _id = ?", [req.body, id]);
+            (yield database_1.default).query("UPDATE clients SET ? WHERE id = ?", [req.body, id]);
             res.status(200).json({ message: "Client updated successfully." });
         });
     }
@@ -308,35 +308,35 @@ class CompanyController {
     deleteCategory(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("UPDATE categories SET active = false WHERE _id = ?", [id]);
+            (yield database_1.default).query("UPDATE categories SET active = false WHERE id = ?", [id]);
             res.status(200).json({ message: "Category eliminated successfully." });
         });
     }
     deleteProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("UPDATE products SET active = false WHERE _id = ?", [id]);
+            (yield database_1.default).query("UPDATE products SET active = false WHERE id = ?", [id]);
             res.status(200).json({ message: "Product eliminated successfully." });
         });
     }
     deleteIngredient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("UPDATE ingredients SET active = false WHERE _id = ?", [id]);
+            (yield database_1.default).query("UPDATE ingredients SET active = false WHERE id = ?", [id]);
             res.status(200).json({ message: "Ingredient eliminated successfully." });
         });
     }
     deleteIngredientInProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id_product, id_ingredient } = req.params;
-            (yield database_1.default).query("UPDATE detail_products_ingredients SET active = false WHERE id_product = ? AND id_ingredient = ?", [id_product, id_ingredient]);
+            const { idProduct, idIngredient } = req.params;
+            (yield database_1.default).query("UPDATE detailProductsIngredients SET active = false WHERE idProduct = ? AND idIngredient = ?", [idProduct, idIngredient]);
             res.status(200).json({ message: "Ingredient in product eliminated successfully." });
         });
     }
     deleteClient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("UPDATE clients SET active = false WHERE _id = ?", [id]);
+            (yield database_1.default).query("UPDATE clients SET active = false WHERE id = ?", [id]);
             res.status(200).json({ message: "Client eliminated successfully." });
         });
     }

@@ -74,7 +74,7 @@ export class ProductFormComponent implements OnInit {
         res => {
           this.product = res[0];
           
-          this.productsService.getCategory(this.product.id_category).subscribe(
+          this.productsService.getCategory(this.product.idCategory).subscribe(
             res => {
               this.categoryOfTheProduct = res[0];
               this.chosenCategory = this.categoryOfTheProduct;
@@ -91,8 +91,8 @@ export class ProductFormComponent implements OnInit {
 
       this.edit = false;
       this.product = {
-        _id: 0,
-        id_category: 0,
+        id: 0,
+        idCategory: null,
         name: "",
         price: 0
       }
@@ -108,7 +108,7 @@ export class ProductFormComponent implements OnInit {
 
         if(this.edit) {
           
-          this.productsService.getIngredientsInProduct(this.product._id).subscribe(
+          this.productsService.getIngredientsInProduct(this.product.id).subscribe(
             res => {
               this.ingredientsInProduct = res;                          
 
@@ -120,7 +120,7 @@ export class ProductFormComponent implements OnInit {
               else {
                 for(let i = 0; i < this.ingredients.length; i++) {                                                
                   for(let y = 0; y < this.ingredientsInProduct.length; y++) {                    
-                    if(this.ingredients[i]._id == this.ingredientsInProduct[y].id_ingredient) {
+                    if(this.ingredients[i].id == this.ingredientsInProduct[y].idIngredient) {
                       
                       this.spendingAmount[i] = this.ingredientsInProduct[y].spendingAmount;
                     }
@@ -165,15 +165,15 @@ export class ProductFormComponent implements OnInit {
 
       this.productsService.saveProduct(this.product).subscribe(
         res => {
-          var id: number = res._id[0]._id;
+          var id: number = res.id[0].id;
 
           for(let i = 0; i < this.ingredients.length; i++) {
             if(this.spendingAmount[i] != null && this.spendingAmount[i] != 0) {
               
               //Create Relation
               let newIngredientInProduct: IngredientInProduct = {
-                id_product: id,
-                id_ingredient: this.ingredients[i]._id,
+                idProduct: id,
+                idIngredient: this.ingredients[i].id,
                 spendingAmount: this.spendingAmount[i]
               }
 
@@ -221,7 +221,7 @@ export class ProductFormComponent implements OnInit {
             
               if(this.spendingAmount[i] == 0 || this.spendingAmount[i] == null) {
                 //Delete                
-                this.productsService.deleteIngredientInProduct(this.product._id, this.ingredients[i]._id).subscribe(
+                this.productsService.deleteIngredientInProduct(this.product.id, this.ingredients[i].id).subscribe(
                   res => {},
                   err => console.log(<any>err)
                 );
@@ -229,8 +229,8 @@ export class ProductFormComponent implements OnInit {
               else if(this.spendingAmountConst[i] == null) {
                 //Create
                 var newIngredientsInProduct: IngredientInProduct = {
-                  id_ingredient: this.ingredients[i]._id,
-                  id_product: this.product._id,
+                  idIngredient: this.ingredients[i].id,
+                  idProduct: this.product.id,
                   spendingAmount: this.spendingAmount[i]
                 };
 
@@ -242,9 +242,9 @@ export class ProductFormComponent implements OnInit {
               else {
                 //Update
                 var updatedIngredientsInProduct: IngredientInProduct = {
-                  _id: this.ingredientsInProduct[i]._id, 
-                  id_ingredient: this.ingredients[i]._id,
-                  id_product: this.product._id,
+                  id: this.ingredientsInProduct[i].id, 
+                  idIngredient: this.ingredients[i].id,
+                  idProduct: this.product.id,
                   spendingAmount: this.spendingAmount[i]
                 };
 
@@ -285,7 +285,7 @@ export class ProductFormComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
-        this.productsService.deleteProduct(this.product._id).subscribe(
+        this.productsService.deleteProduct(this.product.id).subscribe(
           res => {
             this.router.navigate(["/products"]);
           },
@@ -305,14 +305,5 @@ export class ProductFormComponent implements OnInit {
       return true;
     
     return false;
-  }
-
-  protected onChangeCategory(event: any): void {
-    
-    for(var i = 0; i < this.categories.length; i++) {
-      if(this.categories[i] == this.chosenCategory) {
-        this.product.id_category = this.categories[i]._id;
-      }
-    }
-  }
+  }  
 }

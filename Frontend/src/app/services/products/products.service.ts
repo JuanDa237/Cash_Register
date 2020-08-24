@@ -120,22 +120,22 @@ export class ProductsService {
   //Update
   updateCategory(category: Category): Observable<any> {
     var params = JSON.stringify(category);
-    return this.http.put(this.apiUri + "category/" + category._id, params, { headers: this.headers});
+    return this.http.put(this.apiUri + "category/" + category.id, params, { headers: this.headers});
   }
 
   updateProduct(product: Product): Observable<any> {
     var params = JSON.stringify(product);
-    return this.http.put(this.apiUri + "product/" + product._id, params, { headers: this.headers});
+    return this.http.put(this.apiUri + "product/" + product.id, params, { headers: this.headers});
   }
 
   updateIngredient(ingredient: Ingredient): Observable<any> {
     var params = JSON.stringify(ingredient);
-    return this.http.put(this.apiUri + "ingredient/" + ingredient._id, params, { headers: this.headers});
+    return this.http.put(this.apiUri + "ingredient/" + ingredient.id, params, { headers: this.headers});
   }
 
   updateIngredientInProduct(ingredientInProduct: IngredientInProduct): Observable<any> {
     var params = JSON.stringify(ingredientInProduct);
-    return this.http.put(this.apiUri + "product/ingredient/" + ingredientInProduct._id, params, { headers: this.headers});
+    return this.http.put(this.apiUri + "product/ingredient/" + ingredientInProduct.id, params, { headers: this.headers});
   }
 
   updateAmountIngredients(ids: Array<number>): Observable<any> {
@@ -145,7 +145,7 @@ export class ProductsService {
 
   updateClient(client: Client): Observable<any> {
     var params = JSON.stringify(client);
-    return this.http.put(this.apiUri + "client/" + client._id, params, { headers: this.headers});
+    return this.http.put(this.apiUri + "client/" + client.id, params, { headers: this.headers});
   }
 
   //Delete
@@ -161,8 +161,8 @@ export class ProductsService {
     return this.http.delete(this.apiUri + "ingredient/" + id, { headers: this.headers});
   }
 
-  deleteIngredientInProduct(id_product: number, id_ingredient: number): Observable<any> {
-    return this.http.delete(this.apiUri + "product/" + id_product + "/" + id_ingredient, { headers: this.headers});
+  deleteIngredientInProduct(idProduct: number, idIngredient: number): Observable<any> {
+    return this.http.delete(this.apiUri + "product/" + idProduct + "/" + idIngredient, { headers: this.headers});
   }
 
   deleteClient(id: number): Observable<any> {

@@ -61,8 +61,8 @@
                     <td>
                         <div class="text-center">
                             <div class="btn-group">
-                                <button class="btn btn-info" (click)="changeModal(client._id, client.name, client.address, client.phoneNumber)" data-toggle="modal" data-target="#modal"><i class="far fa-edit"></i></button>
-                                <button class="btn btn-danger" (click)="deleteClient(client._id, client.name, client.address, client.phoneNumber)"><i class="far fa-trash-alt"></i></button>
+                                <button class="btn btn-info" (click)="changeModal(client.id, client.name, client.address, client.phoneNumber)" data-toggle="modal" data-target="#modal"><i class="far fa-edit"></i></button>
+                                <button class="btn btn-danger" (click)="deleteClient(client.id, client.name, client.address, client.phoneNumber)"><i class="far fa-trash-alt"></i></button>
                             </div>
                         </div>
                     </td>

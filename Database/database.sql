@@ -1,40 +1,40 @@
-CREATE DATABASE cash_register_db;
-USE cash_register_db;
+CREATE DATABASE cashRegisterDatabase;
+USE cashRegisterDatabase;
 
 CREATE TABLE categories (
-    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
 );
 
 CREATE TABLE products (
-    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-    id_category INT NOT NULL,
-    CONSTRAINT fk_cat_pro FOREIGN KEY (id_category) REFERENCES categories (_id) ON DELETE CASCADE ON UPDATE CASCADE,       
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    idCategory INT NOT NULL,
+    CONSTRAINT fkCategoriyProduct FOREIGN KEY (idCategory) REFERENCES categories (id) ON DELETE CASCADE ON UPDATE CASCADE,       
     name VARCHAR(50) NOT NULL,
     price INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
 );
 
 CREATE TABLE ingredients (
-    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     amount INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
 );
 
-CREATE TABLE detail_products_ingredients (
-    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_product INT NOT NULL,
-    id_ingredient INT NOT NULL,
-    CONSTRAINT fk_ingredients FOREIGN KEY (id_ingredient) REFERENCES ingredients (_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_products FOREIGN KEY (id_product) REFERENCES products (_id) ON DELETE CASCADE ON UPDATE CASCADE,
+CREATE TABLE detailProductsIngredients (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idProduct INT NOT NULL,
+    idIngredient INT NOT NULL,
+    CONSTRAINT fkIngredients FOREIGN KEY (idProduct) REFERENCES ingredients (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fkProducts FOREIGN KEY (idIngredient) REFERENCES products (id) ON DELETE CASCADE ON UPDATE CASCADE,
     spendingAmount INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
 );
 
 CREATE TABLE clients (
-    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(15) NOT NULL,    
     address VARCHAR(20),
     phoneNumber VARCHAR(20),
@@ -42,19 +42,19 @@ CREATE TABLE clients (
 );
 
 CREATE TABLE tickets (
-    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_client INT NOT NULL,
-    CONSTRAINT fk_cli_tic FOREIGN KEY (id_client) REFERENCES clients (_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idClient INT NOT NULL,
+    CONSTRAINT fkClientTicket FOREIGN KEY (idClient) REFERENCES clients (id) ON DELETE CASCADE ON UPDATE CASCADE,
     total INT NOT NULL,
     date DATE NOT NULL
 );
 
-CREATE TABLE detail_ticket_products (
-    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_ticket INT NOT NULL,
-    id_product INT NOT NULL,
-    CONSTRAINT fk_ticets FOREIGN KEY (id_ticket) REFERENCES tickets (_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_pro FOREIGN KEY (id_product) REFERENCES products (_id) ON DELETE CASCADE ON UPDATE CASCADE,
+CREATE TABLE detailTicketProducts (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idTicket INT NOT NULL,
+    idProduct INT NOT NULL,
+    CONSTRAINT fkTickets FOREIGN KEY (idTicket) REFERENCES tickets (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fkPro FOREIGN KEY (idProduct) REFERENCES products (id) ON DELETE CASCADE ON UPDATE CASCADE,
     amount INT NOT NULL
 );
 

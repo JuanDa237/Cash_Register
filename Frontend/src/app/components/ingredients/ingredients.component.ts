@@ -25,7 +25,7 @@ export class IngredientsComponent implements OnInit {
   ) {
     this.ingredients = null;
     this.ingredient = {
-      _id: 0,
+      id: 0,
       name: "",
       amount: 0
     };    
@@ -58,7 +58,7 @@ export class IngredientsComponent implements OnInit {
     if(id != null && name != null && name != "" && amount != null) {
       this.create = false;
       this.ingredient = {
-        _id: id,
+        id: id,
         name: name,
         amount: amount
       };
@@ -66,7 +66,7 @@ export class IngredientsComponent implements OnInit {
     else {
       this.create = true;
       this.ingredient = {
-        _id: 0,
+        id: 0,
         name: "",
         amount: 0
       };
@@ -110,7 +110,7 @@ export class IngredientsComponent implements OnInit {
     if(id != null && name != null && name != ""  && amount != null) {
       this.create = false;
       this.ingredient = {
-        _id: id,
+        id: id,
         name: name,
         amount: amount
       };
@@ -124,7 +124,7 @@ export class IngredientsComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.value) {
-          this.productsService.deleteIngredient(this.ingredient._id).subscribe(
+          this.productsService.deleteIngredient(this.ingredient.id).subscribe(
             res => {
               Swal.fire({
                 position: 'top-end',

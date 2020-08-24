@@ -45,7 +45,7 @@ class CompanyRoutes {
         this.router.delete("/category/:id", companyControllers_1.companyController.deleteCategory);
         this.router.delete("/product/:id", companyControllers_1.companyController.deleteProduct);
         this.router.delete("/ingredient/:id", companyControllers_1.companyController.deleteIngredient);
-        this.router.delete("/product/:id_product/:id_ingredient", companyControllers_1.companyController.deleteIngredientInProduct);
+        this.router.delete("/product/:idProduct/:idIngredient", companyControllers_1.companyController.deleteIngredientInProduct);
         this.router.delete("/client/:id", companyControllers_1.companyController.deleteClient);
     }
 }

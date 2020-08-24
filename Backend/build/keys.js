@@ -5,6 +5,6 @@ exports.default = {
         host: "localhost",
         user: "cashier",
         password: "cashier321",
-        database: "cash_register_db"
+        database: "cashRegisterDatabase"
     }
 };

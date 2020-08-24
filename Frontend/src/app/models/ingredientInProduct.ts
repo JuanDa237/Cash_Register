@@ -1,6 +1,6 @@
 export interface IngredientInProduct {
-    _id?: number;
-    id_product: number;
-    id_ingredient: number;
+    id?: number;
+    idProduct: number;
+    idIngredient: number;
     spendingAmount: number;
 }

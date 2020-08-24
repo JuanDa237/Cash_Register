@@ -1,6 +1,6 @@
 export interface ProductInTicket {
-    _id?: number;
-    id_ticket: number;
-    id_product: number;
+    id?: number;
+    idTicket: number;
+    idProduct: number;
     amount: number;
 }

@@ -49,7 +49,7 @@ export class CashRegisterComponent implements OnInit {
     this.totalPrice = 0;
     this.clients = null;
     this.client = {
-      _id: 0,
+      id: 0,
       name: "",
       address: "",
       phoneNumber: ""
@@ -99,12 +99,12 @@ export class CashRegisterComponent implements OnInit {
         
     const newProduct: productInCart = {
       product: {
-        _id: product._id,
-        id_category: product.id_category,
+        id: product.id,
+        idCategory: product.idCategory,
         name: product.name,
         price: product.price
       },
-      amount: 1      
+      amount: 1
     }
 
     this.shoppingCart.push(newProduct);
@@ -119,10 +119,10 @@ export class CashRegisterComponent implements OnInit {
   public choseClient(id: number): void {
 
     for(var i = 0; i < this.clients.length; i++) {
-      if(this.clients[i]._id == id) {
+      if(this.clients[i].id == id) {
         
         var chosedClient: Client = {
-          _id: id,
+          id: id,
           name: this.clients[i].name,
           address: this.clients[i].address,
           phoneNumber: this.clients[i].phoneNumber,
@@ -148,11 +148,11 @@ export class CashRegisterComponent implements OnInit {
         break;
       }      
 
-      var id: number = this.shoppingCart[i].product._id;
+      var id: number = this.shoppingCart[i].product.id;
 
       var indexProduct = this.products.findIndex(function(product) {
 
-        if(product._id == id)
+        if(product.id == id)
           return product;
       });
 
@@ -167,23 +167,23 @@ export class CashRegisterComponent implements OnInit {
 
     //Create new ticket
     var newTicket: Ticket = {
-      id_client: this.client._id,
+      idClient: this.client.id,
       total: this.totalPrice,
       date: this.actualDate()
     }
     
     this.productsService.saveTicket(newTicket).subscribe(
       res => {        
-        var id: number = res._id[0]._id;
+        var id: number = res.id[0].id;
 
         for(var i = 0; i < this.shoppingCart.length; i++) {
 
           //Create relations
           var newProductInTicket: ProductInTicket = {
-            id_ticket: id,
-            id_product: this.shoppingCart[i].product._id,
+            idTicket: id,
+            idProduct: this.shoppingCart[i].product.id,
             amount: this.shoppingCart[i].amount
-          }          
+          }
 
           this.productsService.createProductInTicket(newProductInTicket).subscribe(
             res => {},
@@ -203,7 +203,7 @@ export class CashRegisterComponent implements OnInit {
       
       for(var x = 0; x < this.shoppingCart[i].amount; x++) {
         
-        products.push(this.shoppingCart[i].product._id);
+        products.push(this.shoppingCart[i].product.id);
       }
     }
 
@@ -257,7 +257,7 @@ export class CashRegisterComponent implements OnInit {
     this.totalPrice = 0;
     this.clients = null;
     this.client = {
-      _id: 0,
+      id: 0,
       name: "",
       address: "",
       phoneNumber: ""

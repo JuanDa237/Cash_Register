@@ -12,11 +12,10 @@
                 <div class="card-body">
                     <form #formProduct="ngForm">
                         <div class="form-group">
-                            <label for="categories">Categoria<span class="text-danger">*</span></label>
-                            <select class="form-control" [ngClass]="{'is-invalid': (!edit && actualCategory.touched && !actualCategory.valid)}" name="categories" #actualCategory="ngModel" [(ngModel)]="chosenCategory" (ngModelChange)="onChangeCategory($event)" required>
-                                <option *ngIf="!edit" [ngValue]="null">Ninguna</option>                                
-                                <option *ngIf="edit && categoryOfTheProduct" [ngValue]="categoryOfTheProduct">{{ categoryOfTheProduct.name }}</option>
-                                <option *ngFor="let category of categories" [ngValue]="category">{{ category.name }}</option>
+                            <label for="category">Categoria<span class="text-danger">*</span></label>
+                            <select name="category" #category="ngModel" [(ngModel)]="product.idCategory" class="form-control" [ngClass]="{'is-invalid': (!edit && category.touched && !category.valid)}" required>
+                                <option *ngIf="!edit" [ngValue]="null">Ninguna</option>
+                                <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
                             </select>                            
                             <div class="invalid-feedback">La categoria es obligatoria.</div>
                         </div>                    

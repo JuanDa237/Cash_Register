@@ -1,6 +1,6 @@
 export interface Ticket {
     id?: number;
-    id_client: number;
+    idClient: number;
     total: number;
     date: string;
 };

@@ -25,7 +25,7 @@ export class CategoriesComponent implements OnInit {
   ) {
     this.categories = null;
     this.category = {
-      _id: 0,
+      id: 0,
       name: ""      
     }; 
   }
@@ -57,14 +57,14 @@ export class CategoriesComponent implements OnInit {
     if(id != null && name != null && name != "") {
       this.create = false;
       this.category = {
-        _id: id,
+        id: id,
         name: name        
       };
     }
     else {
       this.create = true;
       this.category = {
-        _id: 0,
+        id: 0,
         name: ""        
       };
     }
@@ -107,7 +107,7 @@ export class CategoriesComponent implements OnInit {
     if(id != null && name != null && name != "") {
       this.create = false;
       this.category = {
-        _id: id,
+        id: id,
         name: name        
       };
       Swal.fire({
@@ -120,7 +120,7 @@ export class CategoriesComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.value) {
-          this.productsService.deleteCategory(this.category._id).subscribe(
+          this.productsService.deleteCategory(this.category.id).subscribe(
             res => {
               Swal.fire({
                 position: 'top-end',

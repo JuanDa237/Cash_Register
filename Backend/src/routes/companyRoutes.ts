@@ -53,7 +53,7 @@ class CompanyRoutes {
         this.router.delete("/category/:id", companyController.deleteCategory);
         this.router.delete("/product/:id", companyController.deleteProduct);
         this.router.delete("/ingredient/:id", companyController.deleteIngredient);
-        this.router.delete("/product/:id_product/:id_ingredient", companyController.deleteIngredientInProduct);
+        this.router.delete("/product/:idProduct/:idIngredient", companyController.deleteIngredientInProduct);
         this.router.delete("/client/:id", companyController.deleteClient);        
     }
 }

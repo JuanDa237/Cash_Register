@@ -24,8 +24,8 @@ export class ProductsComponent implements OnInit {
   ) {
     this.products = null;
     this.product = {
-      _id: 0,
-      id_category: 0,
+      id: 0,
+      idCategory: 0,
       name: "",
       price: 0
     };
