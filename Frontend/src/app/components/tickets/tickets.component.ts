@@ -22,6 +22,8 @@ export class TicketsComponent implements OnInit {
   public tickets: Array<Ticket>;
   public productsInTickets: Array<ProductInTicket>;
   public selectedTicket: Ticket;
+  public since: Date;
+  public until: Date;
   public dtOptions: DataTables.Settings;
 
   constructor(
@@ -40,27 +42,11 @@ export class TicketsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
-    this.getTickets();
-    this.getClients();
-    this.getProductInTicket();
 
     //Lenguage Settings
     this.dtOptions = {
       "language": datatableLanguage
     }
-  }
-
-  private getTickets() {
-    this.ticketsService.getTickets().subscribe(
-      response => {
-        if(response.length >= 0) {
-
-          this.tickets = response;
-        }
-      },
-      error => console.log(<any>error)
-    );
   }
 
   private getClients() {
@@ -88,7 +74,20 @@ export class TicketsComponent implements OnInit {
   }
 
   //Methods for html
-  
+  public search(): void {
+    this.ticketsService.getTicketsInInterval(this.since.toString(), this.until.toString()).subscribe(
+      response => {
+        if(response.length >= 0) {
+
+          this.tickets = response;
+          this.getClients();
+          this.getProductInTicket();
+        }
+      },
+      err => console.log(<any>err)
+    );
+  }
+
   public viewTicket(ticket: Ticket) {
     
     this.selectedTicket = {

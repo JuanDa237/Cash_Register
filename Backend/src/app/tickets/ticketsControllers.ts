@@ -4,9 +4,18 @@ import pool from "../../database";
 
 class TicketsControllers {
 
+    //Get Interval
+    public async listTicketsInInterval (req: Request, res: Response): Promise<void> {
+        const { since, until } = req.params;
+        (await pool).query("SELECT id, idClient, DATE_FORMAT(date, '%d-%m-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE date >= ? AND date <= ?", [since, until])
+                    .then(dates => {
+                        res.status(200).json(dates);
+                    });
+    }
+    
     //Get list
     public async listTickets (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, idClient, DATE_FORMAT(date, '%m-%d-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets;")
+        (await pool).query("SELECT id, idClient, DATE_FORMAT(date, '%d-%m-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets;")
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -22,7 +31,7 @@ class TicketsControllers {
     //Get one
     public async getOneTicket (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT id, idClient, DATE_FORMAT(date, '%m-%d-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ?", [id])
+        (await pool).query("SELECT id, idClient, DATE_FORMAT(date, '%d-%m-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ?", [id])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);

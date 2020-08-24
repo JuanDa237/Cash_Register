@@ -22,6 +22,11 @@ export class TicketsService {
     this.apiUri = url;
     }
 
+    //Get Interval
+    getTicketsInInterval(since: string, until: string): Observable<any> {
+        return this.http.get(this.apiUri + "tickets/" + since + "/" + until, { headers: this.headers});
+    }
+
     //Get List
     getTickets(): Observable<any> {
         return this.http.get(this.apiUri + "tickets", { headers: this.headers});

@@ -8,6 +8,8 @@ class CategoriesRoutes {
         this.routes();
     }
     routes() {
+        //Get Interval
+        this.router.get("/tickets/:since/:until", ticketsControllers_1.ticketsControllers.listTickets);
         //Get list    
         this.router.get("/tickets", ticketsControllers_1.ticketsControllers.listTickets);
         this.router.get("/tickets/products", ticketsControllers_1.ticketsControllers.listProductsInTickets);

@@ -15,10 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ticketsControllers = void 0;
 const database_1 = __importDefault(require("../../database"));
 class TicketsControllers {
+    //Get Interval
+    listTicketsInInterval(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { since, until } = req.params;
+            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(date, '%d-%m-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE date >= ? AND date <= ?", [since, until])
+                .then(dates => {
+                res.status(200).json(dates);
+            });
+        });
+    }
     //Get list
     listTickets(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(date, '%m-%d-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets;")
+            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(date, '%d-%m-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -36,7 +46,7 @@ class TicketsControllers {
     getOneTicket(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(date, '%m-%d-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ?", [id])
+            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(date, '%d-%m-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ?", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
