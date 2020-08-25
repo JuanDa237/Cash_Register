@@ -43,12 +43,46 @@ export class TicketsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    
+    this.getTodaysTickets();
     this.chart();
+
     //Lenguage Settings
     this.dtOptions = {
       "language": datatableLanguage
     }
+  }
+
+  private getTodaysTickets() {
+    
+    var actualDate: string = this.actualDate();
+    this.ticketsService.getTicketsInInterval(actualDate, actualDate).subscribe(
+      res => {
+        this.tickets = res;
+        this.getClients();
+      },
+      err => console.log(<any>err)
+    );
+  }
+
+  private actualDate(): string {
+    
+    var date: Date = new Date();
+    var year: string, month: string, day: string;
+
+    year = String(date.getFullYear());
+    month = String(date.getMonth() + 1);
+    day = String(date.getDate());
+    
+    if (month.length == 1) {
+      month = "0" + month;
+    }
+    
+    if (day.length == 1) {
+      day = "0" + day;
+    }
+
+    return year + "-" + month + "-" + day;
   }
 
   private getClients() {
