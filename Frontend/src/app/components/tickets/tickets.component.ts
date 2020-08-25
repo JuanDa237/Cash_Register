@@ -11,6 +11,7 @@ import { TicketsService } from "../../services/tickets/tickets.service";
 
 //Imports
 import { datatableLanguage } from "../../models/datatables/datatables"; //Datatable
+import { Chart } from "chart.js"; //Datatable
 
 @Component({
   selector: 'app-tickets',
@@ -43,6 +44,7 @@ export class TicketsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.chart();
     //Lenguage Settings
     this.dtOptions = {
       "language": datatableLanguage
@@ -73,6 +75,63 @@ export class TicketsComponent implements OnInit {
     );
   }
 
+  private chart(): void {
+
+    this.ticketsService.getTicketsInYear().subscribe(
+      res => {
+        
+        var dates: Array<any> = res;
+        var totalInMonths: Array<number> = new Array<number>(12);
+
+        for(var i = 0; i < totalInMonths.length; i++) {
+          totalInMonths[i] = 0;
+        }
+
+        for(var i = 0; i < dates.length; i++) {
+
+          totalInMonths[Number(dates[i].date)] += dates[i].total;
+        }
+
+        var myChart = new Chart("myChart", {
+            type: 'line',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                datasets: [{
+                    label: 'Total De Cada Mes',
+                    data: [
+                      totalInMonths[0],
+                      totalInMonths[1],
+                      totalInMonths[2],
+                      totalInMonths[3],
+                      totalInMonths[4],
+                      totalInMonths[5],
+                      totalInMonths[6],
+                      totalInMonths[7],
+                      totalInMonths[8],
+                      totalInMonths[9],
+                      totalInMonths[10],
+                      totalInMonths[11],
+                      totalInMonths[12]                                            
+                    ],
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    borderColor: 'rgba(0, 123, 155, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+      },
+      err => console.log(<any>err)
+    );   
+  }
   //Methods for html
   public search(): void {
     this.ticketsService.getTicketsInInterval(this.since.toString(), this.until.toString()).subscribe(

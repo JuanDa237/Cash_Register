@@ -13,7 +13,8 @@ class CategoriesRoutes {
     routes(): void {
 
         //Get Interval
-        this.router.get("/tickets/:since/:until", ticketsControllers.listTickets);
+        this.router.get("/tickets/:since/:until", ticketsControllers.listTicketsInInterval);
+        this.router.get("/tickets/year", ticketsControllers.listTicketsInYear);
 
         //Get list    
         this.router.get("/tickets", ticketsControllers.listTickets);

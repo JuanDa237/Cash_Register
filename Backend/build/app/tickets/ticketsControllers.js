@@ -25,6 +25,15 @@ class TicketsControllers {
             });
         });
     }
+    listTicketsInYear(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var year = new Date().getFullYear();
+            (yield database_1.default).query("SELECT DATE_FORMAT(date, '%m') AS date, total FROM tickets WHERE date >= '?-01-01' AND date <= '?-12-31'", [year, year])
+                .then(dates => {
+                res.status(200).json(dates);
+            });
+        });
+    }
     //Get list
     listTickets(req, res) {
         return __awaiter(this, void 0, void 0, function* () {

@@ -27,6 +27,10 @@ export class TicketsService {
         return this.http.get(this.apiUri + "tickets/" + since + "/" + until, { headers: this.headers});
     }
 
+    getTicketsInYear(): Observable<any> {
+        return this.http.get(this.apiUri + "tickets/year", { headers: this.headers});
+    }
+
     //Get List
     getTickets(): Observable<any> {
         return this.http.get(this.apiUri + "tickets", { headers: this.headers});

@@ -12,6 +12,16 @@ class TicketsControllers {
                         res.status(200).json(dates);
                     });
     }
+
+    public async listTicketsInYear (req: Request, res: Response): Promise<void> {
+        
+        var year: number = new Date().getFullYear();
+
+        (await pool).query("SELECT DATE_FORMAT(date, '%m') AS date, total FROM tickets WHERE date >= '?-01-01' AND date <= '?-12-31'", [year, year])
+                    .then(dates => {
+                        res.status(200).json(dates);
+                    });
+    }
     
     //Get list
     public async listTickets (req: Request, res: Response): Promise<void> {
