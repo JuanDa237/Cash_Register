@@ -35,7 +35,7 @@ export class TicketsComponent implements OnInit {
     this.selectedTicket = {
       id: 0,
       idClient: 0,
-      date: "",
+      creationDate: "",
       total: 0,
       homeDelivery: false,
       priceOfHomeDelivery: 0
@@ -123,7 +123,7 @@ export class TicketsComponent implements OnInit {
 
         for(var i = 0; i < dates.length; i++) {
 
-          totalInMonths[Number(dates[i].date)] += dates[i].total;
+          totalInMonths[Number(dates[i].creationDate)] += dates[i].total;
         }
 
         var myChart = new Chart("myChart", {
@@ -186,7 +186,7 @@ export class TicketsComponent implements OnInit {
     this.selectedTicket = {
       id: ticket.id,
       idClient: ticket.idClient,
-      date: ticket.date,
+      creationDate: ticket.creationDate,
       total: ticket.total,
       homeDelivery: ticket.homeDelivery,
       priceOfHomeDelivery: ticket.priceOfHomeDelivery

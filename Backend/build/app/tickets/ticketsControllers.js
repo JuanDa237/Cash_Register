@@ -19,7 +19,7 @@ class TicketsControllers {
     listTicketsInInterval(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { since, until } = req.params;
-            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(date, '%d-%m-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE date >= ? AND date <= ?", [since, until])
+            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE creationDate >= ? AND creationDate <= ?", [since, until])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -28,7 +28,7 @@ class TicketsControllers {
     listTicketsInYear(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var year = new Date().getFullYear();
-            (yield database_1.default).query("SELECT DATE_FORMAT(date, '%m') AS date, total FROM tickets WHERE date >= '?-01-01' AND date <= '?-12-31'", [year, year])
+            (yield database_1.default).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, total FROM tickets WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31'", [year, year])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -37,7 +37,7 @@ class TicketsControllers {
     //Get list
     listTickets(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(date, '%d-%m-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets;")
+            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -55,7 +55,7 @@ class TicketsControllers {
     getOneTicket(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(date, '%d-%m-%Y') AS date, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ?", [id])
+            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ?", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);

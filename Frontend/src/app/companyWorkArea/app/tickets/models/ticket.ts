@@ -1,7 +1,7 @@
 export interface Ticket {
     id?: number;
     idClient: number;
-    date: string;
+    creationDate: string;
     total: number;
     homeDelivery: boolean;
     priceOfHomeDelivery: number;

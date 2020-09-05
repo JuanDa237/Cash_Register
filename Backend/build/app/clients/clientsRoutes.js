@@ -8,6 +8,8 @@ class CategoriesRoutes {
         this.routes();
     }
     routes() {
+        //Get Interval
+        this.router.get("/clients/year", clientsControllers_1.clientsControllers.listClientsInYear);
         //Get All List
         this.router.get("/all/clients", clientsControllers_1.clientsControllers.listAllClients);
         //Get list    

@@ -58,7 +58,8 @@ export class CashRegisterComponent implements OnInit {
       id: 0,
       name: "",
       address: "",
-      phoneNumber: ""
+      phoneNumber: "",
+      creationDate: ""
     };
     this.homeDelivery = false;
     this.priceOfHomeDelivery = null;
@@ -133,6 +134,7 @@ export class CashRegisterComponent implements OnInit {
           name: this.clients[i].name,
           address: this.clients[i].address,
           phoneNumber: this.clients[i].phoneNumber,
+          creationDate: this.clients[i].creationDate
         }
 
         this.client = chosedClient;
@@ -181,7 +183,7 @@ export class CashRegisterComponent implements OnInit {
     //Create new ticket
     var newTicket: Ticket = {
       idClient: this.client.id,
-      date: this.actualDate(),
+      creationDate: this.actualDate(),
       total: this.totalPrice,
       homeDelivery: this.homeDelivery,
       priceOfHomeDelivery: this.priceOfHomeDelivery
@@ -287,7 +289,8 @@ export class CashRegisterComponent implements OnInit {
       id: 0,
       name: "",
       address: "",
-      phoneNumber: ""
+      phoneNumber: "",
+      creationDate: ""
     };
     this.homeDelivery = false;
     this.priceOfHomeDelivery = null;

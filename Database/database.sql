@@ -38,6 +38,7 @@ CREATE TABLE clients (
     name VARCHAR(30) NOT NULL,    
     address VARCHAR(30),
     phoneNumber VARCHAR(15),
+    creationDate DATE NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
 );
 
@@ -45,7 +46,7 @@ CREATE TABLE tickets (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     idClient INT NOT NULL,
     CONSTRAINT fkClientTicket FOREIGN KEY (idClient) REFERENCES clients (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    date DATE NOT NULL,
+    creationDate DATE NOT NULL,
     total INT NOT NULL,
     homeDelivery BOOLEAN NOT NULL DEFAULT false,
     priceOfHomeDelivery INT

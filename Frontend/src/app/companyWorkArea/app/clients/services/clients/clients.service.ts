@@ -21,6 +21,11 @@ export class ClientsService {
     this.apiUri = url;
     }
 
+    //Get Interval
+    getNewClientsInYear(): Observable<any> {
+        return this.http.get(this.apiUri + "clients/year", { headers: this.headers});
+    }
+
     //Get All List
     getAllClients(): Observable<any> {
         return this.http.get(this.apiUri + "all/clients", { headers: this.headers});
