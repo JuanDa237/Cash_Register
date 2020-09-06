@@ -116,41 +116,44 @@ export class TicketsComponent implements OnInit {
         
         var dates: Array<any> = res;
         var totalInMonths: Array<number> = new Array<number>(12);
+        var homeDeliverysInMonths: Array<number> = new Array<number>(12);
 
-        for(var i = 0; i < totalInMonths.length; i++) {
+        for(var i = 0; i < 12; i++) {
           totalInMonths[i] = 0;
+          homeDeliverysInMonths[i] = 0;
         }
 
         for(var i = 0; i < dates.length; i++) {
 
           totalInMonths[Number(dates[i].creationDate)] += dates[i].total;
+
+          if(dates[i].homeDelivery) {
+            homeDeliverysInMonths[Number(dates[i].creationDate)]++;
+          }
         }
 
         var myChart = new Chart("myChart", {
             type: 'line',
             data: {
                 labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                datasets: [{
+                datasets: 
+                [
+                  {
                     label: 'Total De Cada Mes',
-                    data: [
-                      totalInMonths[0],
-                      totalInMonths[1],
-                      totalInMonths[2],
-                      totalInMonths[3],
-                      totalInMonths[4],
-                      totalInMonths[5],
-                      totalInMonths[6],
-                      totalInMonths[7],
-                      totalInMonths[8],
-                      totalInMonths[9],
-                      totalInMonths[10],
-                      totalInMonths[11],
-                      totalInMonths[12]                                            
-                    ],
+                    data: totalInMonths,
                     backgroundColor: 'rgba(0, 123, 255, 0.5)',
                     borderColor: 'rgba(0, 123, 155, 1)',
                     borderWidth: 2
-                }]
+                  },
+                  {
+                    label: 'Total de domicilios',
+                    data: homeDeliverysInMonths,
+                    backgroundColor: 'rgba(12, 092, 323, 0.5)',
+                    borderColor: 'rgba(12, 092, 323, 1)',
+                    borderWidth: 2,
+                    hidden: true
+                  }
+                ]
             },
             options: {
                 scales: {

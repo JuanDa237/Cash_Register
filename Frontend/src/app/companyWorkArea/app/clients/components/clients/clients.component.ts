@@ -222,42 +222,14 @@ export class ClientsComponent implements OnInit {
                     datasets: [
                       {
                         label: 'Clientes Nuevos',
-                        data: [
-                          totalNewClients[0],
-                          totalNewClients[1],
-                          totalNewClients[2],
-                          totalNewClients[3],
-                          totalNewClients[4],
-                          totalNewClients[5],
-                          totalNewClients[6],
-                          totalNewClients[7],
-                          totalNewClients[8],
-                          totalNewClients[9],
-                          totalNewClients[10],
-                          totalNewClients[11],
-                          totalNewClients[12]
-                        ],
+                        data: totalNewClients,
                         backgroundColor: 'rgba(0, 123, 255, 0.5)',
                         borderColor: 'rgba(0, 123, 155, 1)',
                         borderWidth: 2
                     },
                     {
                       label: 'Clientes Eliminados',
-                      data: [
-                        totalExClients[0],
-                        totalExClients[1],
-                        totalExClients[2],
-                        totalExClients[3],
-                        totalExClients[4],
-                        totalExClients[5],
-                        totalExClients[6],
-                        totalExClients[7],
-                        totalExClients[8],
-                        totalExClients[9],
-                        totalExClients[10],
-                        totalExClients[11],
-                        totalExClients[12]
-                      ],
+                      data: totalExClients,
                       backgroundColor: 'rgba(217, 83, 79, 0.5)',
                       borderColor: 'rgba(217, 83, 79, 1)',
                       borderWidth: 2

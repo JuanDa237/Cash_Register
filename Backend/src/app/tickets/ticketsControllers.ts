@@ -17,7 +17,7 @@ class TicketsControllers {
         
         var year: number = new Date().getFullYear();
 
-        (await pool).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, total FROM tickets WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31'", [year, year])
+        (await pool).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, total, homeDelivery FROM tickets WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31'", [year, year])
                     .then(dates => {
                         res.status(200).json(dates);
                     });

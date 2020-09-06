@@ -28,7 +28,7 @@ class TicketsControllers {
     listTicketsInYear(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var year = new Date().getFullYear();
-            (yield database_1.default).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, total FROM tickets WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31'", [year, year])
+            (yield database_1.default).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, total, homeDelivery FROM tickets WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31'", [year, year])
                 .then(dates => {
                 res.status(200).json(dates);
             });
