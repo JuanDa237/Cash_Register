@@ -24,6 +24,11 @@
                                 <div class="invalid-feedback">El nombre es obligatorio.</div>
                             </div>
                             <div class="form-group">
+                                <label for="priceByUnit">Precio/Unidad</label>
+                                <input type="number" class="form-control d-block" [ngClass]="{'is-invalid': (priceByUnit.touched && !priceByUnit.valid)}" name="priceByUnit" placeholder="Precio Por Unidad" #priceByUnit="ngModel" [(ngModel)]="ingredient.priceByUnit" (keydown.enter)="enterEvent($event)" required>
+                                <div class="invalid-feedback">El precio por unidad es obligatorio</div>
+                            </div>
+                            <div class="form-group">
                                 <label for="amount">Cantidad</label>
                                 <input type="number" class="form-control d-block" [ngClass]="{'is-invalid': (amount.touched && !amount.valid)}" name="amount" placeholder="Precio" #amount="ngModel" [(ngModel)]="ingredient.amount" (keydown.enter)="enterEvent($event)" required>
                                 <div class="invalid-feedback">La cantidad es obligatoria.</div>
@@ -45,6 +50,7 @@
             <thead class="text-center">
                 <tr>
                     <th>Nombre</th>
+                    <th>Precio/Unidad</th>
                     <th>Cantidad</th>
                     <th>Acciones</th>
                 </tr>
@@ -52,12 +58,13 @@
             <tbody>
                 <tr [ngClass]="{'table-danger': ingredient.amount <= 0 }" *ngFor="let ingredient of ingredients">
                     <td class="align-middle">{{ ingredient.name }}</td>
+                    <td class="align-middle text-center">{{ ingredient.priceByUnit | thousandsPipe }}</td>
                     <td class="align-middle text-center">{{ ingredient.amount | thousandsPipe }}</td>
                     <td>
                         <div class="text-center">
                             <div class="btn-group">
-                                <button class="btn btn-info" (click)="changeModal(ingredient.id, ingredient.name, ingredient.amount)" data-toggle="modal" data-target="#modal"><i class="far fa-edit"></i></button>
-                                <button class="btn btn-danger" (click)="deleteIngredient(ingredient.id, ingredient.name, ingredient.amount)"><i class="far fa-trash-alt"></i></button>
+                                <button class="btn btn-info" (click)="changeModal(ingredient)" data-toggle="modal" data-target="#modal"><i class="far fa-edit"></i></button>
+                                <button class="btn btn-danger" (click)="deleteIngredient(ingredient)"><i class="far fa-trash-alt"></i></button>
                             </div>
                         </div>
                     </td>

@@ -6,7 +6,7 @@ class IngredientsControllers {
     
     //Get list
     public async listIngredients (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, name, amount FROM ingredients WHERE active = true;")
+        (await pool).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE active = true;")
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -22,7 +22,7 @@ class IngredientsControllers {
     //Get one
     public async getOneIngredient (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT id, name, amount FROM ingredients WHERE id = ? AND active = true;", [id])
+        (await pool).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true;", [id])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);

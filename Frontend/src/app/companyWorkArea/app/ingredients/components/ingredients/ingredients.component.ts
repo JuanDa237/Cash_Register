@@ -28,6 +28,7 @@ export class IngredientsComponent implements OnInit {
     this.ingredient = {
       id: 0,
       name: "",
+      priceByUnit: 0,
       amount: 0
     };    
   }
@@ -55,13 +56,16 @@ export class IngredientsComponent implements OnInit {
   }
 
   //Methods for html
-  public changeModal(id?: number, name?: string, amount?: number): void {
-    if(id != null && name != null && name != "" && amount != null) {
+  public changeModal(ingredient?: Ingredient): void {
+    
+    if(ingredient != null && this.validateIngredient(ingredient)) {
+
       this.create = false;
       this.ingredient = {
-        id: id,
-        name: name,
-        amount: amount
+        id: ingredient.id,
+        name: ingredient.name,
+        priceByUnit: ingredient.priceByUnit,
+        amount: ingredient.amount
       };
     }
     else {
@@ -69,52 +73,86 @@ export class IngredientsComponent implements OnInit {
       this.ingredient = {
         id: 0,
         name: "",
+        priceByUnit: 0,
         amount: 0
       };
     }
   }
 
   public createIngredient(): void {
-    this.ingredientsService.saveIngredient(this.ingredient).subscribe(
-      res => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se creo satisfactoriamente el ingrediente.',
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.getIngredients();
-      },
-      err => console.log(<any>err)
-      
-    );
+
+    if(this.validateIngredient(this.ingredient)) {
+      this.ingredientsService.saveIngredient(this.ingredient).subscribe(
+        res => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Se creo satisfactoriamente el ingrediente.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.getIngredients();
+        },
+        err => console.log(<any>err)
+      );
+    }
+    else {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Lo sentimos.',
+        text: 'Algo salio mal!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
   }
 
   public updateIngredient(): void {
-    this.ingredientsService.updateIngredient(this.ingredient).subscribe(
-      res => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se actualizo satisfactoriamente el ingrediente.',
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.getIngredients();
-      },
-      err => console.log(<any>err)
-    );
+
+    if(this.validateIngredient(this.ingredient)) {
+
+      this.ingredientsService.updateIngredient(this.ingredient).subscribe(
+        res => {
+
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Se actualizo satisfactoriamente el ingrediente.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+
+          this.getIngredients();
+        },
+        err => console.log(<any>err)
+      );
+    }
+    else {
+
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Lo sentimos.',
+        text: 'Algo salio mal!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
   }
 
-  public deleteIngredient(id?: number, name?: string, amount?: number): void {
-    if(id != null && name != null && name != ""  && amount != null) {
+  public deleteIngredient(ingredient: Ingredient): void {
+
+    if(this.validateIngredient(ingredient)) {
+
       this.create = false;
       this.ingredient = {
-        id: id,
-        name: name,
-        amount: amount
+        id: ingredient.id,
+        name: ingredient.name,
+        priceByUnit: ingredient.priceByUnit,
+        amount: ingredient.amount
       };
+
       Swal.fire({
         title: '¿Estas seguro de eliminar el ingrediente?',
         icon: 'warning',
@@ -124,16 +162,20 @@ export class IngredientsComponent implements OnInit {
         confirmButtonText: 'Si',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
+
         if (result.value) {
+
           this.ingredientsService.deleteIngredient(this.ingredient.id).subscribe(
             res => {
+
               Swal.fire({
                 position: 'top-end',
                 icon: 'success',
                 title: 'Se elimino satisfactoriamente la categoria.',
                 showConfirmButton: false,
                 timer: 1500
-              });              
+              });
+              
               this.getIngredients();            
             },
             err => console.log(<any>err)
@@ -150,5 +192,13 @@ export class IngredientsComponent implements OnInit {
     else {
       this.updateIngredient();
     }    
+  }
+
+  private validateIngredient(ingredient: Ingredient): boolean {
+
+    if(ingredient.name.trim() != "" && ingredient.priceByUnit != null && ingredient.amount != null)
+      return true;
+    
+    return false;
   }
 }

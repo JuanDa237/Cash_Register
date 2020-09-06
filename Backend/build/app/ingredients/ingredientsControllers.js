@@ -18,7 +18,7 @@ class IngredientsControllers {
     //Get list
     listIngredients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name, amount FROM ingredients WHERE active = true;")
+            (yield database_1.default).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE active = true;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -36,7 +36,7 @@ class IngredientsControllers {
     getOneIngredient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT id, name, amount FROM ingredients WHERE id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true;", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);

@@ -19,6 +19,7 @@ CREATE TABLE products (
 CREATE TABLE ingredients (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
+    priceByUnit FLOAT NOT NULL,
     amount INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
 );

@@ -54,15 +54,18 @@ export class CategoriesComponent implements OnInit {
   }
 
   //Methods for html
-  public changeModal(id?: number, name?: string): void {
-    if(id != null && name != null && name != "") {
+  public changeModal(category: Category): void {
+
+    if(category != null && this.validateCategory(category)) {
+
       this.create = false;
       this.category = {
-        id: id,
-        name: name        
+        id: category.id,
+        name: category.name
       };
     }
     else {
+      
       this.create = true;
       this.category = {
         id: 0,
@@ -72,45 +75,82 @@ export class CategoriesComponent implements OnInit {
   }
 
   public createCategory(): void {
-    this.categoriesService.saveCategory(this.category).subscribe(
-      res => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se creo satisfactoriamente la categoria.',
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.getCategories();
-      },
-      err => console.log(<any>err)
-      
-    );
+
+    if(this.validateCategory(this.category)) {
+
+      this.categoriesService.saveCategory(this.category).subscribe(
+        res => {
+
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Se creo satisfactoriamente la categoria.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+
+          this.getCategories();
+        },
+        err => console.log(<any>err)
+        
+      );
+    }
+    else {
+
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Lo sentimos.',
+        text: 'Algo salio mal!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
   }
 
   public updateCategory(): void {
-    this.categoriesService.updateCategory(this.category).subscribe(
-      res => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se actualizo satisfactoriamente la categoria.',
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.getCategories();
-      },
-      err => console.log(<any>err)
-    );
+
+    if(this.validateCategory(this.category)) {
+      
+      this.categoriesService.updateCategory(this.category).subscribe(
+        res => {
+
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Se actualizo satisfactoriamente la categoria.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+
+          this.getCategories();
+        },
+        err => console.log(<any>err)
+      );
+    }
+    else {
+
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Lo sentimos.',
+        text: 'Algo salio mal!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
   }
 
-  public deleteCategory(id?: number, name?: string): void {
-    if(id != null && name != null && name != "") {
+  public deleteCategory(category: Category): void {
+    
+    if(this.validateCategory(category)) {
+
       this.create = false;
       this.category = {
-        id: id,
-        name: name        
+        id: category.id,
+        name: category.name
       };
+
       Swal.fire({
         title: '¿Estas seguro de eliminar la categoria?',
         icon: 'warning',
@@ -120,16 +160,20 @@ export class CategoriesComponent implements OnInit {
         confirmButtonText: 'Si',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
+
         if (result.value) {
+
           this.categoriesService.deleteCategory(this.category.id).subscribe(
             res => {
+              
               Swal.fire({
                 position: 'top-end',
                 icon: 'success',
                 title: 'Se elimino satisfactoriamente la categoria.',
                 showConfirmButton: false,
                 timer: 1500
-              });              
+              });
+
               this.getCategories();            
             },
             err => console.log(<any>err)
@@ -146,5 +190,13 @@ export class CategoriesComponent implements OnInit {
     else {
       this.updateCategory();
     }    
+  }
+
+  private validateCategory(category: Category): boolean {
+
+    if(category.id != null && category.name.trim() != "" && category.name != null)
+      return true;
+    
+    return false
   }
 }
