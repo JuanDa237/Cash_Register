@@ -28,8 +28,8 @@ CREATE TABLE detailProductsIngredients (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     idProduct INT NOT NULL,
     idIngredient INT NOT NULL,
-    CONSTRAINT fkIngredients FOREIGN KEY (idProduct) REFERENCES ingredients (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fkProducts FOREIGN KEY (idIngredient) REFERENCES products (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fkIngredients FOREIGN KEY (idIngredient) REFERENCES ingredients (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fkProducts FOREIGN KEY (idProduct) REFERENCES products (id) ON DELETE CASCADE ON UPDATE CASCADE,
     spendingAmount INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
 );

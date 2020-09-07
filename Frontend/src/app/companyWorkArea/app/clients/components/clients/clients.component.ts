@@ -20,7 +20,12 @@ export class ClientsComponent implements OnInit {
   public clients: Array<Client>;
   public client: Client;
   public create: boolean;
+
+  //Datatable
   public dtOptions: DataTables.Settings;
+
+  //Chart
+  private myChart: Chart;
 
   constructor(
     private clientsService: ClientsService
@@ -32,7 +37,8 @@ export class ClientsComponent implements OnInit {
       address: "",
       phoneNumber: "",
       creationDate: ""
-    };    
+    };
+    this.myChart = null;
   }
 
   ngOnInit(): void {
@@ -215,7 +221,12 @@ export class ClientsComponent implements OnInit {
           }
         }
 
-        var myChart = new Chart("myChart", {
+        if(this.myChart != null) {
+
+          this.myChart.destroy();
+        }
+
+        this.myChart = new Chart("myChart", {
                 type: 'line',
                 data: {
                     labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],

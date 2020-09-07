@@ -45,7 +45,7 @@ class ProductsController {
     public async getIngredientsInProduct (req: Request, res: Response): Promise<void> {
         const { id } = req.params;        
         
-        (await pool).query("SELECT * FROM detailProductsIngredients WHERE idProduct = ?", [id])
+        (await pool).query("SELECT * FROM detailProductsIngredients WHERE idProduct = ? AND active = true;", [id])
                     .then(dates => {
                         res.status(200).json(dates);
                     });

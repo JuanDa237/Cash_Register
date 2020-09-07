@@ -142,40 +142,6 @@ export class CashRegisterComponent implements OnInit {
     }    
   }
 
-  private actualizePrice(): void {
-    
-    this.totalPrice = 0;    
-
-    for(var i = 0; i < this.shoppingCart.length; i++) {
-
-      var amount: number = this.shoppingCart[i].amount;
-      this.shoppingCart[i].product.price = 0;
-
-      if(amount <= 0 || amount == null) {
-
-        this.deleteProduct(i);
-        break;
-      }      
-
-      var id: number = this.shoppingCart[i].product.id;
-
-      var indexProduct = this.products.findIndex(function(product) {
-
-        if(product.id == id)
-          return product;
-      });
-
-      var priceForOne: number = this.products[indexProduct].price;
-
-      this.totalPrice +=  priceForOne * amount;   
-      this.shoppingCart[i].product.price = priceForOne * amount;      
-    }
-    
-    if(this.homeDelivery) {      
-      this.totalPrice +=  this.priceOfHomeDelivery;
-    }
-  }
-
   public finishOrder(): void {    
 
     this.actualizePrice();
@@ -231,26 +197,6 @@ export class CashRegisterComponent implements OnInit {
     );
   }
 
-  private actualDate(): string {
-    
-    var date: Date = new Date();
-    var year: string, month: string, day: string;
-
-    year = String(date.getFullYear());
-    month = String(date.getMonth() + 1);
-    day = String(date.getDate());
-    
-    if (month.length == 1) {
-      month = "0" + month;
-    }
-    
-    if (day.length == 1) {
-      day = "0" + day;
-    }
-    
-    return year + "-" + month + "-" + day;
-  }
-
   public priceOfHomeDeliveryChange(): void {
     if(this.homeDelivery) {
       
@@ -280,6 +226,42 @@ export class CashRegisterComponent implements OnInit {
     });
   }
 
+  //Usefull Methods
+
+  private actualizePrice(): void {
+    
+    this.totalPrice = 0;    
+
+    for(var i = 0; i < this.shoppingCart.length; i++) {
+
+      var amount: number = this.shoppingCart[i].amount;
+      this.shoppingCart[i].product.price = 0;
+
+      if(amount <= 0 || amount == null) {
+
+        this.deleteProduct(i);
+        break;
+      }      
+
+      var id: number = this.shoppingCart[i].product.id;
+
+      var indexProduct = this.products.findIndex(function(product) {
+
+        if(product.id == id)
+          return product;
+      });
+
+      var priceForOne: number = this.products[indexProduct].price;
+
+      this.totalPrice +=  priceForOne * amount;   
+      this.shoppingCart[i].product.price = priceForOne * amount;      
+    }
+    
+    if(this.homeDelivery) {      
+      this.totalPrice +=  this.priceOfHomeDelivery;
+    }
+  }
+
   public refreshPage(): void {    
     this.products = null;
     this.shoppingCart = new Array<productInCart>(0);
@@ -297,5 +279,25 @@ export class CashRegisterComponent implements OnInit {
 
     this.getProducts();
     this.getClients();
+  }
+
+  private actualDate(): string {
+    
+    var date: Date = new Date();
+    var year: string, month: string, day: string;
+
+    year = String(date.getFullYear());
+    month = String(date.getMonth() + 1);
+    day = String(date.getDate());
+    
+    if (month.length == 1) {
+      month = "0" + month;
+    }
+    
+    if (day.length == 1) {
+      day = "0" + day;
+    }
+    
+    return year + "-" + month + "-" + day;
   }
 }

@@ -15,6 +15,7 @@ import { IngredientsService } from "../../../ingredients/services/ingredients/in
 //Imports
 import Swal from 'sweetalert2'; //Sweet Alert
 import { datatableLanguage } from "../../../../models/datatables"; //Datatable
+import { Chart } from "chart.js"; //Datatable
 
 @Component({
   selector: 'app-product-form',
@@ -24,6 +25,8 @@ export class ProductFormComponent implements OnInit {
 
   
   public product: Product;
+
+  //Datatable
   public dtOptions: DataTables.Settings;
   
   //To manage Ingredients
@@ -42,6 +45,9 @@ export class ProductFormComponent implements OnInit {
   //To know if is a edit page
   public edit: boolean;
 
+  //Chart
+  private myChart: Chart;
+  
   constructor(
     private categoriesService: CategoriesService,
     private productsService: ProductsService,
@@ -55,6 +61,7 @@ export class ProductFormComponent implements OnInit {
     this.spendingAmount = new Array<number>(1);
     this.spendingAmountConst = new Array<number>(1);
     this.chosenCategory = null;
+    this.myChart = null;
   }
 
   ngOnInit(): void {
@@ -78,7 +85,7 @@ export class ProductFormComponent implements OnInit {
       this.productsService.getProduct(id).subscribe(
         res => {
           this.product = res[0];
-          
+
           this.categoriesService.getCategory(this.product.idCategory).subscribe(
             res => {
               this.categoryOfTheProduct = res[0];
@@ -107,24 +114,32 @@ export class ProductFormComponent implements OnInit {
   }
 
   private getIngredients(): void {
+
     this.ingredientsService.getIngredients().subscribe(
       res => {
+
         this.ingredients = res;
 
         if(this.edit) {
           
           this.productsService.getIngredientsInProduct(this.product.id).subscribe(
             res => {
+
               this.ingredientsInProduct = res;                          
 
               if(this.ingredientsInProduct == null || this.ingredientsInProduct.length == 0) {
+
                 for(let i = 0; i < this.ingredients.length; i++) {
+
                   this.spendingAmount[i] = null;
                 }                
               }
               else {
-                for(let i = 0; i < this.ingredients.length; i++) {                                                
-                  for(let y = 0; y < this.ingredientsInProduct.length; y++) {                    
+
+                for(let i = 0; i < this.ingredients.length; i++) {
+
+                  for(let y = 0; y < this.ingredientsInProduct.length; y++) {
+
                     if(this.ingredients[i].id == this.ingredientsInProduct[y].idIngredient) {
                       
                       this.spendingAmount[i] = this.ingredientsInProduct[y].spendingAmount;
@@ -132,9 +147,12 @@ export class ProductFormComponent implements OnInit {
                   }               
                 }
               }
+
               for(let i = 0; i < this.ingredients.length; i++) {                
                 this.spendingAmountConst[i] = this.spendingAmount[i];
-              } 
+              }
+
+              this.actualizeUtility();
             },
             err => console.log(<any>err)
           );
@@ -143,7 +161,7 @@ export class ProductFormComponent implements OnInit {
           for(let i = 0; i < this.ingredients.length; i++) {
             this.spendingAmount[i] = null;
             this.spendingAmountConst[i] = null;
-          } 
+          }
         }
       },
       err => console.log(<any>err)
@@ -200,7 +218,9 @@ export class ProductFormComponent implements OnInit {
   }
 
   protected updateProduct(): void {
+    
     if(this.validateProduct()) {
+
       Swal.fire({
         title: '¿Estas seguro de editar el producto?',
         icon: 'warning',
@@ -210,7 +230,9 @@ export class ProductFormComponent implements OnInit {
         confirmButtonText: 'Si',
         cancelButtonText: 'Cancelar'
       }).then((result) => {
+
         if (result.value) {
+
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -225,7 +247,7 @@ export class ProductFormComponent implements OnInit {
             if(this.spendingAmountConst[i] != this.spendingAmount[i]) {
             
               if(this.spendingAmount[i] == 0 || this.spendingAmount[i] == null) {
-                //Delete                
+                //Delete
                 this.productsService.deleteIngredientInProduct(this.product.id, this.ingredients[i].id).subscribe(
                   res => {},
                   err => console.log(<any>err)
@@ -238,7 +260,7 @@ export class ProductFormComponent implements OnInit {
                   idProduct: this.product.id,
                   spendingAmount: this.spendingAmount[i]
                 };
-
+                
                 this.productsService.createIngredientInProduct(newIngredientsInProduct).subscribe(
                   res => {},
                   err => console.log(<any>err)
@@ -252,7 +274,7 @@ export class ProductFormComponent implements OnInit {
                   idProduct: this.product.id,
                   spendingAmount: this.spendingAmount[i]
                 };
-
+                
                 this.productsService.updateIngredientInProduct(updatedIngredientsInProduct).subscribe(
                   res => {},
                   err => console.log(<any>err)
@@ -310,5 +332,68 @@ export class ProductFormComponent implements OnInit {
       return true;
     
     return false;
-  }  
+  }
+
+  private actualizeUtility(): void {
+    
+    var nameOfIngredients: Array<string> = new Array<string>(0);
+    var percentOfIngredients: Array<number> = new Array<number>(0);
+    
+    var priceOfIngredients: number = 0;
+    var utility: number = 0;
+
+    for(var i = 0; i < this.ingredients.length; i++) {
+
+      if(this.spendingAmount[i] != null && this.spendingAmount[i] != 0) {
+        
+        nameOfIngredients.push(this.ingredients[i].name);
+
+        var aux = this.ingredients[i].priceByUnit * this.spendingAmount[i];
+
+        percentOfIngredients.push(aux);
+        priceOfIngredients += aux;
+      }
+    }
+    
+    utility = this.product.price - priceOfIngredients;
+
+    if(this.myChart != null) {
+      
+      this.myChart.destroy();
+    }
+    
+    nameOfIngredients.push("Utilidad");
+    percentOfIngredients.push(utility);
+
+    this.myChart = new Chart("myChart", {
+                type: 'pie',
+                data: {
+                    labels: nameOfIngredients,
+                    datasets: [
+                      {
+                        label: 'Porcentaje',
+                        data: percentOfIngredients,
+                        backgroundColor: function(): string {
+                          
+                          if(utility <= 0) {
+                            return 'rgba(217, 83, 79, 0.5)';
+                          }
+                          else {
+                            return 'rgba(0, 123, 255, 0.5)';
+                          }
+                        }
+                      }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+  }
 }

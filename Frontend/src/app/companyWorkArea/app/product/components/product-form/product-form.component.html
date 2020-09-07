@@ -30,7 +30,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                                 </div>
-                                <input type="number" class="form-control" [ngClass]="{'is-invalid': (price.touched && !price.valid)}" name="price" placeholder="Precio" #price="ngModel" [(ngModel)]="product.price" required>
+                                <input type="number" class="form-control" [ngClass]="{'is-invalid': (price.touched && !price.valid)}" name="price" placeholder="Precio" #price="ngModel" [(ngModel)]="product.price" (input)="actualizeUtility()" required>
                                 <div class="invalid-feedback">El precio es obligatorio.</div>
                             </div>
                         </div>                        
@@ -43,7 +43,7 @@
                             </button>
                             <button class="btn btn-danger w-50" (click)="deleteProduct()">
                                 <i class="far fa-trash-alt"></i> Eliminar
-                            </button>                            
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -63,12 +63,17 @@
                         <tr *ngFor="let ingredient of ingredients; let i = index">
                             <td class="align-middle">{{ ingredient.name }}</td>
                             <td>
-                                <input type="number" class="form-control" [(ngModel)]="spendingAmount[i]">
+                                <input type="number" class="form-control" [(ngModel)]="spendingAmount[i]" (input)="actualizeUtility()">
                             </td>                            
                         </tr>
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col offset-md-1">
+            <canvas id="myChart"></canvas>
         </div>
     </div>
 </div>

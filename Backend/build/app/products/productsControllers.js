@@ -59,7 +59,7 @@ class ProductsController {
     getIngredientsInProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT * FROM detailProductsIngredients WHERE idProduct = ?", [id])
+            (yield database_1.default).query("SELECT * FROM detailProductsIngredients WHERE idProduct = ? AND active = true;", [id])
                 .then(dates => {
                 res.status(200).json(dates);
             });

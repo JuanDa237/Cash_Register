@@ -118,7 +118,7 @@
                                     <input type="checkbox" [(ngModel)]="homeDelivery" (change)="priceOfHomeDeliveryChange()">
                                 </div>
                             </div>
-                            <input type="number" class="form-control col-10" [attr.placeholder]="!homeDelivery ? 'Domicilio' : 'Precio Del Domicilo'" [(ngModel)]="priceOfHomeDelivery" [attr.readonly]="!homeDelivery ? true : null">
+                            <input type="number" class="form-control col-10" [attr.placeholder]="!homeDelivery ? 'Domicilio' : 'Precio Del Domicilo'" [(ngModel)]="priceOfHomeDelivery" [attr.readonly]="!homeDelivery ? true : null" (input)="actualizePrice()">
                         </div>
                     </div>
                 </div>
