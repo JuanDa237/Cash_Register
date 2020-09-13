@@ -20,16 +20,16 @@
                         <form #formClient="ngForm">
                             <div class="form-group">
                                 <label for="name">Cliente<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control d-block" [ngClass]="{'is-invalid': (name.touched && !name.valid)}" name="name" placeholder="Cliente" #name="ngModel" [(ngModel)]="client.name" (keydown.enter)="enterEvent($event)" required>
+                                <input type="text" class="form-control d-block" [ngClass]="{'is-invalid': (name.touched && !name.valid)}" name="name" placeholder="Cliente" #name="ngModel" [(ngModel)]="client.name" (keydown.enter)="enterEvent($event)" maxlength="30" required>
                                 <div class="invalid-feedback">El nombre es obligatorio.</div>
                             </div>
                             <div class="form-group">
                                 <label for="address">Direccion</label>
-                                <input type="text" class="form-control d-block" name="address" placeholder="Direccion" #address="ngModel" [(ngModel)]="client.address" (keydown.enter)="enterEvent($event)">                                
+                                <input type="text" class="form-control d-block" name="address" placeholder="Direccion" #address="ngModel" [(ngModel)]="client.address" (keydown.enter)="enterEvent($event)" maxlength="30">
                             </div>
                             <div class="form-group">
                                 <label for="phoneNumber">Telefono</label>
-                                <input type="text" class="form-control d-block" name="phoneNumber" placeholder="Telefono" #phoneNumber="ngModel" [(ngModel)]="client.phoneNumber" (keydown.enter)="enterEvent($event)">                                
+                                <input type="text" class="form-control d-block" name="phoneNumber" placeholder="Telefono" #phoneNumber="ngModel" [(ngModel)]="client.phoneNumber" (keydown.enter)="enterEvent($event)" maxlength="15">
                             </div>
                         </form>
                     </div>

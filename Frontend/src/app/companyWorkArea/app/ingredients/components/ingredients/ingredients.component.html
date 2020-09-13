@@ -20,7 +20,7 @@
                         <form #formIngredient="ngForm">
                             <div class="form-group">
                                 <label for="ingredient">Ingrediente<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control d-block" [ngClass]="{'is-invalid': (name.touched && !name.valid)}" name="ingredient" placeholder="Ingrediente" #name="ngModel" [(ngModel)]="ingredient.name" (keydown.enter)="enterEvent($event)" required>
+                                <input type="text" class="form-control d-block" [ngClass]="{'is-invalid': (name.touched && !name.valid)}" name="ingredient" placeholder="Ingrediente" #name="ngModel" [(ngModel)]="ingredient.name" (keydown.enter)="enterEvent($event)" maxlength="30" required>
                                 <div class="invalid-feedback">El nombre es obligatorio.</div>
                             </div>
                             <div class="form-group">

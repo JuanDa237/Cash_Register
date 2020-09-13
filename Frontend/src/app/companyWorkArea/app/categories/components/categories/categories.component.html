@@ -20,7 +20,7 @@
                         <form #formCategory="ngForm">
                             <div class="form-group">
                                 <label for="category">Categoria<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control d-block" [ngClass]="{'is-invalid': (name.touched && !name.valid)}" name="category" placeholder="Categoria" #name="ngModel" [(ngModel)]="category.name" (keydown.enter)="enterEvent($event)" required>
+                                <input type="text" class="form-control d-block" [ngClass]="{'is-invalid': (name.touched && !name.valid)}" name="category" placeholder="Categoria" #name="ngModel" [(ngModel)]="category.name" (keydown.enter)="enterEvent($event)" maxlength="30" required>
                                 <div class="invalid-feedback">
                                     El nombre es obligatorio.
                                 </div>
