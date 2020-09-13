@@ -32,7 +32,7 @@ class ProductsRoutes {
 
         //Delete
         this.router.delete("/product/:id", productsController.deleteProduct);
-        this.router.delete("/product/:idProduct/:idIngredient", productsController.deleteIngredientInProduct);
+        this.router.delete("/product/ingredient/:id", productsController.deleteIngredientInProduct);
     }
 }
 

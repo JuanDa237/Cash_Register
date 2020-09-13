@@ -33,7 +33,7 @@ class ClientsControllers {
     //Get One
     public async getOneClient (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT id, name, domicile, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true;", [id])
+        (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true;", [id])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);

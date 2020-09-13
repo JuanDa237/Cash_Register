@@ -47,7 +47,7 @@ class ClientsControllers {
     getOneClient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT id, name, domicile, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true;", [id])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);

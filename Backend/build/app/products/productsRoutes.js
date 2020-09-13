@@ -24,7 +24,7 @@ class ProductsRoutes {
         this.router.put("/product/ingredient/:id", productsControllers_1.productsController.updateIngredientInProduct);
         //Delete
         this.router.delete("/product/:id", productsControllers_1.productsController.deleteProduct);
-        this.router.delete("/product/:idProduct/:idIngredient", productsControllers_1.productsController.deleteIngredientInProduct);
+        this.router.delete("/product/ingredient/:id", productsControllers_1.productsController.deleteIngredientInProduct);
     }
 }
 const productsRoutes = new ProductsRoutes();

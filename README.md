@@ -1,6 +1,6 @@
 <h1>PerreroApp</h1>
 <h2>V- 0.0.1</h2>
-<img src="https://raw.githubusercontent.com/JuanDa237/Cash_Register/master/Images/Image.png" alt="AppImage.jpg">
+<img src="https://raw.githubusercontent.com/JuanDa237/Cash_Register/master/Sources/Images/Image.png" alt="AppImage.jpg">
 <h2>Installation</h2>
 <h4>Dependecies</h4>
 <ul>
@@ -8,7 +8,7 @@
     <li>Angular</li>
     <li>MySql</li>
 </ul>
-<p>If you have the dependencies installed you must create the MySql database <a href="https://github.com/JuanDa237/Cash_Register/tree/master/Database">(files in Database folder)</a>, then in the Backend folder do the following commands:</p>
+<p>If you have the dependencies installed you must create the MySql database <a href="https://github.com/JuanDa237/Cash_Register/tree/master/Sources/Database">(files in Database folder)</a>, then in the Backend folder do the following commands:</p>
 <ul>
     <li>
         Do the build: <br>

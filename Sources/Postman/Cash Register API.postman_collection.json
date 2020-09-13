@@ -1,0 +1,1100 @@
+{
+	"info": {
+		"_postman_id": "dab0b25c-ddba-449b-ac78-fb4be2610df6",
+		"name": "Cash Register API",
+		"description": "This is the api for the cash resgister app in Angular.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/",
+			"item": [],
+			"description": "Index routes.",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "/api",
+			"item": [
+				{
+					"name": "/categories & /category",
+					"item": [
+						{
+							"name": "/categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/category/:id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/category/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"category",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Category id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/category",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/category",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"category"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/category/:id",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/category/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"category",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Category id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/category/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/category/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"category",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Category id"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Categories and category endpoint.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/products & /product",
+					"item": [
+						{
+							"name": "/ingredients & /ingredient",
+							"item": [
+								{
+									"name": "/products/ingredients",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/products/ingredients",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"products",
+												"ingredients"
+											]
+										},
+										"description": "Get ingredients in products."
+									},
+									"response": []
+								},
+								{
+									"name": "/product/ingredients/:id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/product/ingredients/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product",
+												"ingredients",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "",
+													"description": "Product id"
+												}
+											]
+										},
+										"description": "Get ingredients in one product."
+									},
+									"response": []
+								},
+								{
+									"name": "/product/ingredient",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"idProduct\": 0,\n    \"idIngredient\": 0,\n    \"spendingAmount\": 0\n}"
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product/ingredient",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product",
+												"ingredient"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/product/ingredient/:id",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"idProduct\": 0,\n    \"idIngredient\": 0,\n    \"spendingAmount\": 0\n}"
+										},
+										"url": {
+											"raw": "http://localhost:3000/api/product/ingredient/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product",
+												"ingredient",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "",
+													"description": "Product id"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/product/ingredient/:id",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/api/product/ingredient/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"product",
+												"ingredient",
+												":id"
+											],
+											"variable": [
+												{
+													"description": "Product id",
+													"key": "id",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"description": "Ingredients in product endpoint.",
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "/products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/all/products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/all/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"all",
+										"products"
+									]
+								},
+								"description": "Get all products even the eliminated products."
+							},
+							"response": []
+						},
+						{
+							"name": "/product/:id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/product/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Product id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/product",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"idCategory\": 0,\n    \"name\": \"\",\n    \"price\": 0\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/product/:id",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"idCategory\": 0,\n    \"name\": \"\",\n    \"price\": 0\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/product/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Product id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/product/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/product/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"product",
+										":id"
+									],
+									"variable": [
+										{
+											"description": "Product id",
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Products and product endpoint.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ed0ca8d9-fe3c-4ccf-8b3f-b249832aa8f1",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ceab3c0a-946c-4cf8-a3c5-410ea2d4fbdb",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/ingredients & /ingredient",
+					"item": [
+						{
+							"name": "/ingredients",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/ingredients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"ingredients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/ingredient/:id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/ingredient/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"ingredient",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Ingredient id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/ingredient",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\",\n    \"amount\": 0,\n    \"priceByUnit\": 0\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/ingredient",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"ingredient"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/ingredient/:id",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\",\n    \"amount\": 0,\n    \"priceByUnit\": 0\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/ingredient/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"ingredient",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Ingredient id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/amountIngredients",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[ 1, 2, 3, 4, 5, 6]"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/amountIngredients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"amountIngredients"
+									]
+								},
+								"description": "This route is for update spendingAmount in ingredients after a new sale"
+							},
+							"response": []
+						},
+						{
+							"name": "/ingredient/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/ingredient/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"ingredient",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Ingredient id"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Ingresients and ingredient endpoint.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/tickets & /ticket",
+					"item": [
+						{
+							"name": "/tickets",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/tickets",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tickets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/ticket/:id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/ticket/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"ticket",
+										":id"
+									],
+									"variable": [
+										{
+											"description": "Ticket id",
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/tickets/:since/:until",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/tickets/:since/:until",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tickets",
+										":since",
+										":until"
+									],
+									"variable": [
+										{
+											"key": "since",
+											"value": ""
+										},
+										{
+											"key": "until",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/tickets/year",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/tickets/year",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tickets",
+										"year"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/tickets/products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/tickets/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"tickets",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/ticket",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"idClient\": 0,\n    \"creationDate\": \"\",\n    \"total\": 0,\n    \"homeDelivery\": false,\n    \"priceOfHomeDelivery\": 0\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/ticket",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"ticket"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/ticket/product",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"idTicket\": 0,\n    \"name\": \"\",\n    \"price\": 0,\n    \"amount\": 0\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/ticket/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"ticket",
+										"product"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Tickets and ticket endpoint.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/clients & /client",
+					"item": [
+						{
+							"name": "/clients",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/clients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"clients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/client/:id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/client/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"client",
+										":id"
+									],
+									"variable": [
+										{
+											"description": "Client id",
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/clients/year",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/clients/year",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"clients",
+										"year"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/all/clients",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/all/clients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"all",
+										"clients"
+									]
+								},
+								"description": "Get all clients even the eliminated clients."
+							},
+							"response": []
+						},
+						{
+							"name": "/client",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\",\n    \"creationDate\": \"\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/client",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"client"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/client/:id",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\",\n    \"creationDate\": \"\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/client/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"client",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Client id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/client/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/client/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"client",
+										":id"
+									],
+									"variable": [
+										{
+											"description": "Client id",
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Clients and client endpoint.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"description": "API folder.",
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

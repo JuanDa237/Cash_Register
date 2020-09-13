@@ -11,20 +11,20 @@ class IngredientsRoutes {
     }
 
     routes(): void {
-        //Get list    
+        //Get list
         this.router.get("/ingredients", ingredientsControllers.listIngredients);
 
-        //Get one        
+        //Get one
         this.router.get("/ingredient/:id", ingredientsControllers.getOneIngredient);
 
-        //Post                
+        //Post
         this.router.post("/ingredient", ingredientsControllers.createIngredient);
 
-        //Update        
+        //Update
         this.router.put("/ingredient/:id", ingredientsControllers.updateIngredient);
         this.router.put("/amountIngredients", ingredientsControllers.updateAmountIngredients);
 
-        //Delete        
+        //Delete
         this.router.delete("/ingredient/:id", ingredientsControllers.deleteIngredient);
     }
 }

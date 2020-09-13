@@ -16,7 +16,7 @@ class CategoriesRoutes {
         this.router.get("/tickets/:since/:until", ticketsControllers.listTicketsInInterval);
         this.router.get("/tickets/year", ticketsControllers.listTicketsInYear);
 
-        //Get list    
+        //Get list
         this.router.get("/tickets", ticketsControllers.listTickets);
         this.router.get("/tickets/products", ticketsControllers.listProductsInTickets);
 

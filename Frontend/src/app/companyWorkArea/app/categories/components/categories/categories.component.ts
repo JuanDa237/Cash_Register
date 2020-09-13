@@ -80,7 +80,7 @@ export class CategoriesComponent implements OnInit {
 
       this.categoriesService.saveCategory(this.category).subscribe(
         res => {
-
+          
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -92,7 +92,6 @@ export class CategoriesComponent implements OnInit {
           this.getCategories();
         },
         err => console.log(<any>err)
-        
       );
     }
     else {

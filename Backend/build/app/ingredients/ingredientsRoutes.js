@@ -8,16 +8,16 @@ class IngredientsRoutes {
         this.routes();
     }
     routes() {
-        //Get list    
+        //Get list
         this.router.get("/ingredients", ingredientsControllers_1.ingredientsControllers.listIngredients);
-        //Get one        
+        //Get one
         this.router.get("/ingredient/:id", ingredientsControllers_1.ingredientsControllers.getOneIngredient);
-        //Post                
+        //Post
         this.router.post("/ingredient", ingredientsControllers_1.ingredientsControllers.createIngredient);
-        //Update        
+        //Update
         this.router.put("/ingredient/:id", ingredientsControllers_1.ingredientsControllers.updateIngredient);
         this.router.put("/amountIngredients", ingredientsControllers_1.ingredientsControllers.updateAmountIngredients);
-        //Delete        
+        //Delete
         this.router.delete("/ingredient/:id", ingredientsControllers_1.ingredientsControllers.deleteIngredient);
     }
 }

@@ -188,7 +188,7 @@ export class ProductFormComponent implements OnInit {
 
       this.productsService.saveProduct(this.product).subscribe(
         res => {
-          var id: number = res.id[0].id;
+          var id: number = res.id;
 
           for(let i = 0; i < this.ingredients.length; i++) {
             if(this.spendingAmount[i] != null && this.spendingAmount[i] != 0) {
@@ -248,7 +248,16 @@ export class ProductFormComponent implements OnInit {
             
               if(this.spendingAmount[i] == 0 || this.spendingAmount[i] == null) {
                 //Delete
-                this.productsService.deleteIngredientInProduct(this.product.id, this.ingredients[i].id).subscribe(
+
+                var id: number;
+
+                for(var x = 0; x < this.ingredientsInProduct.length; x++) {
+
+                  if(this.ingredientsInProduct[x].idProduct == this.product.id && this.ingredientsInProduct[x].idIngredient == this.ingredients[i].id)
+                    id = this.ingredientsInProduct[x].id;
+                }
+
+                this.productsService.deleteIngredientInProduct(id).subscribe(
                   res => {},
                   err => console.log(<any>err)
                 );

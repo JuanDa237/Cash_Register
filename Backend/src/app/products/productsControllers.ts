@@ -6,6 +6,7 @@ class ProductsController {
     
     //Get All List
     public async listAllProducts (req: Request, res: Response): Promise<void> {
+        
         (await pool).query("SELECT id, name, price FROM products;")
                     .then(dates => {
                         res.status(200).json(dates);
@@ -22,7 +23,8 @@ class ProductsController {
     }
 
     public async listIngredientsInProducts (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT * FROM detailProductsIngredients;")
+        
+        (await pool).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE active = true;")
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -43,9 +45,9 @@ class ProductsController {
     }
 
     public async getIngredientsInProduct (req: Request, res: Response): Promise<void> {
-        const { id } = req.params;        
         
-        (await pool).query("SELECT * FROM detailProductsIngredients WHERE idProduct = ? AND active = true;", [id])
+        const { id } = req.params;
+        (await pool).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND active = true;", [id])
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -58,11 +60,9 @@ class ProductsController {
         (await pool).query("INSERT INTO products SET ?", [req.body])
                     .then(async function(value: any) {
 
-                        (await pool).query("SELECT id FROM products WHERE id=(SELECT max(id) FROM products);").then(dates => {
-                            res.status(200).json({
-                                message: "Saved product.",
-                                id: dates
-                            });
+                        res.status(200).json({
+                            message: "Saved product.",
+                            id: value.insertId
                         });
                     });
     }
@@ -89,14 +89,16 @@ class ProductsController {
     //Delete
 
     public async deleteProduct (req: Request, res: Response): Promise<void> {
+        
         const { id } = req.params;
         (await pool).query("UPDATE products SET active = false WHERE id = ?", [id]);
         res.status(200).json({ message: "Product eliminated successfully." });
     }
 
     public async deleteIngredientInProduct (req: Request, res: Response): Promise<void> {
-        const { idProduct, idIngredient } = req.params;
-        (await pool).query("UPDATE detailProductsIngredients SET active = false WHERE idProduct = ? AND idIngredient = ?", [idProduct, idIngredient]);
+        
+        const { id } = req.params;
+        (await pool).query("UPDATE detailProductsIngredients SET active = false WHERE id = ?", [id]);
         res.status(200).json({ message: "Ingredient in product eliminated successfully." });
     }
 }

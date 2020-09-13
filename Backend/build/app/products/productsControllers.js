@@ -35,7 +35,7 @@ class ProductsController {
     }
     listIngredientsInProducts(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT * FROM detailProductsIngredients;")
+            (yield database_1.default).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE active = true;")
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -59,7 +59,7 @@ class ProductsController {
     getIngredientsInProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT * FROM detailProductsIngredients WHERE idProduct = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND active = true;", [id])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -71,11 +71,9 @@ class ProductsController {
             (yield database_1.default).query("INSERT INTO products SET ?", [req.body])
                 .then(function (value) {
                 return __awaiter(this, void 0, void 0, function* () {
-                    (yield database_1.default).query("SELECT id FROM products WHERE id=(SELECT max(id) FROM products);").then(dates => {
-                        res.status(200).json({
-                            message: "Saved product.",
-                            id: dates
-                        });
+                    res.status(200).json({
+                        message: "Saved product.",
+                        id: value.insertId
                     });
                 });
             });
@@ -112,8 +110,8 @@ class ProductsController {
     }
     deleteIngredientInProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { idProduct, idIngredient } = req.params;
-            (yield database_1.default).query("UPDATE detailProductsIngredients SET active = false WHERE idProduct = ? AND idIngredient = ?", [idProduct, idIngredient]);
+            const { id } = req.params;
+            (yield database_1.default).query("UPDATE detailProductsIngredients SET active = false WHERE id = ?", [id]);
             res.status(200).json({ message: "Ingredient in product eliminated successfully." });
         });
     }

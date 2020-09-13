@@ -24,14 +24,6 @@ class IngredientsControllers {
             });
         });
     }
-    listIngredientsInProducts(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT * FROM detailProductsIngredients;")
-                .then(dates => {
-                res.status(200).json(dates);
-            });
-        });
-    }
     //Get one
     getOneIngredient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -47,26 +39,11 @@ class IngredientsControllers {
             });
         });
     }
-    getIngredientsInProduct(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("SELECT * FROM detailProductsIngredients WHERE idProduct = ?", [id])
-                .then(dates => {
-                res.status(200).json(dates);
-            });
-        });
-    }
     //Post
     createIngredient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             (yield database_1.default).query("INSERT INTO ingredients SET ?", [req.body]);
             res.status(200).json({ message: "Saved ingredient." });
-        });
-    }
-    createIngredientInProduct(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("INSERT INTO detailProductsIngredients SET ?", [req.body]);
-            res.status(200).json({ message: "Saved ingredient in product." });
         });
     }
     //Update
@@ -75,13 +52,6 @@ class IngredientsControllers {
             const { id } = req.params;
             (yield database_1.default).query("UPDATE ingredients SET ? WHERE id = ?", [req.body, id]);
             res.status(200).json({ message: "Ingredient updated successfully." });
-        });
-    }
-    updateIngredientInProduct(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("UPDATE detailProductsIngredients SET ? WHERE id = ?", [req.body, id]);
-            res.status(200).json({ message: "Ingredient in product updated successfully." });
         });
     }
     updateAmountIngredients(req, res) {
@@ -111,13 +81,6 @@ class IngredientsControllers {
             const { id } = req.params;
             (yield database_1.default).query("UPDATE ingredients SET active = false WHERE id = ?", [id]);
             res.status(200).json({ message: "Ingredient eliminated successfully." });
-        });
-    }
-    deleteIngredientInProduct(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { idProduct, idIngredient } = req.params;
-            (yield database_1.default).query("UPDATE detailProductsIngredients SET active = false WHERE idProduct = ? AND idIngredient = ?", [idProduct, idIngredient]);
-            res.status(200).json({ message: "Ingredient in product eliminated successfully." });
         });
     }
 }
