@@ -54,7 +54,7 @@ class TicketsControllers {
 
     public async getProductsInTicket (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT * FROM productsInTickets WHERE id = ?", [id])
+        (await pool).query("SELECT * FROM productsInTickets WHERE idTicket = ?", [id])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);

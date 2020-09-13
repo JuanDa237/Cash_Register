@@ -19,6 +19,7 @@ class CategoriesRoutes {
         //Get list
         this.router.get("/tickets", ticketsControllers.listTickets);
         this.router.get("/tickets/products", ticketsControllers.listProductsInTickets);
+        this.router.get("/ticket/products/:id", ticketsControllers.getProductsInTicket);
 
         //Get one
         this.router.get("/ticket/:id", ticketsControllers.getOneTicket);

@@ -1,136 +1,145 @@
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Registros</h1>      
-</div>
-<div class="mb-4">
-    <a class="btn btn-info btn-block" routerLink="/cashRegister"><i class="fas fa-plus-circle"></i> Crear Registro</a>
-</div>
-<div class="row">
-    <!-- Datepicker -->
-    <div class="col offset-md-3 offset-2">
-        <div class="col-md-6 col-8">
-            <form #formDate="ngForm">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="since">Desde<span class="text-danger">*</span></label>
-                            <input type="date" name="since" class="form-control" #since2="ngModel" [(ngModel)]="since">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="until">Hasta<span class="text-danger">*</span></label>
-                            <input type="date" name="until" class="form-control" #until2="ngModel" [(ngModel)]="until">
-                        </div>
-                    </div>
-                </div>        
-            </form>
-        </div>
-        <div class="col-6">
-            <button class="btn btn-info btn-block" [disabled]="!formDate.form.valid" (click)="search()"><i class="fas fa-search"></i> Buscar</button>
-        </div>
+<div *ngIf="tickets">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Registros</h1>      
     </div>
-</div>
-<div class="mt-4" *ngIf="tickets && clients">
-    <!-- Table -->
-    <div class="table-responsive">
-        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered table-sm" style="width:100%">
-            <thead class="text-center">
-                <tr>                    
-                    <th>Cliente</th>
-                    <th>Fecha</th>
-                    <th>Total</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let ticket of tickets">
-                    <td class="align-middle">
-                        <div *ngFor="let client of clients">
-                            <div *ngIf="client.id == ticket.idClient">
-                                {{ client.name }}
-                            </div>                            
-                        </div>
-                    </td>
-                    <td class="align-middle">{{ ticket.creationDate }}</td>
-                    <td class="align-middle text-center">{{ ticket.total | thousandsPipe }}</td>
-                    <td>
-                        <div class="text-center">
-                            <div class="btn-group">                                
-                                <button class="btn btn-info" (click)="viewTicket(ticket)" data-toggle="modal" data-target="#modal"><i class="fas fa-eye"></i></button>
+    <div class="mb-4">
+        <a class="btn btn-info btn-block" routerLink="/cashRegister"><i class="fas fa-plus-circle"></i> Crear Registro</a>
+    </div>
+    <div class="row">
+        <!-- Datepicker -->
+        <div class="col offset-md-3 offset-2">
+            <div class="col-md-6 col-8">
+                <form #formDate="ngForm">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="since">Desde<span class="text-danger">*</span></label>
+                                <input type="date" name="since" class="form-control" #since2="ngModel" [(ngModel)]="since">
                             </div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="until">Hasta<span class="text-danger">*</span></label>
+                                <input type="date" name="until" class="form-control" #until2="ngModel" [(ngModel)]="until">
+                            </div>
+                        </div>
+                    </div>        
+                </form>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-info btn-block" [disabled]="!formDate.form.valid" (click)="search()"><i class="fas fa-search"></i> Buscar</button>
+            </div>
+        </div>
     </div>
-    <div>
-        <!-- Modal -->
+    <div class="mt-4" *ngIf="tickets && clients">
+        <!-- Table -->
+        <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered table-sm" style="width:100%">
+                <thead class="text-center">
+                    <tr>                    
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ticket of tickets; let i = index">
+                        <td class="align-middle">
+                            <div *ngFor="let client of clients">
+                                <div *ngIf="client.id == ticket.idClient">
+                                    {{ client.name }}
+                                </div>                            
+                            </div>
+                        </td>
+                        <td class="align-middle">{{ ticket.creationDate }}</td>
+                        <td class="align-middle text-center">{{ ticket.total | thousandsPipe }}</td>
+                        <td>
+                            <div class="text-center">
+                                <div class="btn-group">                                
+                                    <button class="btn btn-info" (click)="viewTicket(ticket.id, i)" data-toggle="modal" data-target="#modal"><i class="fas fa-eye"></i></button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div>
-            <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Registro</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">                                
-                                <table class="table table-striped table-bordered table-sm" style="width:100%">
-                                    <thead class="text-center">
-                                        <tr>
-                                            <th>Producto</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let productInTicket of productsInTickets">
-                                            <td class="align-middle" *ngIf="productInTicket.idTicket == selectedTicket.id">                                            
-                                                {{ productInTicket.name }}
-                                            </td>
-                                            <td class="align-middle text-center" *ngIf="productInTicket.idTicket == selectedTicket.id">
-                                                {{ productInTicket.amount | thousandsPipe }}
-                                            </td>
-                                            <td class="align-middle text-center" *ngIf="productInTicket.idTicket == selectedTicket.id">
-                                                {{ productInTicket.price * productInTicket.amount | thousandsPipe }}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr  *ngIf="selectedTicket.homeDelivery">
-                                            <th>Sub-Total</th>
-                                            <th></th>
-                                            <th class="align-middle text-center">{{ selectedTicket.total -  selectedTicket.priceOfHomeDelivery | thousandsPipe }}</th>
-                                        </tr>
-                                        <tr *ngIf="selectedTicket.homeDelivery">
-                                            <th>Domicilio</th>
-                                            <th></th>
-                                            <td class="align-middle text-center">+ {{ selectedTicket.priceOfHomeDelivery | thousandsPipe }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Total</th>
-                                            <th></th>
-                                            <th class="align-middle text-center">{{ selectedTicket.total | thousandsPipe }}</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>                        
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>                                                        
+            <!-- Modal -->
+            <div *ngIf="indexSelectedTicket > -1">
+                <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Registro</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">                                
+                                    <table class="table table-striped table-bordered table-sm" style="width:100%">
+                                        <thead class="text-center">
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let productInTicket of productsInTicket">
+                                                <td class="align-middle">
+                                                    {{ productInTicket.name }}
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    {{ productInTicket.amount | thousandsPipe }}
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    {{ productInTicket.price * productInTicket.amount | thousandsPipe }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr  *ngIf="tickets[indexSelectedTicket].homeDelivery">
+                                                <th>Sub-Total</th>
+                                                <th></th>
+                                                <th class="align-middle text-center">{{ tickets[indexSelectedTicket].total -  tickets[indexSelectedTicket].priceOfHomeDelivery | thousandsPipe }}</th>
+                                            </tr>
+                                            <tr *ngIf="tickets[indexSelectedTicket].homeDelivery">
+                                                <th>Domicilio</th>
+                                                <th></th>
+                                                <td class="align-middle text-center">+ {{ tickets[indexSelectedTicket].priceOfHomeDelivery | thousandsPipe }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total</th>
+                                                <th></th>
+                                                <th class="align-middle text-center">{{ tickets[indexSelectedTicket].total | thousandsPipe }}</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>                        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>                                                        
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row mt-2">
+        <div class="col-12">
+            <!-- Chart -->
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
 </div>
-<div class="row mt-2">
-    <div class="col-12">
-        <!-- Chart -->
-        <canvas id="myChart"></canvas>
+<div *ngIf="!tickets">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status" style="height: 5rem; width: 5rem;">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
 </div>

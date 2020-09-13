@@ -21,10 +21,10 @@ export class TicketsComponent implements OnInit {
 
   public clients: Array<Client>;
   public tickets: Array<Ticket>;
-  public productsInTickets: Array<ProductInTicket>;
-  public selectedTicket: Ticket;
+  public productsInTicket: Array<ProductInTicket>;
   public since: Date;
   public until: Date;
+  public indexSelectedTicket: number;
   public dtOptions: DataTables.Settings;
 
   constructor(
@@ -32,14 +32,8 @@ export class TicketsComponent implements OnInit {
     private ticketsService: TicketsService    
   ) {
     this.tickets = new Array<Ticket>(0);
-    this.selectedTicket = {
-      id: 0,
-      idClient: 0,
-      creationDate: "",
-      total: 0,
-      homeDelivery: false,
-      priceOfHomeDelivery: 0
-    };
+    this.productsInTicket = new Array<ProductInTicket>(0);
+    this.indexSelectedTicket = -1;
   }
 
   ngOnInit(): void {
@@ -86,23 +80,12 @@ export class TicketsComponent implements OnInit {
   }
 
   private getClients() {
+    
     this.clientsService.getAllClients().subscribe(
       response => {
         if(response.length >= 0) {
 
           this.clients = response;
-        }
-      },
-      error => console.log(<any>error)
-    );
-  }  
-
-  private getProductInTicket() {
-    this.ticketsService.getProductsInTickets().subscribe(
-      response => {
-        if(response.length >= 0) {
-
-          this.productsInTickets = response;
         }
       },
       error => console.log(<any>error)
@@ -177,22 +160,24 @@ export class TicketsComponent implements OnInit {
 
           this.tickets = response;
           this.getClients();
-          this.getProductInTicket();
         }
       },
       err => console.log(<any>err)
     );
   }
 
-  public viewTicket(ticket: Ticket) {
+  public viewTicket(id: number, index: number) {
     
-    this.selectedTicket = {
-      id: ticket.id,
-      idClient: ticket.idClient,
-      creationDate: ticket.creationDate,
-      total: ticket.total,
-      homeDelivery: ticket.homeDelivery,
-      priceOfHomeDelivery: ticket.priceOfHomeDelivery
-    }
+    this.indexSelectedTicket = index;
+
+    this.ticketsService.getProductsInTicket(id).subscribe(
+      response => {
+        if(response.length >= 0) {
+
+          this.productsInTicket = response;
+        }
+      },
+      error => console.log(<any>error)
+    )
   }
 }

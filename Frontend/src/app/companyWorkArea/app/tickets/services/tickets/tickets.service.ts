@@ -39,7 +39,12 @@ export class TicketsService {
     getProductsInTickets(): Observable<any> {
         return this.http.get(this.apiUri + "tickets/products", { headers: this.headers});
     }
-    
+
+    //Get One
+    getProductsInTicket(id: number): Observable<any> {
+        return this.http.get(this.apiUri + "ticket/products/" + id, { headers: this.headers});
+    }
+
     //Post
     saveTicket(newTicket: Ticket): Observable<any> {
         let params = JSON.stringify(newTicket);
