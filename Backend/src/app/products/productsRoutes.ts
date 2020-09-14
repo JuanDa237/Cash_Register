@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { productsController } from "./productsControllers";
+import { authenticationJwt } from "../authentication/middlewares/index";
 
 class ProductsRoutes {
 
@@ -12,27 +13,27 @@ class ProductsRoutes {
 
     routes(): void {
         //Get All List
-        this.router.get("/all/products", productsController.listAllProducts);
+        this.router.get("/all/products", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], productsController.listAllProducts);
 
         //Get list            
         this.router.get("/products", productsController.listProducts);
-        this.router.get("/products/ingredients", productsController.listIngredientsInProducts);
+        this.router.get("/products/ingredients", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], productsController.listIngredientsInProducts);
 
         //Get one        
         this.router.get("/product/:id", productsController.getOneProduct);        
-        this.router.get("/product/ingredients/:id", productsController.getIngredientsInProduct);
+        this.router.get("/product/ingredients/:id", [authenticationJwt.verifyToken, authenticationJwt.isCashier], productsController.getIngredientsInProduct);
 
         //Post        
-        this.router.post("/product", productsController.createProduct);
-        this.router.post("/product/ingredient", productsController.createIngredientInProduct);
+        this.router.post("/product", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], productsController.createProduct);
+        this.router.post("/product/ingredient", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], productsController.createIngredientInProduct);
         
         //Update
-        this.router.put("/product/:id", productsController.updateProduct);
-        this.router.put("/product/ingredient/:id", productsController.updateIngredientInProduct);
+        this.router.put("/product/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], productsController.updateProduct);
+        this.router.put("/product/ingredient/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], productsController.updateIngredientInProduct);
 
         //Delete
-        this.router.delete("/product/:id", productsController.deleteProduct);
-        this.router.delete("/product/ingredient/:id", productsController.deleteIngredientInProduct);
+        this.router.delete("/product/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], productsController.deleteProduct);
+        this.router.delete("/product/ingredient/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], productsController.deleteIngredientInProduct);
     }
 }
 

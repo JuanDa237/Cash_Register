@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { categoriesControllers } from "./categoriesControllers";
+import { authenticationJwt } from "../authentication/middlewares/index";
 
 class CategoriesRoutes {
 
@@ -18,13 +19,13 @@ class CategoriesRoutes {
         this.router.get("/category/:id", categoriesControllers.getOneCategory);
 
         //Post
-        this.router.post("/category", categoriesControllers.createCategory);
+        this.router.post("/category", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], categoriesControllers.createCategory);
         
         //Update
-        this.router.put("/category/:id", categoriesControllers.updateCategory);
+        this.router.put("/category/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], categoriesControllers.updateCategory);
 
         //Delete
-        this.router.delete("/category/:id", categoriesControllers.deleteCategory);
+        this.router.delete("/category/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], categoriesControllers.deleteCategory);
     }
 }
 

@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { clientsControllers } from "./clientsControllers";
+import { authenticationJwt } from "../authentication/middlewares/index";
 
 class CategoriesRoutes {
 
@@ -12,25 +13,25 @@ class CategoriesRoutes {
 
     routes(): void {
         //Get Interval
-        this.router.get("/clients/year", clientsControllers.listClientsInYear);
+        this.router.get("/clients/year", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], clientsControllers.listClientsInYear);
 
         //Get All List
-        this.router.get("/all/clients", clientsControllers.listAllClients);
+        this.router.get("/all/clients",  [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], clientsControllers.listAllClients);
 
         //Get list    
-        this.router.get("/clients", clientsControllers.listClients);
+        this.router.get("/clients",  [authenticationJwt.verifyToken, authenticationJwt.isCashier], clientsControllers.listClients);
 
         //Get one
-        this.router.get("/client/:id", clientsControllers.getOneClient);
+        this.router.get("/client/:id",  [authenticationJwt.verifyToken, authenticationJwt.isCashier], clientsControllers.getOneClient);
 
         //Post
-        this.router.post("/client", clientsControllers.createClient);
+        this.router.post("/client",  [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], clientsControllers.createClient);
         
         //Update
-        this.router.put("/client/:id", clientsControllers.updateClient);        
+        this.router.put("/client/:id",  [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], clientsControllers.updateClient);
 
         //Delete
-        this.router.delete("/client/:id", clientsControllers.deleteClient); 
+        this.router.delete("/client/:id",  [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], clientsControllers.deleteClient);
     }
 }
 

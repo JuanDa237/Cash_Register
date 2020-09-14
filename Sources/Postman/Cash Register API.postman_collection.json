@@ -75,6 +75,12 @@
 										"key": "Content-Type",
 										"value": "application/json",
 										"type": "text"
+									},
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -105,6 +111,12 @@
 										"key": "Content-Type",
 										"value": "application/json",
 										"type": "text"
+									},
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -138,7 +150,14 @@
 							"name": "/category/:id",
 							"request": {
 								"method": "DELETE",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/category/:id",
 									"protocol": "http",
@@ -177,7 +196,14 @@
 									"name": "/products/ingredients",
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "authentication-token",
+												"value": "",
+												"type": "text",
+												"disabled": true
+											}
+										],
 										"url": {
 											"raw": "http://localhost:3000/api/products/ingredients",
 											"protocol": "http",
@@ -199,7 +225,14 @@
 									"name": "/product/ingredients/:id",
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "authentication-token",
+												"value": "",
+												"type": "text",
+												"disabled": true
+											}
+										],
 										"url": {
 											"raw": "http://localhost:3000/api/product/ingredients/:id",
 											"protocol": "http",
@@ -234,6 +267,12 @@
 												"key": "Content-Type",
 												"type": "text",
 												"value": "application/json"
+											},
+											{
+												"key": "authentication-token",
+												"value": "",
+												"type": "text",
+												"disabled": true
 											}
 										],
 										"body": {
@@ -265,6 +304,12 @@
 												"key": "Content-Type",
 												"value": "application/json",
 												"type": "text"
+											},
+											{
+												"key": "authentication-token",
+												"value": "",
+												"type": "text",
+												"disabled": true
 											}
 										],
 										"body": {
@@ -299,7 +344,14 @@
 									"name": "/product/ingredient/:id",
 									"request": {
 										"method": "DELETE",
-										"header": [],
+										"header": [
+											{
+												"key": "authentication-token",
+												"value": "",
+												"type": "text",
+												"disabled": true
+											}
+										],
 										"url": {
 											"raw": "http://localhost:3000/api/product/ingredient/:id",
 											"protocol": "http",
@@ -353,7 +405,14 @@
 							"name": "/all/products",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/all/products",
 									"protocol": "http",
@@ -408,6 +467,12 @@
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
+									},
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -438,6 +503,12 @@
 										"key": "Content-Type",
 										"value": "application/json",
 										"type": "text"
+									},
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -471,7 +542,14 @@
 							"name": "/product/:id",
 							"request": {
 								"method": "DELETE",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/product/:id",
 									"protocol": "http",
@@ -529,7 +607,14 @@
 							"name": "/ingredients",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/ingredients",
 									"protocol": "http",
@@ -549,7 +634,14 @@
 							"name": "/ingredient/:id",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/ingredient/:id",
 									"protocol": "http",
@@ -582,6 +674,12 @@
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
+									},
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -612,6 +710,12 @@
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
+									},
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -650,6 +754,12 @@
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
+									},
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -676,7 +786,14 @@
 							"name": "/ingredient/:id",
 							"request": {
 								"method": "DELETE",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/ingredient/:id",
 									"protocol": "http",
@@ -712,7 +829,14 @@
 							"name": "/tickets",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/tickets",
 									"protocol": "http",
@@ -732,7 +856,14 @@
 							"name": "/ticket/:id",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/ticket/:id",
 									"protocol": "http",
@@ -760,7 +891,14 @@
 							"name": "/tickets/:since/:until",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/tickets/:since/:until",
 									"protocol": "http",
@@ -792,7 +930,14 @@
 							"name": "/tickets/year",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/tickets/year",
 									"protocol": "http",
@@ -813,7 +958,14 @@
 							"name": "/tickets/products",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/tickets/products",
 									"protocol": "http",
@@ -831,6 +983,42 @@
 							"response": []
 						},
 						{
+							"name": "/ticket/products/:id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/api/ticket/products/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"ticket",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Ticket id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "/ticket",
 							"request": {
 								"method": "POST",
@@ -839,6 +1027,12 @@
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
+									},
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -869,6 +1063,12 @@
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
+									},
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -903,7 +1103,14 @@
 							"name": "/clients",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/clients",
 									"protocol": "http",
@@ -923,7 +1130,14 @@
 							"name": "/client/:id",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/client/:id",
 									"protocol": "http",
@@ -951,7 +1165,14 @@
 							"name": "/clients/year",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/clients/year",
 									"protocol": "http",
@@ -972,7 +1193,14 @@
 							"name": "/all/clients",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/all/clients",
 									"protocol": "http",
@@ -999,6 +1227,12 @@
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
+									},
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -1029,6 +1263,12 @@
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
+									},
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -1062,7 +1302,14 @@
 							"name": "/client/:id",
 							"request": {
 								"method": "DELETE",
-								"header": [],
+								"header": [
+									{
+										"key": "authentication-token",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
 									"raw": "http://localhost:3000/api/client/:id",
 									"protocol": "http",
@@ -1088,6 +1335,76 @@
 						}
 					],
 					"description": "Clients and client endpoint.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/authentication",
+					"item": [
+						{
+							"name": "/singIn",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userName\": \"\",\n    \"password\": \"\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/authentication/singIn",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"authentication",
+										"singIn"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/singUp",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"idCompany\": 0,\n    \"roleName\": \"\",\n    \"userName\": \"\",\n    \"password\": \"\",\n    \"name\": \"\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/authentication/singUp",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"authentication",
+										"singUp"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Authentication endpoint.",
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
 				}

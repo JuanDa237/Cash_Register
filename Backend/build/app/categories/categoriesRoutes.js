@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const categoriesControllers_1 = require("./categoriesControllers");
+const index_1 = require("../authentication/middlewares/index");
 class CategoriesRoutes {
     constructor(router = express_1.Router()) {
         this.router = router;
@@ -13,11 +14,11 @@ class CategoriesRoutes {
         //Get one
         this.router.get("/category/:id", categoriesControllers_1.categoriesControllers.getOneCategory);
         //Post
-        this.router.post("/category", categoriesControllers_1.categoriesControllers.createCategory);
+        this.router.post("/category", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], categoriesControllers_1.categoriesControllers.createCategory);
         //Update
-        this.router.put("/category/:id", categoriesControllers_1.categoriesControllers.updateCategory);
+        this.router.put("/category/:id", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], categoriesControllers_1.categoriesControllers.updateCategory);
         //Delete
-        this.router.delete("/category/:id", categoriesControllers_1.categoriesControllers.deleteCategory);
+        this.router.delete("/category/:id", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], categoriesControllers_1.categoriesControllers.deleteCategory);
     }
 }
 const categoriesRoutes = new CategoriesRoutes();

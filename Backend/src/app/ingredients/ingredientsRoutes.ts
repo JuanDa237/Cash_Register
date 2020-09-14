@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { ingredientsControllers } from "./ingredientsControllers";
+import { authenticationJwt } from "../authentication/middlewares/index";
 
 class IngredientsRoutes {
 
@@ -12,20 +13,20 @@ class IngredientsRoutes {
 
     routes(): void {
         //Get list
-        this.router.get("/ingredients", ingredientsControllers.listIngredients);
+        this.router.get("/ingredients", [authenticationJwt.verifyToken, authenticationJwt.isCashier], ingredientsControllers.listIngredients);
 
         //Get one
-        this.router.get("/ingredient/:id", ingredientsControllers.getOneIngredient);
+        this.router.get("/ingredient/:id", [authenticationJwt.verifyToken, authenticationJwt.isCashier], ingredientsControllers.getOneIngredient);
 
         //Post
-        this.router.post("/ingredient", ingredientsControllers.createIngredient);
+        this.router.post("/ingredient", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], ingredientsControllers.createIngredient);
 
         //Update
-        this.router.put("/ingredient/:id", ingredientsControllers.updateIngredient);
-        this.router.put("/amountIngredients", ingredientsControllers.updateAmountIngredients);
+        this.router.put("/ingredient/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], ingredientsControllers.updateIngredient);
+        this.router.put("/amountIngredients", [authenticationJwt.verifyToken, authenticationJwt.isCashier], ingredientsControllers.updateAmountIngredients);
 
         //Delete
-        this.router.delete("/ingredient/:id", ingredientsControllers.deleteIngredient);
+        this.router.delete("/ingredient/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], ingredientsControllers.deleteIngredient);
     }
 }
 

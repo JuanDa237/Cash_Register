@@ -1,6 +1,9 @@
 import express, { Application } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import dotenv from "dotenv";
+
+import { createRoles } from "./app/roles/initialSetup";
 
 import indexRoutes from "./app/index/indexRoutes";
 import categoriesRoutes from "./app/categories/categoriesRoutes";
@@ -8,6 +11,7 @@ import productsRoutes from "./app/products/productsRoutes";
 import ingredientsRoutes from "./app/ingredients/ingredientsRoutes";
 import ticketsRoutes from "./app/tickets/ticketsRoutes";
 import clientsRoutes from "./app/clients/clientsRoutes";
+import authenticationRoutes from "./app/authentication/authenticationRoutes";
 
 class Server {
     
@@ -16,7 +20,13 @@ class Server {
     constructor() {
         this.app = express();
         this.config();
-        this.routes(); 
+        this.routes();
+
+        //Start reading environment variables
+        dotenv.config();
+
+        //Create default roles
+        createRoles();
     }
 
     config(): void {
@@ -34,6 +44,7 @@ class Server {
         this.app.use("/api", ingredientsRoutes);
         this.app.use("/api", ticketsRoutes);
         this.app.use("/api", clientsRoutes);
+        this.app.use("/api/authentication", authenticationRoutes);
     }
 
     start(): void {

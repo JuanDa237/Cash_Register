@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { ticketsControllers } from "./ticketsControllers";
+import { authenticationJwt } from "../authentication/middlewares/index";
 
 class CategoriesRoutes {
 
@@ -13,20 +14,20 @@ class CategoriesRoutes {
     routes(): void {
 
         //Get Interval
-        this.router.get("/tickets/:since/:until", ticketsControllers.listTicketsInInterval);
-        this.router.get("/tickets/year", ticketsControllers.listTicketsInYear);
+        this.router.get("/tickets/:since/:until", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], ticketsControllers.listTicketsInInterval);
+        this.router.get("/tickets/year", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], ticketsControllers.listTicketsInYear);
 
         //Get list
-        this.router.get("/tickets", ticketsControllers.listTickets);
-        this.router.get("/tickets/products", ticketsControllers.listProductsInTickets);
-        this.router.get("/ticket/products/:id", ticketsControllers.getProductsInTicket);
+        this.router.get("/tickets", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], ticketsControllers.listTickets);
+        this.router.get("/tickets/products", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], ticketsControllers.listProductsInTickets);
+        this.router.get("/ticket/products/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], ticketsControllers.getProductsInTicket);
 
         //Get one
-        this.router.get("/ticket/:id", ticketsControllers.getOneTicket);
+        this.router.get("/ticket/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], ticketsControllers.getOneTicket);
 
         //Post
-        this.router.post("/ticket", ticketsControllers.createTicket);
-        this.router.post("/ticket/product", ticketsControllers.createProductInTicket);
+        this.router.post("/ticket", [authenticationJwt.verifyToken, authenticationJwt.isCashier], ticketsControllers.createTicket);
+        this.router.post("/ticket/product", [authenticationJwt.verifyToken, authenticationJwt.isCashier], ticketsControllers.createProductInTicket);
     }
 }
 
