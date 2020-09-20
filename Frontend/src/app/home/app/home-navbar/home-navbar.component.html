@@ -1,0 +1,81 @@
+<ng-container *ngIf="!authenticationService.loggedIn(); else loggedIn">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" routerLink="/home">Caja Registradora</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/signIn" routerLinkActive="active">Iniciar Seccion <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container p-5">
+        <router-outlet></router-outlet>
+    </div>
+</ng-container>
+<ng-template #loggedIn>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">    
+        <a class="navbar-brand loggedIn col-md-3 col-lg-2 mr-0 px-3" routerLink="/cashRegister">
+            <img class="rounded pr-1" src="../../../assets/logo.png" width="30" height="30" alt="Logo.jpg">
+            {{ company }}
+        </a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="sidebar-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/cashRegister" routerLinkActive="active">
+                                <i class="fas fa-cash-register"></i> Registradora
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/categories" routerLinkActive="active">
+                                <i class="fas fa-stream"></i> Categorias
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/products" routerLinkActive="active">
+                                <i class="fas fa-boxes"></i> Productos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/ingredients" routerLinkActive="active">
+                                <i class="fas fa-bread-slice"></i> Ingredientes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/clients" routerLinkActive="active">
+                                <i class="fas fa-users"></i> Clientes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/tickets" routerLinkActive="active">
+                                <i class="far fa-clipboard mx-1"></i> Registros
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/configuration" routerLinkActive="active">
+                                <i class="fas fa-cog"></i> Configuracion
+                            </a>
+                        </li>
+                    </ul>        
+                </div>
+            </nav>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div>
+                    <router-outlet></router-outlet>
+                </div>
+            </main>
+        </div>
+    </div>
+</ng-template>

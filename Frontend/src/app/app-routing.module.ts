@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { HomeComponent } from './home/app/home/home.component';
+import { SignInComponent } from './home/app/sign-in/sign-in.component';
 import { CashRegisterComponent } from './companyWorkArea/components/cash-register/cash-register.component';
 import { CategoriesComponent } from './companyWorkArea/app/categories/components/categories/categories.component';
 import { ProductsComponent } from './companyWorkArea/app/product/components/products/products.component';
@@ -11,47 +13,66 @@ import { TicketsComponent } from './companyWorkArea/app/tickets/components/ticke
 import { CompanyConfigurationComponent } from './companyWorkArea/components/company-configuration/company-configuration.component';
 import { ErrorComponent } from './global/components/error/error.component';
 
+import { AuthenticationGuard } from './home/guards/authentication/authentication.guard';
+
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "/cashRegister",
+    redirectTo: "/home",
     pathMatch: "full"
   },
   {
+    path: "home",
+    component: HomeComponent
+  },
+  {
+    path: "signIn",
+    component: SignInComponent
+  },
+  {
     path: "cashRegister",
-    component: CashRegisterComponent
+    component: CashRegisterComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "categories",
-    component: CategoriesComponent
+    component: CategoriesComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "products",
-    component: ProductsComponent
+    component: ProductsComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "products/add",
-    component: ProductFormComponent
+    component: ProductFormComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "product/edit/:id",
-    component: ProductFormComponent
+    component: ProductFormComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "ingredients",
-    component: IngredientsComponent
+    component: IngredientsComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "clients",
-    component: ClientsComponent
+    component: ClientsComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "tickets",
-    component: TicketsComponent
+    component: TicketsComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "configuration",
-    component: CompanyConfigurationComponent
+    component: CompanyConfigurationComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "**",

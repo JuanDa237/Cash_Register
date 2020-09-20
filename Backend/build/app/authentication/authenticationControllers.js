@@ -31,14 +31,14 @@ class AuthenticationControllers {
                         }, process.env.TOKEN_SECRET || "tokenTest", {
                             expiresIn: 86400 //The token expires in 24 hours
                         });
-                        res.status(200).header("token", token).json({ message: "Sing in succesfully." });
+                        return res.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({ message: "Sing in succesfully." });
                     }
                     else {
-                        res.status(401).json({ message: "Password is wrong." });
+                        return res.status(401).json({ message: "Password is wrong." });
                     }
                 }
                 else {
-                    res.status(400).json({ message: "Username not found." });
+                    return res.status(400).json({ message: "Username not found." });
                 }
             }));
         });
@@ -52,7 +52,7 @@ class AuthenticationControllers {
             yield (yield database_1.default).query("SELECT id FROM users WHERE userName = ?", [userName])
                 .then((dates) => {
                 if (dates.length > 0) {
-                    res.status(401).json({ message: "Username '" + userName + "' is in use." });
+                    return res.status(401).json({ message: "Username '" + userName + "' is in use." });
                 }
                 else {
                     itsOk = true;
@@ -69,7 +69,7 @@ class AuthenticationControllers {
                             itsOk = true;
                         }
                         else {
-                            res.status(400).json({ message: "Role '" + roleName + "' not found." });
+                            return res.status(400).json({ message: "Role '" + roleName + "' not found." });
                         }
                     });
                 }
@@ -81,7 +81,7 @@ class AuthenticationControllers {
                             itsOk = true;
                         }
                         else {
-                            res.status(400).json({ message: "Role user not found." });
+                            return res.status(400).json({ message: "Role user not found." });
                         }
                     });
                 }
@@ -102,7 +102,7 @@ class AuthenticationControllers {
                                 expiresIn: 86400 //The token expires in 24 hours
                             });
                             newUser.password = "";
-                            res.status(200).header("token", token).json({
+                            return res.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({
                                 message: "Saved user.",
                                 user: newUser
                             });

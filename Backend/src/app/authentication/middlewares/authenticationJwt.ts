@@ -13,12 +13,12 @@ interface Payload {
 export async function verifyToken(req: Request, res: Response, next: NextFunction) {
     
     try {
-        const token = req.header("authentication-token");
-
+        const token = req.header("authentication-token")?.split(" ")[1];
+    
         if(!token) return res.status(403).json({ message: "No token provided."});
-
+    
         const payload = jwt.verify(token, process.env.TOKEN_SECRET || "tokentest") as Payload;
-
+        
         (await pool).query("SELECT idCompany, idRole, userName FROM users WHERE id = ?", [payload.id])
                     .then((dates: Array<User>) => {
 
@@ -33,7 +33,8 @@ export async function verifyToken(req: Request, res: Response, next: NextFunctio
                     })
 
     } catch (error) {
-        return res.status(400).json({ message: "Unauthorized."});
+        console.log(error);
+        return res.status(401).json({ message: "Unauthorized."});
     }
 }
 
@@ -46,7 +47,7 @@ export async function isUser(req: Request, res: Response, next: NextFunction) {
                         next();
                     }
                     else {
-                        return res.status(400).json({ message: "Unauthorized."});
+                        return res.status(401).json({ message: "Unauthorized."});
                     }
                 });
 }
@@ -60,7 +61,7 @@ export async function isAdministrator(req: Request, res: Response, next: NextFun
                         next();
                     }
                     else {
-                        return res.status(400).json({ message: "Unauthorized."});
+                        return res.status(401).json({ message: "Unauthorized."});
                     }
                 });
 }
@@ -74,7 +75,7 @@ export async function isCashier(req: Request, res: Response, next: NextFunction)
                         next();
                     }
                     else {
-                        return res.status(400).json({ message: "Unauthorized."});
+                        return res.status(401).json({ message: "Unauthorized."});
                     }
                 });
 }

@@ -16,9 +16,10 @@ exports.isCashier = exports.isAdministrator = exports.isUser = exports.verifyTok
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const database_1 = __importDefault(require("../../../database"));
 function verifyToken(req, res, next) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const token = req.header("authentication-token");
+            const token = (_a = req.header("authentication-token")) === null || _a === void 0 ? void 0 : _a.split(" ")[1];
             if (!token)
                 return res.status(403).json({ message: "No token provided." });
             const payload = jsonwebtoken_1.default.verify(token, process.env.TOKEN_SECRET || "tokentest");
@@ -34,7 +35,8 @@ function verifyToken(req, res, next) {
             });
         }
         catch (error) {
-            return res.status(400).json({ message: "Unauthorized." });
+            console.log(error);
+            return res.status(401).json({ message: "Unauthorized." });
         }
     });
 }
@@ -47,7 +49,7 @@ function isUser(req, res, next) {
                 next();
             }
             else {
-                return res.status(400).json({ message: "Unauthorized." });
+                return res.status(401).json({ message: "Unauthorized." });
             }
         });
     });
@@ -61,7 +63,7 @@ function isAdministrator(req, res, next) {
                 next();
             }
             else {
-                return res.status(400).json({ message: "Unauthorized." });
+                return res.status(401).json({ message: "Unauthorized." });
             }
         });
     });
@@ -75,7 +77,7 @@ function isCashier(req, res, next) {
                 next();
             }
             else {
-                return res.status(400).json({ message: "Unauthorized." });
+                return res.status(401).json({ message: "Unauthorized." });
             }
         });
     });

@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 //Librarys
 import { DataTablesModule } from 'angular-datatables';
 
 //Components
-import { NavbarComponent } from './companyWorkArea/components/navbar/navbar.component';
+import { SignInComponent } from './home/app/sign-in/sign-in.component';
+import { HomeComponent } from './home/app/home/home.component';
+import { HomeNavbarComponent } from './home/app/home-navbar/home-navbar.component';
 import { CashRegisterComponent } from './companyWorkArea/components/cash-register/cash-register.component';
 import { CategoriesComponent } from './companyWorkArea/app/categories/components/categories/categories.component';
 import { ProductsComponent } from './companyWorkArea/app/product/components/products/products.component';
@@ -25,6 +27,8 @@ import { ClientsComponent } from './companyWorkArea/app/clients/components/clien
 import { TicketsComponent } from './companyWorkArea/app/tickets/components/tickets/tickets.component';
 
 //Services
+import { AuthenticationService } from "./home/services/authentication/authentication.service";
+import { TokenInterceptorService } from "./home/services/tokenInterceptor/token-interceptor.service";
 import { CategoriesService } from "./companyWorkArea/app/categories/services/categories/categories.service";
 import { ProductsService } from "./companyWorkArea/app/product/services/products/products.service";
 import { IngredientsService } from "./companyWorkArea/app/ingredients/services/ingredients/ingredients.service";
@@ -35,10 +39,13 @@ import { ClientsService } from "./companyWorkArea/app/clients/services/clients/c
 import { FilterPipe } from './global/pipes/filter/filter.pipe';
 import { ThousandsPipe } from './global/pipes/thousands/thousands.pipe';
 
+//Guards
+import { AuthenticationGuard } from './home/guards/authentication/authentication.guard';
+
+
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     ProductsComponent,
     IngredientsComponent,
     ProductFormComponent,
@@ -49,7 +56,10 @@ import { ThousandsPipe } from './global/pipes/thousands/thousands.pipe';
     CompanyConfigurationComponent,
     ClientsComponent,
     TicketsComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    SignInComponent,
+    HomeComponent,
+    HomeNavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +73,14 @@ import { ThousandsPipe } from './global/pipes/thousands/thousands.pipe';
     ProductsService,
     IngredientsService,
     TicketsService,
-    ClientsService
+    ClientsService,
+    AuthenticationService,
+    AuthenticationGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
