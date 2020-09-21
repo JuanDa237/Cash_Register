@@ -4,7 +4,8 @@
     </div>
     <div class="row">        
         <div class="col-md-5 mb-md-0 mb-2">
-            <!-- Client Information --><div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <!-- Client Information -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h4">Cliente</h1>
             </div>
             <div class="input-group mb-2">
@@ -137,8 +138,8 @@
                         <!-- Ticket -->
                         <div class="m-2" id="ticket" #ticket>
                             <img src="../../../assets/logo.png" class="rounded" style="width: 54px; height: 54px;" alt="Logo">
-                            <h2 class="d-inline-block text-center">Del Perrero</h2>
-                            <p class="text-center text-justify border border-dark p-2 my-2">Encuentranos en fulldomi o escribenos al 3135444317 para hacer tus domicilios</p>                                    
+                            <h2 class="d-inline-block text-center">{{ company.name }}</h2>
+                            <p class="text-center text-justify border border-dark p-2 my-2">{{ company.ticketMessage }}</p>                                    
                             <p>                                        
                                 <strong>Nombre:</strong> {{ client.name }} |
                                 <span *ngIf="homeDelivery">

@@ -29,6 +29,7 @@ import { TicketsComponent } from './companyWorkArea/app/tickets/components/ticke
 //Services
 import { AuthenticationService } from "./home/services/authentication/authentication.service";
 import { TokenInterceptorService } from "./home/services/tokenInterceptor/token-interceptor.service";
+import { CompaniesService } from "./companyWorkArea/services/companiesService/companies.service";
 import { CategoriesService } from "./companyWorkArea/app/categories/services/categories/categories.service";
 import { ProductsService } from "./companyWorkArea/app/product/services/products/products.service";
 import { IngredientsService } from "./companyWorkArea/app/ingredients/services/ingredients/ingredients.service";
@@ -74,6 +75,7 @@ import { AuthenticationGuard } from './home/guards/authentication/authentication
     IngredientsService,
     TicketsService,
     ClientsService,
+    CompaniesService,
     AuthenticationService,
     AuthenticationGuard,
     {

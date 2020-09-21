@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { createRoles } from "./app/roles/initialSetup";
 
 import indexRoutes from "./app/index/indexRoutes";
+import companiesRoutes from "./app/companies/companiesRoutes";
 import categoriesRoutes from "./app/categories/categoriesRoutes";
 import productsRoutes from "./app/products/productsRoutes";
 import ingredientsRoutes from "./app/ingredients/ingredientsRoutes";
@@ -39,6 +40,7 @@ class Server {
 
     routes(): void {
         this.app.use("/", indexRoutes);
+        this.app.use("/api", companiesRoutes);
         this.app.use("/api", categoriesRoutes);
         this.app.use("/api", productsRoutes);
         this.app.use("/api", ingredientsRoutes);

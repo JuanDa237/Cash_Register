@@ -1,12 +1,14 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 //Models
+import { Company } from "../../models/company";
 import { Product } from "../../app/product/models/product";
 import { Client } from '../../app/clients/models/client';
 import { Ticket } from '../../app/tickets/models/ticket';
 import { ProductInTicket } from '../../app/product/models/productInTicket';
 
 //Services
+import { CompaniesService } from "../../services/companiesService/companies.service";
 import { ProductsService } from "../../app/product/services/products/products.service";
 import { ClientsService } from "../../app/clients/services/clients/clients.service";
 import { TicketsService } from "../../app/tickets/services/tickets/tickets.service";
@@ -42,14 +44,19 @@ export class CashRegisterComponent implements OnInit {
   public clients: Array<Client>;
   public client: Client;
 
+  //Company
+  public company: Company;
+
   //Datatables
   public dtOptions: DataTables.Settings;
 
   constructor(
     private productsService: ProductsService,
     private clientsService: ClientsService,
-    private ticketsService: TicketsService
+    private ticketsService: TicketsService,
+    private companiesService: CompaniesService
   ) {
+    this.company = null;
     this.products = null;
     this.shoppingCart = new Array<productInCart>(0);
     this.totalPrice = 0;
@@ -68,6 +75,7 @@ export class CashRegisterComponent implements OnInit {
   ngOnInit(): void {
     this.getProducts();
     this.getClients();
+    this.getCompany();
 
     //Lenguage Settings
     this.dtOptions = {
@@ -98,6 +106,16 @@ export class CashRegisterComponent implements OnInit {
         }
       },
       error => console.log(<any>error)
+    );
+  }
+
+  private getCompany() {
+
+    this.companiesService.getCompany().subscribe(
+      res => {
+        this.company = res[0];
+      },
+      err => console.log(<any>err)
     );
   }
 

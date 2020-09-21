@@ -9,6 +9,7 @@ const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const initialSetup_1 = require("./app/roles/initialSetup");
 const indexRoutes_1 = __importDefault(require("./app/index/indexRoutes"));
+const companiesRoutes_1 = __importDefault(require("./app/companies/companiesRoutes"));
 const categoriesRoutes_1 = __importDefault(require("./app/categories/categoriesRoutes"));
 const productsRoutes_1 = __importDefault(require("./app/products/productsRoutes"));
 const ingredientsRoutes_1 = __importDefault(require("./app/ingredients/ingredientsRoutes"));
@@ -34,6 +35,7 @@ class Server {
     }
     routes() {
         this.app.use("/", indexRoutes_1.default);
+        this.app.use("/api", companiesRoutes_1.default);
         this.app.use("/api", categoriesRoutes_1.default);
         this.app.use("/api", productsRoutes_1.default);
         this.app.use("/api", ingredientsRoutes_1.default);
