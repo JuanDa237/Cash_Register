@@ -35,7 +35,7 @@ class AuthenticationControllers {
                             }
                         }
                         else {
-                            return res.status(400).json({ message: "Username not found." });
+                            return res.status(404).json({ message: "Username not found." });
                         }
                     });
     }
