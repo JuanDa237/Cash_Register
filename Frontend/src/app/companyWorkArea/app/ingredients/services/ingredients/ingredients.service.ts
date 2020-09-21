@@ -23,12 +23,12 @@ export class IngredientsService {
 
     //Get List
     getIngredients(): Observable<any> {
-        return this.http.get(this.apiUri + "ingredients", { headers: this.headers});
+        return this.http.get<Array<Ingredient>>(this.apiUri + "ingredients", { headers: this.headers});
     }
 
     //Get One
     getIngredient(id: number): Observable<any> {
-        return this.http.get(this.apiUri + "ingredient/" + id, { headers: this.headers});
+        return this.http.get<Ingredient>(this.apiUri + "ingredient/" + id, { headers: this.headers});
     }
 
     //Post

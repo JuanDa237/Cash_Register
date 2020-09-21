@@ -23,12 +23,12 @@ export class CategoriesService {
 
     //Get List
     getCategories(): Observable<any> {
-        return this.http.get(this.apiUri + "categories", { headers: this.headers});
+        return this.http.get<Array<Category>>(this.apiUri + "categories", { headers: this.headers});
     }
 
     //Get One
     getCategory(id: number): Observable<any> {
-        return this.http.get(this.apiUri + "category/" + id, { headers: this.headers});
+        return this.http.get<Category>(this.apiUri + "category/" + id, { headers: this.headers});
     }
 
     //Post

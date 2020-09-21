@@ -5,6 +5,11 @@ import { Router } from "@angular/router";
 
 import { url } from "../../../companyWorkArea/services/global";
 
+interface User {
+  userName: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +27,7 @@ export class AuthenticationService {
   }
 
   //Post
-  signIn(user): Observable<any> {
+  signIn(user: User): Observable<any> {
     return this.http.post(this.apiUri + "authentication/singIn", user, { headers: this.headers, observe: "response" });
   }
 

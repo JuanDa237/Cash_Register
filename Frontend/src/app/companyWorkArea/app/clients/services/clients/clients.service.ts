@@ -23,20 +23,18 @@ export class ClientsService {
 
     //Get Interval
     getNewClientsInYear(): Observable<any> {
-        return this.http.get(this.apiUri + "clients/year", { headers: this.headers});
+        return this.http.get<Array<Client>>(this.apiUri + "clients/year", { headers: this.headers});
     }
 
     //Get All List
     getAllClients(): Observable<any> {
-        return this.http.get(this.apiUri + "all/clients", { headers: this.headers});
+        return this.http.get<Array<Client>>(this.apiUri + "all/clients", { headers: this.headers});
     }
 
     //Get List
     getClients(): Observable<any> {
-        return this.http.get(this.apiUri + "clients", { headers: this.headers});
+        return this.http.get<Array<Client>>(this.apiUri + "clients", { headers: this.headers});
     }
-
-    //Get One
 
     //Post
     saveClient(newClient: Client): Observable<any> {

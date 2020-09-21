@@ -24,25 +24,25 @@ export class TicketsService {
 
     //Get Interval
     getTicketsInInterval(since: string, until: string): Observable<any> {
-        return this.http.get(this.apiUri + "tickets/" + since + "/" + until, { headers: this.headers});
+        return this.http.get<Array<Ticket>>(this.apiUri + "tickets/" + since + "/" + until, { headers: this.headers});
     }
 
     getTicketsInYear(): Observable<any> {
-        return this.http.get(this.apiUri + "tickets/year", { headers: this.headers});
+        return this.http.get<Array<Ticket>>(this.apiUri + "tickets/year", { headers: this.headers});
     }
 
     //Get List
     getTickets(): Observable<any> {
-        return this.http.get(this.apiUri + "tickets", { headers: this.headers});
+        return this.http.get<Array<Ticket>>(this.apiUri + "tickets", { headers: this.headers});
     }
 
     getProductsInTickets(): Observable<any> {
-        return this.http.get(this.apiUri + "tickets/products", { headers: this.headers});
+        return this.http.get<Array<ProductInTicket>>(this.apiUri + "tickets/products", { headers: this.headers});
     }
 
     //Get One
     getProductsInTicket(id: number): Observable<any> {
-        return this.http.get(this.apiUri + "ticket/products/" + id, { headers: this.headers});
+        return this.http.get<Array<ProductInTicket>>(this.apiUri + "ticket/products/" + id, { headers: this.headers});
     }
 
     //Post

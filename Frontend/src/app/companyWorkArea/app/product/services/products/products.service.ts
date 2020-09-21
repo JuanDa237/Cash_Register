@@ -24,25 +24,25 @@ export class ProductsService {
 
     //Get All List
     getAllProducts(): Observable<any> {
-        return this.http.get(this.apiUri + "all/products", { headers: this.headers});
+        return this.http.get<Array<Product>>(this.apiUri + "all/products", { headers: this.headers});
     }
 
     getIngredientsInProducts(): Observable<any> {
-        return this.http.get(this.apiUri + "products/ingredients", { headers: this.headers});
+        return this.http.get<Array<IngredientInProduct>>(this.apiUri + "products/ingredients", { headers: this.headers});
     }
     
     //Get List
     getProducts(): Observable<any> {
-        return this.http.get(this.apiUri + "products", { headers: this.headers});
+        return this.http.get<Array<Product>>(this.apiUri + "products", { headers: this.headers});
     }
     
     //Get One
     getProduct(id: number): Observable<any> {
-        return this.http.get(this.apiUri + "product/" + id, { headers: this.headers});
+        return this.http.get<Product>(this.apiUri + "product/" + id, { headers: this.headers});
     }
 
     getIngredientsInProduct(id: number): Observable<any> {
-        return this.http.get(this.apiUri + "product/ingredients/" + id, { headers: this.headers});
+        return this.http.get<Array<IngredientInProduct>>(this.apiUri + "product/ingredients/" + id, { headers: this.headers});
     }
     
     //Post
