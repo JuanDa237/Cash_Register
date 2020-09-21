@@ -13,10 +13,10 @@ class CategoriesRoutes {
 
     routes(): void {        
         //Get list    
-        this.router.get("/categories", categoriesControllers.listCategories);
+        this.router.get("/categories", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], categoriesControllers.listCategories);
 
         //Get one
-        this.router.get("/category/:id", categoriesControllers.getOneCategory);
+        this.router.get("/category/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], categoriesControllers.getOneCategory);
 
         //Post
         this.router.post("/category", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], categoriesControllers.createCategory);

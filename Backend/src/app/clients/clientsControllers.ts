@@ -8,7 +8,7 @@ class ClientsControllers {
         
         var year: number = new Date().getFullYear();
 
-        (await pool).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, active FROM clients WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31'", [year, year])
+        (await pool).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, active FROM clients WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31' AND idCompany = ?", [year, year, req.user.idCompany])
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -16,7 +16,7 @@ class ClientsControllers {
 
     //Get All List
     public async listAllClients (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients;")
+        (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE idCompany = ?", [req.user.idCompany])
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -24,7 +24,7 @@ class ClientsControllers {
     
     //Get List
     public async listClients (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE active = true;")
+        (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE active = true AND idCompany = ?", [req.user.idCompany])
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -33,7 +33,7 @@ class ClientsControllers {
     //Get One
     public async getOneClient (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true;", [id])
+        (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);
@@ -46,7 +46,7 @@ class ClientsControllers {
 
     //Post
     public async createClient (req: Request, res: Response): Promise<void> {
-        
+        req.body.idCompany = req.user.idCompany; 
         (await pool).query("INSERT INTO clients SET ?", [req.body]);
         res.status(200).json({ message: "Saved client." });        
     }

@@ -10,9 +10,9 @@ class CategoriesRoutes {
     }
     routes() {
         //Get list    
-        this.router.get("/categories", categoriesControllers_1.categoriesControllers.listCategories);
+        this.router.get("/categories", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], categoriesControllers_1.categoriesControllers.listCategories);
         //Get one
-        this.router.get("/category/:id", categoriesControllers_1.categoriesControllers.getOneCategory);
+        this.router.get("/category/:id", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], categoriesControllers_1.categoriesControllers.getOneCategory);
         //Post
         this.router.post("/category", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], categoriesControllers_1.categoriesControllers.createCategory);
         //Update

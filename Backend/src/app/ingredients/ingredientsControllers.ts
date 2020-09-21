@@ -6,7 +6,7 @@ class IngredientsControllers {
     
     //Get list
     public async listIngredients (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE active = true;")
+        (await pool).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE active = true AND idCompany = ?", [req.user.idCompany])
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -15,7 +15,7 @@ class IngredientsControllers {
     //Get one
     public async getOneIngredient (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true;", [id])
+        (await pool).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);
@@ -28,7 +28,7 @@ class IngredientsControllers {
 
     //Post
     public async createIngredient (req: Request, res: Response): Promise<void> {
-        
+        req.body.idCompany = req.user.idCompany;
         (await pool).query("INSERT INTO ingredients SET ?", [req.body]);
         res.status(200).json({ message: "Saved ingredient." });        
     }
@@ -43,10 +43,11 @@ class IngredientsControllers {
     public async updateAmountIngredients (req: Request, res: Response): Promise<void>  {
         
         var ids = req.body;
+        const idCompany = req.user.idCompany;
         
         for(let x = 0; x < ids.length; x++) {
 
-            await (await pool).query("SELECT idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ?", [ids[x]])
+            await (await pool).query("SELECT idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND idCompany = ?", [ids[x], idCompany])
                     .then(async (dates) => {
                         
                         const ingredientsInProduct = dates;                        
@@ -56,7 +57,7 @@ class IngredientsControllers {
                             let spendingAmount = ingredientsInProduct[i].spendingAmount;
                             let idIngredient = ingredientsInProduct[i].idIngredient;
 
-                            await (await pool).query("SELECT amount FROM ingredients WHERE id = ? AND active = true;", [idIngredient])
+                            await (await pool).query("SELECT amount FROM ingredients WHERE id = ? AND active = true AND idCompany = ?", [idIngredient, idCompany])
                                         .then(async (date) => {
                                             
                                             let newAmount = date[0].amount - spendingAmount;                                                                                                                                                                            

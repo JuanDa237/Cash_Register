@@ -18,7 +18,7 @@ class ProductsController {
     //Get All List
     listAllProducts(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name, price FROM products;")
+            (yield database_1.default).query("SELECT id, name, price FROM products WHERE idCompany = ?", [req.user.idCompany])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -27,7 +27,7 @@ class ProductsController {
     //Get list
     listProducts(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name, price FROM products WHERE active = true;")
+            (yield database_1.default).query("SELECT id, name, price FROM products WHERE active = true AND idCompany = ?", [req.user.idCompany])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -35,7 +35,7 @@ class ProductsController {
     }
     listIngredientsInProducts(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE active = true;")
+            (yield database_1.default).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE active = true AND idCompany = ?", [req.user.idCompany])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -45,7 +45,7 @@ class ProductsController {
     getOneProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT id, idCategory , name, price FROM products WHERE id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, idCategory , name, price FROM products WHERE id = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -59,7 +59,7 @@ class ProductsController {
     getIngredientsInProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -68,6 +68,7 @@ class ProductsController {
     //Post
     createProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            req.body.idCompany = req.user.idCompany;
             (yield database_1.default).query("INSERT INTO products SET ?", [req.body])
                 .then(function (value) {
                 return __awaiter(this, void 0, void 0, function* () {
@@ -81,6 +82,7 @@ class ProductsController {
     }
     createIngredientInProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            req.body.idCompany = req.user.idCompany;
             (yield database_1.default).query("INSERT INTO detailProductsIngredients SET ?", [req.body]);
             res.status(200).json({ message: "Saved ingredient in product." });
         });

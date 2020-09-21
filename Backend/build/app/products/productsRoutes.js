@@ -12,10 +12,10 @@ class ProductsRoutes {
         //Get All List
         this.router.get("/all/products", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], productsControllers_1.productsController.listAllProducts);
         //Get list            
-        this.router.get("/products", productsControllers_1.productsController.listProducts);
+        this.router.get("/products", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isCashier], productsControllers_1.productsController.listProducts);
         this.router.get("/products/ingredients", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], productsControllers_1.productsController.listIngredientsInProducts);
         //Get one        
-        this.router.get("/product/:id", productsControllers_1.productsController.getOneProduct);
+        this.router.get("/product/:id", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], productsControllers_1.productsController.getOneProduct);
         this.router.get("/product/ingredients/:id", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isCashier], productsControllers_1.productsController.getIngredientsInProduct);
         //Post        
         this.router.post("/product", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], productsControllers_1.productsController.createProduct);

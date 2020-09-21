@@ -18,7 +18,7 @@ class IngredientsControllers {
     //Get list
     listIngredients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE active = true;")
+            (yield database_1.default).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE active = true AND idCompany = ?", [req.user.idCompany])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -28,7 +28,7 @@ class IngredientsControllers {
     getOneIngredient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -42,6 +42,7 @@ class IngredientsControllers {
     //Post
     createIngredient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            req.body.idCompany = req.user.idCompany;
             (yield database_1.default).query("INSERT INTO ingredients SET ?", [req.body]);
             res.status(200).json({ message: "Saved ingredient." });
         });
@@ -57,14 +58,15 @@ class IngredientsControllers {
     updateAmountIngredients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var ids = req.body;
+            const idCompany = req.user.idCompany;
             for (let x = 0; x < ids.length; x++) {
-                yield (yield database_1.default).query("SELECT idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ?", [ids[x]])
+                yield (yield database_1.default).query("SELECT idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND idCompany = ?", [ids[x], idCompany])
                     .then((dates) => __awaiter(this, void 0, void 0, function* () {
                     const ingredientsInProduct = dates;
                     for (var i = 0; i < ingredientsInProduct.length; i++) {
                         let spendingAmount = ingredientsInProduct[i].spendingAmount;
                         let idIngredient = ingredientsInProduct[i].idIngredient;
-                        yield (yield database_1.default).query("SELECT amount FROM ingredients WHERE id = ? AND active = true;", [idIngredient])
+                        yield (yield database_1.default).query("SELECT amount FROM ingredients WHERE id = ? AND active = true AND idCompany = ?", [idIngredient, idCompany])
                             .then((date) => __awaiter(this, void 0, void 0, function* () {
                             let newAmount = date[0].amount - spendingAmount;
                             yield (yield database_1.default).query("UPDATE ingredients SET amount = ? WHERE id = ?", [newAmount, idIngredient]);

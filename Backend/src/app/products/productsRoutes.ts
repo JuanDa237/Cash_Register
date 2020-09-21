@@ -16,11 +16,11 @@ class ProductsRoutes {
         this.router.get("/all/products", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], productsController.listAllProducts);
 
         //Get list            
-        this.router.get("/products", productsController.listProducts);
+        this.router.get("/products", [authenticationJwt.verifyToken, authenticationJwt.isCashier], productsController.listProducts);
         this.router.get("/products/ingredients", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], productsController.listIngredientsInProducts);
 
         //Get one        
-        this.router.get("/product/:id", productsController.getOneProduct);        
+        this.router.get("/product/:id", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], productsController.getOneProduct);        
         this.router.get("/product/ingredients/:id", [authenticationJwt.verifyToken, authenticationJwt.isCashier], productsController.getIngredientsInProduct);
 
         //Post        

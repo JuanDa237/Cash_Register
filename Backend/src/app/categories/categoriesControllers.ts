@@ -6,7 +6,7 @@ class CategoriesControllers {
     
     //Get List
     public async listCategories (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, name FROM categories WHERE active = true;")
+        (await pool).query("SELECT id, name FROM categories WHERE active = true AND idCompany = ?", [req.user.idCompany])
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -15,7 +15,7 @@ class CategoriesControllers {
     //Get One    
     public async getOneCategory (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT id, name FROM categories WHERE id = ? AND active = true;", [id])
+        (await pool).query("SELECT id, name FROM categories WHERE id = ? AND active = true AND idCompany = ?;", [id, req.user.idCompany])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);
@@ -28,7 +28,7 @@ class CategoriesControllers {
 
     //Post
     public async createCategory (req: Request, res: Response): Promise<void> {
-        
+        req.body.idCompany = req.user.idCompany;
         (await pool).query("INSERT INTO categories SET ?", [req.body]);
         res.status(200).json({ message: "Saved category." });        
     }

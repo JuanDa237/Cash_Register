@@ -19,7 +19,7 @@ class ClientsControllers {
     listClientsInYear(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var year = new Date().getFullYear();
-            (yield database_1.default).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, active FROM clients WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31'", [year, year])
+            (yield database_1.default).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, active FROM clients WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31' AND idCompany = ?", [year, year, req.user.idCompany])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -28,7 +28,7 @@ class ClientsControllers {
     //Get All List
     listAllClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients;")
+            (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE idCompany = ?", [req.user.idCompany])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -37,7 +37,7 @@ class ClientsControllers {
     //Get List
     listClients(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE active = true;")
+            (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE active = true AND idCompany = ?", [req.user.idCompany])
                 .then(dates => {
                 res.status(200).json(dates);
             });
@@ -47,7 +47,7 @@ class ClientsControllers {
     getOneClient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true;", [id])
+            (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
                 .then(dates => {
                 if (dates != 0) {
                     return res.status(200).json(dates);
@@ -61,6 +61,7 @@ class ClientsControllers {
     //Post
     createClient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            req.body.idCompany = req.user.idCompany;
             (yield database_1.default).query("INSERT INTO clients SET ?", [req.body]);
             res.status(200).json({ message: "Saved client." });
         });

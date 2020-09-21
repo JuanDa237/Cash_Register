@@ -7,7 +7,7 @@ class ProductsController {
     //Get All List
     public async listAllProducts (req: Request, res: Response): Promise<void> {
         
-        (await pool).query("SELECT id, name, price FROM products;")
+        (await pool).query("SELECT id, name, price FROM products WHERE idCompany = ?", [req.user.idCompany])
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -16,7 +16,7 @@ class ProductsController {
     //Get list
 
     public async listProducts (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, name, price FROM products WHERE active = true;")
+        (await pool).query("SELECT id, name, price FROM products WHERE active = true AND idCompany = ?", [req.user.idCompany])
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -24,7 +24,7 @@ class ProductsController {
 
     public async listIngredientsInProducts (req: Request, res: Response): Promise<void> {
         
-        (await pool).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE active = true;")
+        (await pool).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE active = true AND idCompany = ?", [req.user.idCompany])
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -33,7 +33,7 @@ class ProductsController {
     //Get one
     public async getOneProduct (req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        (await pool).query("SELECT id, idCategory , name, price FROM products WHERE id = ? AND active = true;", [id])
+        (await pool).query("SELECT id, idCategory , name, price FROM products WHERE id = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
                     .then(dates => {
                         if(dates != 0) {
                             return res.status(200).json(dates);
@@ -47,7 +47,7 @@ class ProductsController {
     public async getIngredientsInProduct (req: Request, res: Response): Promise<void> {
         
         const { id } = req.params;
-        (await pool).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND active = true;", [id])
+        (await pool).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
                     .then(dates => {
                         res.status(200).json(dates);
                     });
@@ -56,7 +56,7 @@ class ProductsController {
     //Post
 
     public async createProduct (req: Request, res: Response): Promise<void> {
-        
+        req.body.idCompany = req.user.idCompany;
         (await pool).query("INSERT INTO products SET ?", [req.body])
                     .then(async function(value: any) {
 
@@ -67,7 +67,8 @@ class ProductsController {
                     });
     }
 
-    public async createIngredientInProduct (req: Request, res: Response): Promise<void> {        
+    public async createIngredientInProduct (req: Request, res: Response): Promise<void> {
+        req.body.idCompany = req.user.idCompany;
         (await pool).query("INSERT INTO detailProductsIngredients SET ?", [req.body]);
         res.status(200).json({ message: "Saved ingredient in product." });
     }
