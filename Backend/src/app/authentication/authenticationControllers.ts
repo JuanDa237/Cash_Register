@@ -14,9 +14,9 @@ class AuthenticationControllers {
         const { userName, password } = request.body;
 
         return (await pool).query("SELECT id, password FROM users WHERE userName = ?", [userName])
-                    .then(async (dates): Promise<Response> => {
+                    .then(async (dates: Array<any>): Promise<Response> => {
                         
-                        if(dates != 0) {
+                        if(dates.length != 0) {
                             
                             const correctPassword: boolean = await validatePassword(password, dates[0].password);
 

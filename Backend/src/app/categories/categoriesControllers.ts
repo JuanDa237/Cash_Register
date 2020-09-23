@@ -18,10 +18,10 @@ class CategoriesControllers {
         const { id } = request.params;
 
         return (await pool).query("SELECT id, name FROM categories WHERE id = ? AND active = true AND idCompany = ?;", [id, request.user.idCompany])
-                        .then(dates => {
+                        .then((dates: Array<any>) => {
                             
-                            if(dates != 0) {
-                                return response.status(200).json(dates);
+                            if(dates.length != 0) {
+                                return response.status(200).json(dates[0]);
                             }
                             else {
                                 return response.status(404).json({ message: "Not found" });
@@ -51,7 +51,15 @@ class CategoriesControllers {
     public async deleteCategory(request: Request, response: Response): Promise<Response> {
         const { id } = request.params;
         return (await pool).query("UPDATE categories SET active = false WHERE id = ?", [id])
-                        .then(value => {
+                        .then(async value => {
+                            
+                            await (await pool).query("SELECT id FROM products WHERE idCategory = ? AND active = true", [id])
+                            .then(async (value: Array<any>) => {
+                                //Delete products in category
+                                for(var i = 0; i < value.length; i++) {
+                                    (await pool).query("UPDATE products SET active = false WHERE id = ?", [value[i].id])
+                                }
+                            });
                             return response.status(200).json({ message: "Category eliminated successfully." });
                         });
     }

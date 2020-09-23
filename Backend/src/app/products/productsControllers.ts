@@ -34,10 +34,10 @@ class ProductsController {
     public async getOneProduct(request: Request, response: Response): Promise<Response> {
         const { id } = request.params;
         return (await pool).query("SELECT id, idCategory , name, price FROM products WHERE id = ? AND active = true AND idCompany = ?", [id, request.user.idCompany])
-                    .then(dates => {
+                    .then((dates: Array<any>) => {
                         
-                        if(dates != 0) {
-                            return response.status(200).json(dates);
+                        if(dates.length != 0) {
+                            return response.status(200).json(dates[0]);
                         }
                         else {
                             return response.status(404).json({ message: "Not found" });

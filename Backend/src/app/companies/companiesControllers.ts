@@ -7,10 +7,10 @@ class CompaniesControllers {
     public async getOneCompany(request: Request, response: Response): Promise<Response> {
         
         return (await pool).query("SELECT name, imageUrl, ticketMessage FROM companies WHERE id = ? AND active = true;", [request.user.idCompany])
-                        .then(dates => {
+                        .then((dates: Array<any>) => {
 
-                            if(dates != 0) {
-                                return response.status(200).json(dates);
+                            if(dates.length != 0) {
+                                return response.status(200).json(dates[0]);
                             }
                             else {
                                 return response.status(404).json({ message: "Not found." });

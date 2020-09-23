@@ -23,7 +23,7 @@ class AuthenticationControllers {
             const { userName, password } = request.body;
             return (yield database_1.default).query("SELECT id, password FROM users WHERE userName = ?", [userName])
                 .then((dates) => __awaiter(this, void 0, void 0, function* () {
-                if (dates != 0) {
+                if (dates.length != 0) {
                     const correctPassword = yield User_1.validatePassword(password, dates[0].password);
                     if (correctPassword) {
                         const token = jsonwebtoken_1.default.sign({

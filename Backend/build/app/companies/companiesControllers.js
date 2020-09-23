@@ -19,9 +19,9 @@ class CompaniesControllers {
     getOneCompany(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             return (yield database_1.default).query("SELECT name, imageUrl, ticketMessage FROM companies WHERE id = ? AND active = true;", [request.user.idCompany])
-                .then(dates => {
-                if (dates != 0) {
-                    return response.status(200).json(dates);
+                .then((dates) => {
+                if (dates.length != 0) {
+                    return response.status(200).json(dates[0]);
                 }
                 else {
                     return response.status(404).json({ message: "Not found." });

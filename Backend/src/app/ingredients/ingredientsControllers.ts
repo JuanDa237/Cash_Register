@@ -16,9 +16,10 @@ class IngredientsControllers {
     public async getOneIngredient(request: Request, response: Response): Promise<Response> {
         const { id } = request.params;
         return (await pool).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true AND idCompany = ?", [id, request.user.idCompany])
-                    .then(dates => {
-                        if(dates != 0) {
-                            return response.status(200).json(dates);
+                    .then((dates: Array<any>) => {
+                        
+                        if(dates.length != 0) {
+                            return response.status(200).json(dates[0]);
                         }
                         else {
                             return response.status(404).json({ message: "Not found" });

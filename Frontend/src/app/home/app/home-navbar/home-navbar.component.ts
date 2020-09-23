@@ -32,7 +32,7 @@ export class HomeNavbarComponent implements OnInit {
         
         this.companiesService.getCompany().subscribe(
           res => {
-            this.company = res[0];
+            this.company = res;
           },
           error => console.log(<any>error)
         );

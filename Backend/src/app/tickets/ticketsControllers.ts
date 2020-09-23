@@ -42,9 +42,10 @@ class TicketsControllers {
     public async getOneTicket(request: Request, response: Response): Promise<Response> {
         const { id } = request.params;
         return (await pool).query("SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ? AND idCompany = ?", [id, request.user.idCompany])
-                    .then(dates => {
-                        if(dates != 0) {
-                            return response.status(200).json(dates);
+                    .then((dates: Array<any>) => {
+                        
+                        if(dates.length != 0) {
+                            return response.status(200).json(dates[0]);
                         }
                         else {
                             return response.status(404).json({ message: "Not found" });

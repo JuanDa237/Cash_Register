@@ -46,9 +46,9 @@ class ProductsController {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = request.params;
             return (yield database_1.default).query("SELECT id, idCategory , name, price FROM products WHERE id = ? AND active = true AND idCompany = ?", [id, request.user.idCompany])
-                .then(dates => {
-                if (dates != 0) {
-                    return response.status(200).json(dates);
+                .then((dates) => {
+                if (dates.length != 0) {
+                    return response.status(200).json(dates[0]);
                 }
                 else {
                     return response.status(404).json({ message: "Not found" });
