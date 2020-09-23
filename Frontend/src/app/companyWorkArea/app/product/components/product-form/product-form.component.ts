@@ -80,23 +80,23 @@ export class ProductFormComponent implements OnInit {
     var id: number = this.activatedRoute.snapshot.params.id;
 
     if(id != null) {
+      
       this.edit = true;
-
       this.productsService.getProduct(id).subscribe(
-        res => {
-          this.product = res[0];
+        response => {
+          this.product = response;
 
           this.categoriesService.getCategory(this.product.idCategory).subscribe(
-            res => {
-              this.categoryOfTheProduct = res[0];
+            responseTwo => {
+              this.categoryOfTheProduct = responseTwo;
               this.chosenCategory = this.categoryOfTheProduct;
 
               this.getIngredients();
             },
-            err => console.log(<any>err)
+            error => console.error(error)
           );          
         },
-        err => console.log(<any>err)
+        error => console.error(error)
       );
     }
     else {
@@ -116,16 +116,16 @@ export class ProductFormComponent implements OnInit {
   private getIngredients(): void {
 
     this.ingredientsService.getIngredients().subscribe(
-      res => {
+      response => {
 
-        this.ingredients = res;
+        this.ingredients = response;
 
         if(this.edit) {
           
           this.productsService.getIngredientsInProduct(this.product.id).subscribe(
-            res => {
+            responseTwo => {
 
-              this.ingredientsInProduct = res;                          
+              this.ingredientsInProduct = responseTwo;                          
 
               if(this.ingredientsInProduct == null || this.ingredientsInProduct.length == 0) {
 
@@ -154,7 +154,7 @@ export class ProductFormComponent implements OnInit {
 
               this.actualizeUtility();
             },
-            err => console.log(<any>err)
+            error => console.error(error)
           );
         }
         else {
@@ -164,7 +164,7 @@ export class ProductFormComponent implements OnInit {
           }
         }
       },
-      err => console.log(<any>err)
+      error => console.error(error)
     );
   }
 
@@ -187,8 +187,8 @@ export class ProductFormComponent implements OnInit {
     if(this.validateProduct()) {
 
       this.productsService.saveProduct(this.product).subscribe(
-        res => {
-          var id: number = res.id;
+        response => {
+          var id: number = response.id;
 
           for(let i = 0; i < this.ingredients.length; i++) {
             if(this.spendingAmount[i] != null && this.spendingAmount[i] != 0) {
@@ -201,19 +201,26 @@ export class ProductFormComponent implements OnInit {
               }
 
               this.productsService.createIngredientInProduct(newIngredientInProduct).subscribe(
-                res => {},
-                err => console.log(<any>err)
+                response => {},
+                error => console.error(error)
               );
             }
           }
 
           this.router.navigate(["/products"]);          
         },
-        err => console.log(<any>err)
+        error => console.error(error)
       );
     }
     else {
-
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Lo sentimos.',
+        text: 'Algo salio mal!',
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   }
 
@@ -239,7 +246,7 @@ export class ProductFormComponent implements OnInit {
             title: 'Se edito satisfactoriamente el producto.',
             showConfirmButton: false,
             timer: 1500
-          })
+          });
           
           for(let i = 0; i < this.ingredients.length; i++) {
             //Update relations
@@ -258,8 +265,8 @@ export class ProductFormComponent implements OnInit {
                 }
 
                 this.productsService.deleteIngredientInProduct(id).subscribe(
-                  res => {},
-                  err => console.log(<any>err)
+                  resolve => {},
+                  error => console.error(error)
                 );
               }  
               else if(this.spendingAmountConst[i] == null) {
@@ -271,8 +278,8 @@ export class ProductFormComponent implements OnInit {
                 };
                 
                 this.productsService.createIngredientInProduct(newIngredientsInProduct).subscribe(
-                  res => {},
-                  err => console.log(<any>err)
+                  resolve => {},
+                  error => console.error(error)
                 );
               }
               else {
@@ -285,18 +292,18 @@ export class ProductFormComponent implements OnInit {
                 };
                 
                 this.productsService.updateIngredientInProduct(updatedIngredientsInProduct).subscribe(
-                  res => {},
-                  err => console.log(<any>err)
+                  resolve => {},
+                  error => console.error(error)
                 );
               }
           }                     
         }
         
         this.productsService.updateProduct(this.product).subscribe(
-          res => {
+          resolve => {
             this.router.navigate(["/products"]);
             },
-            err => console.log(<any>err)           
+            error => console.error(error)           
           );
         }
       });
@@ -313,6 +320,7 @@ export class ProductFormComponent implements OnInit {
       confirmButtonText: 'Si',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
+
       if (result.value) {
         Swal.fire({
           position: 'top-end',
@@ -321,14 +329,15 @@ export class ProductFormComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
+
         this.productsService.deleteProduct(this.product.id).subscribe(
-          res => {
+          resolve => {
             this.router.navigate(["/products"]);
           },
-          err => console.log(<any>err)
-        );        
+          error => console.error(error)
+        );
       }
-    });      
+    });
   }
 
   //Usefull methods

@@ -97,7 +97,7 @@ export class ClientsComponent implements OnInit {
 
       this.client.creationDate = this.actualDate();
       this.clientsService.saveClient(this.client).subscribe(
-        res => {
+        response => {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -106,8 +106,9 @@ export class ClientsComponent implements OnInit {
             timer: 1500
           });
           this.getClients();
+          this.chart();
         },
-        err => console.log(<any>err)
+        error => console.error(error)
         
       );
     }
@@ -129,7 +130,8 @@ export class ClientsComponent implements OnInit {
       
       this.client.creationDate = this.actualDate();
       this.clientsService.updateClient(this.client).subscribe(
-        res => {
+        response => {
+
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -139,7 +141,7 @@ export class ClientsComponent implements OnInit {
           });
           this.getClients();
         },
-        err => console.log(<any>err)
+        error => console.error(error)
       );
     }
     else {
@@ -150,7 +152,7 @@ export class ClientsComponent implements OnInit {
         text: 'Algo salio mal!',
         showConfirmButton: false,
         timer: 1500
-      })
+      });
     }
   }
 
@@ -180,7 +182,8 @@ export class ClientsComponent implements OnInit {
         if (result.value) {
 
           this.clientsService.deleteClient(this.client.id).subscribe(
-            res => {
+            response => {
+
               Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -189,8 +192,9 @@ export class ClientsComponent implements OnInit {
                 timer: 1500
               });              
               this.getClients();
+              this.chart();
             },
-            err => console.log(<any>err)
+            error => console.error(error)
           ); 
         }
       });
@@ -200,9 +204,9 @@ export class ClientsComponent implements OnInit {
   public chart(): void {
 
     this.clientsService.getNewClientsInYear().subscribe(
-      res => {
-
-        var clientsInYear: Array<any> = res;
+      response => {
+        
+        var clientsInYear: Array<any> = response;
         var totalNewClients: Array<number> = new Array<number>(12);
         var totalExClients: Array<number> = new Array<number>(12);
 
@@ -225,7 +229,7 @@ export class ClientsComponent implements OnInit {
 
           this.myChart.destroy();
         }
-
+        
         this.myChart = new Chart("myChart", {
                 type: 'line',
                 data: {
@@ -258,7 +262,7 @@ export class ClientsComponent implements OnInit {
                 }
             });
       },
-      err => console.log(<any>err)
+      error => console.error(error)
     );
   }
 

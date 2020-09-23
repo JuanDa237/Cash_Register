@@ -43,22 +43,20 @@ export class IngredientsComponent implements OnInit {
     }
   }
 
-  private getIngredients() {
+  private getIngredients(): void{
+    
     this.ingredientsService.getIngredients().subscribe(
       response => {
-        if(response.length >= 0) {
-
-          this.ingredients = response;
-        }
+        this.ingredients = response;
       },
-      error => console.log(<any>error)
+      error => console.error(error)
     );
   }
 
   //Methods for html
   public changeModal(ingredient?: Ingredient): void {
     
-    if(ingredient != null && this.validateIngredient(ingredient)) {
+    if(this.validateIngredient(ingredient)) {
 
       this.create = false;
       this.ingredient = {
@@ -82,8 +80,10 @@ export class IngredientsComponent implements OnInit {
   public createIngredient(): void {
 
     if(this.validateIngredient(this.ingredient)) {
+      
       this.ingredientsService.saveIngredient(this.ingredient).subscribe(
-        res => {
+        response => {
+
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -93,7 +93,7 @@ export class IngredientsComponent implements OnInit {
           });
           this.getIngredients();
         },
-        err => console.log(<any>err)
+        error => console.error(error)
       );
     }
     else {
@@ -104,7 +104,7 @@ export class IngredientsComponent implements OnInit {
         text: 'Algo salio mal!',
         showConfirmButton: false,
         timer: 1500
-      })
+      });
     }
   }
 
@@ -113,7 +113,7 @@ export class IngredientsComponent implements OnInit {
     if(this.validateIngredient(this.ingredient)) {
 
       this.ingredientsService.updateIngredient(this.ingredient).subscribe(
-        res => {
+        response => {
 
           Swal.fire({
             position: 'top-end',
@@ -125,7 +125,7 @@ export class IngredientsComponent implements OnInit {
 
           this.getIngredients();
         },
-        err => console.log(<any>err)
+        error => console.error(error)
       );
     }
     else {
@@ -137,7 +137,7 @@ export class IngredientsComponent implements OnInit {
         text: 'Algo salio mal!',
         showConfirmButton: false,
         timer: 1500
-      })
+      });
     }
   }
 
@@ -166,7 +166,7 @@ export class IngredientsComponent implements OnInit {
         if (result.value) {
 
           this.ingredientsService.deleteIngredient(this.ingredient.id).subscribe(
-            res => {
+            response => {
 
               Swal.fire({
                 position: 'top-end',
@@ -178,7 +178,7 @@ export class IngredientsComponent implements OnInit {
               
               this.getIngredients();            
             },
-            err => console.log(<any>err)
+            error => console.error(error)
           ); 
         }
       });
@@ -196,7 +196,7 @@ export class IngredientsComponent implements OnInit {
 
   private validateIngredient(ingredient: Ingredient): boolean {
 
-    if(ingredient.name.trim() != "" && ingredient.priceByUnit != null && ingredient.amount != null)
+    if(ingredient != null && ingredient.name.trim() != "" && ingredient.priceByUnit != null && ingredient.amount != null)
       return true;
     
     return false;

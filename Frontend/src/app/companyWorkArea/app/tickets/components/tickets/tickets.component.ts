@@ -55,7 +55,7 @@ export class TicketsComponent implements OnInit {
         this.tickets = res;
         this.getClients();
       },
-      err => console.log(<any>err)
+      error => console.error(error)
     );
   }
 
@@ -95,9 +95,8 @@ export class TicketsComponent implements OnInit {
   private chart(): void {
 
     this.ticketsService.getTicketsInYear().subscribe(
-      res => {
+      response => {
         
-        var dates: Array<any> = res;
         var totalInMonths: Array<number> = new Array<number>(12);
         var homeDeliverysInMonths: Array<number> = new Array<number>(12);
 
@@ -106,12 +105,12 @@ export class TicketsComponent implements OnInit {
           homeDeliverysInMonths[i] = 0;
         }
 
-        for(var i = 0; i < dates.length; i++) {
+        for(var i = 0; i < response.length; i++) {
 
-          totalInMonths[Number(dates[i].creationDate)] += dates[i].total;
+          totalInMonths[Number(response[i].creationDate)] += response[i].total;
 
-          if(dates[i].homeDelivery) {
-            homeDeliverysInMonths[Number(dates[i].creationDate)]++;
+          if(response[i].homeDelivery) {
+            homeDeliverysInMonths[Number(response[i].creationDate)]++;
           }
         }
 
@@ -149,7 +148,7 @@ export class TicketsComponent implements OnInit {
             }
         });
       },
-      err => console.log(<any>err)
+      error => console.error(error)
     );   
   }
   //Methods for html
@@ -162,7 +161,7 @@ export class TicketsComponent implements OnInit {
           this.getClients();
         }
       },
-      err => console.log(<any>err)
+      error => console.error(error)
     );
   }
 

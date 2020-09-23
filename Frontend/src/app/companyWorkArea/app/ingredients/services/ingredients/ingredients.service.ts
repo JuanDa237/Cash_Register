@@ -11,40 +11,40 @@ import { Ingredient } from "../../models/ingredient";
 })
 export class IngredientsService {
 
-    private apiUri: string;
+    private apiUrl: string;
     private headers: HttpHeaders;
 
     constructor (
         private http: HttpClient
     ) {
     this.headers = new HttpHeaders().set("Content-type", "application/json");
-    this.apiUri = url;
+    this.apiUrl = url;
     }
 
     //Get List
-    getIngredients(): Observable<any> {
-        return this.http.get<Array<Ingredient>>(this.apiUri + "ingredients", { headers: this.headers});
+    getIngredients(): Observable<Ingredient[]> {
+        return this.http.get<Ingredient[]>(this.apiUrl + "ingredients", { headers: this.headers});
     }
 
     //Get One
-    getIngredient(id: number): Observable<any> {
-        return this.http.get<Ingredient>(this.apiUri + "ingredient/" + id, { headers: this.headers});
+    getIngredient(id: number): Observable<Ingredient> {
+        return this.http.get<Ingredient>(this.apiUrl + "ingredient/" + id, { headers: this.headers});
     }
 
     //Post
     saveIngredient(newIngredient: Ingredient): Observable<any> {
         let params = JSON.stringify(newIngredient);
-        return this.http.post(this.apiUri + "ingredient", params, { headers: this.headers});
+        return this.http.post(this.apiUrl + "ingredient", params, { headers: this.headers});
     }
 
     //Update
     updateIngredient(ingredient: Ingredient): Observable<any> {
         var params = JSON.stringify(ingredient);
-        return this.http.put(this.apiUri + "ingredient/" + ingredient.id, params, { headers: this.headers});
+        return this.http.put(this.apiUrl + "ingredient/" + ingredient.id, params, { headers: this.headers});
     }
 
     //Delete
     deleteIngredient(id: number): Observable<any> {
-        return this.http.delete(this.apiUri + "ingredient/" + id, { headers: this.headers});
+        return this.http.delete(this.apiUrl + "ingredient/" + id, { headers: this.headers});
     }
 }

@@ -86,24 +86,20 @@ export class CashRegisterComponent implements OnInit {
   }
 
   private getProducts() {
+    
     this.productsService.getProducts().subscribe(
       response => {
-        if(response.length >= 0) {
-
-          this.products = response;
-        }
+        this.products = response;
       },
       error => console.log(<any>error)
     );
   }
 
   private getClients() {
+    
     this.clientsService.getClients().subscribe(
       response => {
-        if(response.length >= 0) {
-
-          this.clients = response;
-        }
+        this.clients = response;
       },
       error => console.log(<any>error)
     );
@@ -112,10 +108,10 @@ export class CashRegisterComponent implements OnInit {
   private getCompany() {
 
     this.companiesService.getCompany().subscribe(
-      res => {
-        this.company = res[0];
+      response => {
+        this.company = response;
       },
-      err => console.log(<any>err)
+      error => console.error(error)
     );
   }
 
@@ -145,8 +141,9 @@ export class CashRegisterComponent implements OnInit {
   public choseClient(id: number): void {
 
     for(var i = 0; i < this.clients.length; i++) {
+      
       if(this.clients[i].id == id) {
-        
+
         var chosedClient: Client = {
           id: id,
           name: this.clients[i].name,
@@ -174,8 +171,8 @@ export class CashRegisterComponent implements OnInit {
     }
     
     this.ticketsService.saveTicket(newTicket).subscribe(
-      res => {        
-        var id: number = res.id[0].id;
+      response => {        
+        var id: number = response.id[0].id;
 
         for(var i = 0; i < this.shoppingCart.length; i++) {
 
@@ -188,12 +185,12 @@ export class CashRegisterComponent implements OnInit {
           }
 
           this.ticketsService.createProductInTicket(newProductInTicket).subscribe(
-            res => {},
-            err => console.log(<any>err)
+            response => {},
+            error => console.error(error)
           );
         }
       },
-      err => console.log(<any>err)
+      error => console.error(error)
     );
 
     //Actualize Amount Of Products
@@ -210,12 +207,13 @@ export class CashRegisterComponent implements OnInit {
     }
 
     this.productsService.updateAmountIngredients(products).subscribe(
-      res => {},
-      err => console.log(<any>err)
+      response => {},
+      error => console.error(error)
     );
   }
 
   public priceOfHomeDeliveryChange(): void {
+    
     if(this.homeDelivery) {
       
       this.priceOfHomeDelivery = 0;

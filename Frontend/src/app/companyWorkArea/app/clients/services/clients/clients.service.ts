@@ -11,45 +11,45 @@ import { Client } from "../../models/client";
 })
 export class ClientsService {
 
-    private apiUri: string;
+    private apiUrl: string;
     private headers: HttpHeaders;
 
     constructor (
         private http: HttpClient
     ) {
     this.headers = new HttpHeaders().set("Content-type", "application/json");
-    this.apiUri = url;
+    this.apiUrl = url;
     }
 
     //Get Interval
-    getNewClientsInYear(): Observable<any> {
-        return this.http.get<Array<Client>>(this.apiUri + "clients/year", { headers: this.headers});
+    getNewClientsInYear(): Observable<Client[]> {
+        return this.http.get<Client[]>(this.apiUrl + "clients/year", { headers: this.headers});
     }
 
     //Get All List
-    getAllClients(): Observable<any> {
-        return this.http.get<Array<Client>>(this.apiUri + "all/clients", { headers: this.headers});
+    getAllClients(): Observable<Client[]> {
+        return this.http.get<Client[]>(this.apiUrl + "all/clients", { headers: this.headers});
     }
 
     //Get List
-    getClients(): Observable<any> {
-        return this.http.get<Array<Client>>(this.apiUri + "clients", { headers: this.headers});
+    getClients(): Observable<Client[]> {
+        return this.http.get<Client[]>(this.apiUrl + "clients", { headers: this.headers});
     }
 
     //Post
     saveClient(newClient: Client): Observable<any> {
         let params = JSON.stringify(newClient);
-        return this.http.post(this.apiUri + "client", params, { headers: this.headers});
+        return this.http.post(this.apiUrl + "client", params, { headers: this.headers});
     }
 
     //Update
     updateClient(client: Client): Observable<any> {
         var params = JSON.stringify(client);
-        return this.http.put(this.apiUri + "client/" + client.id, params, { headers: this.headers});
+        return this.http.put(this.apiUrl + "client/" + client.id, params, { headers: this.headers});
     }
 
     //Delete
     deleteClient(id: number): Observable<any> {
-        return this.http.delete(this.apiUri + "client/" + id, { headers: this.headers});
+        return this.http.delete(this.apiUrl + "client/" + id, { headers: this.headers});
     }
 }

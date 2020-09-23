@@ -42,21 +42,23 @@ export class CategoriesComponent implements OnInit {
   }
 
   private getCategories(): void {
-    this.categoriesService.getCategories().subscribe(
+    
+    this.categoriesService.getCategories().subscribe( 
       response => {
+        
         if(response.length >= 0) {
 
           this.categories = response;
         }
       },
-      error => console.log(<any>error)
+      error => console.error(error)
     );
   }
 
   //Methods for html
   public changeModal(category: Category): void {
 
-    if(category != null && this.validateCategory(category)) {
+    if(this.validateCategory(category)) {
 
       this.create = false;
       this.category = {
@@ -79,8 +81,8 @@ export class CategoriesComponent implements OnInit {
     if(this.validateCategory(this.category)) {
 
       this.categoriesService.saveCategory(this.category).subscribe(
-        res => {
-          
+        response => {
+
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -91,7 +93,7 @@ export class CategoriesComponent implements OnInit {
 
           this.getCategories();
         },
-        err => console.log(<any>err)
+        error => console.error(error)
       );
     }
     else {
@@ -112,7 +114,7 @@ export class CategoriesComponent implements OnInit {
     if(this.validateCategory(this.category)) {
       
       this.categoriesService.updateCategory(this.category).subscribe(
-        res => {
+        response => {
 
           Swal.fire({
             position: 'top-end',
@@ -124,7 +126,7 @@ export class CategoriesComponent implements OnInit {
 
           this.getCategories();
         },
-        err => console.log(<any>err)
+        error => console.error(error)
       );
     }
     else {
@@ -163,7 +165,7 @@ export class CategoriesComponent implements OnInit {
         if (result.value) {
 
           this.categoriesService.deleteCategory(this.category.id).subscribe(
-            res => {
+            response => {
               
               Swal.fire({
                 position: 'top-end',
@@ -175,7 +177,7 @@ export class CategoriesComponent implements OnInit {
 
               this.getCategories();            
             },
-            err => console.log(<any>err)
+            error => console.error(error)
           ); 
         }
       });
@@ -193,7 +195,7 @@ export class CategoriesComponent implements OnInit {
 
   private validateCategory(category: Category): boolean {
 
-    if(category.id != null && category.name.trim() != "" && category.name != null)
+    if(category != null && category.id != null && category.name.trim() != "" && category.name != null)
       return true;
     
     return false

@@ -42,18 +42,17 @@ export class ProductsComponent implements OnInit {
   }
 
   private getProducts() {
+    
     this.productsService.getProducts().subscribe(
       response => {
-        if(response.length >= 0) {
-
-          this.products = response;
-        }
+        this.products = response;
       },
       error => console.log(<any>error)
     );
   }
 
   public deleteProduct(id: number): void {
+    
     Swal.fire({
       title: '¿Estas seguro de eliminar el producto?',
       icon: 'warning',
@@ -63,7 +62,9 @@ export class ProductsComponent implements OnInit {
       confirmButtonText: 'Si',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
+      
       if (result.value) {
+        
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -71,11 +72,12 @@ export class ProductsComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
+
         this.productsService.deleteProduct(id).subscribe(
-          res => {
+          resolve => {
             this.getProducts();
           },
-          err => console.log(<any>err)
+          error => console.error(error)
         );        
       }
     });      

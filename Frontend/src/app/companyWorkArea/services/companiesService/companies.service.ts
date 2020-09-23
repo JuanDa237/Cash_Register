@@ -11,18 +11,20 @@ import { Company } from "../../models/company";
   providedIn: 'root'
 })
 export class CompaniesService {
-  private apiUri: string;
+  
+  private apiUrl: string;
   private headers: HttpHeaders;
 
   constructor (
       private http: HttpClient
   ) {
     this.headers = new HttpHeaders().set("Content-type", "application/json");
-    this.apiUri = url;
+    this.apiUrl = url;
   }
 
   //Get List
-  getCompany(): Observable<any> {
-      return this.http.get<Array<Company>>(this.apiUri + "company", { headers: this.headers});
+  getCompany(): Observable<Company> {
+    //Whit the token the server know the company
+    return this.http.get<Company>(this.apiUrl + "company", { headers: this.headers});
   }
 }

@@ -15,7 +15,7 @@ interface User {
 })
 export class AuthenticationService {
 
-  private apiUri: string;
+  private apiUrl: string;
   private headers: HttpHeaders;
 
   constructor (
@@ -23,12 +23,12 @@ export class AuthenticationService {
       private router: Router
   ) {
     this.headers = new HttpHeaders().set("Content-type", "application/json");
-    this.apiUri = url;
+    this.apiUrl = url;
   }
 
   //Post
   signIn(user: User): Observable<any> {
-    return this.http.post(this.apiUri + "authentication/singIn", user, { headers: this.headers, observe: "response" });
+    return this.http.post(this.apiUrl + "authentication/singIn", user, { headers: this.headers, observe: "response" });
   }
 
   loggedIn(): boolean {
@@ -41,7 +41,7 @@ export class AuthenticationService {
     return localStorage.getItem("token");
   }
 
-  logOut(redirection: boolean) {
+  logOut(redirection: boolean): void {
     
     localStorage.removeItem("token");
 

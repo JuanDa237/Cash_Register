@@ -12,72 +12,72 @@ import { IngredientInProduct } from "../../../ingredients/models/ingredientInPro
 })
 export class ProductsService {
 
-    private apiUri: string;
+    private apiUrl: string;
     private headers: HttpHeaders;
 
     constructor (
         private http: HttpClient
     ) {
     this.headers = new HttpHeaders().set("Content-type", "application/json");
-    this.apiUri = url;
+    this.apiUrl = url;
     }
 
     //Get All List
-    getAllProducts(): Observable<any> {
-        return this.http.get<Array<Product>>(this.apiUri + "all/products", { headers: this.headers});
+    getAllProducts(): Observable<Product[]> {
+        return this.http.get<Product[]>(this.apiUrl + "all/products", { headers: this.headers});
     }
 
-    getIngredientsInProducts(): Observable<any> {
-        return this.http.get<Array<IngredientInProduct>>(this.apiUri + "products/ingredients", { headers: this.headers});
+    getIngredientsInProducts(): Observable<IngredientInProduct[]> {
+        return this.http.get<IngredientInProduct[]>(this.apiUrl + "products/ingredients", { headers: this.headers});
     }
     
     //Get List
-    getProducts(): Observable<any> {
-        return this.http.get<Array<Product>>(this.apiUri + "products", { headers: this.headers});
+    getProducts(): Observable<Product[]> {
+        return this.http.get<Product[]>(this.apiUrl + "products", { headers: this.headers});
     }
     
     //Get One
-    getProduct(id: number): Observable<any> {
-        return this.http.get<Product>(this.apiUri + "product/" + id, { headers: this.headers});
+    getProduct(id: number): Observable<Product> {
+        return this.http.get<Product>(this.apiUrl + "product/" + id, { headers: this.headers});
     }
 
-    getIngredientsInProduct(id: number): Observable<any> {
-        return this.http.get<Array<IngredientInProduct>>(this.apiUri + "product/ingredients/" + id, { headers: this.headers});
+    getIngredientsInProduct(id: number): Observable<IngredientInProduct[]> {
+        return this.http.get<IngredientInProduct[]>(this.apiUrl + "product/ingredients/" + id, { headers: this.headers});
     }
     
     //Post
     saveProduct(newProduct: Product): Observable<any> {
         let params = JSON.stringify(newProduct);
-        return this.http.post(this.apiUri + "product", params, { headers: this.headers});
+        return this.http.post(this.apiUrl + "product", params, { headers: this.headers});
     }
 
     createIngredientInProduct(ingredientInProduct: IngredientInProduct): Observable<any> {
         var params = JSON.stringify(ingredientInProduct);
-        return this.http.post(this.apiUri + "product/ingredient", params, { headers: this.headers});
+        return this.http.post(this.apiUrl + "product/ingredient", params, { headers: this.headers});
     }
     
     //Update
     updateProduct(product: Product): Observable<any> {
         var params = JSON.stringify(product);
-        return this.http.put(this.apiUri + "product/" + product.id, params, { headers: this.headers});
+        return this.http.put(this.apiUrl + "product/" + product.id, params, { headers: this.headers});
     }
 
     updateIngredientInProduct(ingredientInProduct: IngredientInProduct): Observable<any> {
         var params = JSON.stringify(ingredientInProduct);
-        return this.http.put(this.apiUri + "product/ingredient/" + ingredientInProduct.id, params, { headers: this.headers});
+        return this.http.put(this.apiUrl + "product/ingredient/" + ingredientInProduct.id, params, { headers: this.headers});
     }
 
     updateAmountIngredients(ids: Array<number>): Observable<any> {
         var params = JSON.stringify(ids);
-        return this.http.put(this.apiUri + "amountIngredients", params, { headers: this.headers});
+        return this.http.put(this.apiUrl + "amountIngredients", params, { headers: this.headers});
     }
 
     //Delete
     deleteProduct(id: number): Observable<any> {
-        return this.http.delete(this.apiUri + "product/" + id, { headers: this.headers});
+        return this.http.delete(this.apiUrl + "product/" + id, { headers: this.headers});
     }
 
     deleteIngredientInProduct(id: number): Observable<any> {
-        return this.http.delete(this.apiUri + "product/ingredient/" + id, { headers: this.headers});
+        return this.http.delete(this.apiUrl + "product/ingredient/" + id, { headers: this.headers});
     }
 }
