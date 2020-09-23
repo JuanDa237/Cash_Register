@@ -18,10 +18,10 @@ const database_1 = __importDefault(require("../../database"));
 const User_1 = require("../users/models/User");
 class AuthenticationControllers {
     //Post
-    singIn(req, res) {
+    singIn(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { userName, password } = req.body;
-            (yield database_1.default).query("SELECT id, password FROM users WHERE userName = ?", [userName])
+            const { userName, password } = request.body;
+            return (yield database_1.default).query("SELECT id, password FROM users WHERE userName = ?", [userName])
                 .then((dates) => __awaiter(this, void 0, void 0, function* () {
                 if (dates != 0) {
                     const correctPassword = yield User_1.validatePassword(password, dates[0].password);
@@ -31,28 +31,28 @@ class AuthenticationControllers {
                         }, process.env.TOKEN_SECRET || "tokenTest", {
                             expiresIn: 86400 //The token expires in 24 hours
                         });
-                        return res.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({ message: "Sing in succesfully." });
+                        return response.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({ message: "Sing in succesfully." });
                     }
                     else {
-                        return res.status(401).json({ message: "Password is wrong." });
+                        return response.status(401).json({ message: "Password is wrong." });
                     }
                 }
                 else {
-                    return res.status(404).json({ message: "Username not found." });
+                    return response.status(404).json({ message: "Username not found." });
                 }
             }));
         });
     }
-    singUp(req, res) {
+    singUp(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { idCompany, roleName, userName, password, name } = req.body;
+            const { idCompany, roleName, userName, password, name } = request.body;
             var idRole = 0;
             var itsOk = false;
             //Validate userName
             yield (yield database_1.default).query("SELECT id FROM users WHERE userName = ?", [userName])
                 .then((dates) => {
                 if (dates.length > 0) {
-                    return res.status(401).json({ message: "Username '" + userName + "' is in use." });
+                    return response.status(401).json({ message: `Username "${userName}" is in use.` });
                 }
                 else {
                     itsOk = true;
@@ -69,7 +69,7 @@ class AuthenticationControllers {
                             itsOk = true;
                         }
                         else {
-                            return res.status(400).json({ message: "Role '" + roleName + "' not found." });
+                            return response.status(400).json({ message: `Role "${roleName}" not found.` });
                         }
                     });
                 }
@@ -81,7 +81,7 @@ class AuthenticationControllers {
                             itsOk = true;
                         }
                         else {
-                            return res.status(400).json({ message: "Role user not found." });
+                            return response.status(400).json({ message: "Role user not found." });
                         }
                     });
                 }
@@ -102,7 +102,7 @@ class AuthenticationControllers {
                                 expiresIn: 86400 //The token expires in 24 hours
                             });
                             newUser.password = "";
-                            return res.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({
+                            return response.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({
                                 message: "Saved user.",
                                 user: newUser
                             });

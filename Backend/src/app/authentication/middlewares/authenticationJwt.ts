@@ -10,12 +10,13 @@ interface Payload {
     exp: number;
 }
 
-export async function verifyToken(req: Request, res: Response, next: NextFunction) {
+export async function verifyToken(request: Request, response: Response, next: NextFunction) {
     
     try {
-        const token = req.header("authentication-token")?.split(" ")[1];
+        const token = request.header("authentication-token")?.split(" ")[1];
     
-        if(!token) return res.status(403).json({ message: "No token provided."});
+        if(!token) 
+            return response.status(403).json({ message: "No token provided." });
     
         const payload = jwt.verify(token, process.env.TOKEN_SECRET || "tokentest") as Payload;
         
@@ -24,58 +25,57 @@ export async function verifyToken(req: Request, res: Response, next: NextFunctio
 
                         if(dates.length > 0) {
                             
-                            req.user = dates[0];
-                            next();
+                            request.user = dates[0];
+                            return next();
                         }
                         else {
-                            return res.status(404).json({ message: "User not found."});
+                            return response.status(404).json({ message: "User not found." });
                         }
-                    })
+                    });
 
     } catch (error) {
-        console.log(error);
-        return res.status(401).json({ message: "Unauthorized."});
+        return response.status(401).json({ message: "Unauthorized." });
     }
 }
 
-export async function isUser(req: Request, res: Response, next: NextFunction) {
+export async function isUser(request: Request, response: Response, next: NextFunction): Promise<void> {
 
-    (await pool).query("SELECT name FROM roles WHERE id = ?", [req.user.idRole])
+    (await pool).query("SELECT name FROM roles WHERE id = ?", [request.user.idRole])
                 .then((date: Array<any>) => {
                     
                     if(date.length > 0 && (date[0].name == "administrator" || date[0].name == "cashier" || date[0].name == "user")) {
-                        next();
+                        return next();
                     }
                     else {
-                        return res.status(401).json({ message: "Unauthorized."});
+                        return response.status(401).json({ message: "Unauthorized." });
                     }
                 });
 }
 
-export async function isAdministrator(req: Request, res: Response, next: NextFunction) {
+export async function isAdministrator(request: Request, response: Response, next: NextFunction): Promise<void> {
     
-    (await pool).query("SELECT name FROM roles WHERE id = ?", [req.user.idRole])
+    (await pool).query("SELECT name FROM roles WHERE id = ?", [request.user.idRole])
                 .then((date: Array<any>) => {
                     
                     if(date.length > 0 && date[0].name == "administrator") {
-                        next();
+                        return next();
                     }
                     else {
-                        return res.status(401).json({ message: "Unauthorized."});
+                        return response.status(401).json({ message: "Unauthorized."});
                     }
                 });
 }
 
-export async function isCashier(req: Request, res: Response, next: NextFunction) {
+export async function isCashier(request: Request, response: Response, next: NextFunction): Promise<void> {
     
-    (await pool).query("SELECT name FROM roles WHERE id = ?", [req.user.idRole])
+    (await pool).query("SELECT name FROM roles WHERE id = ?", [request.user.idRole])
                 .then((date: Array<any>) => {
                     
                     if(date.length > 0 && (date[0].name == "administrator" || date[0].name == "cashier")) {
-                        next();
+                        return next();
                     }
                     else {
-                        return res.status(401).json({ message: "Unauthorized."});
+                        return response.status(401).json({ message: "Unauthorized."});
                     }
                 });
 }

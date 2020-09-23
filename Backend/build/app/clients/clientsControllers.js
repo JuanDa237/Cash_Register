@@ -16,66 +16,70 @@ exports.clientsControllers = void 0;
 const database_1 = __importDefault(require("../../database"));
 class ClientsControllers {
     //Get Interval
-    listClientsInYear(req, res) {
+    listClientsInYear(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             var year = new Date().getFullYear();
-            (yield database_1.default).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, active FROM clients WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31' AND idCompany = ?", [year, year, req.user.idCompany])
+            return (yield database_1.default).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, active FROM clients WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31' AND idCompany = ?", [year, year, request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
     //Get All List
-    listAllClients(req, res) {
+    listAllClients(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE idCompany = ?", [req.user.idCompany])
+            return (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE idCompany = ?", [request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
     //Get List
-    listClients(req, res) {
+    listClients(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE active = true AND idCompany = ?", [req.user.idCompany])
+            return (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE active = true AND idCompany = ?", [request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
     //Get One
-    getOneClient(req, res) {
+    getOneClient(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
+            const { id } = request.params;
+            return (yield database_1.default).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true AND idCompany = ?", [id, request.user.idCompany])
                 .then(dates => {
                 if (dates != 0) {
-                    return res.status(200).json(dates);
+                    return response.status(200).json(dates);
                 }
                 else {
-                    return res.status(404).json({ message: "Not found" });
+                    return response.status(404).json({ message: "Not found." });
                 }
             });
         });
     }
     //Post
-    createClient(req, res) {
+    createClient(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            req.body.idCompany = req.user.idCompany;
-            (yield database_1.default).query("INSERT INTO clients SET ?", [req.body]);
-            res.status(200).json({ message: "Saved client." });
+            request.body.idCompany = request.user.idCompany;
+            return (yield database_1.default).query("INSERT INTO clients SET ?", [request.body])
+                .then(value => {
+                return response.status(200).json({ message: "Saved client." });
+            });
         });
     }
     //Update
-    updateClient(req, res) {
+    updateClient(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("UPDATE clients SET ? WHERE id = ?", [req.body, id]);
-            res.status(200).json({ message: "Client updated successfully." });
+            const { id } = request.params;
+            return (yield database_1.default).query("UPDATE clients SET ? WHERE id = ?", [request.body, id])
+                .then(value => {
+                return response.status(200).json({ message: "Client updated successfully." });
+            });
         });
     }
     //Delete
-    deleteClient(req, res) {
+    deleteClient(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             var date = new Date();
             var year, month, day;
@@ -88,10 +92,12 @@ class ClientsControllers {
             if (day.length == 1) {
                 day = "0" + day;
             }
-            const { id } = req.params;
+            const { id } = request.params;
             var newDate = year + "-" + month + "-" + day;
-            (yield database_1.default).query("UPDATE clients SET active = false, creationDate = ? WHERE id = ?", [newDate, id]);
-            res.status(200).json({ message: "Client eliminated successfully." });
+            return (yield database_1.default).query("UPDATE clients SET active = false, creationDate = ? WHERE id = ?", [newDate, id])
+                .then(value => {
+                return response.status(200).json({ message: "Client eliminated successfully." });
+            });
         });
     }
 }

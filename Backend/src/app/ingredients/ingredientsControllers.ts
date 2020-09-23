@@ -5,45 +5,49 @@ import pool from "../../database";
 class IngredientsControllers {
     
     //Get list
-    public async listIngredients (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE active = true AND idCompany = ?", [req.user.idCompany])
+    public async listIngredients(request: Request, response: Response): Promise<Response> {
+        return (await pool).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE active = true AND idCompany = ?", [request.user.idCompany])
                     .then(dates => {
-                        res.status(200).json(dates);
+                        return response.status(200).json(dates);
                     });
     }
 
     //Get one
-    public async getOneIngredient (req: Request, res: Response): Promise<void> {
-        const { id } = req.params;
-        (await pool).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
+    public async getOneIngredient(request: Request, response: Response): Promise<Response> {
+        const { id } = request.params;
+        return (await pool).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true AND idCompany = ?", [id, request.user.idCompany])
                     .then(dates => {
                         if(dates != 0) {
-                            return res.status(200).json(dates);
+                            return response.status(200).json(dates);
                         }
                         else {
-                            return res.status(404).json({ message: "Not found" });
+                            return response.status(404).json({ message: "Not found" });
                         }
                     });
     }
 
     //Post
-    public async createIngredient (req: Request, res: Response): Promise<void> {
-        req.body.idCompany = req.user.idCompany;
-        (await pool).query("INSERT INTO ingredients SET ?", [req.body]);
-        res.status(200).json({ message: "Saved ingredient." });        
+    public async createIngredient(request: Request, response: Response): Promise<Response> {
+        request.body.idCompany = request.user.idCompany;
+        return (await pool).query("INSERT INTO ingredients SET ?", [request.body])
+                        .then(value => {
+                            return response.status(200).json({ message: "Saved ingredient." });
+                        });
     }
 
     //Update
-    public async updateIngredient (req: Request, res: Response): Promise<void>  {
-        const { id } = req.params;
-        (await pool).query("UPDATE ingredients SET ? WHERE id = ?", [req.body, id]);
-        res.status(200).json({ message: "Ingredient updated successfully." });
+    public async updateIngredient(request: Request, response: Response): Promise<Response>  {
+        const { id } = request.params;
+        return (await pool).query("UPDATE ingredients SET ? WHERE id = ?", [request.body, id])
+                            .then(value => {
+                                return response.status(200).json({ message: "Ingredient updated successfully." });
+                            });
     }
 
-    public async updateAmountIngredients (req: Request, res: Response): Promise<void>  {
+    public async updateAmountIngredients(request: Request, response: Response): Promise<Response>  {
         
-        var ids = req.body;
-        const idCompany = req.user.idCompany;
+        var ids = request.body;
+        const idCompany = request.user.idCompany;
         
         for(let x = 0; x < ids.length; x++) {
 
@@ -62,20 +66,22 @@ class IngredientsControllers {
                                             
                                             let newAmount = date[0].amount - spendingAmount;                                                                                                                                                                            
                                             
-                                            await (await pool).query("UPDATE ingredients SET amount = ? WHERE id = ?", [newAmount, idIngredient])
+                                            await (await pool).query("UPDATE ingredients SET amount = ? WHERE id = ?", [newAmount, idIngredient]);
                                         });                        
                         }
                         
                     });
         }
-        res.status(200).json({ message: "Ingredients amount updated successfully." });
+        return response.status(200).json({ message: "Ingredients amount updated successfully." });
     }
 
     //Delete
-    public async deleteIngredient (req: Request, res: Response): Promise<void> {
-        const { id } = req.params;
-        (await pool).query("UPDATE ingredients SET active = false WHERE id = ?", [id]);
-        res.status(200).json({ message: "Ingredient eliminated successfully." });
+    public async deleteIngredient (request: Request, response: Response): Promise<Response> {
+        const { id } = request.params;
+        return (await pool).query("UPDATE ingredients SET active = false WHERE id = ?", [id])
+                    .then(value => {
+                        return response.status(200).json({ message: "Ingredient eliminated successfully." });
+                    });
     }
 }
 

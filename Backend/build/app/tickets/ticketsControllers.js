@@ -16,80 +16,80 @@ exports.ticketsControllers = void 0;
 const database_1 = __importDefault(require("../../database"));
 class TicketsControllers {
     //Get Interval
-    listTicketsInInterval(req, res) {
+    listTicketsInInterval(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { since, until } = req.params;
-            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE creationDate >= ? AND creationDate <= ? AND idCompany = ?", [since, until, req.user.idCompany])
+            const { since, until } = request.params;
+            return (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE creationDate >= ? AND creationDate <= ? AND idCompany = ?", [since, until, request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
-    listTicketsInYear(req, res) {
+    listTicketsInYear(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             var year = new Date().getFullYear();
-            (yield database_1.default).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, total, homeDelivery FROM tickets WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31' AND idCompany = ?", [year, year, req.user.idCompany])
+            return (yield database_1.default).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, total, homeDelivery FROM tickets WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31' AND idCompany = ?", [year, year, request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
     //Get list
-    listTickets(req, res) {
+    listTickets(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE idCompany = ?", [req.user.idCompany])
+            return (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE idCompany = ?", [request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
-    listProductsInTickets(req, res) {
+    listProductsInTickets(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT * FROM productsInTickets WHERE idCompany = ?", [req.user.idCompany])
+            return (yield database_1.default).query("SELECT * FROM productsInTickets WHERE idCompany = ?", [request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
     //Get one
-    getOneTicket(req, res) {
+    getOneTicket(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ? AND idCompany = ?", [id, req.user.idCompany])
+            const { id } = request.params;
+            return (yield database_1.default).query("SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ? AND idCompany = ?", [id, request.user.idCompany])
                 .then(dates => {
                 if (dates != 0) {
-                    return res.status(200).json(dates);
+                    return response.status(200).json(dates);
                 }
                 else {
-                    return res.status(404).json({ message: "Not found" });
+                    return response.status(404).json({ message: "Not found" });
                 }
             });
         });
     }
-    getProductsInTicket(req, res) {
+    getProductsInTicket(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("SELECT * FROM productsInTickets WHERE idTicket = ? AND idCompany = ?", [id, req.user.idCompany])
+            const { id } = request.params;
+            return (yield database_1.default).query("SELECT * FROM productsInTickets WHERE idTicket = ? AND idCompany = ?", [id, request.user.idCompany])
                 .then(dates => {
                 if (dates != 0) {
-                    return res.status(200).json(dates);
+                    return response.status(200).json(dates);
                 }
                 else {
-                    return res.status(404).json({ message: "Not found" });
+                    return response.status(404).json({ message: "Not found" });
                 }
             });
         });
     }
     //Post
-    createTicket(req, res) {
+    createTicket(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            req.body.idCompany = req.user.idCompany;
-            (yield database_1.default).query("INSERT INTO tickets SET ?", [req.body])
+            request.body.idCompany = request.user.idCompany;
+            return (yield database_1.default).query("INSERT INTO tickets SET ?", [request.body])
                 .then(function (value) {
                 return __awaiter(this, void 0, void 0, function* () {
-                    (yield database_1.default).query("SELECT id FROM tickets WHERE id=(SELECT max(id) FROM tickets);")
+                    return (yield database_1.default).query("SELECT id FROM tickets WHERE id=(SELECT max(id) FROM tickets);")
                         .then(dates => {
-                        res.status(200).json({
+                        return response.status(200).json({
                             message: "Saved ticket.",
                             id: dates
                         });
@@ -99,11 +99,13 @@ class TicketsControllers {
             ;
         });
     }
-    createProductInTicket(req, res) {
+    createProductInTicket(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            req.body.idCompany = req.user.idCompany;
-            (yield database_1.default).query("INSERT INTO productsInTickets SET ?", [req.body]);
-            res.status(200).json({ message: "Saved product in ticket." });
+            request.body.idCompany = request.user.idCompany;
+            return (yield database_1.default).query("INSERT INTO productsInTickets SET ?", [request.body])
+                .then(value => {
+                return response.status(200).json({ message: "Saved product in ticket." });
+            });
         });
     }
 }

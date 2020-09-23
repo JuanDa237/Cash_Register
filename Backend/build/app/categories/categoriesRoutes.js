@@ -9,7 +9,7 @@ class CategoriesRoutes {
         this.routes();
     }
     routes() {
-        //Get list    
+        //Get list
         this.router.get("/categories", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], categoriesControllers_1.categoriesControllers.listCategories);
         //Get one
         this.router.get("/category/:id", [index_1.authenticationJwt.verifyToken, index_1.authenticationJwt.isAdministrator], categoriesControllers_1.categoriesControllers.getOneCategory);

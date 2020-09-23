@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 
 class IndexController {
     
-    index (req: Request, res: Response) {
-        res.json({ message: "Welcome to my api, The route is /api"});
+    public index(request: Request, response: Response): Response {
+        return response.json({ message: "Welcome to my api, the documentation is in folder Sources/Postman." });
     }
 }
 

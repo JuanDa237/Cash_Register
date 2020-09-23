@@ -16,51 +16,57 @@ exports.categoriesControllers = void 0;
 const database_1 = __importDefault(require("../../database"));
 class CategoriesControllers {
     //Get List
-    listCategories(req, res) {
+    listCategories(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name FROM categories WHERE active = true AND idCompany = ?", [req.user.idCompany])
+            return (yield database_1.default).query("SELECT id, name FROM categories WHERE active = true AND idCompany = ?", [request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
     //Get One    
-    getOneCategory(req, res) {
+    getOneCategory(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("SELECT id, name FROM categories WHERE id = ? AND active = true AND idCompany = ?;", [id, req.user.idCompany])
+            const { id } = request.params;
+            return (yield database_1.default).query("SELECT id, name FROM categories WHERE id = ? AND active = true AND idCompany = ?;", [id, request.user.idCompany])
                 .then(dates => {
                 if (dates != 0) {
-                    return res.status(200).json(dates);
+                    return response.status(200).json(dates);
                 }
                 else {
-                    return res.status(404).json({ message: "Not found" });
+                    return response.status(404).json({ message: "Not found" });
                 }
             });
         });
     }
     //Post
-    createCategory(req, res) {
+    createCategory(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            req.body.idCompany = req.user.idCompany;
-            (yield database_1.default).query("INSERT INTO categories SET ?", [req.body]);
-            res.status(200).json({ message: "Saved category." });
+            request.body.idCompany = request.user.idCompany;
+            return (yield database_1.default).query("INSERT INTO categories SET ?", [request.body])
+                .then(value => {
+                return response.status(200).json({ message: "Saved category." });
+            });
         });
     }
     //Update
-    updateCategory(req, res) {
+    updateCategory(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("UPDATE categories SET ? WHERE id = ?", [req.body, id]);
-            res.status(200).json({ message: "Category updated successfully." });
+            const { id } = request.params;
+            return (yield database_1.default).query("UPDATE categories SET ? WHERE id = ?", [request.body, id])
+                .then(value => {
+                return response.status(200).json({ message: "Category updated successfully." });
+            });
         });
     }
     //Delete
-    deleteCategory(req, res) {
+    deleteCategory(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("UPDATE categories SET active = false WHERE id = ?", [id]);
-            res.status(200).json({ message: "Category eliminated successfully." });
+            const { id } = request.params;
+            return (yield database_1.default).query("UPDATE categories SET active = false WHERE id = ?", [id])
+                .then(value => {
+                return response.status(200).json({ message: "Category eliminated successfully." });
+            });
         });
     }
 }

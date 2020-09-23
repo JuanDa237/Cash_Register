@@ -16,15 +16,15 @@ exports.companiesControllers = void 0;
 const database_1 = __importDefault(require("../../database"));
 class CompaniesControllers {
     //Get one
-    getOneCompany(req, res) {
+    getOneCompany(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT name, imageUrl, ticketMessage FROM companies WHERE id = ? AND active = true;", [req.user.idCompany])
+            return (yield database_1.default).query("SELECT name, imageUrl, ticketMessage FROM companies WHERE id = ? AND active = true;", [request.user.idCompany])
                 .then(dates => {
                 if (dates != 0) {
-                    return res.status(200).json(dates);
+                    return response.status(200).json(dates);
                 }
                 else {
-                    return res.status(404).json({ message: "Not found" });
+                    return response.status(404).json({ message: "Not found." });
                 }
             });
         });

@@ -22,9 +22,9 @@ function createRoles() {
                 if (dates.length > 0)
                     return;
                 yield Promise.all([
-                    (yield database_1.default).query("INSERT INTO roles SET name = 'user'"),
-                    (yield database_1.default).query("INSERT INTO roles SET name = 'administrator'"),
-                    (yield database_1.default).query("INSERT INTO roles SET name = 'cashier'")
+                    yield (yield database_1.default).query("INSERT INTO roles SET name = 'user'"),
+                    yield (yield database_1.default).query("INSERT INTO roles SET name = 'administrator'"),
+                    yield (yield database_1.default).query("INSERT INTO roles SET name = 'cashier'")
                 ]);
             }
             catch (error) {

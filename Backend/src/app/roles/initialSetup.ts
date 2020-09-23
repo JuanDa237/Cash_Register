@@ -6,13 +6,15 @@ export async function createRoles() {
                 .then(async (dates: Array<any>) => {
                     
                     try {
-                        if(dates.length > 0) return;
+                        if(dates.length > 0)
+                            return;
 
                         await Promise.all([
-                            (await pool).query("INSERT INTO roles SET name = 'user'"),
-                            (await pool).query("INSERT INTO roles SET name = 'administrator'"),
-                            (await pool).query("INSERT INTO roles SET name = 'cashier'")
+                            await (await pool).query("INSERT INTO roles SET name = 'user'"),
+                            await (await pool).query("INSERT INTO roles SET name = 'administrator'"),
+                            await (await pool).query("INSERT INTO roles SET name = 'cashier'")
                         ]);
+                        
                     } catch (error) {
                         console.log(<any>error);
                     }

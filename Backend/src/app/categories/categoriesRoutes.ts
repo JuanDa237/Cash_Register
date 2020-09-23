@@ -12,7 +12,7 @@ class CategoriesRoutes {
     }
 
     routes(): void {        
-        //Get list    
+        //Get list
         this.router.get("/categories", [authenticationJwt.verifyToken, authenticationJwt.isAdministrator], categoriesControllers.listCategories);
 
         //Get one

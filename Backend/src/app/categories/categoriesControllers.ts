@@ -5,46 +5,55 @@ import pool from "../../database";
 class CategoriesControllers {
     
     //Get List
-    public async listCategories (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, name FROM categories WHERE active = true AND idCompany = ?", [req.user.idCompany])
-                    .then(dates => {
-                        res.status(200).json(dates);
-                    });
+    public async listCategories(request: Request, response: Response): Promise<Response> {
+        return (await pool).query("SELECT id, name FROM categories WHERE active = true AND idCompany = ?", [request.user.idCompany])
+                        .then(dates => {
+                            return response.status(200).json(dates);
+                        });
     }
 
     //Get One    
-    public async getOneCategory (req: Request, res: Response): Promise<void> {
-        const { id } = req.params;
-        (await pool).query("SELECT id, name FROM categories WHERE id = ? AND active = true AND idCompany = ?;", [id, req.user.idCompany])
-                    .then(dates => {
-                        if(dates != 0) {
-                            return res.status(200).json(dates);
-                        }
-                        else {
-                            return res.status(404).json({ message: "Not found" });
-                        }
-                    });
+    public async getOneCategory(request: Request, response: Response): Promise<Response> {
+        
+        const { id } = request.params;
+
+        return (await pool).query("SELECT id, name FROM categories WHERE id = ? AND active = true AND idCompany = ?;", [id, request.user.idCompany])
+                        .then(dates => {
+                            
+                            if(dates != 0) {
+                                return response.status(200).json(dates);
+                            }
+                            else {
+                                return response.status(404).json({ message: "Not found" });
+                            }
+                        });
     }
 
     //Post
-    public async createCategory (req: Request, res: Response): Promise<void> {
-        req.body.idCompany = req.user.idCompany;
-        (await pool).query("INSERT INTO categories SET ?", [req.body]);
-        res.status(200).json({ message: "Saved category." });        
+    public async createCategory(request: Request, response: Response): Promise<Response> {
+        request.body.idCompany = request.user.idCompany;
+        return (await pool).query("INSERT INTO categories SET ?", [request.body])
+                        .then(value => {
+                            return response.status(200).json({ message: "Saved category." });
+                        });
     }
 
     //Update
-    public async updateCategory (req: Request, res: Response): Promise<void>  {
-        const { id } = req.params;
-        (await pool).query("UPDATE categories SET ? WHERE id = ?", [req.body, id]);
-        res.status(200).json({ message: "Category updated successfully." });
+    public async updateCategory(request: Request, response: Response): Promise<Response>  {
+        const { id } = request.params;
+        return (await pool).query("UPDATE categories SET ? WHERE id = ?", [request.body, id])
+                        .then(value => {
+                            return response.status(200).json({ message: "Category updated successfully." });
+                        });
     }
 
     //Delete
-    public async deleteCategory (req: Request, res: Response): Promise<void> {
-        const { id } = req.params;
-        (await pool).query("UPDATE categories SET active = false WHERE id = ?", [id]);
-        res.status(200).json({ message: "Category eliminated successfully." });
+    public async deleteCategory(request: Request, response: Response): Promise<Response> {
+        const { id } = request.params;
+        return (await pool).query("UPDATE categories SET active = false WHERE id = ?", [id])
+                        .then(value => {
+                            return response.status(200).json({ message: "Category eliminated successfully." });
+                        });
     }
 }
 

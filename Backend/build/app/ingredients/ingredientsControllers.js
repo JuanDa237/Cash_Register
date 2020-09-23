@@ -16,49 +16,53 @@ exports.ingredientsControllers = void 0;
 const database_1 = __importDefault(require("../../database"));
 class IngredientsControllers {
     //Get list
-    listIngredients(req, res) {
+    listIngredients(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE active = true AND idCompany = ?", [req.user.idCompany])
+            return (yield database_1.default).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE active = true AND idCompany = ?", [request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
     //Get one
-    getOneIngredient(req, res) {
+    getOneIngredient(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
+            const { id } = request.params;
+            return (yield database_1.default).query("SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true AND idCompany = ?", [id, request.user.idCompany])
                 .then(dates => {
                 if (dates != 0) {
-                    return res.status(200).json(dates);
+                    return response.status(200).json(dates);
                 }
                 else {
-                    return res.status(404).json({ message: "Not found" });
+                    return response.status(404).json({ message: "Not found" });
                 }
             });
         });
     }
     //Post
-    createIngredient(req, res) {
+    createIngredient(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            req.body.idCompany = req.user.idCompany;
-            (yield database_1.default).query("INSERT INTO ingredients SET ?", [req.body]);
-            res.status(200).json({ message: "Saved ingredient." });
+            request.body.idCompany = request.user.idCompany;
+            return (yield database_1.default).query("INSERT INTO ingredients SET ?", [request.body])
+                .then(value => {
+                return response.status(200).json({ message: "Saved ingredient." });
+            });
         });
     }
     //Update
-    updateIngredient(req, res) {
+    updateIngredient(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("UPDATE ingredients SET ? WHERE id = ?", [req.body, id]);
-            res.status(200).json({ message: "Ingredient updated successfully." });
+            const { id } = request.params;
+            return (yield database_1.default).query("UPDATE ingredients SET ? WHERE id = ?", [request.body, id])
+                .then(value => {
+                return response.status(200).json({ message: "Ingredient updated successfully." });
+            });
         });
     }
-    updateAmountIngredients(req, res) {
+    updateAmountIngredients(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            var ids = req.body;
-            const idCompany = req.user.idCompany;
+            var ids = request.body;
+            const idCompany = request.user.idCompany;
             for (let x = 0; x < ids.length; x++) {
                 yield (yield database_1.default).query("SELECT idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND idCompany = ?", [ids[x], idCompany])
                     .then((dates) => __awaiter(this, void 0, void 0, function* () {
@@ -74,15 +78,17 @@ class IngredientsControllers {
                     }
                 }));
             }
-            res.status(200).json({ message: "Ingredients amount updated successfully." });
+            return response.status(200).json({ message: "Ingredients amount updated successfully." });
         });
     }
     //Delete
-    deleteIngredient(req, res) {
+    deleteIngredient(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("UPDATE ingredients SET active = false WHERE id = ?", [id]);
-            res.status(200).json({ message: "Ingredient eliminated successfully." });
+            const { id } = request.params;
+            return (yield database_1.default).query("UPDATE ingredients SET active = false WHERE id = ?", [id])
+                .then(value => {
+                return response.status(200).json({ message: "Ingredient eliminated successfully." });
+            });
         });
     }
 }

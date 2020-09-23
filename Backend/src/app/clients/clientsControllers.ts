@@ -4,62 +4,67 @@ import pool from "../../database";
 
 class ClientsControllers {
     //Get Interval
-    public async listClientsInYear (req: Request, res: Response): Promise<void> {
+    public async listClientsInYear(request: Request, response: Response): Promise<Response> {
         
         var year: number = new Date().getFullYear();
 
-        (await pool).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, active FROM clients WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31' AND idCompany = ?", [year, year, req.user.idCompany])
+        return (await pool).query("SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, active FROM clients WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31' AND idCompany = ?", [year, year, request.user.idCompany])
                     .then(dates => {
-                        res.status(200).json(dates);
+                        return response.status(200).json(dates);
                     });
     }
 
     //Get All List
-    public async listAllClients (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE idCompany = ?", [req.user.idCompany])
+    public async listAllClients(request: Request, response: Response): Promise<Response> {
+        return (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE idCompany = ?", [request.user.idCompany])
                     .then(dates => {
-                        res.status(200).json(dates);
+                        return response.status(200).json(dates);
                     });
     }
     
     //Get List
-    public async listClients (req: Request, res: Response): Promise<void> {
-        (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE active = true AND idCompany = ?", [req.user.idCompany])
+    public async listClients(request: Request, response: Response): Promise<Response> {
+        return (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE active = true AND idCompany = ?", [request.user.idCompany])
                     .then(dates => {
-                        res.status(200).json(dates);
+                        return response.status(200).json(dates);
                     });
     }
 
     //Get One
-    public async getOneClient (req: Request, res: Response): Promise<void> {
-        const { id } = req.params;
-        (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
+    public async getOneClient(request: Request, response: Response): Promise<Response> {
+        const { id } = request.params;
+        return (await pool).query("SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true AND idCompany = ?", [id, request.user.idCompany])
                     .then(dates => {
+
                         if(dates != 0) {
-                            return res.status(200).json(dates);
+                            return response.status(200).json(dates);
                         }
                         else {
-                            return res.status(404).json({ message: "Not found" });
+                            return response.status(404).json({ message: "Not found." });
                         }
                     });
     }
 
     //Post
-    public async createClient (req: Request, res: Response): Promise<void> {
-        req.body.idCompany = req.user.idCompany; 
-        (await pool).query("INSERT INTO clients SET ?", [req.body]);
-        res.status(200).json({ message: "Saved client." });        
+    public async createClient(request: Request, response: Response): Promise<Response> {
+        request.body.idCompany = request.user.idCompany; 
+        return (await pool).query("INSERT INTO clients SET ?", [request.body])
+                    .then(value => {
+                        return response.status(200).json({ message: "Saved client." });
+                    });
     }
 
     //Update
-    public async updateClient (req: Request, res: Response): Promise<void>  {
-        const { id } = req.params;
-        (await pool).query("UPDATE clients SET ? WHERE id = ?", [req.body, id]);
-        res.status(200).json({ message: "Client updated successfully." });
+    public async updateClient(request: Request, response: Response): Promise<Response>  {
+        const { id } = request.params;
+        return (await pool).query("UPDATE clients SET ? WHERE id = ?", [request.body, id])
+                    .then(value => {
+                        return response.status(200).json({ message: "Client updated successfully." });
+                    })
     }
 
     //Delete
-    public async deleteClient (req: Request, res: Response): Promise<void> {
+    public async deleteClient(request: Request, response: Response): Promise<Response> {
 
         var date: Date = new Date();
         var year: string, month: string, day: string;
@@ -76,11 +81,13 @@ class ClientsControllers {
             day = "0" + day;
         }
         
-        const { id } = req.params;
+        const { id } = request.params;
         var newDate: string = year + "-" + month + "-" + day;
 
-        (await pool).query("UPDATE clients SET active = false, creationDate = ? WHERE id = ?", [newDate, id]);
-        res.status(200).json({ message: "Client eliminated successfully." });
+        return (await pool).query("UPDATE clients SET active = false, creationDate = ? WHERE id = ?", [newDate, id])
+                        .then(value => {
+                            return response.status(200).json({ message: "Client eliminated successfully." });
+                        });
     }
 }
 

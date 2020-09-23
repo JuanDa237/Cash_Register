@@ -16,63 +16,63 @@ exports.productsController = void 0;
 const database_1 = __importDefault(require("../../database"));
 class ProductsController {
     //Get All List
-    listAllProducts(req, res) {
+    listAllProducts(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name, price FROM products WHERE idCompany = ?", [req.user.idCompany])
+            return (yield database_1.default).query("SELECT id, name, price FROM products WHERE idCompany = ?", [request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
     //Get list
-    listProducts(req, res) {
+    listProducts(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, name, price FROM products WHERE active = true AND idCompany = ?", [req.user.idCompany])
+            return (yield database_1.default).query("SELECT id, name, price FROM products WHERE active = true AND idCompany = ?", [request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
-    listIngredientsInProducts(req, res) {
+    listIngredientsInProducts(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            (yield database_1.default).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE active = true AND idCompany = ?", [req.user.idCompany])
+            return (yield database_1.default).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE active = true AND idCompany = ?", [request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
     //Get one
-    getOneProduct(req, res) {
+    getOneProduct(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("SELECT id, idCategory , name, price FROM products WHERE id = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
+            const { id } = request.params;
+            return (yield database_1.default).query("SELECT id, idCategory , name, price FROM products WHERE id = ? AND active = true AND idCompany = ?", [id, request.user.idCompany])
                 .then(dates => {
                 if (dates != 0) {
-                    return res.status(200).json(dates);
+                    return response.status(200).json(dates);
                 }
                 else {
-                    return res.status(404).json({ message: "Not found" });
+                    return response.status(404).json({ message: "Not found" });
                 }
             });
         });
     }
-    getIngredientsInProduct(req, res) {
+    getIngredientsInProduct(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND active = true AND idCompany = ?", [id, req.user.idCompany])
+            const { id } = request.params;
+            return (yield database_1.default).query("SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND active = true AND idCompany = ?", [id, request.user.idCompany])
                 .then(dates => {
-                res.status(200).json(dates);
+                return response.status(200).json(dates);
             });
         });
     }
     //Post
-    createProduct(req, res) {
+    createProduct(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            req.body.idCompany = req.user.idCompany;
-            (yield database_1.default).query("INSERT INTO products SET ?", [req.body])
+            request.body.idCompany = request.user.idCompany;
+            return (yield database_1.default).query("INSERT INTO products SET ?", [request.body])
                 .then(function (value) {
                 return __awaiter(this, void 0, void 0, function* () {
-                    res.status(200).json({
+                    return response.status(200).json({
                         message: "Saved product.",
                         id: value.insertId
                     });
@@ -80,41 +80,51 @@ class ProductsController {
             });
         });
     }
-    createIngredientInProduct(req, res) {
+    createIngredientInProduct(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            req.body.idCompany = req.user.idCompany;
-            (yield database_1.default).query("INSERT INTO detailProductsIngredients SET ?", [req.body]);
-            res.status(200).json({ message: "Saved ingredient in product." });
+            request.body.idCompany = request.user.idCompany;
+            return (yield database_1.default).query("INSERT INTO detailProductsIngredients SET ?", [request.body])
+                .then(value => {
+                return response.status(200).json({ message: "Saved ingredient in product." });
+            });
         });
     }
     //Update
-    updateProduct(req, res) {
+    updateProduct(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("UPDATE products SET ? WHERE id = ?", [req.body, id]);
-            res.status(200).json({ message: "Product updated successfully." });
+            const { id } = request.params;
+            return (yield database_1.default).query("UPDATE products SET ? WHERE id = ?", [request.body, id])
+                .then(value => {
+                return response.status(200).json({ message: "Product updated successfully." });
+            });
         });
     }
-    updateIngredientInProduct(req, res) {
+    updateIngredientInProduct(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("UPDATE detailProductsIngredients SET ? WHERE id = ?", [req.body, id]);
-            res.status(200).json({ message: "Ingredient in product updated successfully." });
+            const { id } = request.params;
+            return (yield database_1.default).query("UPDATE detailProductsIngredients SET ? WHERE id = ?", [request.body, id])
+                .then(value => {
+                return response.status(200).json({ message: "Ingredient in product updated successfully." });
+            });
         });
     }
     //Delete
-    deleteProduct(req, res) {
+    deleteProduct(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("UPDATE products SET active = false WHERE id = ?", [id]);
-            res.status(200).json({ message: "Product eliminated successfully." });
+            const { id } = request.params;
+            return (yield database_1.default).query("UPDATE products SET active = false WHERE id = ?", [id])
+                .then(value => {
+                return response.status(200).json({ message: "Product eliminated successfully." });
+            });
         });
     }
-    deleteIngredientInProduct(req, res) {
+    deleteIngredientInProduct(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            (yield database_1.default).query("UPDATE detailProductsIngredients SET active = false WHERE id = ?", [id]);
-            res.status(200).json({ message: "Ingredient in product eliminated successfully." });
+            const { id } = request.params;
+            return (yield database_1.default).query("UPDATE detailProductsIngredients SET active = false WHERE id = ?", [id])
+                .then(value => {
+                return response.status(200).json({ message: "Ingredient in product eliminated successfully." });
+            });
         });
     }
 }

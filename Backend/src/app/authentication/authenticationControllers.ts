@@ -9,12 +9,12 @@ import { Role } from "../roles/models/Role";
 class AuthenticationControllers {
     
     //Post
-    public async singIn (req: Request, res: Response): Promise<void> {
+    public async singIn(request: Request, response: Response): Promise<Response> {
         
-        const { userName, password } = req.body;
+        const { userName, password } = request.body;
 
-        (await pool).query("SELECT id, password FROM users WHERE userName = ?", [userName])
-                    .then(async dates => {
+        return (await pool).query("SELECT id, password FROM users WHERE userName = ?", [userName])
+                    .then(async (dates): Promise<Response> => {
                         
                         if(dates != 0) {
                             
@@ -28,30 +28,30 @@ class AuthenticationControllers {
                                     expiresIn: 86400 //The token expires in 24 hours
                                 });
                                 
-                                return res.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({ message: "Sing in succesfully." });
+                                return response.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({ message: "Sing in succesfully." });
                             }
                             else {
-                                return res.status(401).json({ message: "Password is wrong." });
+                                return response.status(401).json({ message: "Password is wrong." });
                             }
                         }
                         else {
-                            return res.status(404).json({ message: "Username not found." });
+                            return response.status(404).json({ message: "Username not found." });
                         }
                     });
     }
     
-    public async singUp (req: Request, res: Response): Promise<void> {
+    public async singUp(request: Request, response: Response): Promise<void> {
         
-        const { idCompany, roleName, userName, password, name } = req.body;
+        const { idCompany, roleName, userName, password, name } = request.body;
         var idRole: number = 0;
         var itsOk: boolean = false;
 
         //Validate userName
         await (await pool).query("SELECT id FROM users WHERE userName = ?", [userName])
-                            .then((dates: Array<number>) => {
+                            .then((dates: Array<number>): Response<any> | undefined => {
                                 
                                 if (dates.length > 0) {
-                                    return res.status(401).json({ message: "Username '" + userName + "' is in use." });
+                                    return response.status(401).json({ message: `Username "${userName}" is in use.` });
                                 }
                                 else {
                                     itsOk = true;
@@ -74,7 +74,7 @@ class AuthenticationControllers {
                                     itsOk = true;
                                 }
                                 else {
-                                    return res.status(400).json({ message: "Role '" + roleName + "' not found." });
+                                    return response.status(400).json({ message: `Role "${roleName}" not found.` });
                                 }
                             });
             }
@@ -88,7 +88,7 @@ class AuthenticationControllers {
                                     itsOk = true;
                                 }
                                 else {
-                                    return res.status(400).json({ message: "Role user not found." });
+                                    return response.status(400).json({ message: "Role user not found." });
                                 }
                             });
             }
@@ -114,7 +114,7 @@ class AuthenticationControllers {
 
                                 newUser.password = "";
 
-                                return res.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({
+                                return response.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({
                                     message: "Saved user.",
                                     user: newUser
                                 });
