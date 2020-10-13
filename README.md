@@ -8,7 +8,7 @@
     <li>Angular</li>
     <li>MySql</li>
 </ul>
-<p>If you have the dependencies installed you must create the MySql database <a href="https://github.com/JuanDa237/Cash_Register/tree/master/Sources/Database">(files in Database folder)</a>, then in the Backend folder do the following commands:</p>
+<p>If you have the dependencies installed you must create the MySql database <a href="https://github.com/JuanDa237/Cash_Register/tree/main/sources/database">(files in Database folder)</a>, then in the Backend folder do the following commands:</p>
 <ul>
     <li>
         Do the build: <br>
