@@ -25,8 +25,8 @@
 <ul>
     <li>
         Start the Angular server:<br>
-        <strong>$ ng serve</strong>
+        <strong>$ npm start</strong>
     </li>
     <br>
 </ul>
-<p>Then go to http://localhost:4200 and use the amazing cash register in a web page.</p>
+<p>Then go to http://localhost:4000 and use the amazing cash register in a web page.</p>
