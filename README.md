@@ -1,6 +1,6 @@
 <h1>PerreroApp</h1>
-<h2>V- 0.0.1</h2>
-<img src="https://raw.githubusercontent.com/JuanDa237/Cash_Register/master/Sources/Images/Image.png" alt="AppImage.jpg">
+<h2>V- 0.0.2</h2>
+<img src="https://raw.githubusercontent.com/JuanDa237/Cash_Register/main/sources/images/image.png" alt="appImage.png">
 <h2>Installation</h2>
 <h4>Dependecies</h4>
 <ul>

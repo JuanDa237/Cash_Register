@@ -8,7 +8,7 @@
 # Private Files
 toDoList.md
 
-# compiled output
+# Compiled output
 /dist
 /tmp
 /out-tsc
@@ -16,7 +16,7 @@ toDoList.md
 # Only exists if Bazel was run
 /bazel-out
 
-# profiling files
+# Profiling files
 chrome-profiler-events*.json
 speed-measure-plugin*.json
 
@@ -37,7 +37,7 @@ speed-measure-plugin*.json
 !.vscode/extensions.json
 .history/*
 
-# misc
+# Misc
 /.sass-cache
 /connect.lock
 /coverage
@@ -47,6 +47,6 @@ yarn-error.log
 testem.log
 /typings
 
-# System Files
+# System files
 .DS_Store
 Thumbs.db
