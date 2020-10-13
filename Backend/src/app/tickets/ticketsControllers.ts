@@ -72,14 +72,10 @@ class TicketsControllers {
         request.body.idCompany = request.user.idCompany;
         return (await pool).query("INSERT INTO tickets SET ?", [request.body])
                     .then(async function(value) {
-
-                        return (await pool).query("SELECT id FROM tickets WHERE id=(SELECT max(id) FROM tickets);")
-                        .then(dates => {
-
-                            return response.status(200).json({
-                                message: "Saved ticket.",
-                                id: dates
-                            });
+                        //Edit this
+                        return response.status(200).json({
+                            message: "Saved ticket.",
+                            id: value.insertId
                         });
                     });;    
     }

@@ -87,12 +87,10 @@ class TicketsControllers {
             return (yield database_1.default).query("INSERT INTO tickets SET ?", [request.body])
                 .then(function (value) {
                 return __awaiter(this, void 0, void 0, function* () {
-                    return (yield database_1.default).query("SELECT id FROM tickets WHERE id=(SELECT max(id) FROM tickets);")
-                        .then(dates => {
-                        return response.status(200).json({
-                            message: "Saved ticket.",
-                            id: dates
-                        });
+                    //Edit this
+                    return response.status(200).json({
+                        message: "Saved ticket.",
+                        id: value.insertId
                     });
                 });
             });

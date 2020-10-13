@@ -1,0 +1,22 @@
+<div class="my-4">
+    <button class="btn btn-info btn-block" routerLink="add" ><i class="fas fa-plus-circle"></i> Crear Producto</button>        
+</div>
+<div *ngIf="products.length <= 0">
+    <app-loading colorClass="text-primary" size="10rem"></app-loading>
+</div>
+<div [hidden]="products.length <= 0">
+    <app-table [columns]="['Nombre', 'Precio', 'Acciones']">
+        <tr *ngFor="let product of products">                
+            <td class="align-middle">{{ product.name }}</td>
+            <td class="align-middle text-center">{{ product.price | number }}</td>
+            <td>
+                <div class="text-center">
+                    <div class="btn-group">
+                        <button class="btn btn-info" [routerLink]="['edit/', product.id]"><i class="far fa-edit"></i></button>
+                        <button class="btn btn-danger" (click)="deleteProduct(product.id)"><i class="far fa-trash-alt"></i></button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </app-table>
+</div>

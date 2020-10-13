@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" (click)="to('page-top')" routerLink="/">Caja Registradora</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#home-navbar" aria-controls="home-navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="home-navbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" (click)="to('about')" routerLink="/">Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="to('services')" routerLink="/">Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="to('contact')" routerLink="/">Contacto</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link"  routerLink="/signIn">Ingresar</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

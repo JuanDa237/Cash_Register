@@ -1,0 +1,16 @@
+@import 'styles/variables.scss';
+
+.sb-topnav {
+    padding-left: 0;
+    height: $topnav-base-height;
+    z-index: $zindex-topnav;
+    .navbar-brand {
+        width: $sidenav-base-width;
+        padding-left: $navbar-padding-x;
+        padding-right: $navbar-padding-x;
+        margin: 0;
+    }
+    #sidebarToggle {
+        color: $topnav-dark-toggler-color;
+    }
+}
