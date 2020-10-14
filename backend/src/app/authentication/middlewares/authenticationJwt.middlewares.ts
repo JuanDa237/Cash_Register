@@ -21,7 +21,7 @@ export async function verifyToken(request: Request, response: Response, next: Ne
     
         const payload: Payload = jwt.verify(token, process.env.TOKEN_SECRET || "tokentest") as Payload;
         
-        (await pool).query("SELECT idCompany, idRole, userName FROM users WHERE id = ?", [payload.id])
+        (await pool).query("SELECT id, idCompany, idRole, userName FROM users WHERE id = ?", [payload.id])
                     .then((dates: Array<User>) => {
 
                         if(dates.length > 0) {
