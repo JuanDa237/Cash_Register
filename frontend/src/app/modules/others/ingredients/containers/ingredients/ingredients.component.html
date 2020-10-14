@@ -11,10 +11,10 @@
     </div>
 </app-modal>
 <div class="my-3">
-    <div *ngIf="ingredients.length <= 0">
+    <div *ngIf="loading">
         <app-loading colorClass="text-primary" size="10rem"></app-loading>
     </div>
-    <div [hidden]="ingredients.length <= 0">
+    <div [hidden]="loading">
         <app-table [columns]="['Nombre', 'Precio/Unidad', 'Cantidad', 'Acciones']" [footer]="ingredients.length >= 10">
             <tr [class.table-danger]="ingredient.amount <= 0" *ngFor="let ingredient of ingredients">
                 <td class="align-middle">{{ ingredient.name }}</td>

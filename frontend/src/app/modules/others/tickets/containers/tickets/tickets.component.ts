@@ -22,6 +22,8 @@ export class TicketsComponent implements OnInit {
   public since: Date;
   public until: Date;
 
+  public loading: boolean;
+
   @ViewChild(TableComponent)
   private table!: TableComponent;
   
@@ -36,6 +38,8 @@ export class TicketsComponent implements OnInit {
     this.tickets = new Array<Ticket>(0);
     this.since = new Date();
     this.until = new Date();
+
+    this.loading = true;
   }
 
   ngOnInit(): void {
@@ -49,6 +53,7 @@ export class TicketsComponent implements OnInit {
     this.ticketsService.getTicketsInInterval(actualDate, actualDate).subscribe(
       res => {
         this.tickets = res;
+
         this.getClients();
       },
       error => {throw new Error(error)}
@@ -66,6 +71,8 @@ export class TicketsComponent implements OnInit {
     this.clientsService.getAllClients().subscribe(
       response => {
         this.clients = response;
+        this.loading = false;
+
         this.table.renderTable();
       },
       error => {throw new Error(error)}
@@ -74,11 +81,13 @@ export class TicketsComponent implements OnInit {
 
   //Methods for html
   public search(dates: Date[]): void {
+    
+    this.loading = true;
 
     this.ticketsService.getTicketsInInterval(dates[0].toString(), dates[1].toString()).subscribe(
       response => {
           this.tickets = response;
-          this.getClients();
+          this.loading = false;
       },
       error => {throw new Error(error)}
     );

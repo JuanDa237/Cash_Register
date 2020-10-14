@@ -10,10 +10,10 @@
         <button type="button" class="btn btn-success" (click)="createOrUpdateCategory()" [disabled]="invalidForm" data-dismiss="modal">{{  creating ? 'Crear' : 'Editar'  }}</button>
     </div>
 </app-modal>
-<div *ngIf="categories.length <= 0">
+<div *ngIf="loading">
     <app-loading colorClass="text-primary" size="10rem"></app-loading>
 </div>
-<div [hidden]="categories.length <= 0">
+<div [hidden]="loading">
     <div class="my-4">
         <app-table [columns]="['Nombre', 'Acciones']">
             <tr *ngFor="let category of categories">

@@ -3,10 +3,10 @@
 </a>
 <app-tickets-datepicker (dates)="search($event)"></app-tickets-datepicker>
 <div class="mt-4">
-    <div *ngIf="tickets.length <= 0 && clients.length <= 0">
+    <div *ngIf="loading">
         <app-loading colorClass="text-primary" size="10rem"></app-loading>
     </div>
-    <div [hidden]="tickets.length <= 0 && clients.length <= 0">
+    <div [hidden]="loading">
         <app-table [columns]="['Cliente', 'Fecha', 'Total', 'Acciones']">
             <tr *ngFor="let ticket of tickets; let i = index">
                 <td class="align-middle">

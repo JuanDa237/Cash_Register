@@ -16,6 +16,8 @@ export class CategoriesComponent implements OnInit {
 
   public categories: Array<Category>;
   public creating: boolean;
+  
+  public loading: boolean;
 
   public invalidForm: boolean;
 
@@ -31,6 +33,7 @@ export class CategoriesComponent implements OnInit {
     this.categories = new Array<Category>(0);
     this.creating = false;
     this.invalidForm = false;
+    this.loading = true;
   }
 
   ngOnInit(): void {
@@ -43,6 +46,7 @@ export class CategoriesComponent implements OnInit {
     this.categoriesService.getCategories().subscribe( 
       response => {
         this.categories = response;
+        this.loading = false;
         this.table.renderTable();
       },
       error => {throw new Error(error)}

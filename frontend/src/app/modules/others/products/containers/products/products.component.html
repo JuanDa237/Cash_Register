@@ -1,10 +1,10 @@
 <div class="my-4">
     <button class="btn btn-info btn-block" routerLink="add" ><i class="fas fa-plus-circle"></i> Crear Producto</button>        
 </div>
-<div *ngIf="products.length <= 0">
+<div *ngIf="loading">
     <app-loading colorClass="text-primary" size="10rem"></app-loading>
 </div>
-<div [hidden]="products.length <= 0">
+<div [hidden]="loading">
     <app-table [columns]="['Nombre', 'Precio', 'Acciones']">
         <tr *ngFor="let product of products">                
             <td class="align-middle">{{ product.name }}</td>

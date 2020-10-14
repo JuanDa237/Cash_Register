@@ -10,10 +10,10 @@
         <button type="button" class="btn btn-success" (click)="createOrUpdateClient()" [disabled]="invalidForm" data-dismiss="modal">{{  creating ? 'Crear' : 'Editar'  }}</button>
     </div>
 </app-modal>
-<div *ngIf="clients.length <= 0">
+<div *ngIf="loading">
     <app-loading colorClass="text-primary" size="10rem"></app-loading>
 </div>
-<div [hidden]="clients.length <= 0">
+<div [hidden]="loading">
     <app-table [columns]="['Nombre', 'Direccion', 'Telefono', 'Creado El', 'Acciones']">
         <tr *ngFor="let client of clients">
             <td class="align-middle">{{ client.name }}</td>

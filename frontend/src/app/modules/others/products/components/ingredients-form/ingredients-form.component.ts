@@ -22,6 +22,8 @@ export class IngredientsFormComponent implements OnInit {
   public spendingAmount: Array<number>;
   private spendingAmountConst: Array<number>;
 
+  public loading: boolean;
+
   @ViewChild(TableComponent)
   private table!: TableComponent;
 
@@ -39,6 +41,8 @@ export class IngredientsFormComponent implements OnInit {
     this.spendingAmount = new Array<number>(0);
     this.spendingAmountConst = new Array<number>(0);
 
+    this.loading = true;
+
     this.inputAmount = new EventEmitter<null>();
   }
 
@@ -51,7 +55,8 @@ export class IngredientsFormComponent implements OnInit {
     this.ingredientsService.getIngredients().subscribe(
       response => {
         this.ingredients = response;
-
+        this.loading = false;
+        
         this.table.renderTable();
         this.getIngredientsInProduct();
       },
@@ -95,7 +100,7 @@ export class IngredientsFormComponent implements OnInit {
           }
   
           this.spendingAmountConst = [...this.spendingAmount];
-
+          
           //Chart
           this.inputAmountEvent();
         },

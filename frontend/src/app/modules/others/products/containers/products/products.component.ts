@@ -15,6 +15,8 @@ export class ProductsComponent implements OnInit {
 
   public products: Array<Product>;
 
+  public loading: boolean;
+
   @ViewChild(TableComponent)
   private table!: TableComponent;
   
@@ -22,6 +24,7 @@ export class ProductsComponent implements OnInit {
     private productsService: ProductsService
   ) {
     this.products = new Array<Product>(0);
+    this.loading = true;
   }
 
   ngOnInit(): void {
@@ -33,6 +36,7 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProducts().subscribe(
       response => {
         this.products = response;
+        this.loading = false;
         this.table.renderTable();
       },
       error => {throw new Error(error)}

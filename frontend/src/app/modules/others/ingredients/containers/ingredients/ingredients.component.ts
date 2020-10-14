@@ -20,6 +20,7 @@ export class IngredientsComponent implements OnInit {
   public creating: boolean;
 
   public invalidForm: boolean;
+  public loading: boolean;
 
   @ViewChild(IngredientsFormComponent)
   public formChild!: IngredientsFormComponent;
@@ -33,6 +34,7 @@ export class IngredientsComponent implements OnInit {
     this.ingredients = new Array<Ingredient>(0);
     this.creating = false;
     this.invalidForm = false;
+    this.loading = true;
   }
 
   ngOnInit(): void {
@@ -45,6 +47,8 @@ export class IngredientsComponent implements OnInit {
     this.ingredientsService.getIngredients().subscribe(
       response => {
         this.ingredients = response;
+        this.loading = false;
+        
         this.table.renderTable();
       },
       error => {throw new Error(error)}

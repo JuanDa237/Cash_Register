@@ -21,6 +21,7 @@ export class ClientsComponent implements OnInit {
   public creating: boolean;
 
   public invalidForm: boolean;
+  public loading: boolean;
 
   @ViewChild(ClientsChartComponent)
   private chartChild!: ClientsChartComponent;
@@ -37,6 +38,7 @@ export class ClientsComponent implements OnInit {
     this.clients = new Array<Client>(0);
     this.creating = false;
     this.invalidForm = false;
+    this.loading = true;
   }
 
   ngOnInit(): void {
@@ -49,6 +51,8 @@ export class ClientsComponent implements OnInit {
     this.clientsService.getClients().subscribe(
       response => {
         this.clients = response;
+        this.loading = false;
+        
         this.table.renderTable();
       },
       error => {throw new Error(error)}
