@@ -55,15 +55,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/company",
-									"protocol": "http",
+									"raw": "{{api}}company",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"company"
+										"{{api}}company"
 									]
 								}
 							},
@@ -92,15 +86,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/categories",
-									"protocol": "http",
+									"raw": "{{api}}categories",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"categories"
+										"{{api}}categories"
 									]
 								}
 							},
@@ -122,15 +110,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/category/:id",
-									"protocol": "http",
+									"raw": "{{api}}category/:id",
 									"host": [
-										"localhost"
+										"{{api}}category"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"category",
 										":id"
 									],
 									"variable": [
@@ -170,15 +154,9 @@
 									"raw": "{\n    \"name\": \"\"\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/category",
-									"protocol": "http",
+									"raw": "{{api}}category",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"category"
+										"{{api}}category"
 									]
 								}
 							},
@@ -210,15 +188,11 @@
 									"raw": "{\n    \"name\": \"\"\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/category/:id",
-									"protocol": "http",
+									"raw": "{{api}}category/:id",
 									"host": [
-										"localhost"
+										"{{api}}category"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"category",
 										":id"
 									],
 									"variable": [
@@ -248,15 +222,11 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/category/:id",
-									"protocol": "http",
+									"raw": "{{api}}category/:id",
 									"host": [
-										"localhost"
+										"{{api}}category"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"category",
 										":id"
 									],
 									"variable": [
@@ -297,15 +267,11 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:3000/api/products/ingredients",
-											"protocol": "http",
+											"raw": "{{api}}products/ingredients",
 											"host": [
-												"localhost"
+												"{{api}}products"
 											],
-											"port": "3000",
 											"path": [
-												"api",
-												"products",
 												"ingredients"
 											]
 										},
@@ -329,15 +295,11 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:3000/api/product/ingredients/:id",
-											"protocol": "http",
+											"raw": "{{api}}product/ingredients/:id",
 											"host": [
-												"localhost"
+												"{{api}}product"
 											],
-											"port": "3000",
 											"path": [
-												"api",
-												"product",
 												"ingredients",
 												":id"
 											],
@@ -380,15 +342,11 @@
 											"raw": "{\n    \"idProduct\": 0,\n    \"idIngredient\": 0,\n    \"spendingAmount\": 0\n}"
 										},
 										"url": {
-											"raw": "http://localhost:3000/api/product/ingredient",
-											"protocol": "http",
+											"raw": "{{api}}product/ingredient",
 											"host": [
-												"localhost"
+												"{{api}}product"
 											],
-											"port": "3000",
 											"path": [
-												"api",
-												"product",
 												"ingredient"
 											]
 										}
@@ -421,15 +379,11 @@
 											"raw": "{\n    \"idProduct\": 0,\n    \"idIngredient\": 0,\n    \"spendingAmount\": 0\n}"
 										},
 										"url": {
-											"raw": "http://localhost:3000/api/product/ingredient/:id",
-											"protocol": "http",
+											"raw": "{{api}}product/ingredient/:id",
 											"host": [
-												"localhost"
+												"{{api}}product"
 											],
-											"port": "3000",
 											"path": [
-												"api",
-												"product",
 												"ingredient",
 												":id"
 											],
@@ -460,15 +414,11 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:3000/api/product/ingredient/:id",
-											"protocol": "http",
+											"raw": "{{api}}product/ingredient/:id",
 											"host": [
-												"localhost"
+												"{{api}}product"
 											],
-											"port": "3000",
 											"path": [
-												"api",
-												"product",
 												"ingredient",
 												":id"
 											],
@@ -504,15 +454,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/products",
-									"protocol": "http",
+									"raw": "{{api}}products",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"products"
+										"{{api}}products"
 									]
 								}
 							},
@@ -534,15 +478,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/all/products",
-									"protocol": "http",
+									"raw": "{{api}}all/products",
 									"host": [
-										"localhost"
+										"{{api}}all"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"all",
 										"products"
 									]
 								},
@@ -566,14 +506,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/product/:id",
-									"protocol": "http",
+									"raw": "{{api}}api/product/:id",
 									"host": [
-										"localhost"
+										"{{api}}api"
 									],
-									"port": "3000",
 									"path": [
-										"api",
 										"product",
 										":id"
 									],
@@ -614,15 +551,9 @@
 									"raw": "{\n    \"idCategory\": 0,\n    \"name\": \"\",\n    \"price\": 0\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/product",
-									"protocol": "http",
+									"raw": "{{api}}product",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"product"
+										"{{api}}product"
 									]
 								}
 							},
@@ -654,15 +585,11 @@
 									"raw": "{\n    \"idCategory\": 0,\n    \"name\": \"\",\n    \"price\": 0\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/product/:id",
-									"protocol": "http",
+									"raw": "{{api}}product/:id",
 									"host": [
-										"localhost"
+										"{{api}}product"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"product",
 										":id"
 									],
 									"variable": [
@@ -692,15 +619,11 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/product/:id",
-									"protocol": "http",
+									"raw": "{{api}}product/:id",
 									"host": [
-										"localhost"
+										"{{api}}product"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"product",
 										":id"
 									],
 									"variable": [
@@ -760,15 +683,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/ingredients",
-									"protocol": "http",
+									"raw": "{{api}}ingredients",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"ingredients"
+										"{{api}}ingredients"
 									]
 								}
 							},
@@ -790,15 +707,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/ingredient/:id",
-									"protocol": "http",
+									"raw": "{{api}}ingredient/:id",
 									"host": [
-										"localhost"
+										"{{api}}ingredient"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"ingredient",
 										":id"
 									],
 									"variable": [
@@ -838,15 +751,9 @@
 									"raw": "{\n    \"name\": \"\",\n    \"amount\": 0,\n    \"priceByUnit\": 0\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/ingredient",
-									"protocol": "http",
+									"raw": "{{api}}ingredient",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"ingredient"
+										"{{api}}ingredient"
 									]
 								}
 							},
@@ -878,15 +785,11 @@
 									"raw": "{\n    \"name\": \"\",\n    \"amount\": 0,\n    \"priceByUnit\": 0\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/ingredient/:id",
-									"protocol": "http",
+									"raw": "{{api}}ingredient/:id",
 									"host": [
-										"localhost"
+										"{{api}}ingredient"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"ingredient",
 										":id"
 									],
 									"variable": [
@@ -926,15 +829,9 @@
 									"raw": "[ 0, 0, 0, 0, 0, 0, ...]"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/amountIngredients",
-									"protocol": "http",
+									"raw": "{{api}}amountIngredients",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"amountIngredients"
+										"{{api}}amountIngredients"
 									]
 								},
 								"description": "This route is for update spendingAmount in ingredients after a new sale"
@@ -957,15 +854,11 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/ingredient/:id",
-									"protocol": "http",
+									"raw": "{{api}}ingredient/:id",
 									"host": [
-										"localhost"
+										"{{api}}ingredient"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"ingredient",
 										":id"
 									],
 									"variable": [
@@ -1003,15 +896,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/tickets",
-									"protocol": "http",
+									"raw": "{{api}}tickets",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"tickets"
+										"{{api}}tickets"
 									]
 								}
 							},
@@ -1033,15 +920,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/ticket/:id",
-									"protocol": "http",
+									"raw": "{{api}}ticket/:id",
 									"host": [
-										"localhost"
+										"{{api}}ticket"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"ticket",
 										":id"
 									],
 									"variable": [
@@ -1071,15 +954,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/tickets/:since/:until",
-									"protocol": "http",
+									"raw": "{{api}}tickets/:since/:until",
 									"host": [
-										"localhost"
+										"{{api}}tickets"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"tickets",
 										":since",
 										":until"
 									],
@@ -1113,15 +992,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/tickets/year",
-									"protocol": "http",
+									"raw": "{{api}}tickets/year",
 									"host": [
-										"localhost"
+										"{{api}}tickets"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"tickets",
 										"year"
 									]
 								}
@@ -1144,15 +1019,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/tickets/products",
-									"protocol": "http",
+									"raw": "{{api}}tickets/products",
 									"host": [
-										"localhost"
+										"{{api}}tickets"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"tickets",
 										"products"
 									]
 								}
@@ -1175,15 +1046,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/ticket/products/:id",
-									"protocol": "http",
+									"raw": "{{api}}ticket/products/:id",
 									"host": [
-										"localhost"
+										"{{api}}ticket"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"ticket",
 										"products",
 										":id"
 									],
@@ -1224,15 +1091,9 @@
 									"raw": "{\n    \"idClient\": 0,\n    \"creationDate\": \"\",\n    \"total\": 0,\n    \"homeDelivery\": false,\n    \"priceOfHomeDelivery\": 0\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/ticket",
-									"protocol": "http",
+									"raw": "{{api}}ticket",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"ticket"
+										"{{api}}ticket"
 									]
 								}
 							},
@@ -1264,15 +1125,11 @@
 									"raw": "{\n    \"idTicket\": 0,\n    \"name\": \"\",\n    \"price\": 0,\n    \"amount\": 0\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/ticket/product",
-									"protocol": "http",
+									"raw": "{{api}}ticket/product",
 									"host": [
-										"localhost"
+										"{{api}}ticket"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"ticket",
 										"product"
 									]
 								}
@@ -1303,15 +1160,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/clients",
-									"protocol": "http",
+									"raw": "{{api}}clients",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"clients"
+										"{{api}}clients"
 									]
 								}
 							},
@@ -1333,15 +1184,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/client/:id",
-									"protocol": "http",
+									"raw": "{{api}}client/:id",
 									"host": [
-										"localhost"
+										"{{api}}client"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"client",
 										":id"
 									],
 									"variable": [
@@ -1371,15 +1218,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/clients/year",
-									"protocol": "http",
+									"raw": "{{api}}clients/year",
 									"host": [
-										"localhost"
+										"{{api}}clients"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"clients",
 										"year"
 									]
 								}
@@ -1402,15 +1245,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/all/clients",
-									"protocol": "http",
+									"raw": "{{api}}all/clients",
 									"host": [
-										"localhost"
+										"{{api}}all"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"all",
 										"clients"
 									]
 								},
@@ -1444,15 +1283,9 @@
 									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\",\n    \"creationDate\": \"\"\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/client",
-									"protocol": "http",
+									"raw": "{{api}}client",
 									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"client"
+										"{{api}}client"
 									]
 								}
 							},
@@ -1484,15 +1317,11 @@
 									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\",\n    \"creationDate\": \"\"\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/client/:id",
-									"protocol": "http",
+									"raw": "{{api}}client/:id",
 									"host": [
-										"localhost"
+										"{{api}}client"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"client",
 										":id"
 									],
 									"variable": [
@@ -1522,15 +1351,11 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/client/:id",
-									"protocol": "http",
+									"raw": "{{api}}client/:id",
 									"host": [
-										"localhost"
+										"{{api}}client"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"client",
 										":id"
 									],
 									"variable": [
@@ -1546,6 +1371,39 @@
 						}
 					],
 					"description": "Clients and client endpoint.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/user && /users",
+					"item": [
+						{
+							"name": "http://localhost:3000/api/user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}user",
+									"host": [
+										"{{api}}user"
+									]
+								},
+								"description": "To get the name and the role of a user."
+							},
+							"response": []
+						}
+					],
+					"description": "To get the user information.",
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
 				},
@@ -1568,15 +1426,11 @@
 									"raw": "{\n    \"userName\": \"\",\n    \"password\": \"\"\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/authentication/singIn",
-									"protocol": "http",
+									"raw": "{{api}}authentication/singIn",
 									"host": [
-										"localhost"
+										"{{api}}authentication"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"authentication",
 										"singIn"
 									]
 								}
@@ -1599,15 +1453,11 @@
 									"raw": "{\n    \"idCompany\": 0,\n    \"roleName\": \"\",\n    \"userName\": \"\",\n    \"password\": \"\",\n    \"name\": \"\"\n}"
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/authentication/singUp",
-									"protocol": "http",
+									"raw": "{{api}}authentication/singUp",
 									"host": [
-										"localhost"
+										"{{api}}authentication"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"authentication",
 										"singUp"
 									]
 								}
