@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { indexController } from "./indexControllers";
+import { indexController } from "./index.controllers";
 
 class IndexRoutes {
 

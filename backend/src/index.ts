@@ -3,16 +3,16 @@ import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import { createRoles } from "./app/roles/initialSetup";
+import { createInitialData } from "./app/roles/initialData";
 
-import indexRoutes from "./app/index/indexRoutes";
-import companiesRoutes from "./app/companies/companiesRoutes";
-import categoriesRoutes from "./app/categories/categoriesRoutes";
-import productsRoutes from "./app/products/productsRoutes";
-import ingredientsRoutes from "./app/ingredients/ingredientsRoutes";
-import ticketsRoutes from "./app/tickets/ticketsRoutes";
-import clientsRoutes from "./app/clients/clientsRoutes";
-import authenticationRoutes from "./app/authentication/authenticationRoutes";
+import indexRoutes from "./app/index/index.routes";
+import companiesRoutes from "./app/companies/companies.routes";
+import categoriesRoutes from "./app/categories/categories.routes";
+import productsRoutes from "./app/products/products.routes";
+import ingredientsRoutes from "./app/ingredients/ingredients.routes";
+import ticketsRoutes from "./app/tickets/tickets.routes";
+import clientsRoutes from "./app/clients/clients.routes";
+import authenticationRoutes from "./app/authentication/authentication.routes";
 
 class Server {
     
@@ -20,17 +20,14 @@ class Server {
 
     constructor() {
         this.app = express();
-        this.config();
+        this.configExpress();
         this.routes();
-
+        this.initialConfig();
         //Start reading environment variables
         dotenv.config();
-
-        //Create default roles
-        createRoles();
     }
 
-    config(): void {
+    private configExpress(): void {
         this.app.set("port", process.env.PORT || 3000);
         this.app.use(morgan("dev"));
         this.app.use(cors());
@@ -38,7 +35,7 @@ class Server {
         this.app.use(express.urlencoded({extended: false}));
     }
 
-    routes(): void {
+    private routes(): void {
         this.app.use("/", indexRoutes);
         this.app.use("/api", companiesRoutes);
         this.app.use("/api", categoriesRoutes);
@@ -49,7 +46,12 @@ class Server {
         this.app.use("/api/authentication", authenticationRoutes);
     }
 
-    start(): void {
+    private initialConfig(): void {
+        
+        createInitialData();
+    }
+
+    public start(): void {
         this.app.listen(this.app.get("port"), () => {
             console.log("Server on port " + this.app.get("port"));
         });

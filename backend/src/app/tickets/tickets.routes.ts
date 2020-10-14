@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { ticketsControllers } from "./ticketsControllers";
+import { ticketsControllers } from "./tickets.controllers";
 import { authenticationJwt } from "../authentication/middlewares/index";
 
 class CategoriesRoutes {

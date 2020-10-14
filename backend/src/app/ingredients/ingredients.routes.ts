@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { ingredientsControllers } from "./ingredientsControllers";
+import { ingredientsControllers } from "./ingredients.controllers";
 import { authenticationJwt } from "../authentication/middlewares/index";
 
 class IngredientsRoutes {

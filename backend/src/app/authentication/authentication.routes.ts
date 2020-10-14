@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { authenticationControllers } from "./authenticationControllers";
+import { authenticationControllers } from "./authentication.controllers";
 
 class AuthenticationRoutes {
 
@@ -10,7 +10,7 @@ class AuthenticationRoutes {
         this.routes();
     }
 
-    routes(): void {
+    private routes(): void {
         
         //Post
         this.router.post("/singIn", authenticationControllers.singIn);

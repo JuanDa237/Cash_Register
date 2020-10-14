@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { productsController } from "./productsControllers";
+import { productsController } from "./products.controllers";
 import { authenticationJwt } from "../authentication/middlewares/index";
 
 class ProductsRoutes {

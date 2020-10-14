@@ -2,7 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import pool from "../../../database";
 
-import { User } from "../../users/models/User";
+import { User } from "../../users/models";
+import { roles } from "../../roles/data";
 
 interface Payload {
     id: number;
@@ -18,7 +19,7 @@ export async function verifyToken(request: Request, response: Response, next: Ne
         if(!token) 
             return response.status(403).json({ message: "No token provided." });
     
-        const payload = jwt.verify(token, process.env.TOKEN_SECRET || "tokentest") as Payload;
+        const payload: Payload = jwt.verify(token, process.env.TOKEN_SECRET || "tokentest") as Payload;
         
         (await pool).query("SELECT idCompany, idRole, userName FROM users WHERE id = ?", [payload.id])
                     .then((dates: Array<User>) => {
@@ -43,25 +44,11 @@ export async function isUser(request: Request, response: Response, next: NextFun
     (await pool).query("SELECT name FROM roles WHERE id = ?", [request.user.idRole])
                 .then((date: Array<any>) => {
                     
-                    if(date.length > 0 && (date[0].name == "administrator" || date[0].name == "cashier" || date[0].name == "user")) {
+                    if(date.length > 0 && (date[0].name == roles.ADMINISTRATOR || date[0].name == roles.CASHIER || date[0].name == roles.USER)) {
                         return next();
                     }
                     else {
                         return response.status(401).json({ message: "Unauthorized." });
-                    }
-                });
-}
-
-export async function isAdministrator(request: Request, response: Response, next: NextFunction): Promise<void> {
-    
-    (await pool).query("SELECT name FROM roles WHERE id = ?", [request.user.idRole])
-                .then((date: Array<any>) => {
-                    
-                    if(date.length > 0 && date[0].name == "administrator") {
-                        return next();
-                    }
-                    else {
-                        return response.status(401).json({ message: "Unauthorized."});
                     }
                 });
 }
@@ -71,7 +58,21 @@ export async function isCashier(request: Request, response: Response, next: Next
     (await pool).query("SELECT name FROM roles WHERE id = ?", [request.user.idRole])
                 .then((date: Array<any>) => {
                     
-                    if(date.length > 0 && (date[0].name == "administrator" || date[0].name == "cashier")) {
+                    if(date.length > 0 && (date[0].name == roles.ADMINISTRATOR || date[0].name == roles.CASHIER)) {
+                        return next();
+                    }
+                    else {
+                        return response.status(401).json({ message: "Unauthorized."});
+                    }
+                });
+}
+
+export async function isAdministrator(request: Request, response: Response, next: NextFunction): Promise<void> {
+    
+    (await pool).query("SELECT name FROM roles WHERE id = ?", [request.user.idRole])
+                .then((date: Array<any>) => {
+                    
+                    if(date.length > 0 && date[0].name == roles.ADMINISTRATOR) {
                         return next();
                     }
                     else {

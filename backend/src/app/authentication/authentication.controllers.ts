@@ -3,8 +3,9 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import pool from "../../database";
 
-import { User, encryptPassword, validatePassword } from "../users/models/User";
-import { Role } from "../roles/models/Role";
+import { User, encryptPassword, validatePassword } from "../users/models";
+import { Role } from "../roles/models";
+import { roles } from "../roles/data";
 
 class AuthenticationControllers {
     
@@ -80,7 +81,7 @@ class AuthenticationControllers {
             }
             else {
                 
-                await (await pool).query("SELECT * FROM roles WHERE name = 'user';")
+                await (await pool).query(`SELECT * FROM roles WHERE name = '${roles.USER}';`)
                             .then((dates: Array<Role>) => {
                                 
                                 if(dates.length > 0) {
@@ -88,7 +89,7 @@ class AuthenticationControllers {
                                     itsOk = true;
                                 }
                                 else {
-                                    return response.status(400).json({ message: "Role user not found." });
+                                    return response.status(400).json({ message: `Role ${roles.USER} not found.` });
                                 }
                             });
             }
@@ -112,11 +113,17 @@ class AuthenticationControllers {
                                     expiresIn: 86400 //The token expires in 24 hours
                                 });
 
-                                newUser.password = "";
+                                var exportUser = {
+                                    id: value.insertId,
+                                    idCompany: newUser.idCompany,
+                                    idRole: newUser.idRole,
+                                    userName: newUser.userName,
+                                    name: newUser.name
+                                };
 
                                 return response.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({
                                     message: "Saved user.",
-                                    user: newUser
+                                    user: exportUser
                                 });
                             });
             }

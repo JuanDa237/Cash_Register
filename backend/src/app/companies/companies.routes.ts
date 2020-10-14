@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { companiesControllers } from "./companiesControllers";
+import { companiesControllers } from "./companies.controllers";
 import { authenticationJwt } from "../authentication/middlewares/index";
 
 class CompaniesRoutes {
