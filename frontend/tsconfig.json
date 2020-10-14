@@ -28,6 +28,9 @@
             ],
             "@modules/*": [
                 "app/modules/*"
+            ],
+            "@enviroment/*": [
+                "environments/*"
             ]
         },
         "resolveJsonModule": true,

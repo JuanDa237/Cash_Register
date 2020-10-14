@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 
-import { url } from "@modules/main/navigation/data/url.data";
+//Api
+import { environment } from '@enviroment/environment';
 
 import { Ingredient } from "../models/index";
 
@@ -18,7 +19,7 @@ export class IngredientsService {
         private http: HttpClient
     ) {
     this.headers = new HttpHeaders().set("Content-type", "application/json");
-    this.apiUrl = url;
+    this.apiUrl = environment.apiUrl;
     }
 
     //Get List

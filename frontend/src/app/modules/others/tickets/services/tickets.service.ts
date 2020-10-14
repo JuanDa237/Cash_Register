@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 
-import { url } from "@modules/main/navigation/data/index";
+//Api
+import { environment } from '@enviroment/environment';
 
 import { Ticket } from "../models/index";
 import { ProductInTicket } from "../../products/models/index";
@@ -19,7 +20,7 @@ export class TicketsService {
         private http: HttpClient
     ) {
     this.headers = new HttpHeaders().set("Content-type", "application/json");
-    this.apiUrl = url;
+    this.apiUrl = environment.apiUrl;
     }
 
     //Get Interval

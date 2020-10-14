@@ -6,8 +6,8 @@ import { Observable } from "rxjs/Observable";
 //Models
 import { User } from "../models/index";
 
-//Data
-import { url } from "@modules/main/navigation/data/index";
+//Api
+import { environment } from '@enviroment/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class AuthenticationService {
       private router: Router
   ) {
     this.headers = new HttpHeaders().set("Content-type", "application/json");
-    this.apiUrl = url;
+    this.apiUrl = environment.apiUrl;
   }
 
   //Post
