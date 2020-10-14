@@ -5,7 +5,6 @@ import pool from "../../database";
 
 import { User, encryptPassword, validatePassword } from "../users/models";
 import { Role } from "../roles/models";
-import { roles } from "../roles/data";
 
 class AuthenticationControllers {
     
@@ -41,38 +40,30 @@ class AuthenticationControllers {
                     });
     }
     
-    public async singUp(request: Request, response: Response): Promise<void> {
+    public async singUp(request: Request, response: Response): Promise<Response> {
         
         const { idCompany, roleName, userName, password, name } = request.body;
         var idRole: number = 0;
-        var itsOk: boolean = false;
 
         //Validate userName
-        await (await pool).query("SELECT id FROM users WHERE userName = ?", [userName])
-                            .then((dates: Array<number>): Response<any> | undefined => {
+        var usernameResponse: Response | undefined = await (await pool).query("SELECT id FROM users WHERE userName = ?", [userName])
+                            .then((dates: Array<number>): Response | undefined => {
                                 
                                 if (dates.length > 0) {
                                     return response.status(401).json({ message: `Username "${userName}" is in use.` });
                                 }
-                                else {
-                                    itsOk = true;
-                                }
                             });
 
-        if(itsOk) {
-            
-            itsOk = false;
+        if(typeof usernameResponse == "undefined") {
 
             //Validate role
             if(roleName != null) {
-
-                await (await pool).query("SELECT * FROM roles WHERE name = ?", [roleName])
-                            .then((dates: Array<Role>) => {
+                var roleResponse: Response | undefined = await (await pool).query("SELECT * FROM roles WHERE name = ?", [roleName])
+                            .then((dates: Array<Role>): Response | undefined => {
                                 
                                 if(dates.length > 0) {
                                     
                                     idRole = dates[0].id;
-                                    itsOk = true;
                                 }
                                 else {
                                     return response.status(400).json({ message: `Role "${roleName}" not found.` });
@@ -80,21 +71,10 @@ class AuthenticationControllers {
                             });
             }
             else {
-                
-                await (await pool).query(`SELECT * FROM roles WHERE name = '${roles.USER}';`)
-                            .then((dates: Array<Role>) => {
-                                
-                                if(dates.length > 0) {
-                                    idRole = dates[0].id;
-                                    itsOk = true;
-                                }
-                                else {
-                                    return response.status(400).json({ message: `Role ${roles.USER} not found.` });
-                                }
-                            });
+                return response.status(400).json({ message: "No provided role." });
             }
     
-            if(itsOk) {
+            if(typeof roleResponse == "undefined") {
 
                 const newUser: User = {
                     idCompany: idCompany,
@@ -104,14 +84,8 @@ class AuthenticationControllers {
                     name: name
                 };
                 
-                (await pool).query("INSERT INTO users SET ?", [newUser])
-                            .then(async function(value: any) {
-
-                                const token: string = jwt.sign({
-                                    id: value.insertId
-                                }, process.env.TOKEN_SECRET || "tokenTest", {
-                                    expiresIn: 86400 //The token expires in 24 hours
-                                });
+                var userResponse: Promise<Response> = (await pool).query("INSERT INTO users SET ?", [newUser])
+                            .then(async function(value: any): Promise<Response> {
 
                                 var exportUser = {
                                     id: value.insertId,
@@ -121,12 +95,19 @@ class AuthenticationControllers {
                                     name: newUser.name
                                 };
 
-                                return response.status(200).header("token", token).set('Access-Control-Expose-Headers', 'token').json({
+                                return response.status(200).json({
                                     message: "Saved user.",
                                     user: exportUser
                                 });
                             });
+                return userResponse;
             }
+            else {
+                return roleResponse;
+            }
+        }
+        else {
+            return usernameResponse;
         }
     }
 }
