@@ -1,6 +1,12 @@
+export enum Role {
+    CASHIER = "cashier",
+    ADMINISTRATOR = "administrator"
+}
+
 export interface RouteData {
     title?: string;
     activeTopNav?: string;
+    roles: Role[],
     hideBreadcrumbs: boolean;
     breadcrumbs: Breadcrumb[];
 }
@@ -24,5 +30,6 @@ export interface SideNavItem {
 
 export interface SideNavSection {
     text?: string;
+    roles: Role[];
     items: string[];
 }

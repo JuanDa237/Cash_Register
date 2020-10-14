@@ -1,17 +1,21 @@
 import { SideNavItems, SideNavSection } from '@modules/main/navigation/models';
+import { Role } from '../models/index';
 
 export const sideNavSections: SideNavSection[] = [
     {
         text: 'REGISTRAR',
-        items: ['cashRegister']
+        items: ['cashRegister'],
+        roles: [Role.CASHIER, Role.ADMINISTRATOR]
     },
     {
         text: 'EDITAR',
-        items: ['categories', 'products', 'ingredients', 'clients', 'tickets']
+        items: ['categories', 'products', 'ingredients', 'clients', 'tickets'],
+        roles: [Role.ADMINISTRATOR]
     },
     {
         text: 'CONFIGURACION',
-        items: ['configuration']
+        items: ['configuration'],
+        roles: [Role.CASHIER, Role.ADMINISTRATOR]
     }
 ];
 

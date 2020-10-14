@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CompanyModule } from './company.module';
 
 //Models
-import { RouteData } from "@modules/main/navigation/models/index";
+import { RouteData, Role } from "@modules/main/navigation/models/index";
 
 //Containers
 import * as companyContainers from './containers/index';
@@ -28,9 +28,11 @@ const routes: Routes = [
       {
         path: 'cashRegister',
         component: othersContainers.CashRegisterComponent,
+        canActivate: [companyGuards.RoleGuard],
         data: {
           title: 'Registradora',
-          hideBreadcrumbs: true
+          hideBreadcrumbs: true,
+          roles: [Role.CASHIER, Role.ADMINISTRATOR]
         } as RouteData
       },
       {
@@ -38,7 +40,8 @@ const routes: Routes = [
         component: othersContainers.CategoriesComponent,
         data: {
           title: 'Categorias',
-          hideBreadcrumbs: true
+          hideBreadcrumbs: true,
+          roles: [Role.ADMINISTRATOR]
         } as RouteData
       },
       {
@@ -47,7 +50,8 @@ const routes: Routes = [
           import('@modules/others/routes').then(m => m.ProductsRoutingModule),
         data: {
           title: 'Productos',
-          hideBreadcrumbs: true
+          hideBreadcrumbs: true,
+          roles: [Role.ADMINISTRATOR]
         } as RouteData
       },
       {
@@ -55,7 +59,8 @@ const routes: Routes = [
         component: othersContainers.IngredientsComponent,
         data: {
           title: 'Ingredientes',
-          hideBreadcrumbs: true
+          hideBreadcrumbs: true,
+          roles: [Role.ADMINISTRATOR]
         } as RouteData
       },
       {
@@ -63,7 +68,8 @@ const routes: Routes = [
         component: othersContainers.ClientsComponent,
         data: {
           title: 'Clientes',
-          hideBreadcrumbs: true
+          hideBreadcrumbs: true,
+          roles: [Role.ADMINISTRATOR]
         } as RouteData
       },
       {
@@ -71,7 +77,8 @@ const routes: Routes = [
         component: othersContainers.TicketsComponent,
         data: {
           title: 'Registros',
-          hideBreadcrumbs: true
+          hideBreadcrumbs: true,
+          roles: [Role.ADMINISTRATOR]
         } as RouteData
       },
       {
@@ -79,7 +86,8 @@ const routes: Routes = [
         component: othersContainers.ConfigurationCompanyComponent,
         data: {
           title: 'Configuracion',
-          hideBreadcrumbs: true
+          hideBreadcrumbs: true,
+          roles: [Role.ADMINISTRATOR]
         } as RouteData
       }
     ]
