@@ -8,7 +8,28 @@
 	"item": [
 		{
 			"name": "/",
-			"item": [],
+			"item": [
+				{
+					"name": "http://localhost:3000/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								""
+							]
+						},
+						"description": "Index route."
+					},
+					"response": []
+				}
+			],
 			"description": "Index routes.",
 			"protocolProfileBehavior": {}
 		},
@@ -16,11 +37,58 @@
 			"name": "/api",
 			"item": [
 				{
+					"name": "/companies & /company",
+					"item": [
+						{
+							"name": "/company",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/company",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"company"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "/categories & /category",
 					"item": [
 						{
 							"name": "/categories",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -41,6 +109,16 @@
 						{
 							"name": "/category/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -69,18 +147,22 @@
 						{
 							"name": "/category",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
 										"value": "application/json",
 										"type": "text"
-									},
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
 									}
 								],
 								"body": {
@@ -105,18 +187,22 @@
 						{
 							"name": "/category/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [
 									{
 										"key": "Content-Type",
 										"value": "application/json",
 										"type": "text"
-									},
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
 									}
 								],
 								"body": {
@@ -149,15 +235,18 @@
 						{
 							"name": "/category/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/category/:id",
 									"protocol": "http",
@@ -195,15 +284,18 @@
 								{
 									"name": "/products/ingredients",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
-										"header": [
-											{
-												"key": "authentication-token",
-												"value": "",
-												"type": "text",
-												"disabled": true
-											}
-										],
+										"header": [],
 										"url": {
 											"raw": "http://localhost:3000/api/products/ingredients",
 											"protocol": "http",
@@ -224,15 +316,18 @@
 								{
 									"name": "/product/ingredients/:id",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
-										"header": [
-											{
-												"key": "authentication-token",
-												"value": "",
-												"type": "text",
-												"disabled": true
-											}
-										],
+										"header": [],
 										"url": {
 											"raw": "http://localhost:3000/api/product/ingredients/:id",
 											"protocol": "http",
@@ -261,18 +356,23 @@
 								{
 									"name": "/product/ingredient",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [
 											{
 												"key": "Content-Type",
-												"type": "text",
-												"value": "application/json"
-											},
-											{
-												"key": "authentication-token",
-												"value": "",
-												"type": "text",
-												"disabled": true
+												"value": "application/json",
+												"description": "Define the content in .json",
+												"type": "text"
 											}
 										],
 										"body": {
@@ -298,18 +398,22 @@
 								{
 									"name": "/product/ingredient/:id",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "PUT",
 										"header": [
 											{
 												"key": "Content-Type",
 												"value": "application/json",
 												"type": "text"
-											},
-											{
-												"key": "authentication-token",
-												"value": "",
-												"type": "text",
-												"disabled": true
 											}
 										],
 										"body": {
@@ -343,15 +447,18 @@
 								{
 									"name": "/product/ingredient/:id",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "DELETE",
-										"header": [
-											{
-												"key": "authentication-token",
-												"value": "",
-												"type": "text",
-												"disabled": true
-											}
-										],
+										"header": [],
 										"url": {
 											"raw": "http://localhost:3000/api/product/ingredient/:id",
 											"protocol": "http",
@@ -384,6 +491,16 @@
 						{
 							"name": "/products",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -404,15 +521,18 @@
 						{
 							"name": "/all/products",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/all/products",
 									"protocol": "http",
@@ -433,6 +553,16 @@
 						{
 							"name": "/product/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -461,18 +591,22 @@
 						{
 							"name": "/product",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
-									},
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
 									}
 								],
 								"body": {
@@ -497,18 +631,22 @@
 						{
 							"name": "/product/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [
 									{
 										"key": "Content-Type",
 										"value": "application/json",
 										"type": "text"
-									},
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
 									}
 								],
 								"body": {
@@ -541,15 +679,18 @@
 						{
 							"name": "/product/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/product/:id",
 									"protocol": "http",
@@ -606,15 +747,18 @@
 						{
 							"name": "/ingredients",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/ingredients",
 									"protocol": "http",
@@ -633,15 +777,18 @@
 						{
 							"name": "/ingredient/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/ingredient/:id",
 									"protocol": "http",
@@ -668,18 +815,22 @@
 						{
 							"name": "/ingredient",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
-									},
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
 									}
 								],
 								"body": {
@@ -704,18 +855,22 @@
 						{
 							"name": "/ingredient/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [
 									{
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
-									},
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
 									}
 								],
 								"body": {
@@ -748,23 +903,27 @@
 						{
 							"name": "/amountIngredients",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [
 									{
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
-									},
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "[ 1, 2, 3, 4, 5, 6]"
+									"raw": "[ 0, 0, 0, 0, 0, 0, ...]"
 								},
 								"url": {
 									"raw": "http://localhost:3000/api/amountIngredients",
@@ -785,15 +944,18 @@
 						{
 							"name": "/ingredient/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/ingredient/:id",
 									"protocol": "http",
@@ -828,15 +990,18 @@
 						{
 							"name": "/tickets",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/tickets",
 									"protocol": "http",
@@ -855,15 +1020,18 @@
 						{
 							"name": "/ticket/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/ticket/:id",
 									"protocol": "http",
@@ -890,15 +1058,18 @@
 						{
 							"name": "/tickets/:since/:until",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/tickets/:since/:until",
 									"protocol": "http",
@@ -929,15 +1100,18 @@
 						{
 							"name": "/tickets/year",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/tickets/year",
 									"protocol": "http",
@@ -957,15 +1131,18 @@
 						{
 							"name": "/tickets/products",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/tickets/products",
 									"protocol": "http",
@@ -985,15 +1162,18 @@
 						{
 							"name": "/ticket/products/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/ticket/products/:id",
 									"protocol": "http",
@@ -1021,18 +1201,22 @@
 						{
 							"name": "/ticket",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
-									},
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
 									}
 								],
 								"body": {
@@ -1057,18 +1241,22 @@
 						{
 							"name": "/ticket/product",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
-									},
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
 									}
 								],
 								"body": {
@@ -1102,15 +1290,18 @@
 						{
 							"name": "/clients",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/clients",
 									"protocol": "http",
@@ -1129,15 +1320,18 @@
 						{
 							"name": "/client/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/client/:id",
 									"protocol": "http",
@@ -1164,15 +1358,18 @@
 						{
 							"name": "/clients/year",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/clients/year",
 									"protocol": "http",
@@ -1192,15 +1389,18 @@
 						{
 							"name": "/all/clients",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/all/clients",
 									"protocol": "http",
@@ -1221,18 +1421,22 @@
 						{
 							"name": "/client",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
-									},
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
 									}
 								],
 								"body": {
@@ -1257,18 +1461,22 @@
 						{
 							"name": "/client/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [
 									{
 										"key": "Content-Type",
 										"type": "text",
 										"value": "application/json"
-									},
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
 									}
 								],
 								"body": {
@@ -1301,15 +1509,18 @@
 						{
 							"name": "/client/:id",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
-								"header": [
-									{
-										"key": "authentication-token",
-										"value": "",
-										"type": "text",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "http://localhost:3000/api/client/:id",
 									"protocol": "http",
