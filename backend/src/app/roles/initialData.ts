@@ -1,8 +1,11 @@
 import pool from "../../database";
+
+import { User } from "../users/models/index";
 import { encryptPassword } from "../users/models";
 
 import { roles } from "./data";
-import { User } from "../users/models/index";
+
+import keys from "../../keys";
 
 export function createInitialData() {
     //Create initial roles
@@ -10,19 +13,6 @@ export function createInitialData() {
         //Create initial company and user
         createFirstCompany();
     });
-}
-
-const firstCompany = {
-    name: "Del Perrero",
-    imageUrl: "",
-    ticketMessage: "",
-    active: true
-}
-
-const firstUser = {
-    name: "Juan David Gavira",
-    userName: "Juan",
-    password: "contra"
 }
 
 async function createRoles(): Promise<any> {
@@ -55,7 +45,7 @@ async function createFirstCompany(): Promise<any> {
                             if(dates.length > 0)
                                 return;
     
-                            (await pool).query("INSERT INTO companies SET ?", [firstCompany])
+                            (await pool).query("INSERT INTO companies SET ?", [keys.initialData.company])
                                         .then(async company => {
 
                                             (await pool).query(`SELECT id FROM roles WHERE name = '${roles.ADMINISTRATOR}';`)
@@ -64,9 +54,9 @@ async function createFirstCompany(): Promise<any> {
                                                             const newUser: User = {
                                                                 idCompany: company.insertId,
                                                                 idRole: roles[0].id,
-                                                                userName: firstUser.userName,
-                                                                password: await encryptPassword(firstUser.password),
-                                                                name: firstUser.name
+                                                                userName: keys.initialData.user.userName,
+                                                                password: await encryptPassword(keys.initialData.user.password),
+                                                                name: keys.initialData.user.name
                                                             };
                                                             
                                                             await (await pool).query("INSERT INTO users SET ?", [newUser]);
