@@ -18,7 +18,7 @@ export class SignInComponent {
 
 	constructor(private authenticationService: AuthenticationService, private router: Router) {
 		this.user = {
-			userName: '',
+			username: '',
 			password: ''
 		};
 		this.error = new Array<boolean>(2);

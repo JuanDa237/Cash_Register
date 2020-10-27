@@ -45,7 +45,7 @@ async function createFirstCompany(): Promise<any> {
 							const newUser: User = {
 								idCompany: company.insertId,
 								idRole: roles[0].id,
-								userName: keys.initialData.user.userName,
+								username: keys.initialData.user.username,
 								password: await encryptPassword(keys.initialData.user.password),
 								name: keys.initialData.user.name
 							};

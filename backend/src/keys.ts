@@ -14,7 +14,7 @@ export default {
 		},
 		user: {
 			name: 'Juan David Gavira',
-			userName: 'Juan',
+			username: 'Juan',
 			password: 'contra'
 		}
 	}

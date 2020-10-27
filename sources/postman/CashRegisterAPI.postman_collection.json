@@ -1279,7 +1279,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"userName\": \"\",\n    \"password\": \"\"\n}"
+									"raw": "{\n    \"username\": \"\",\n    \"password\": \"\"\n}"
 								},
 								"url": {
 									"raw": "{{api}}authentication/singIn",
@@ -1302,7 +1302,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"idCompany\": 0,\n    \"roleName\": \"\",\n    \"userName\": \"\",\n    \"password\": \"\",\n    \"name\": \"\"\n}"
+									"raw": "{\n    \"idCompany\": 0,\n    \"roleName\": \"\",\n    \"username\": \"\",\n    \"password\": \"\",\n    \"name\": \"\"\n}"
 								},
 								"url": {
 									"raw": "{{api}}authentication/singUp",

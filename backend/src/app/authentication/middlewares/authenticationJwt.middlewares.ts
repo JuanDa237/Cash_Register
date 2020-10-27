@@ -23,7 +23,7 @@ export async function verifyToken(request: Request, response: Response, next: Ne
 		) as Payload;
 
 		(await pool)
-			.query('SELECT id, idCompany, idRole, userName FROM users WHERE id = ?', [payload.id])
+			.query('SELECT id, idCompany, idRole, username FROM users WHERE id = ?', [payload.id])
 			.then((dates: Array<User>) => {
 				if (dates.length > 0) {
 					request.user = dates[0];

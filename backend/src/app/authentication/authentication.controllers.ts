@@ -9,10 +9,10 @@ import { Role } from '../roles/models';
 class AuthenticationControllers {
 	//Post
 	public async singIn(request: Request, response: Response): Promise<Response> {
-		const { userName, password } = request.body;
+		const { username, password } = request.body;
 
 		return (await pool)
-			.query('SELECT id, password FROM users WHERE userName = ?', [userName])
+			.query('SELECT id, password FROM users WHERE username = ?', [username])
 			.then(
 				async (dates: Array<any>): Promise<Response> => {
 					if (dates.length != 0) {
@@ -48,17 +48,17 @@ class AuthenticationControllers {
 	}
 
 	public async singUp(request: Request, response: Response): Promise<Response> {
-		const { idCompany, roleName, userName, password, name } = request.body;
+		const { idCompany, roleName, username, password, name } = request.body;
 		var idRole: number = 0;
 
-		//Validate userName
+		//Validate username
 		var usernameResponse: Response | undefined = await (await pool)
-			.query('SELECT id FROM users WHERE userName = ?', [userName])
+			.query('SELECT id FROM users WHERE username = ?', [username])
 			.then((dates: Array<number>): Response | undefined => {
 				if (dates.length > 0) {
 					return response
 						.status(401)
-						.json({ message: `Username "${userName}" is in use.` });
+						.json({ message: `Username "${username}" is in use.` });
 				}
 			});
 
@@ -84,7 +84,7 @@ class AuthenticationControllers {
 				const newUser: User = {
 					idCompany: idCompany,
 					idRole: idRole,
-					userName: userName,
+					username: username,
 					password: await encryptPassword(password),
 					name: name
 				};
@@ -96,7 +96,7 @@ class AuthenticationControllers {
 							id: value.insertId,
 							idCompany: newUser.idCompany,
 							idRole: newUser.idRole,
-							userName: newUser.userName,
+							username: newUser.username,
 							name: newUser.name
 						};
 

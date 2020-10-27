@@ -18,13 +18,13 @@ export class SideNavComponent implements OnInit {
 	public sideNavItems: SideNavItems;
 	public sideNavSections: SideNavSection[];
 
-	public userName: string;
+	public username: string;
 	public role: string;
 
 	constructor(private usersService: UsersService) {
 		this.sideNavItems = sideNavItems;
 		this.sideNavSections = sideNavSections;
-		this.userName = '';
+		this.username = '';
 		this.role = '';
 	}
 
@@ -35,7 +35,7 @@ export class SideNavComponent implements OnInit {
 	private getUser(): void {
 		this.usersService.getUser().subscribe(
 			(response) => {
-				this.userName = response.name;
+				this.username = response.name;
 				this.role = response.role;
 
 				this.actualizeNavSections();

@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 export interface User {
 	idCompany: number;
 	idRole: number;
-	userName: string;
+	username: string;
 	password: string;
 	name: string;
 }
