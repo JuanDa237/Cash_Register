@@ -1,29 +1,29 @@
-@import "styles/variables.scss";
+@import 'styles/variables.scss';
 
 // Base styling for the sidenav
 .sb-sidenav {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex-wrap: nowrap;
-    background-color: $sidenav-dark-bg;
-    color: $sidenav-dark-color;
-    .sb-sidenav-menu {
-        flex-grow: 1;
-        .nav {
-            flex-direction: column;
-            flex-wrap: nowrap;
-            .sb-sidenav-menu-heading {
-                padding: 1.75rem 1rem 0.75rem;
-                font-size: 0.75rem;
-                font-weight: bold;
-                text-transform: uppercase;
-                color: $sidenav-dark-heading-color;
-            }
-        }
-    }
-    .sb-sidenav-footer {
-        padding: 0.75rem;
-        background-color: $sidenav-dark-footer-bg;
-    }
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	flex-wrap: nowrap;
+	background-color: $sidenav-dark-bg;
+	color: $sidenav-dark-color;
+	.sb-sidenav-menu {
+		flex-grow: 1;
+		.nav {
+			flex-direction: column;
+			flex-wrap: nowrap;
+			.sb-sidenav-menu-heading {
+				padding: 1.75rem 1rem 0.75rem;
+				font-size: 0.75rem;
+				font-weight: bold;
+				text-transform: uppercase;
+				color: $sidenav-dark-heading-color;
+			}
+		}
+	}
+	.sb-sidenav-footer {
+		padding: 0.75rem;
+		background-color: $sidenav-dark-footer-bg;
+	}
 }

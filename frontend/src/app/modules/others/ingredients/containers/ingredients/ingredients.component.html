@@ -1,38 +1,68 @@
-<button class="btn btn-info btn-block mb-4" data-toggle="modal" data-target="#modalIngredients" (click)="changeModal(null)">
-    <i class="fas fa-plus-circle"></i> Crear Ingrediente
+<button
+	class="btn btn-info btn-block mb-4"
+	data-toggle="modal"
+	data-target="#modalIngredients"
+	(click)="changeModal(null)"
+>
+	<i class="fas fa-plus-circle"></i> Crear Ingrediente
 </button>
-<app-modal idModal="modalIngredients" [title]="creating ? 'Crear Ingrediente' : 'Editar Ingrediente'">
-    <div class="modal-body">
-        <app-ingredients-form (onSubmitEvent)="createOrUpdateIngredient()" (invalidForm)="invalidForm = $event"></app-ingredients-form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-success" (click)="createOrUpdateIngredient()" [disabled]="invalidForm" data-dismiss="modal">{{  creating ? 'Crear' : 'Editar'  }}</button>
-    </div>
+<app-modal
+	idModal="modalIngredients"
+	[title]="creating ? 'Crear Ingrediente' : 'Editar Ingrediente'"
+>
+	<div class="modal-body">
+		<app-ingredients-form
+			(onSubmitEvent)="createOrUpdateIngredient()"
+			(invalidForm)="invalidForm = $event"
+		></app-ingredients-form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+		<button
+			type="button"
+			class="btn btn-success"
+			(click)="createOrUpdateIngredient()"
+			[disabled]="invalidForm"
+			data-dismiss="modal"
+		>
+			{{ creating ? 'Crear' : 'Editar' }}
+		</button>
+	</div>
 </app-modal>
 <div class="my-3">
-    <div *ngIf="loading">
-        <app-loading colorClass="text-primary" size="10rem"></app-loading>
-    </div>
-    <div [hidden]="loading">
-        <app-table [columns]="['Nombre', 'Precio/Unidad', 'Cantidad', 'Acciones']" [footer]="ingredients.length >= 10">
-            <tr [class.table-danger]="ingredient.amount <= 0" *ngFor="let ingredient of ingredients">
-                <td class="align-middle">{{ ingredient.name }}</td>
-                <td class="align-middle text-center">{{ ingredient.priceByUnit | number }}</td>
-                <td class="align-middle text-center">{{ ingredient.amount | number }}</td>
-                <td>
-                    <div class="text-center">
-                        <div class="btn-group">
-                            <button class="btn btn-info" (click)="changeModal(ingredient)" data-toggle="modal" data-target="#modalIngredients">
-                                <i class="far fa-edit"></i>
-                            </button>
-                            <button class="btn btn-danger" (click)="deleteIngredient(ingredient)">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </app-table>
-    </div>
+	<div *ngIf="loading">
+		<app-loading colorClass="text-primary" size="10rem"></app-loading>
+	</div>
+	<div [hidden]="loading">
+		<app-table
+			[columns]="['Nombre', 'Precio/Unidad', 'Cantidad', 'Acciones']"
+			[footer]="ingredients.length >= 10"
+		>
+			<tr
+				[class.table-danger]="ingredient.amount <= 0"
+				*ngFor="let ingredient of ingredients"
+			>
+				<td class="align-middle">{{ ingredient.name }}</td>
+				<td class="align-middle text-center">{{ ingredient.priceByUnit | number }}</td>
+				<td class="align-middle text-center">{{ ingredient.amount | number }}</td>
+				<td>
+					<div class="text-center">
+						<div class="btn-group">
+							<button
+								class="btn btn-info"
+								(click)="changeModal(ingredient)"
+								data-toggle="modal"
+								data-target="#modalIngredients"
+							>
+								<i class="far fa-edit"></i>
+							</button>
+							<button class="btn btn-danger" (click)="deleteIngredient(ingredient)">
+								<i class="far fa-trash-alt"></i>
+							</button>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</app-table>
+	</div>
 </div>

@@ -1,1 +1,1 @@
-export * from './tickets.model'
+export * from './tickets.model';

@@ -1,33 +1,32 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-home-section',
-  templateUrl: './home-section.component.html',
-  styleUrls: ['./home-section.component.scss']
+	selector: 'app-home-section',
+	templateUrl: './home-section.component.html',
+	styleUrls: ['./home-section.component.scss']
 })
 export class HomeSectionComponent implements OnInit, OnChanges {
+	@Input()
+	public sectionClass!: string;
 
-  @Input()
-  public sectionClass!: string;
-  
-  @Input()
-  public id: string;
+	@Input()
+	public id: string;
 
-  constructor() {
-    this.id = '';
-  }
+	constructor() {
+		this.id = '';
+	}
 
-  ngOnInit() {
-    this.checkRequiredFields();
-  }
+	ngOnInit() {
+		this.checkRequiredFields();
+	}
 
-  ngOnChanges() {
-    this.checkRequiredFields();
-  }
+	ngOnChanges() {
+		this.checkRequiredFields();
+	}
 
-  checkRequiredFields(): void {
-    if(this.id === '') {
-      throw new Error("Attribute 'id' is required.");
-    }
-  }
+	checkRequiredFields(): void {
+		if (this.id === '') {
+			throw new Error("Attribute 'id' is required.");
+		}
+	}
 }

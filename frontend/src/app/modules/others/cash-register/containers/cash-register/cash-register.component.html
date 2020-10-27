@@ -1,37 +1,36 @@
 <div class="row my-2">
-    <div class="col-md-6">
-        <app-card-component>
-            <div class="card-header">
-                Cliente
-            </div>
-            <div class="card-body">
-                <div>
-                    <app-client-picker (choseClient)="client = $event"></app-client-picker>
-                </div>
-                <div class="mt-2">
-                    <app-client-form [client]="client"></app-client-form>
-                </div>
-            </div>
-        </app-card-component>
-    </div>
-    <div class="col-md-6">
-        <app-card-component>
-            <div class="card-header">
-                Productos
-            </div>
-            <div class="card-body">
-                <app-products-table (addProduct)="addProductEvent($event)"></app-products-table>
-            </div>
-        </app-card-component>
-    </div>
+	<div class="col-md-6">
+		<app-card-component>
+			<div class="card-header">Cliente</div>
+			<div class="card-body">
+				<div>
+					<app-client-picker (choseClient)="client = $event"></app-client-picker>
+				</div>
+				<div class="mt-2">
+					<app-client-form [client]="client"></app-client-form>
+				</div>
+			</div>
+		</app-card-component>
+	</div>
+	<div class="col-md-6">
+		<app-card-component>
+			<div class="card-header">Productos</div>
+			<div class="card-body">
+				<app-products-table (addProduct)="addProductEvent($event)"></app-products-table>
+			</div>
+		</app-card-component>
+	</div>
 </div>
 <div class="row">
-    <div class="col">
-        <app-card-component>
-            <div class="card-header">Lista</div>
-            <div class="card-body">
-                <app-shopping-cart [client]="client" (refreshPage)="refreshPage()"></app-shopping-cart>
-            </div>
-        </app-card-component>
-    </div>
+	<div class="col">
+		<app-card-component>
+			<div class="card-header">Lista</div>
+			<div class="card-body">
+				<app-shopping-cart
+					[client]="client"
+					(refreshPage)="refreshPage()"
+				></app-shopping-cart>
+			</div>
+		</app-card-component>
+	</div>
 </div>

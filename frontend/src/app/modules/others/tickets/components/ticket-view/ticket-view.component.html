@@ -8,52 +8,46 @@
     </p>
 </div> -->
 <p>
-    <span class="font-weight-bold">Nombre:</span> {{ client.name }} |
-    <ng-container *ngIf="ticket.homeDelivery else noHomeDelivery">
-        Domicilio |
-        <span *ngIf="client.address">
-            Direccion: {{ client.address }} |
-        </span>
-        <span *ngIf="client.phoneNumber">
-            Telefono: {{ client.phoneNumber }}
-        </span>
-    </ng-container>
-    <ng-template #noHomeDelivery>
-        Pedido Local |
-    </ng-template>
-</p>                                                                                    
+	<span class="font-weight-bold">Nombre:</span> {{ client.name }} |
+	<ng-container *ngIf="ticket.homeDelivery; else noHomeDelivery">
+		Domicilio |
+		<span *ngIf="client.address"> Direccion: {{ client.address }} | </span>
+		<span *ngIf="client.phoneNumber"> Telefono: {{ client.phoneNumber }} </span>
+	</ng-container>
+	<ng-template #noHomeDelivery> Pedido Local | </ng-template>
+</p>
 <table class="table table-sm my-2">
-    <thead>
-        <tr>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let productInTicket of productsInTicket">
-            <td>{{ productInTicket.name }}</td>
-            <td>{{ productInTicket.amount | number }}</td>
-            <td>{{ productInTicket.price * productInTicket.amount | number }}</td>
-        </tr>
-    </tbody>
-    <tfoot class="font-weight-bold">
-        <ng-container *ngIf="ticket.homeDelivery">
-            <tr>
-                <td>Sub-Total</td>
-                <td></td>
-                <td>{{ ticket.total - ticket.priceOfHomeDelivery | number }}</td>
-            </tr>
-            <tr>
-                <td>Domicilio</td>
-                <td></td>
-                <td>{{ ticket.priceOfHomeDelivery | number }}</td>
-            </tr>
-        </ng-container>
-        <tr>
-            <td>Total</td>
-            <td></td>
-            <td>{{ ticket.total | number }}</td>
-        </tr>
-    </tfoot>
+	<thead>
+		<tr>
+			<th>Producto</th>
+			<th>Cantidad</th>
+			<th>Precio</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let productInTicket of productsInTicket">
+			<td>{{ productInTicket.name }}</td>
+			<td>{{ productInTicket.amount | number }}</td>
+			<td>{{ productInTicket.price * productInTicket.amount | number }}</td>
+		</tr>
+	</tbody>
+	<tfoot class="font-weight-bold">
+		<ng-container *ngIf="ticket.homeDelivery">
+			<tr>
+				<td>Sub-Total</td>
+				<td></td>
+				<td>{{ ticket.total - ticket.priceOfHomeDelivery | number }}</td>
+			</tr>
+			<tr>
+				<td>Domicilio</td>
+				<td></td>
+				<td>{{ ticket.priceOfHomeDelivery | number }}</td>
+			</tr>
+		</ng-container>
+		<tr>
+			<td>Total</td>
+			<td></td>
+			<td>{{ ticket.total | number }}</td>
+		</tr>
+	</tfoot>
 </table>

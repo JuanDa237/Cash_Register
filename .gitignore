@@ -2,8 +2,9 @@
 /frontend/node_modules
 /backend/node_modules
 
-# Backend build
+# Builds
 /backend/build
+/frontend/build
 
 # Private Files
 toDoList.md

@@ -1,18 +1,18 @@
 // Bootstrap
-@import "../../node_modules/bootstrap/scss/bootstrap";
+@import '../../node_modules/bootstrap/scss/bootstrap';
 
 // Font Awesome Icons
 @import '../../node_modules/@fortawesome/fontawesome-free/css/all.css';
 
 //Datatables
-@import "../../node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css";
-@import "../../node_modules/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css";
+@import '../../node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+@import '../../node_modules/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css';
 
 // Import Custom Variables
-@import "variables.scss";
+@import 'variables.scss';
 
 // Import Custom SCSS
-@import "global.scss";
+@import 'global.scss';
 
 // Dashboard Layout
-@import "layout/dashboard.scss";
+@import 'layout/dashboard.scss';

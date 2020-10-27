@@ -1,7 +1,5 @@
-import { TicketsComponent } from "./tickets/tickets.component";
+import { TicketsComponent } from './tickets/tickets.component';
 
-export const containers = [
-    TicketsComponent
-]
+export const containers = [TicketsComponent];
 
-export { TicketsComponent } from "./tickets/tickets.component";
+export { TicketsComponent } from './tickets/tickets.component';

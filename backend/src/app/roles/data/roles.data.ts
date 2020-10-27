@@ -1,4 +1,4 @@
 export const roles = {
-    CASHIER: "cashier",
-    ADMINISTRATOR: "administrator"
-}
+	CASHIER: 'cashier',
+	ADMINISTRATOR: 'administrator'
+};

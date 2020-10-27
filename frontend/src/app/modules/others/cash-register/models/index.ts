@@ -1,1 +1,1 @@
-export { ProductInCart } from "./cash-register.model";
+export { ProductInCart } from './cash-register.model';

@@ -1,43 +1,50 @@
 <a class="btn btn-info btn-block mb-4" routerLink="/company/cashRegister">
-    <i class="fas fa-plus-circle"></i> Crear Registro
+	<i class="fas fa-plus-circle"></i> Crear Registro
 </a>
 <app-tickets-datepicker (dates)="search($event)"></app-tickets-datepicker>
 <div class="mt-4">
-    <div *ngIf="loading">
-        <app-loading colorClass="text-primary" size="10rem"></app-loading>
-    </div>
-    <div [hidden]="loading">
-        <app-table [columns]="['Cliente', 'Fecha', 'Total', 'Acciones']">
-            <tr *ngFor="let ticket of tickets; let i = index">
-                <td class="align-middle">
-                    <div *ngFor="let client of clients">
-                        <div *ngIf="client.id == ticket.idClient">
-                            {{ client.name }}
-                        </div>                            
-                    </div>
-                </td>
-                <td class="align-middle">{{ ticket.creationDate }}</td>
-                <td class="align-middle text-center">{{ ticket.total | number }}</td>
-                <td>
-                    <div class="text-center">
-                        <div class="btn-group">                                
-                            <button class="btn btn-info" (click)="viewTicket(i)" data-toggle="modal" data-target="#modalTickets"><i class="fas fa-eye"></i></button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </app-table>
-    </div>
-    <app-modal idModal="modalTickets" title="Registro">
-        <div class="modal-body">
-            <app-ticket-view></app-ticket-view>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>                                                        
-        </div>
-    </app-modal>
+	<div *ngIf="loading">
+		<app-loading colorClass="text-primary" size="10rem"></app-loading>
+	</div>
+	<div [hidden]="loading">
+		<app-table [columns]="['Cliente', 'Fecha', 'Total', 'Acciones']">
+			<tr *ngFor="let ticket of tickets; let i = index">
+				<td class="align-middle">
+					<div *ngFor="let client of clients">
+						<div *ngIf="client.id == ticket.idClient">
+							{{ client.name }}
+						</div>
+					</div>
+				</td>
+				<td class="align-middle">{{ ticket.creationDate }}</td>
+				<td class="align-middle text-center">{{ ticket.total | number }}</td>
+				<td>
+					<div class="text-center">
+						<div class="btn-group">
+							<button
+								class="btn btn-info"
+								(click)="viewTicket(i)"
+								data-toggle="modal"
+								data-target="#modalTickets"
+							>
+								<i class="fas fa-eye"></i>
+							</button>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</app-table>
+	</div>
+	<app-modal idModal="modalTickets" title="Registro">
+		<div class="modal-body">
+			<app-ticket-view></app-ticket-view>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+		</div>
+	</app-modal>
 </div>
 <!-- Chart -->
 <div class="row my-3">
-    <app-tickets-chart chartId="ticketsChart"></app-tickets-chart>
+	<app-tickets-chart chartId="ticketsChart"></app-tickets-chart>
 </div>

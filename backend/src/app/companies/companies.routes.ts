@@ -1,20 +1,21 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { companiesControllers } from "./companies.controllers";
-import { authenticationJwt } from "../authentication/middlewares/index";
+import { companiesControllers } from './companies.controllers';
+import { authenticationJwt } from '../authentication/middlewares/index';
 
 class CompaniesRoutes {
+	constructor(public router: Router = Router()) {
+		this.routes();
+	}
 
-    constructor(
-        public router: Router = Router()
-    ) {
-        this.routes();
-    }
-
-    routes(): void {        
-        //Get one
-        this.router.get("/company", [authenticationJwt.verifyToken, authenticationJwt.isCashier], companiesControllers.getOneCompany);
-    }
+	routes(): void {
+		//Get one
+		this.router.get(
+			'/company',
+			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
+			companiesControllers.getOneCompany
+		);
+	}
 }
 
 const companiesRoutes = new CompaniesRoutes();

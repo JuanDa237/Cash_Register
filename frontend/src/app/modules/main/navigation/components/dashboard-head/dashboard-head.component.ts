@@ -8,38 +8,33 @@ import { Breadcrumb } from '@modules/main/navigation/models';
 import { NavigationService } from '@modules/main/navigation/services';
 
 @Component({
-    selector: 'app-dashboard-head',
-    templateUrl: './dashboard-head.component.html'
+	selector: 'app-dashboard-head',
+	templateUrl: './dashboard-head.component.html'
 })
-export class DashboardHeadComponent implements OnInit, OnDestroy{
-  
-  public title!: string;
-  public hideBreadcrumbs: boolean;
-  public breadcrumbs!: Breadcrumb[];
-  
-  private subscription: Subscription = new Subscription();
-  
-  constructor(
-    private navigationService: NavigationService
-  ) {
-    this.title = '';
-    this.hideBreadcrumbs = false;
-  }
+export class DashboardHeadComponent implements OnInit, OnDestroy {
+	public title!: string;
+	public hideBreadcrumbs: boolean;
+	public breadcrumbs!: Breadcrumb[];
 
-  ngOnInit() {
-    this.subscription.add(
-      this.navigationService.getRouteData().subscribe(routeData => {
+	private subscription: Subscription = new Subscription();
 
-        if(routeData.title)
-          this.title = routeData.title;
+	constructor(private navigationService: NavigationService) {
+		this.title = '';
+		this.hideBreadcrumbs = false;
+	}
 
-        this.hideBreadcrumbs = routeData.hideBreadcrumbs;
-        this.breadcrumbs = routeData.breadcrumbs;
-      })
-    );
-  }
+	ngOnInit() {
+		this.subscription.add(
+			this.navigationService.getRouteData().subscribe((routeData) => {
+				if (routeData.title) this.title = routeData.title;
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+				this.hideBreadcrumbs = routeData.hideBreadcrumbs;
+				this.breadcrumbs = routeData.breadcrumbs;
+			})
+		);
+	}
+
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
+	}
 }

@@ -1,1 +1,1 @@
-export * from "./datatables.data";
+export * from './datatables.data';

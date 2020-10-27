@@ -1,20 +1,23 @@
 <app-card-component>
-    <div class="card-header">
-        Ingredientes
-    </div>
-    <div class="card-body">
-        <div *ngIf="loading">
-            <app-loading colorClass="text-primary" size="10rem"></app-loading>
-        </div>
-        <div [hidden]="loading">
-            <app-table [columns]="['Nombre', 'Consumo']" [info]="false" [lengthChange]="false">
-                <tr *ngFor="let ingredient of ingredients; let i = index">
-                    <td class="align-middle">{{ ingredient.name }}</td>
-                    <td>
-                        <input type="number" class="form-control" [(ngModel)]="spendingAmount[i]" (input)="inputAmountEvent()">
-                    </td>
-                </tr>
-            </app-table>
-        </div>
-    </div>
+	<div class="card-header">Ingredientes</div>
+	<div class="card-body">
+		<div *ngIf="loading">
+			<app-loading colorClass="text-primary" size="10rem"></app-loading>
+		</div>
+		<div [hidden]="loading">
+			<app-table [columns]="['Nombre', 'Consumo']" [info]="false" [lengthChange]="false">
+				<tr *ngFor="let ingredient of ingredients; let i = index">
+					<td class="align-middle">{{ ingredient.name }}</td>
+					<td>
+						<input
+							type="number"
+							class="form-control"
+							[(ngModel)]="spendingAmount[i]"
+							(input)="inputAmountEvent()"
+						/>
+					</td>
+				</tr>
+			</app-table>
+		</div>
+	</div>
 </app-card-component>

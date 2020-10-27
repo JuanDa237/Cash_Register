@@ -1,7 +1,5 @@
-import { ProductsRoutingModule } from "./products/products-routing.module"
+import { ProductsRoutingModule } from './products/products-routing.module';
 
-export const routes = [
-    ProductsRoutingModule
-]
+export const routes = [ProductsRoutingModule];
 
-export { ProductsRoutingModule }
+export { ProductsRoutingModule };

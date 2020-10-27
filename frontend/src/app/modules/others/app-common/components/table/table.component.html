@@ -1,23 +1,24 @@
 <div class="table-responsive">
-    <table 
-        datatable
-        [dtOptions]="dtOptions"
-        [dtTrigger]="dtTrigger"
-        class="table table-hover"
-        [ngClass]="extraClass"
-        width="100%">
-        <thead>
-            <tr>
-                <th *ngFor="let column of columns">{{ column }}</th>
-            </tr>
-        </thead>
-        <tfoot *ngIf="footer">
-            <tr>
-                <th *ngFor="let column of columns">{{ column }}</th>
-            </tr>
-        </tfoot>
-        <tbody>
-            <ng-content></ng-content>
-        </tbody>
-    </table>
+	<table
+		datatable
+		[dtOptions]="dtOptions"
+		[dtTrigger]="dtTrigger"
+		class="table table-hover"
+		[ngClass]="extraClass"
+		width="100%"
+	>
+		<thead>
+			<tr>
+				<th *ngFor="let column of columns">{{ column }}</th>
+			</tr>
+		</thead>
+		<tfoot *ngIf="footer">
+			<tr>
+				<th *ngFor="let column of columns">{{ column }}</th>
+			</tr>
+		</tfoot>
+		<tbody>
+			<ng-content></ng-content>
+		</tbody>
+	</table>
 </div>

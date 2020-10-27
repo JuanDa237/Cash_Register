@@ -1,7 +1,5 @@
-import { TicketsService } from "./tickets.service";
+import { TicketsService } from './tickets.service';
 
-export const services = [
-    TicketsService
-]
+export const services = [TicketsService];
 
-export * from "./tickets.service";
+export * from './tickets.service';

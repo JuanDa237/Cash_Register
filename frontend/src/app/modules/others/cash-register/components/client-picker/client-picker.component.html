@@ -1,12 +1,25 @@
-<app-table [columns]="['Nombre', 'Acciones']" [pageLength]="5" [lengthChange]="false" [info]="false" [footer]="false">
-    <tr *ngFor="let client of clients; let i = index" [ngClass]="{'table-info': chosedClientIndex == i}">
-        <td class="align-middle">{{ client.name }}</td>
-        <td>
-            <div class="text-center">
-                <button class="btn btn-success text-center" (click)="choseClientEvent(i)" [disabled]="chosedClientIndex == i">
-                    <i class="fas fa-plus-circle"></i>
-                </button>
-            </div>
-        </td>
-    </tr>
+<app-table
+	[columns]="['Nombre', 'Acciones']"
+	[pageLength]="5"
+	[lengthChange]="false"
+	[info]="false"
+	[footer]="false"
+>
+	<tr
+		*ngFor="let client of clients; let i = index"
+		[ngClass]="{ 'table-info': chosedClientIndex == i }"
+	>
+		<td class="align-middle">{{ client.name }}</td>
+		<td>
+			<div class="text-center">
+				<button
+					class="btn btn-success text-center"
+					(click)="choseClientEvent(i)"
+					[disabled]="chosedClientIndex == i"
+				>
+					<i class="fas fa-plus-circle"></i>
+				</button>
+			</div>
+		</td>
+	</tr>
 </app-table>

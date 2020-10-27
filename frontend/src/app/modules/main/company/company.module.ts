@@ -12,27 +12,23 @@ import { NavigationModule } from '@modules/main/navigation/navigation.module';
 import * as othersModules from '@modules/others/index';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    HttpClientModule,
-    NavigationModule,
-    othersModules.modules
-  ],
-  providers: [
-    companyServices.services,
-    companyGuards.guards,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: companyServices.TokenInterceptorService,
-      multi: true
-    }
-  ],
-  declarations: [
-    companyContainers.containers
-  ],
-  exports: [
-    companyContainers.containers
-  ]
+	imports: [
+		CommonModule,
+		RouterModule,
+		HttpClientModule,
+		NavigationModule,
+		othersModules.modules
+	],
+	providers: [
+		companyServices.services,
+		companyGuards.guards,
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: companyServices.TokenInterceptorService,
+			multi: true
+		}
+	],
+	declarations: [companyContainers.containers],
+	exports: [companyContainers.containers]
 })
-export class CompanyModule { }
+export class CompanyModule {}

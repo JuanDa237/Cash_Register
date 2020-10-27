@@ -1,39 +1,39 @@
-@import "styles/variables.scss";
+@import 'styles/variables.scss';
 
 .nav-link {
-    display: flex;
-    align-items: center;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    position: relative;
-    color: $sidenav-dark-link-color;
-    .sb-nav-link-icon {
-        font-size: 0.9rem;
-        margin-right: 0.5rem;
-        color: $sidenav-dark-icon-color;
-    }
-    .sb-sidenav-collapse-arrow {
-        display: inline-block;
-        margin-left: auto;
-        transition: transform 0.15s ease;
-        color: $sidenav-dark-icon-color;
-    }
-    &.collapsed {
-        .sb-sidenav-collapse-arrow {
-            transform: rotate(-90deg);
-        }
-    }
-    &:hover {
-        color: $sidenav-dark-link-active-color;
-    }
-    &.active {
-        color: $sidenav-dark-link-active-color;
-        .sb-nav-link-icon {
-            color: $sidenav-dark-link-active-color;
-        }
-    }
+	display: flex;
+	align-items: center;
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
+	position: relative;
+	color: $sidenav-dark-link-color;
+	.sb-nav-link-icon {
+		font-size: 0.9rem;
+		margin-right: 0.5rem;
+		color: $sidenav-dark-icon-color;
+	}
+	.sb-sidenav-collapse-arrow {
+		display: inline-block;
+		margin-left: auto;
+		transition: transform 0.15s ease;
+		color: $sidenav-dark-icon-color;
+	}
+	&.collapsed {
+		.sb-sidenav-collapse-arrow {
+			transform: rotate(-90deg);
+		}
+	}
+	&:hover {
+		color: $sidenav-dark-link-active-color;
+	}
+	&.active {
+		color: $sidenav-dark-link-active-color;
+		.sb-nav-link-icon {
+			color: $sidenav-dark-link-active-color;
+		}
+	}
 }
 .sb-sidenav-menu-nested {
-    margin-left: 1.5rem;
-    flex-direction: column;
+	margin-left: 1.5rem;
+	flex-direction: column;
 }

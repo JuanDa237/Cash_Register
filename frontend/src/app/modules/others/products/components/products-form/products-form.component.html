@@ -1,82 +1,97 @@
 <form [formGroup]="productForm" (ngSubmit)="submitEvent()" novalidate>
-    <div class="form-group">
-        <div class="form-group">
-            <label for="idCategory">
-                Categoria<span class="text-danger">*</span>
-            </label>
-            <select 
-                tabindex="1"
-                type="text"
-                id="idCategory"
-                class="form-control"
-                name="idCategory"
-                formControlName="idCategory"
-                [class.is-invalid]="productForm.get('idCategory')?.touched && productForm.get('idCategory')?.invalid">
-                <option *ngIf="creating" [ngValue]="null">Ninguna</option>
-                <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
-            </select>                          
-            <div
-                class="invalid-feedback"
-                *ngIf="productForm.get('idCategory')?.touched && productForm.get('idCategory')?.invalid">
-                    <div *ngIf="creating && productForm.get('idCategory')?.errors.required">
-                        La categoria es obligatoria.
-                    </div>
-            </div>
-        </div>
-        <label for="name">
-            Producto<span class="text-danger">*</span>
-        </label>
-        <input
-            tabindex="2"
-            type="text"
-            id="name"
-            class="form-control"
-            placeholder="Deben ser al menos 3 caracteres"
-            name="name"
-            formControlName="name"
-            [class.is-invalid]="productForm.get('name')?.touched && productForm.get('name')?.invalid">
-        <div
-            class="invalid-feedback"
-            *ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid">
-            <div *ngIf="productForm.get('name')?.errors.required">
-                El nombre es obligatorio.
-            </div>
-            <div *ngIf="productForm.get('name')?.errors.minlength">
-                {{ productForm.get('name')?.errors.minlength.actualLength + " caracteres de " +  productForm.get('name')?.errors.minlength.requiredLength  + " requeridos." }}
-            </div>
-            <div *ngIf="productForm.get('name')?.errors.maxlength">
-                {{ "El maximo de caracteres permitidos son " + productForm.get('name')?.errors.maxlength.requiredLength }}
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="price">Precio</label>
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">
-                    <i class="fas fa-dollar-sign"></i>
-                </span>
-            </div>
-            <input
-                tabindex="3"
-                step="100"
-                type="number"
-                id="price"
-                class="form-control"
-                formControlName="price"
-                [class.is-invalid]="productForm.get('price')?.touched && productForm.get('price')?.invalid"
-                (input)="inputPriceEvent()">
-            <div 
-                class="invalid-feedback"
-                *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid">
-                <div *ngIf="productForm.get('price')?.errors.required">
-                    El precio es obligatorio
-                </div>
-            </div>
-        </div>
-    </div>
-    <input
-        type="submit"
-        [disabled]="productForm.invalid"
-        hidden>
+	<div class="form-group">
+		<div class="form-group">
+			<label for="idCategory"> Categoria<span class="text-danger">*</span> </label>
+			<select
+				tabindex="1"
+				type="text"
+				id="idCategory"
+				class="form-control"
+				name="idCategory"
+				formControlName="idCategory"
+				[class.is-invalid]="
+					productForm.get('idCategory')?.touched && productForm.get('idCategory')?.invalid
+				"
+			>
+				<option *ngIf="creating" [ngValue]="null">Ninguna</option>
+				<option *ngFor="let category of categories" [ngValue]="category.id">
+					{{ category.name }}
+				</option>
+			</select>
+			<div
+				class="invalid-feedback"
+				*ngIf="
+					productForm.get('idCategory')?.touched && productForm.get('idCategory')?.invalid
+				"
+			>
+				<div *ngIf="creating && productForm.get('idCategory')?.errors.required">
+					La categoria es obligatoria.
+				</div>
+			</div>
+		</div>
+		<label for="name"> Producto<span class="text-danger">*</span> </label>
+		<input
+			tabindex="2"
+			type="text"
+			id="name"
+			class="form-control"
+			placeholder="Deben ser al menos 3 caracteres"
+			name="name"
+			formControlName="name"
+			[class.is-invalid]="
+				productForm.get('name')?.touched && productForm.get('name')?.invalid
+			"
+		/>
+		<div
+			class="invalid-feedback"
+			*ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid"
+		>
+			<div *ngIf="productForm.get('name')?.errors.required">El nombre es obligatorio.</div>
+			<div *ngIf="productForm.get('name')?.errors.minlength">
+				{{
+					productForm.get('name')?.errors.minlength.actualLength +
+						' caracteres de ' +
+						productForm.get('name')?.errors.minlength.requiredLength +
+						' requeridos.'
+				}}
+			</div>
+			<div *ngIf="productForm.get('name')?.errors.maxlength">
+				{{
+					'El maximo de caracteres permitidos son ' +
+						productForm.get('name')?.errors.maxlength.requiredLength
+				}}
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="price">Precio</label>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">
+					<i class="fas fa-dollar-sign"></i>
+				</span>
+			</div>
+			<input
+				tabindex="3"
+				step="100"
+				type="number"
+				id="price"
+				class="form-control"
+				formControlName="price"
+				[class.is-invalid]="
+					productForm.get('price')?.touched && productForm.get('price')?.invalid
+				"
+				(input)="inputPriceEvent()"
+			/>
+			<div
+				class="invalid-feedback"
+				*ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid"
+			>
+				<div *ngIf="productForm.get('price')?.errors.required">
+					El precio es obligatorio
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="submit" [disabled]="productForm.invalid" hidden />
 </form>

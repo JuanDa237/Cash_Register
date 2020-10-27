@@ -4,8 +4,8 @@ import { SideNavItemComponent } from './side-nav-item/side-nav-item.component';
 import { TopNavUserComponent } from './top-nav-user/top-nav-user.component';
 
 export const components = [
-    SideNavItemComponent,
-    BreadcrumbsComponent,
-    DashboardHeadComponent,
-    TopNavUserComponent,
-]
+	SideNavItemComponent,
+	BreadcrumbsComponent,
+	DashboardHeadComponent,
+	TopNavUserComponent
+];

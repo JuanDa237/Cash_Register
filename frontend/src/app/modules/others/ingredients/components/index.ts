@@ -1,7 +1,5 @@
-import { IngredientsFormComponent } from "./ingredients-form/ingredients-form.component";
+import { IngredientsFormComponent } from './ingredients-form/ingredients-form.component';
 
-export const components = [
-    IngredientsFormComponent
-]
+export const components = [IngredientsFormComponent];
 
-export * from "./ingredients-form/ingredients-form.component";
+export * from './ingredients-form/ingredients-form.component';

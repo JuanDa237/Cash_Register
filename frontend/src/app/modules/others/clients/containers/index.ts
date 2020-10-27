@@ -1,7 +1,5 @@
-import { ClientsComponent } from "./clients/clients.component";
+import { ClientsComponent } from './clients/clients.component';
 
-export const containers = [
-    ClientsComponent
-]
+export const containers = [ClientsComponent];
 
-export { ClientsComponent } from "./clients/clients.component";
+export { ClientsComponent } from './clients/clients.component';

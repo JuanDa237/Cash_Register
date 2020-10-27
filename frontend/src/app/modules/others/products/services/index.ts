@@ -1,7 +1,5 @@
-import { ProductsService } from "./products.service";
+import { ProductsService } from './products.service';
 
-export const services = [
-    ProductsService
-]
+export const services = [ProductsService];
 
-export * from "./products.service";
+export * from './products.service';

@@ -8,22 +8,17 @@ import * as appCommonLayouts from './layouts';
 import * as navigationServices from './services';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule
-    ],
-    providers: [
-        navigationServices.services
-    ],
-    declarations: [
-        navigationContainers.containers,
-        navigationComponents.components,
-        appCommonLayouts.layouts
-    ],
-    exports: [
-        navigationContainers.containers,
-        navigationComponents.components,
-        appCommonLayouts.layouts
-    ],
+	imports: [CommonModule, RouterModule],
+	providers: [navigationServices.services],
+	declarations: [
+		navigationContainers.containers,
+		navigationComponents.components,
+		appCommonLayouts.layouts
+	],
+	exports: [
+		navigationContainers.containers,
+		navigationComponents.components,
+		appCommonLayouts.layouts
+	]
 })
 export class NavigationModule {}

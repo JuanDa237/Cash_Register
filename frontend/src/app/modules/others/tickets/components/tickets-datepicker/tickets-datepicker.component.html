@@ -1,42 +1,41 @@
 <div class="row">
-    <div class="col">
-        <form [formGroup]="ticketForm" (ngSubmit)="submitEvent()" novalidate>
-            <div class="row">
-                <div class="col-12 col-md-4 form-group">
-                    <label for="since">
-                        Desde<span class="text-danger">*</span>
-                    </label>
-                    <input
-                        tabindex="1"
-                        type="date"
-                        id="since"
-                        class="form-control"
-                        name="since"
-                        formControlName="since">
-                </div>
-                <div class="col-12 col-md-4 form-group">
-                    <label for="until">
-                        Hasta<span class="text-danger">*</span>
-                    </label>
-                    <input
-                        tabindex="1"
-                        type="date"
-                        id="until"
-                        class="form-control"
-                        name="until"
-                        formControlName="until">
-                </div>
-                <div class="col-12 col-md-4 form-group">
-                    <label></label>
-                    <button
-                        tabindex="3"
-                        type="submit"
-                        class="btn btn-info btn-block mt-md-2"
-                        [disabled]="ticketForm.invalid">
-                        <i class="fas fa-search"></i> Buscar
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
+	<div class="col">
+		<form [formGroup]="ticketForm" (ngSubmit)="submitEvent()" novalidate>
+			<div class="row">
+				<div class="col-12 col-md-4 form-group">
+					<label for="since"> Desde<span class="text-danger">*</span> </label>
+					<input
+						tabindex="1"
+						type="date"
+						id="since"
+						class="form-control"
+						name="since"
+						formControlName="since"
+					/>
+				</div>
+				<div class="col-12 col-md-4 form-group">
+					<label for="until"> Hasta<span class="text-danger">*</span> </label>
+					<input
+						tabindex="1"
+						type="date"
+						id="until"
+						class="form-control"
+						name="until"
+						formControlName="until"
+					/>
+				</div>
+				<div class="col-12 col-md-4 form-group">
+					<label></label>
+					<button
+						tabindex="3"
+						type="submit"
+						class="btn btn-info btn-block mt-md-2"
+						[disabled]="ticketForm.invalid"
+					>
+						<i class="fas fa-search"></i> Buscar
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>

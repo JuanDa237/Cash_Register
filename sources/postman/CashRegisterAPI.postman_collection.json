@@ -17,13 +17,9 @@
 						"url": {
 							"raw": "http://localhost:3000/",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "3000",
-							"path": [
-								""
-							]
+							"path": [""]
 						},
 						"description": "Index route."
 					},
@@ -56,9 +52,7 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}company",
-									"host": [
-										"{{api}}company"
-									]
+									"host": ["{{api}}company"]
 								}
 							},
 							"response": []
@@ -87,9 +81,7 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}categories",
-									"host": [
-										"{{api}}categories"
-									]
+									"host": ["{{api}}categories"]
 								}
 							},
 							"response": []
@@ -111,12 +103,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}category/:id",
-									"host": [
-										"{{api}}category"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}category"],
+									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -155,9 +143,7 @@
 								},
 								"url": {
 									"raw": "{{api}}category",
-									"host": [
-										"{{api}}category"
-									]
+									"host": ["{{api}}category"]
 								}
 							},
 							"response": []
@@ -189,12 +175,8 @@
 								},
 								"url": {
 									"raw": "{{api}}category/:id",
-									"host": [
-										"{{api}}category"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}category"],
+									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -223,12 +205,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}category/:id",
-									"host": [
-										"{{api}}category"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}category"],
+									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -268,12 +246,8 @@
 										"header": [],
 										"url": {
 											"raw": "{{api}}products/ingredients",
-											"host": [
-												"{{api}}products"
-											],
-											"path": [
-												"ingredients"
-											]
+											"host": ["{{api}}products"],
+											"path": ["ingredients"]
 										},
 										"description": "Get ingredients in products."
 									},
@@ -296,13 +270,8 @@
 										"header": [],
 										"url": {
 											"raw": "{{api}}product/ingredients/:id",
-											"host": [
-												"{{api}}product"
-											],
-											"path": [
-												"ingredients",
-												":id"
-											],
+											"host": ["{{api}}product"],
+											"path": ["ingredients", ":id"],
 											"variable": [
 												{
 													"key": "id",
@@ -343,12 +312,8 @@
 										},
 										"url": {
 											"raw": "{{api}}product/ingredient",
-											"host": [
-												"{{api}}product"
-											],
-											"path": [
-												"ingredient"
-											]
+											"host": ["{{api}}product"],
+											"path": ["ingredient"]
 										}
 									},
 									"response": []
@@ -380,13 +345,8 @@
 										},
 										"url": {
 											"raw": "{{api}}product/ingredient/:id",
-											"host": [
-												"{{api}}product"
-											],
-											"path": [
-												"ingredient",
-												":id"
-											],
+											"host": ["{{api}}product"],
+											"path": ["ingredient", ":id"],
 											"variable": [
 												{
 													"key": "id",
@@ -415,13 +375,8 @@
 										"header": [],
 										"url": {
 											"raw": "{{api}}product/ingredient/:id",
-											"host": [
-												"{{api}}product"
-											],
-											"path": [
-												"ingredient",
-												":id"
-											],
+											"host": ["{{api}}product"],
+											"path": ["ingredient", ":id"],
 											"variable": [
 												{
 													"description": "Product id",
@@ -455,9 +410,7 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}products",
-									"host": [
-										"{{api}}products"
-									]
+									"host": ["{{api}}products"]
 								}
 							},
 							"response": []
@@ -479,12 +432,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}all/products",
-									"host": [
-										"{{api}}all"
-									],
-									"path": [
-										"products"
-									]
+									"host": ["{{api}}all"],
+									"path": ["products"]
 								},
 								"description": "Get all products even the eliminated products."
 							},
@@ -507,13 +456,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}api/product/:id",
-									"host": [
-										"{{api}}api"
-									],
-									"path": [
-										"product",
-										":id"
-									],
+									"host": ["{{api}}api"],
+									"path": ["product", ":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -552,9 +496,7 @@
 								},
 								"url": {
 									"raw": "{{api}}product",
-									"host": [
-										"{{api}}product"
-									]
+									"host": ["{{api}}product"]
 								}
 							},
 							"response": []
@@ -586,12 +528,8 @@
 								},
 								"url": {
 									"raw": "{{api}}product/:id",
-									"host": [
-										"{{api}}product"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}product"],
+									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -620,12 +558,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}product/:id",
-									"host": [
-										"{{api}}product"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}product"],
+									"path": [":id"],
 									"variable": [
 										{
 											"description": "Product id",
@@ -645,9 +579,7 @@
 							"script": {
 								"id": "ed0ca8d9-fe3c-4ccf-8b3f-b249832aa8f1",
 								"type": "text/javascript",
-								"exec": [
-									""
-								]
+								"exec": [""]
 							}
 						},
 						{
@@ -655,9 +587,7 @@
 							"script": {
 								"id": "ceab3c0a-946c-4cf8-a3c5-410ea2d4fbdb",
 								"type": "text/javascript",
-								"exec": [
-									""
-								]
+								"exec": [""]
 							}
 						}
 					],
@@ -684,9 +614,7 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}ingredients",
-									"host": [
-										"{{api}}ingredients"
-									]
+									"host": ["{{api}}ingredients"]
 								}
 							},
 							"response": []
@@ -708,12 +636,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}ingredient/:id",
-									"host": [
-										"{{api}}ingredient"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}ingredient"],
+									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -752,9 +676,7 @@
 								},
 								"url": {
 									"raw": "{{api}}ingredient",
-									"host": [
-										"{{api}}ingredient"
-									]
+									"host": ["{{api}}ingredient"]
 								}
 							},
 							"response": []
@@ -786,12 +708,8 @@
 								},
 								"url": {
 									"raw": "{{api}}ingredient/:id",
-									"host": [
-										"{{api}}ingredient"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}ingredient"],
+									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -830,9 +748,7 @@
 								},
 								"url": {
 									"raw": "{{api}}amountIngredients",
-									"host": [
-										"{{api}}amountIngredients"
-									]
+									"host": ["{{api}}amountIngredients"]
 								},
 								"description": "This route is for update spendingAmount in ingredients after a new sale"
 							},
@@ -855,12 +771,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}ingredient/:id",
-									"host": [
-										"{{api}}ingredient"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}ingredient"],
+									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -897,9 +809,7 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}tickets",
-									"host": [
-										"{{api}}tickets"
-									]
+									"host": ["{{api}}tickets"]
 								}
 							},
 							"response": []
@@ -921,12 +831,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}ticket/:id",
-									"host": [
-										"{{api}}ticket"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}ticket"],
+									"path": [":id"],
 									"variable": [
 										{
 											"description": "Ticket id",
@@ -955,13 +861,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}tickets/:since/:until",
-									"host": [
-										"{{api}}tickets"
-									],
-									"path": [
-										":since",
-										":until"
-									],
+									"host": ["{{api}}tickets"],
+									"path": [":since", ":until"],
 									"variable": [
 										{
 											"key": "since",
@@ -993,12 +894,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}tickets/year",
-									"host": [
-										"{{api}}tickets"
-									],
-									"path": [
-										"year"
-									]
+									"host": ["{{api}}tickets"],
+									"path": ["year"]
 								}
 							},
 							"response": []
@@ -1020,12 +917,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}tickets/products",
-									"host": [
-										"{{api}}tickets"
-									],
-									"path": [
-										"products"
-									]
+									"host": ["{{api}}tickets"],
+									"path": ["products"]
 								}
 							},
 							"response": []
@@ -1047,13 +940,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}ticket/products/:id",
-									"host": [
-										"{{api}}ticket"
-									],
-									"path": [
-										"products",
-										":id"
-									],
+									"host": ["{{api}}ticket"],
+									"path": ["products", ":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -1092,9 +980,7 @@
 								},
 								"url": {
 									"raw": "{{api}}ticket",
-									"host": [
-										"{{api}}ticket"
-									]
+									"host": ["{{api}}ticket"]
 								}
 							},
 							"response": []
@@ -1126,12 +1012,8 @@
 								},
 								"url": {
 									"raw": "{{api}}ticket/product",
-									"host": [
-										"{{api}}ticket"
-									],
-									"path": [
-										"product"
-									]
+									"host": ["{{api}}ticket"],
+									"path": ["product"]
 								}
 							},
 							"response": []
@@ -1161,9 +1043,7 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}clients",
-									"host": [
-										"{{api}}clients"
-									]
+									"host": ["{{api}}clients"]
 								}
 							},
 							"response": []
@@ -1185,12 +1065,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}client/:id",
-									"host": [
-										"{{api}}client"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}client"],
+									"path": [":id"],
 									"variable": [
 										{
 											"description": "Client id",
@@ -1219,12 +1095,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}clients/year",
-									"host": [
-										"{{api}}clients"
-									],
-									"path": [
-										"year"
-									]
+									"host": ["{{api}}clients"],
+									"path": ["year"]
 								}
 							},
 							"response": []
@@ -1246,12 +1118,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}all/clients",
-									"host": [
-										"{{api}}all"
-									],
-									"path": [
-										"clients"
-									]
+									"host": ["{{api}}all"],
+									"path": ["clients"]
 								},
 								"description": "Get all clients even the eliminated clients."
 							},
@@ -1284,9 +1152,7 @@
 								},
 								"url": {
 									"raw": "{{api}}client",
-									"host": [
-										"{{api}}client"
-									]
+									"host": ["{{api}}client"]
 								}
 							},
 							"response": []
@@ -1318,12 +1184,8 @@
 								},
 								"url": {
 									"raw": "{{api}}client/:id",
-									"host": [
-										"{{api}}client"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}client"],
+									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -1352,12 +1214,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}client/:id",
-									"host": [
-										"{{api}}client"
-									],
-									"path": [
-										":id"
-									],
+									"host": ["{{api}}client"],
+									"path": [":id"],
 									"variable": [
 										{
 											"description": "Client id",
@@ -1394,9 +1252,7 @@
 								"header": [],
 								"url": {
 									"raw": "{{api}}user",
-									"host": [
-										"{{api}}user"
-									]
+									"host": ["{{api}}user"]
 								},
 								"description": "To get the name and the role of a user."
 							},
@@ -1427,12 +1283,8 @@
 								},
 								"url": {
 									"raw": "{{api}}authentication/singIn",
-									"host": [
-										"{{api}}authentication"
-									],
-									"path": [
-										"singIn"
-									]
+									"host": ["{{api}}authentication"],
+									"path": ["singIn"]
 								}
 							},
 							"response": []
@@ -1454,12 +1306,8 @@
 								},
 								"url": {
 									"raw": "{{api}}authentication/singUp",
-									"host": [
-										"{{api}}authentication"
-									],
-									"path": [
-										"singUp"
-									]
+									"host": ["{{api}}authentication"],
+									"path": ["singUp"]
 								}
 							},
 							"response": []

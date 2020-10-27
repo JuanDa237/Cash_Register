@@ -1,36 +1,61 @@
-<button class="btn btn-info btn-block mb-4" data-toggle="modal" data-target="#modalClients" (click)="changeModal(null)">
-    <i class="fas fa-plus-circle"></i> Crear Cliente
+<button
+	class="btn btn-info btn-block mb-4"
+	data-toggle="modal"
+	data-target="#modalClients"
+	(click)="changeModal(null)"
+>
+	<i class="fas fa-plus-circle"></i> Crear Cliente
 </button>
 <app-modal idModal="modalClients" [title]="creating ? 'Crear Cliente' : 'Editar Cliente'">
-    <div class="modal-body">
-        <app-clients-form (onSubmitEvent)="createOrUpdateClient()" (invalidForm)="invalidForm = $event"></app-clients-form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-success" (click)="createOrUpdateClient()" [disabled]="invalidForm" data-dismiss="modal">{{  creating ? 'Crear' : 'Editar'  }}</button>
-    </div>
+	<div class="modal-body">
+		<app-clients-form
+			(onSubmitEvent)="createOrUpdateClient()"
+			(invalidForm)="invalidForm = $event"
+		></app-clients-form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+		<button
+			type="button"
+			class="btn btn-success"
+			(click)="createOrUpdateClient()"
+			[disabled]="invalidForm"
+			data-dismiss="modal"
+		>
+			{{ creating ? 'Crear' : 'Editar' }}
+		</button>
+	</div>
 </app-modal>
 <div *ngIf="loading">
-    <app-loading colorClass="text-primary" size="10rem"></app-loading>
+	<app-loading colorClass="text-primary" size="10rem"></app-loading>
 </div>
 <div [hidden]="loading">
-    <app-table [columns]="['Nombre', 'Direccion', 'Telefono', 'Creado El', 'Acciones']">
-        <tr *ngFor="let client of clients">
-            <td class="align-middle">{{ client.name }}</td>
-            <td class="align-middle">{{ client.address }}</td>                    
-            <td class="align-middle">{{ client.phoneNumber }}</td>                  
-            <td class="align-middle">{{ client.creationDate }}</td>                    
-            <td>
-                <div class="text-center">
-                    <div class="btn-group">
-                        <button class="btn btn-info" (click)="changeModal(client)" data-toggle="modal" data-target="#modalClients"><i class="far fa-edit"></i></button>
-                        <button class="btn btn-danger" (click)="deleteClient(client)"><i class="far fa-trash-alt"></i></button>
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </app-table>
+	<app-table [columns]="['Nombre', 'Direccion', 'Telefono', 'Creado El', 'Acciones']">
+		<tr *ngFor="let client of clients">
+			<td class="align-middle">{{ client.name }}</td>
+			<td class="align-middle">{{ client.address }}</td>
+			<td class="align-middle">{{ client.phoneNumber }}</td>
+			<td class="align-middle">{{ client.creationDate }}</td>
+			<td>
+				<div class="text-center">
+					<div class="btn-group">
+						<button
+							class="btn btn-info"
+							(click)="changeModal(client)"
+							data-toggle="modal"
+							data-target="#modalClients"
+						>
+							<i class="far fa-edit"></i>
+						</button>
+						<button class="btn btn-danger" (click)="deleteClient(client)">
+							<i class="far fa-trash-alt"></i>
+						</button>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</app-table>
 </div>
 <div class="row">
-    <app-clients-chart chartId="clientsChart"></app-clients-chart>
+	<app-clients-chart chartId="clientsChart"></app-clients-chart>
 </div>

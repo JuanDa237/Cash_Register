@@ -9,16 +9,8 @@ import * as errorContainers from './containers';
 import { NavigationModule } from '@modules/main/navigation/navigation.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        NavigationModule
-    ],
-    declarations: [
-        errorContainers.containers
-    ],
-    exports: [
-        errorContainers.containers
-    ]
+	imports: [CommonModule, RouterModule, NavigationModule],
+	declarations: [errorContainers.containers],
+	exports: [errorContainers.containers]
 })
 export class ErrorModule {}
