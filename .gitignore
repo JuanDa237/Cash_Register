@@ -7,7 +7,7 @@
 /frontend/build
 
 # Private Files
-toDoList.md
+toDoList
 
 # Compiled output
 /dist

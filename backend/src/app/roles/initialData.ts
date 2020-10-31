@@ -3,7 +3,7 @@ import pool from '../../database';
 import { User } from '../users/models/index';
 import { encryptPassword } from '../users/models';
 
-import { roles } from './data';
+import { Role } from './data';
 
 import keys from '../../keys';
 
@@ -21,8 +21,8 @@ async function createRoles(): Promise<any> {
 			if (dates.length > 0) return;
 
 			await Promise.all([
-				await (await pool).query(`INSERT INTO roles SET name = '${roles.CASHIER}'`),
-				await (await pool).query(`INSERT INTO roles SET name = '${roles.ADMINISTRATOR}'`)
+				await (await pool).query(`INSERT INTO roles SET name = '${Role.CASHIER}'`),
+				await (await pool).query(`INSERT INTO roles SET name = '${Role.ADMINISTRATOR}'`)
 			]);
 			console.log('Roles created.');
 		} catch (error) {
@@ -40,7 +40,7 @@ async function createFirstCompany(): Promise<any> {
 				.query('INSERT INTO companies SET ?', [keys.initialData.company])
 				.then(async (company) => {
 					(await pool)
-						.query(`SELECT id FROM roles WHERE name = '${roles.ADMINISTRATOR}';`)
+						.query(`SELECT id FROM roles WHERE name = '${Role.ADMINISTRATOR}';`)
 						.then(async (roles: any[]) => {
 							const newUser: User = {
 								idCompany: company.insertId,

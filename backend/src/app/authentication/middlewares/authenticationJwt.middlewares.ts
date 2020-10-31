@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import pool from '../../../database';
 
 import { User } from '../../users/models';
-import { roles } from '../../roles/data';
+import { Role } from '../../roles/data';
 
 interface Payload {
 	id: number;
@@ -47,7 +47,7 @@ export async function isCashier(
 		.then((date: Array<any>) => {
 			if (
 				date.length > 0 &&
-				(date[0].name == roles.ADMINISTRATOR || date[0].name == roles.CASHIER)
+				(date[0].name == Role.ADMINISTRATOR || date[0].name == Role.CASHIER)
 			) {
 				return next();
 			} else {
@@ -64,7 +64,7 @@ export async function isAdministrator(
 	(await pool)
 		.query('SELECT name FROM roles WHERE id = ?', [request.user.idRole])
 		.then((date: Array<any>) => {
-			if (date.length > 0 && date[0].name == roles.ADMINISTRATOR) {
+			if (date.length > 0 && date[0].name == Role.ADMINISTRATOR) {
 				return next();
 			} else {
 				return response.status(401).json({ message: 'Unauthorized.' });
