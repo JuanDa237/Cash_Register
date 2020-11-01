@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 //Models
-import { User } from '../models/index';
+import { LogInUser } from '../models/index';
 
 //Api
 import { environment } from '@enviroment/environment';
@@ -22,7 +22,7 @@ export class AuthenticationService {
 	}
 
 	//Post
-	signIn(user: User): Observable<any> {
+	signIn(user: LogInUser): Observable<any> {
 		return this.http.post(this.apiUrl + 'authentication/singIn', user, {
 			headers: this.headers,
 			observe: 'response'

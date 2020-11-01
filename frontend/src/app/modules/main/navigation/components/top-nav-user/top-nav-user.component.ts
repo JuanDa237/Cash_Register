@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '@app/modules/main/landing/models';
+
 import { UserService } from '../../services';
+import { User } from '../../models';
 
 @Component({
 	selector: 'app-top-nav-user',
@@ -8,11 +9,12 @@ import { UserService } from '../../services';
 	styleUrls: ['top-nav-user.component.scss']
 })
 export class TopNavUserComponent implements OnInit {
-	public user: {};
+	public user: User;
 
 	constructor(private userService: UserService) {
 		this.user = {
-			name: ''
+			name: '',
+			role: ''
 		};
 	}
 

@@ -5,14 +5,14 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/index';
 
 //Models
-import { User } from '../../models/index';
+import { LogInUser } from '../../models/index';
 
 @Component({
 	selector: 'app-sign-in',
 	templateUrl: './sign-in.component.html'
 })
 export class SignInComponent {
-	public user: User;
+	public user: LogInUser;
 	public error: Array<boolean>;
 	public rememberUser: boolean;
 

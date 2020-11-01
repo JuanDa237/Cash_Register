@@ -3,6 +3,11 @@ export enum Role {
 	ADMINISTRATOR = 'administrator'
 }
 
+export interface User {
+	name: string;
+	role: string;
+}
+
 export interface RouteData {
 	title?: string;
 	activeTopNav?: string;
