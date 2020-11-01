@@ -13,7 +13,7 @@ interface User {
 @Injectable({
 	providedIn: 'root'
 })
-export class UsersService {
+export class UserService {
 	private apiUrl: string;
 	private headers: HttpHeaders;
 

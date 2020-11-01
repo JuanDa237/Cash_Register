@@ -7,7 +7,7 @@ import { SideNavItems, SideNavSection } from '@modules/main/navigation/models';
 import { sideNavItems, sideNavSections } from '@modules/main/navigation/data';
 
 //Services
-import { UsersService } from '../../services/index';
+import { UserService } from '../../services/index';
 
 @Component({
 	selector: 'app-side-nav',
@@ -21,7 +21,7 @@ export class SideNavComponent implements OnInit {
 	public username: string;
 	public role: string;
 
-	constructor(private usersService: UsersService) {
+	constructor(private userService: UserService) {
 		this.sideNavItems = sideNavItems;
 		this.sideNavSections = sideNavSections;
 		this.username = '';
@@ -33,7 +33,7 @@ export class SideNavComponent implements OnInit {
 	}
 
 	private getUser(): void {
-		this.usersService.getUser().subscribe(
+		this.userService.getUser().subscribe(
 			(response) => {
 				this.username = response.name;
 				this.role = response.role;
