@@ -19,20 +19,39 @@ class Server {
 	public app: Application;
 
 	constructor() {
+		// Enviroment variables
+		dotenv.config();
+
+		// Express
 		this.app = express();
 		this.configExpress();
-		this.routes();
+		this.othersConfings();
+
 		this.initialConfig();
-		//Start reading environment variables
-		dotenv.config();
+
+		// Config routes
+		this.routes();
 	}
 
 	private configExpress(): void {
 		this.app.set('port', process.env.PORT || 3000);
-		this.app.use(morgan('dev'));
-		this.app.use(cors());
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: false }));
+	}
+
+	private othersConfings(): void {
+		//Cors policy configuration
+		this.app.use(cors());
+
+		//Morgan to see peticions in console
+		this.app.use(morgan('dev'));
+	}
+
+	private initialConfig(): void {
+		createInitialData();
+
+		//Public folder
+		this.app.use('/api/uploads', express.static('uploads'));
 	}
 
 	private routes(): void {
@@ -45,10 +64,6 @@ class Server {
 		this.app.use('/api', clientsRoutes);
 		this.app.use('/api', usersRoutes);
 		this.app.use('/api/authentication', authenticationRoutes);
-	}
-
-	private initialConfig(): void {
-		createInitialData();
 	}
 
 	public start(): void {

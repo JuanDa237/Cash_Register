@@ -64,7 +64,26 @@ export async function isAdministrator(
 	(await pool)
 		.query('SELECT name FROM roles WHERE id = ?', [request.user.idRole])
 		.then((date: Array<any>) => {
-			if (date.length > 0 && date[0].name == Role.ADMINISTRATOR) {
+			if (
+				date.length > 0 &&
+				(date[0].name == Role.ADMINISTRATOR || date[0].name == Role.SUPERADMIN)
+			) {
+				return next();
+			} else {
+				return response.status(401).json({ message: 'Unauthorized.' });
+			}
+		});
+}
+
+export async function isSuperAdmin(
+	request: Request,
+	response: Response,
+	next: NextFunction
+): Promise<void> {
+	(await pool)
+		.query('SELECT name FROM roles WHERE id = ?', [request.user.idRole])
+		.then((date: Array<any>) => {
+			if (date.length > 0 && date[0].name == Role.SUPERADMIN) {
 				return next();
 			} else {
 				return response.status(401).json({ message: 'Unauthorized.' });

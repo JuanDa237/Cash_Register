@@ -6,6 +6,9 @@
 /backend/build
 /frontend/build
 
+# Backend uploads
+/backend/uploads/*
+
 # Private Files
 toDoList
 

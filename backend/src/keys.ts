@@ -7,14 +7,15 @@ export default {
 	},
 	initialData: {
 		company: {
-			name: 'Del Perrero',
-			imageUrl: '',
+			name: 'Nueva Empresa',
+			image: '',
 			ticketMessage: '',
+			visible: false,
 			active: true
 		},
 		user: {
-			name: 'Juan David Gavira',
-			username: 'Juan',
+			name: 'Juan Gaviria',
+			username: 'juan',
 			password: 'contra'
 		}
 	}
