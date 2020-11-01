@@ -4,6 +4,7 @@ import pool from '../../../database';
 
 import { User } from '../../users/models';
 import { Role } from '../../roles/data';
+import { Role as IRole } from '../../roles/models';
 
 interface Payload {
 	id: number;
@@ -11,7 +12,11 @@ interface Payload {
 	exp: number;
 }
 
-export async function verifyToken(request: Request, response: Response, next: NextFunction) {
+export async function verifyToken(
+	request: Request,
+	response: Response,
+	next: NextFunction
+): Promise<void | Response<any>> {
 	try {
 		const token = request.header('Authorization')?.split(' ')[1];
 
@@ -22,16 +27,16 @@ export async function verifyToken(request: Request, response: Response, next: Ne
 			process.env.TOKEN_SECRET || 'tokentest'
 		) as Payload;
 
-		(await pool)
-			.query('SELECT id, idCompany, idRole, username FROM users WHERE id = ?', [payload.id])
-			.then((dates: Array<User>) => {
-				if (dates.length > 0) {
-					request.user = dates[0];
-					return next();
-				} else {
-					return response.status(404).json({ message: 'User not found.' });
-				}
-			});
+		const user: User[] = await (
+			await pool
+		).query('SELECT id, idCompany, idRole, username FROM users WHERE id = ?', [payload.id]);
+
+		if (user.length > 0) {
+			request.user = user[0];
+			return next();
+		} else {
+			return response.status(404).json({ message: 'User not found.' });
+		}
 	} catch (error) {
 		return response.status(401).json({ message: 'Unauthorized.' });
 	}
@@ -41,52 +46,54 @@ export async function isCashier(
 	request: Request,
 	response: Response,
 	next: NextFunction
-): Promise<void> {
-	(await pool)
-		.query('SELECT name FROM roles WHERE id = ?', [request.user.idRole])
-		.then((date: Array<any>) => {
-			if (
-				date.length > 0 &&
-				(date[0].name == Role.ADMINISTRATOR || date[0].name == Role.CASHIER)
-			) {
-				return next();
-			} else {
-				return response.status(401).json({ message: 'Unauthorized.' });
-			}
-		});
+): Promise<void | Response<any>> {
+	const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
+		request.user.idRole
+	]);
+
+	if (
+		userRole.length > 0 &&
+		(userRole[0].name == Role.CASHIER ||
+			userRole[0].name == Role.ADMINISTRATOR ||
+			userRole[0].name == Role.SUPERADMIN)
+	) {
+		return next();
+	} else {
+		return response.status(401).json({ message: 'Unauthorized.' });
+	}
 }
 
 export async function isAdministrator(
 	request: Request,
 	response: Response,
 	next: NextFunction
-): Promise<void> {
-	(await pool)
-		.query('SELECT name FROM roles WHERE id = ?', [request.user.idRole])
-		.then((date: Array<any>) => {
-			if (
-				date.length > 0 &&
-				(date[0].name == Role.ADMINISTRATOR || date[0].name == Role.SUPERADMIN)
-			) {
-				return next();
-			} else {
-				return response.status(401).json({ message: 'Unauthorized.' });
-			}
-		});
+): Promise<void | Response<any>> {
+	const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
+		request.user.idRole
+	]);
+
+	if (
+		userRole.length > 0 &&
+		(userRole[0].name == Role.ADMINISTRATOR || userRole[0].name == Role.SUPERADMIN)
+	) {
+		return next();
+	} else {
+		return response.status(401).json({ message: 'Unauthorized.' });
+	}
 }
 
 export async function isSuperAdmin(
 	request: Request,
 	response: Response,
 	next: NextFunction
-): Promise<void> {
-	(await pool)
-		.query('SELECT name FROM roles WHERE id = ?', [request.user.idRole])
-		.then((date: Array<any>) => {
-			if (date.length > 0 && date[0].name == Role.SUPERADMIN) {
-				return next();
-			} else {
-				return response.status(401).json({ message: 'Unauthorized.' });
-			}
-		});
+): Promise<void | Response<any>> {
+	const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
+		request.user.idRole
+	]);
+
+	if (userRole.length > 0 && userRole[0].name == Role.SUPERADMIN) {
+		return next();
+	} else {
+		return response.status(401).json({ message: 'Unauthorized.' });
+	}
 }

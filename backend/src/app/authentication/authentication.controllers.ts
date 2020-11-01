@@ -4,114 +4,94 @@ import jwt from 'jsonwebtoken';
 import pool from '../../database';
 
 import { User, encryptPassword, validatePassword } from '../users/models';
-import { Role } from '../roles/models';
 
 class AuthenticationControllers {
 	//Post
 	public async singIn(request: Request, response: Response): Promise<Response> {
 		const { username, password } = request.body;
 
-		return (await pool)
-			.query('SELECT id, password FROM users WHERE username = ?', [username])
-			.then(
-				async (dates: Array<any>): Promise<Response> => {
-					if (dates.length != 0) {
-						const correctPassword: boolean = await validatePassword(
-							password,
-							dates[0].password
-						);
+		const user: User[] = await (
+			await pool
+		).query('SELECT id, password FROM users WHERE username = ?', [username]);
 
-						if (correctPassword) {
-							const token: string = jwt.sign(
-								{
-									id: dates[0].id
-								},
-								process.env.TOKEN_SECRET || 'tokenTest',
-								{
-									expiresIn: 86400 //The token expires in 24 hours
-								}
-							);
+		if (user.length > 0) {
+			const correctPassword: boolean = await validatePassword(password, user[0].password);
 
-							return response
-								.status(200)
-								.header('token', token)
-								.set('Access-Control-Expose-Headers', 'token')
-								.json({ message: 'Sing in succesfully.' });
-						} else {
-							return response.status(401).json({ message: 'Password is wrong.' });
-						}
-					} else {
-						return response.status(404).json({ message: 'Username not found.' });
+			if (correctPassword) {
+				const token: string = jwt.sign(
+					{
+						id: user[0].id
+					},
+					process.env.TOKEN_SECRET || 'tokenTest',
+					{
+						expiresIn: 86400 //The token expires in 24 hours
 					}
-				}
-			);
+				);
+
+				return response
+					.status(200)
+					.header('token', token)
+					.set('Access-Control-Expose-Headers', 'token')
+					.json({ message: 'Sing in succesfully.' });
+			} else {
+				return response.status(401).json({ message: 'Password is wrong.' });
+			}
+		} else {
+			return response.status(404).json({ message: 'Username not found.' });
+		}
 	}
 
 	public async singUp(request: Request, response: Response): Promise<Response> {
 		const { idCompany, roleName, username, password, name } = request.body;
-		var idRole: number = 0;
 
-		//Validate username
-		var usernameResponse: Response | undefined = await (await pool)
-			.query('SELECT id FROM users WHERE username = ?', [username])
-			.then((dates: Array<number>): Response | undefined => {
-				if (dates.length > 0) {
-					return response
-						.status(401)
-						.json({ message: `Username "${username}" is in use.` });
-				}
-			});
+		// Validate username
+		const userWithUsername = await (await pool).query(
+			'SELECT id FROM users WHERE username = ?',
+			[username]
+		);
 
-		if (typeof usernameResponse == 'undefined') {
-			//Validate role
-			if (roleName != null) {
-				var roleResponse: Response | undefined = await (await pool)
-					.query('SELECT * FROM roles WHERE name = ?', [roleName])
-					.then((dates: Array<Role>): Response | undefined => {
-						if (dates.length > 0) {
-							idRole = dates[0].id;
-						} else {
-							return response
-								.status(400)
-								.json({ message: `Role "${roleName}" not found.` });
-						}
-					});
+		if (userWithUsername.length > 0) {
+			return response.status(401).json({ message: `Username '${username}' is in use.` });
+		}
+
+		// Validate role
+		var idRole: number;
+
+		if (roleName != null) {
+			const role = await (await pool).query('SELECT * FROM roles WHERE name = ?', [roleName]);
+
+			if (role.length > 0) {
+				idRole = role[0].id;
 			} else {
-				return response.status(400).json({ message: 'No provided role.' });
-			}
-
-			if (typeof roleResponse == 'undefined') {
-				const newUser: User = {
-					idCompany: idCompany,
-					idRole: idRole,
-					username: username,
-					password: await encryptPassword(password),
-					name: name
-				};
-
-				var userResponse: Promise<Response> = (await pool)
-					.query('INSERT INTO users SET ?', [newUser])
-					.then(async function (value: any): Promise<Response> {
-						var exportUser = {
-							id: value.insertId,
-							idCompany: newUser.idCompany,
-							idRole: newUser.idRole,
-							username: newUser.username,
-							name: newUser.name
-						};
-
-						return response.status(200).json({
-							message: 'Saved user.',
-							user: exportUser
-						});
-					});
-				return userResponse;
-			} else {
-				return roleResponse;
+				return response.status(400).json({ message: `Role '${roleName}' not found.` });
 			}
 		} else {
-			return usernameResponse;
+			return response.status(400).json({ message: 'No provided role.' });
 		}
+
+		const newUser: User = {
+			idCompany,
+			idRole,
+			username,
+			password: await encryptPassword(password),
+			name
+		};
+
+		console.log(newUser);
+		const insertedNewUser: any = await (await pool).query('INSERT INTO users SET ?', [newUser]);
+
+		const exportUser = {
+			id: insertedNewUser.insertId,
+			idCompany: newUser.idCompany,
+			idRole: newUser.idRole,
+			username: newUser.username,
+			name: newUser.name
+		};
+
+		return response.status(200).json({
+			message: 'Saved user.',
+			user: exportUser
+		});
 	}
 }
 

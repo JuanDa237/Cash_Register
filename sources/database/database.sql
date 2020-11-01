@@ -40,7 +40,7 @@ CREATE TABLE products (
     idCategory INT NOT NULL,
     CONSTRAINT fkCompanyProduct FOREIGN KEY (idCompany) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fkCategoriyProduct FOREIGN KEY (idCategory) REFERENCES categories (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
     price INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true
@@ -72,7 +72,7 @@ CREATE TABLE clients (
     idCompany INT NOT NULL,
     CONSTRAINT fkCompanyClient FOREIGN KEY (idCompany) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE,
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,    
+    name VARCHAR(30) NOT NULL,
     address VARCHAR(30),
     phoneNumber VARCHAR(15),
     creationDate DATE NOT NULL,

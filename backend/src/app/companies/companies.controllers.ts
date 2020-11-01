@@ -1,21 +1,26 @@
 import { Request, Response } from 'express';
+
+// Database
 import pool from '../../database';
+
+// Models
+import { Company } from './models';
 
 class CompaniesControllers {
 	//Get one
 	public async getOneCompany(request: Request, response: Response): Promise<Response> {
-		return (await pool)
-			.query(
-				'SELECT name, imageUrl, ticketMessage FROM companies WHERE id = ? AND active = true;',
-				[request.user.idCompany]
-			)
-			.then((dates: Array<any>) => {
-				if (dates.length != 0) {
-					return response.status(200).json(dates[0]);
-				} else {
-					return response.status(404).json({ message: 'Not found.' });
-				}
-			});
+		const company: Company[] = await (
+			await pool
+		).query(
+			'SELECT name, imageUrl, ticketMessage FROM companies WHERE id = ? AND active = true;',
+			[request.user.idCompany]
+		);
+
+		if (company.length > 0) {
+			return response.status(200).json(company[0]);
+		} else {
+			return response.status(404).json({ message: 'Not found.' });
+		}
 	}
 
 	//Post
@@ -25,21 +30,19 @@ class CompaniesControllers {
 			[fieldname: string]: Express.Multer.File;
 		};
 
-		return (await pool)
-			.query('INSERT INTO companies SET ?', [
-				{
-					name,
-					ticketMessage,
-					visible: visible === 'true',
-					image: typeof image != 'undefined' ? image.path : ''
-				}
-			])
-			.then((value: any) => {
-				return response.status(200).json({
-					message: 'Saved company.',
-					id: value.insertId
-				});
-			});
+		const newCompany = await (await pool).query('INSERT INTO companies SET ?', [
+			{
+				name,
+				ticketMessage,
+				visible: visible === 'true',
+				image: typeof image != 'undefined' ? image.path : ''
+			}
+		]);
+
+		return response.status(200).json({
+			message: 'Saved company.',
+			id: newCompany.insertId
+		});
 	}
 
 	//Update
@@ -50,19 +53,16 @@ class CompaniesControllers {
 			[fieldname: string]: Express.Multer.File[];
 		};
 
-		return (await pool)
-			.query('UPDATE companies SET ? WHERE id = ?', [
-				{
-					name,
-					ticketMessage,
-					visible,
-					image: typeof image != 'undefined' ? image[0].path : null
-				},
-				id
-			])
-			.then((value) => {
-				return response.status(200).json({ message: 'Company updated successfully.' });
-			});
+		await (await pool).query('UPDATE companies SET ? WHERE id = ?', [
+			{
+				name,
+				ticketMessage,
+				visible,
+				image: typeof image != 'undefined' ? image[0].path : null
+			},
+			id
+		]);
+		return response.status(200).json({ message: 'Company updated successfully.' });
 	}
 }
 

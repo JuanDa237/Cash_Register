@@ -10,16 +10,15 @@
 			"name": "/",
 			"item": [
 				{
-					"name": "http://localhost:3000/",
+					"name": "http://localhost:3000",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/",
+							"raw": "http://localhost:3000",
 							"protocol": "http",
 							"host": ["localhost"],
-							"port": "3000",
-							"path": [""]
+							"port": "3000"
 						},
 						"description": "Index route."
 					},
@@ -32,6 +31,32 @@
 		{
 			"name": "/api",
 			"item": [
+				{
+					"name": "/uploads",
+					"item": [
+						{
+							"name": "/:dir",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}uploads/:dir",
+									"host": ["{{api}}uploads"],
+									"path": [":dir"],
+									"variable": [
+										{
+											"key": "dir",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
 				{
 					"name": "/companies & /company",
 					"item": [
@@ -50,6 +75,53 @@
 								},
 								"method": "GET",
 								"header": [],
+								"url": {
+									"raw": "{{api}}company",
+									"host": ["{{api}}company"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/company",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "ticketMessage",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "visible",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
 								"url": {
 									"raw": "{{api}}company",
 									"host": ["{{api}}company"]
@@ -1279,7 +1351,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"\",\n    \"password\": \"\"\n}"
+									"raw": "{\n    \"username\": \"juan\",\n    \"password\": \"contra\"\n}"
 								},
 								"url": {
 									"raw": "{{api}}authentication/singIn",
