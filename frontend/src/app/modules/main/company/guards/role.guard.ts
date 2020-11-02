@@ -10,23 +10,20 @@ import { UserService } from '../../navigation/services/user.service';
 export class RoleGuard implements CanActivate {
 	constructor(private userService: UserService, private router: Router) {}
 
-	canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
-		return this.userService
-			.getUser()
-			.toPromise()
-			.then((value): boolean => {
-				var userRole: string = value.role;
-				var routeRoles: Role[] = route.data.roles;
+	async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+		const user = await this.userService.getUser().toPromise();
 
-				var canContinue: boolean = false;
+		var userRole: string = user.role;
+		var routeRoles: Role[] = route.data.roles;
 
-				routeRoles.forEach((role) => {
-					if (userRole == role) canContinue = true;
-				});
+		var canContinue: boolean = false;
 
-				if (!canContinue) this.router.navigate(['/error/401']);
+		routeRoles.forEach((role) => {
+			if (userRole == role) canContinue = true;
+		});
 
-				return canContinue;
-			});
+		if (!canContinue) this.router.navigate(['/error/401']);
+
+		return canContinue;
 	}
 }

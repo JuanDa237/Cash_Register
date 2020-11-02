@@ -5,31 +5,30 @@ import fs from 'fs-extra';
 
 import pool from '../../../database';
 
+// Models
+import { Company } from '../models';
+
 export const multerConfig: multer.Multer = multer({
 	storage: multer.diskStorage({
 		destination: async (request, file, callback): Promise<void> => {
-			(await pool)
-				.query('SELECT name FROM companies WHERE id = ? AND active = true;', [
-					request.user.idCompany
-				])
-				.then(async (dates: Array<any>) => {
-					const category = dates[0];
+			const company: Company[] = await (
+				await pool
+			).query('SELECT name FROM companies WHERE id = ? AND active = true;', [
+				request.user.idCompany
+			]);
 
-					if (category != null || typeof category != 'undefined') {
-						const dir: string = `uploads/${category.name}`.replace(/ /g, '_');
-						const dirExists = await fs.pathExists(dir);
+			if (company.length <= 0) return callback(new Error('Company not found.'), 'uploads');
 
-						if (!dirExists) {
-							return await fs.mkdir(dir, (error: Error) => {
-								callback(error, dir);
-							});
-						}
+			const dir: string = `uploads/${company[0].name}`.replace(/ /g, '_');
+			const dirExists = await fs.pathExists(dir);
 
-						return callback(null, dir);
-					} else {
-						return callback(new Error('Category not found.'), 'uploads');
-					}
+			if (!dirExists) {
+				return await fs.mkdir(dir, (error: Error) => {
+					callback(error, dir);
 				});
+			}
+
+			return callback(null, dir);
 		},
 		filename: (request, file, callback): void => {
 			const extencion: string = path.extname(file.originalname);
