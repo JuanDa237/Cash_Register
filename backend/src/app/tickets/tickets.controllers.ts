@@ -18,7 +18,7 @@ class TicketsControllers {
 		const tickets: Ticket[] = await (
 			await pool
 		).query(
-			"SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE creationDate >= ? AND creationDate <= ? AND idCompany = ?",
+			"SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery FROM tickets WHERE creationDate >= ? AND creationDate <= ? AND idCompany = ?",
 			[since, until, request.user.idCompany]
 		);
 
@@ -43,7 +43,7 @@ class TicketsControllers {
 		const tickets: Ticket[] = await (
 			await pool
 		).query(
-			"SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE idCompany = ?",
+			"SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery FROM tickets WHERE idCompany = ?",
 			[request.user.idCompany]
 		);
 
@@ -65,7 +65,7 @@ class TicketsControllers {
 		const ticket: Ticket[] = await (
 			await pool
 		).query(
-			"SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery, priceOfHomeDelivery FROM tickets WHERE id = ? AND idCompany = ?",
+			"SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery FROM tickets WHERE id = ? AND idCompany = ?",
 			[id, request.user.idCompany]
 		);
 
@@ -96,15 +96,16 @@ class TicketsControllers {
 	//Post
 	public async createTicket(request: Request, response: Response): Promise<Response> {
 		const idCompany: number = request.user.idCompany;
-		const { total, priceOfHomeDelivery, products } = request.body;
+		const { total, products } = request.body;
 
 		delete request.body.products;
 		delete request.body.total;
+		if (request.body.homeDelivery <= 0) delete request.body.homeDelivery;
 
 		const finalTotal =
 			typeof total != 'undefined'
 				? total
-				: await ticketFunctions.getTotalOfTicket(products, priceOfHomeDelivery);
+				: await ticketFunctions.getTotalOfTicket(products, request.body.homeDelivery);
 
 		var ticket: Ticket = request.body;
 		ticket.idCompany = idCompany;

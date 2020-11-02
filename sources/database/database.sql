@@ -87,8 +87,7 @@ CREATE TABLE tickets (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     creationDate DATE NOT NULL,
     total INT NOT NULL,
-    homeDelivery BOOLEAN NOT NULL DEFAULT false,
-    priceOfHomeDelivery INT
+    homeDelivery INT
 );
 
 CREATE TABLE productsInTickets (

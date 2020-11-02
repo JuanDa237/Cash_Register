@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dab0b25c-ddba-449b-ac78-fb4be2610df6",
+		"_postman_id": "7cea787b-1bbe-45d7-a24c-6fe8fa07ed69",
 		"name": "Cash Register API",
 		"description": "This is the api for the cash resgister app in Angular.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -125,6 +125,61 @@
 								"url": {
 									"raw": "{{api}}company",
 									"host": ["{{api}}company"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/company",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": [],
+											"disabled": true
+										},
+										{
+											"key": "ticketMessage",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "visible",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{api}}company/:id",
+									"host": ["{{api}}company"],
+									"path": [":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
 								}
 							},
 							"response": []
@@ -451,9 +506,9 @@
 											"path": ["ingredient", ":id"],
 											"variable": [
 												{
-													"description": "Product id",
 													"key": "id",
-													"value": ""
+													"value": "",
+													"description": "Product id"
 												}
 											]
 										}
@@ -527,9 +582,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{api}}api/product/:id",
-									"host": ["{{api}}api"],
-									"path": ["product", ":id"],
+									"raw": "{{api}}product/:id",
+									"host": ["{{api}}product"],
+									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -634,9 +689,9 @@
 									"path": [":id"],
 									"variable": [
 										{
-											"description": "Product id",
 											"key": "id",
-											"value": ""
+											"value": "",
+											"description": "Product id"
 										}
 									]
 								}
@@ -649,7 +704,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ed0ca8d9-fe3c-4ccf-8b3f-b249832aa8f1",
+								"id": "5c865045-02ae-4c98-b51e-26789c9214a1",
 								"type": "text/javascript",
 								"exec": [""]
 							}
@@ -657,7 +712,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ceab3c0a-946c-4cf8-a3c5-410ea2d4fbdb",
+								"id": "2d76df0c-d9bf-48b5-b3ff-ddaec9075e73",
 								"type": "text/javascript",
 								"exec": [""]
 							}
@@ -794,39 +849,6 @@
 							"response": []
 						},
 						{
-							"name": "/amountIngredients",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "[ 0, 0, 0, 0, 0, 0, ...]"
-								},
-								"url": {
-									"raw": "{{api}}amountIngredients",
-									"host": ["{{api}}amountIngredients"]
-								},
-								"description": "This route is for update spendingAmount in ingredients after a new sale"
-							},
-							"response": []
-						},
-						{
 							"name": "/ingredient/:id",
 							"request": {
 								"auth": {
@@ -907,9 +929,9 @@
 									"path": [":id"],
 									"variable": [
 										{
-											"description": "Ticket id",
 											"key": "id",
-											"value": ""
+											"value": "",
+											"description": "Ticket id"
 										}
 									]
 								}
@@ -1048,44 +1070,11 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"idClient\": 0,\n    \"creationDate\": \"\",\n    \"total\": 0,\n    \"homeDelivery\": false,\n    \"priceOfHomeDelivery\": 0\n}"
+									"raw": "{\n    // Optional fields\n    //\"total\": 0,\n    //\"homeDelivery\": 0,\n    \"idClient\": 0,\n    \"creationDate\": \"\",\n    \"products\": [\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        },\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        }\n    ]\n}"
 								},
 								"url": {
 									"raw": "{{api}}ticket",
 									"host": ["{{api}}ticket"]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/ticket/product",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"idTicket\": 0,\n    \"name\": \"\",\n    \"price\": 0,\n    \"amount\": 0\n}"
-								},
-								"url": {
-									"raw": "{{api}}ticket/product",
-									"host": ["{{api}}ticket"],
-									"path": ["product"]
 								}
 							},
 							"response": []
@@ -1141,9 +1130,9 @@
 									"path": [":id"],
 									"variable": [
 										{
-											"description": "Client id",
 											"key": "id",
-											"value": ""
+											"value": "",
+											"description": "Client id"
 										}
 									]
 								}
@@ -1290,9 +1279,9 @@
 									"path": [":id"],
 									"variable": [
 										{
-											"description": "Client id",
 											"key": "id",
-											"value": ""
+											"value": "",
+											"description": "Client id"
 										}
 									]
 								}
@@ -1364,6 +1353,16 @@
 						{
 							"name": "/singUp",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{

@@ -41,7 +41,7 @@ async function createFirstCompany(): Promise<any> {
 	if (companies.length > 0) return;
 
 	try {
-		const newCompany: any = (await pool).query('INSERT INTO companies SET ?', [
+		const newCompany: any = await (await pool).query('INSERT INTO companies SET ?', [
 			keys.initialData.company
 		]);
 

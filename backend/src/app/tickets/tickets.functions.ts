@@ -2,7 +2,6 @@
 import pool from '../../database';
 
 // Models
-import { Ticket } from './models';
 import { Product, ProductInTicket } from '../products/models';
 import { Ingredient, IngredientInProduct } from '../ingredients/models';
 
@@ -18,13 +17,12 @@ interface ProductIdWithAmount {
 class TicketFunctions {
 	public async getTotalOfTicket(
 		productsIdWithAmount: ProductIdWithAmount[],
-		priceOfHomeDelivery?: number
+		homeDelivery?: number
 	): Promise<number> {
 		var total: number = 0;
-		var products: Product[] = new Array<Product>(0);
 
-		if (typeof priceOfHomeDelivery != 'undefined') {
-			total += priceOfHomeDelivery;
+		if (typeof homeDelivery != 'undefined') {
+			total += homeDelivery;
 		}
 
 		for (const productIdWithAmount of productsIdWithAmount) {
@@ -33,7 +31,7 @@ class TicketFunctions {
 			).query('SELECT price FROM products WHERE id = ? AND active = true', [
 				productIdWithAmount.idProduct
 			]);
-			total += productIdWithAmount.amount * product[0].price;
+			if (product.length > 0) total += productIdWithAmount.amount * product[0].price;
 		}
 
 		return total;
@@ -55,6 +53,8 @@ class TicketFunctions {
 				'SELECT id, name, price FROM products WHERE id = ? AND active = true AND idCompany = ?',
 				[productIdWithAmount.idProduct, idCompany]
 			);
+			if (product.length <= 0) return;
+
 			product[0].amount = productIdWithAmount.amount;
 			products.push(product[0]);
 
