@@ -30,7 +30,7 @@ class CompaniesRoutes {
 
 		// Update
 		this.router.post(
-			'/company',
+			'/company/:id',
 			[
 				authenticationJwt.verifyToken,
 				authenticationJwt.isSuperAdmin,

@@ -8,7 +8,7 @@ export interface Product {
 }
 
 export interface ProductInTicket {
-	id: number;
+	id?: number;
 	idCompany: number;
 	idTicket: number;
 	name: string;

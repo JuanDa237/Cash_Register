@@ -36,11 +36,6 @@ class IngredientsRoutes {
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			ingredientsControllers.updateIngredient
 		);
-		this.router.put(
-			'/amountIngredients',
-			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
-			ingredientsControllers.updateAmountIngredients
-		);
 
 		//Delete
 		this.router.delete(

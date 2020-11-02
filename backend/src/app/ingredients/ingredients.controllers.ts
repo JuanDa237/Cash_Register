@@ -57,40 +57,6 @@ class IngredientsControllers {
 		return response.status(200).json({ message: 'Ingredient updated successfully.' });
 	}
 
-	public async updateAmountIngredients(request: Request, response: Response): Promise<Response> {
-		var ids: number[] = request.body;
-		const idCompany = request.user.idCompany;
-
-		ids.forEach(async (id) => {
-			const ingredientsInProduct: IngredientInProduct[] = await (
-				await pool
-			).query(
-				'SELECT idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND idCompany = ?',
-				[id, idCompany]
-			);
-
-			ingredientsInProduct.forEach(async (ingredientInProduct) => {
-				let spendingAmount = ingredientInProduct.spendingAmount;
-				let idIngredient = ingredientInProduct.idIngredient;
-
-				const ingredient: Ingredient[] = await (
-					await pool
-				).query(
-					'SELECT amount FROM ingredients WHERE id = ? AND active = true AND idCompany = ?',
-					[idIngredient, idCompany]
-				);
-				let newAmount = ingredient[0].amount - spendingAmount;
-
-				await (await pool).query('UPDATE ingredients SET amount = ? WHERE id = ?', [
-					newAmount,
-					idIngredient
-				]);
-			});
-		});
-
-		return response.status(200).json({ message: 'Ingredients amount updated successfully.' });
-	}
-
 	//Delete
 	public async deleteIngredient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;

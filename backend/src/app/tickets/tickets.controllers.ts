@@ -7,6 +7,9 @@ import pool from '../../database';
 import { Ticket } from './models';
 import { ProductInTicket } from '../products/models';
 
+// Functions
+import { ticketFunctions } from './tickets.functions';
+
 class TicketsControllers {
 	//Get Interval
 	public async listTicketsInInterval(request: Request, response: Response): Promise<Response> {
@@ -92,26 +95,29 @@ class TicketsControllers {
 
 	//Post
 	public async createTicket(request: Request, response: Response): Promise<Response> {
-		request.body.idCompany = request.user.idCompany;
-		const newTicket: any = await (await pool).query('INSERT INTO tickets SET ?', [
-			request.body
-		]);
+		const idCompany: number = request.user.idCompany;
+		const { total, priceOfHomeDelivery, products } = request.body;
+
+		delete request.body.products;
+		delete request.body.total;
+
+		const finalTotal =
+			typeof total != 'undefined'
+				? total
+				: await ticketFunctions.getTotalOfTicket(products, priceOfHomeDelivery);
+
+		var ticket: Ticket = request.body;
+		ticket.idCompany = idCompany;
+		ticket.total = finalTotal;
+
+		const newTicket: any = await (await pool).query('INSERT INTO tickets SET ?', [ticket]);
+
+		await ticketFunctions.doThingsNeededForNewTicket(products, newTicket.insertId, idCompany);
 
 		return response.status(200).json({
 			message: 'Saved ticket.',
-			id: newTicket.insertId
-		});
-	}
-
-	public async createProductInTicket(request: Request, response: Response): Promise<Response> {
-		request.body.idCompany = request.user.idCompany;
-		const newProductInTicket: any = await (
-			await pool
-		).query('INSERT INTO productsInTickets SET ?', [request.body]);
-
-		return response.status(200).json({
-			message: 'Saved product in ticket.',
-			id: newProductInTicket.insertId
+			id: newTicket.insertId,
+			total: finalTotal != total ? finalTotal : undefined
 		});
 	}
 }

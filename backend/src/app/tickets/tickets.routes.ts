@@ -51,11 +51,6 @@ class CategoriesRoutes {
 			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
 			ticketsControllers.createTicket
 		);
-		this.router.post(
-			'/ticket/product',
-			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
-			ticketsControllers.createProductInTicket
-		);
 	}
 }
 
