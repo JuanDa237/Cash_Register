@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { IngredientsService } from '@modules/others/ingredients/services';
 import { Ingredient, IngredientInProduct } from '@modules/others/ingredients/models';
@@ -9,7 +9,11 @@ import { ProductsService } from '../../services';
 import { TableComponent } from '@modules/others/app-common/components';
 import { Product } from '../../models';
 
-interface ProductWithIngredients extends Product {
+interface ProductWithIngredients {
+	id?: number;
+	idCategory: number;
+	name: string;
+	price: number;
 	ingredients: IngredientInProduct[];
 }
 
@@ -18,11 +22,8 @@ interface ProductWithIngredients extends Product {
 	templateUrl: './ingredients-form.component.html'
 })
 export class IngredientsFormComponent implements OnInit {
-	public ingredients: Array<Ingredient>;
-	public ingredientsInProduct: Array<IngredientInProduct>;
-
-	public spendingAmount: Array<number>;
-	private spendingAmountConst: Array<number>;
+	public ingredients: Ingredient[];
+	public spendingAmounts: number[];
 
 	public loading: boolean;
 
@@ -35,13 +36,11 @@ export class IngredientsFormComponent implements OnInit {
 	constructor(
 		private ingredientsService: IngredientsService,
 		private productsService: ProductsService,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private router: Router
 	) {
 		this.ingredients = new Array<Ingredient>(0);
-		this.ingredientsInProduct = new Array<IngredientInProduct>(0);
-
-		this.spendingAmount = new Array<number>(0);
-		this.spendingAmountConst = new Array<number>(0);
+		this.spendingAmounts = new Array<number>(0);
 
 		this.loading = true;
 
@@ -52,6 +51,7 @@ export class IngredientsFormComponent implements OnInit {
 		this.getIngredients();
 	}
 
+	// Private functions
 	private getIngredients(): void {
 		this.ingredientsService.getIngredients().subscribe(
 			(response) => {
@@ -71,32 +71,17 @@ export class IngredientsFormComponent implements OnInit {
 		const id: number = this.activatedRoute.snapshot.params.id;
 		const creating: boolean = id == null;
 
-		if (creating) {
-			this.spendingAmount.forEach((spendingAmount) => (spendingAmount = 0));
-			this.spendingAmountConst = [...this.spendingAmount];
-		} else {
+		if (!creating) {
 			this.productsService.getIngredientsInProduct(id).subscribe(
 				(response) => {
-					this.ingredientsInProduct = response;
+					this.ingredients.forEach((ingredient, index) => {
+						for (const ingredientInProduct of response) {
+							if (ingredient.id == ingredientInProduct.idIngredient)
+								this.spendingAmounts[index] = ingredientInProduct.spendingAmount;
+						}
+					});
 
-					if (
-						this.ingredientsInProduct == null ||
-						this.ingredientsInProduct.length == 0
-					) {
-						this.spendingAmount.forEach((spendingAmount) => (spendingAmount = 0));
-					} else {
-						this.ingredients.forEach((ingredient, index) => {
-							this.ingredientsInProduct.forEach((ingredientInProduct) => {
-								if (ingredient.id == ingredientInProduct.idIngredient) {
-									this.spendingAmount[index] = ingredientInProduct.spendingAmount;
-								}
-							});
-						});
-					}
-
-					this.spendingAmountConst = [...this.spendingAmount];
-
-					//Chart
+					// Chart
 					this.inputAmountEvent();
 				},
 				(error) => {
@@ -106,102 +91,64 @@ export class IngredientsFormComponent implements OnInit {
 		}
 	}
 
-	//Public methods
+	// Html functions
+	public inputAmountEvent(): void {
+		this.inputAmount.emit(null);
+	}
+
+	public focusoutSpendingAmount(index: number) {
+		if (this.spendingAmounts[index] < 0) {
+			this.spendingAmounts[index] = 0;
+			this.inputAmountEvent();
+		}
+	}
+
+	// Public functions to parents
 	public createProductWithIngredientes(product: Product): void {
+		var productWithIngredients: ProductWithIngredients = this.getProductWithIngredients(
+			product
+		);
+
+		this.productsService.createProduct(productWithIngredients).subscribe(
+			(response) => {
+				this.router.navigate(['company/products']);
+			},
+			(error) => console.error(error)
+		);
+	}
+
+	public updateProduct(product: Product): void {
+		var productWithIngredients: ProductWithIngredients = this.getProductWithIngredients(
+			product
+		);
+
+		this.productsService.updateProduct(productWithIngredients).subscribe(
+			(response) => {
+				this.router.navigate(['company/products']);
+			},
+			(error) => console.error(error)
+		);
+	}
+
+	private getProductWithIngredients(product: Product): ProductWithIngredients {
 		var productWithIngredients: ProductWithIngredients = {
-			id: 0,
+			id: product.id != null ? product.id : undefined,
 			idCategory: product.idCategory,
 			name: product.name,
 			price: product.price,
 			ingredients: new Array<IngredientInProduct>(0)
 		};
 
-		this.ingredients.forEach((ingredient, index) => {
-			if (this.spendingAmount[index] != null && this.spendingAmount[index] != 0) {
-				//Create Relation
+		this.spendingAmounts.forEach((spendingAmount, index) => {
+			if (spendingAmount > 0) {
 				productWithIngredients.ingredients.push({
-					id: 0,
-					idProduct: product.id,
-					idIngredient: ingredient.id,
-					spendingAmount: this.spendingAmount[index]
+					idProduct: product.id != null ? product.id : undefined,
+					idIngredient: this.ingredients[index].id,
+					spendingAmount: spendingAmount
 				} as IngredientInProduct);
 			}
 		});
 
-		this.productsService.createProduct(productWithIngredients).subscribe(
-			(response) => {},
-			(error) => console.error(error)
-		);
-	}
-
-	public updateIngredientsInProduct(idProduct: number): void {
-		this.ingredients.forEach((ingredient, index) => {
-			if (this.spendingAmountConst[index] != this.spendingAmount[index]) {
-				if (this.spendingAmount[index] == 0 || this.spendingAmount[index] == null) {
-					//Delete
-
-					var idIngredientInProduct: number = 0;
-
-					this.ingredientsInProduct.forEach((ingredientInProduct, indexTwo) => {
-						if (
-							ingredientInProduct.idProduct == idProduct &&
-							ingredientInProduct.idIngredient == ingredient.id
-						)
-							idIngredientInProduct = this.ingredientsInProduct[indexTwo].id;
-					});
-
-					/*this.productsService.deleteIngredientInProduct(idIngredientInProduct).subscribe(
-						(resolve) => {},
-						(error) => console.error(error)
-					);*/
-				} else if (this.spendingAmountConst[index] == null) {
-					//Create
-					var newIngredientsInProduct: IngredientInProduct = {
-						id: 0,
-						idIngredient: ingredient.id,
-						idProduct: idProduct,
-						spendingAmount: this.spendingAmount[index]
-					};
-
-					/*this.productsService
-						.createIngredientInProduct(newIngredientsInProduct)
-						.subscribe(
-							(resolve) => {},
-							(error) => console.error(error)
-						);*/
-				} else {
-					//Update
-					var idIngredientInProduct: number = 0;
-
-					this.ingredientsInProduct.forEach((ingredientInProduct) => {
-						if (
-							ingredient.id == ingredientInProduct.idIngredient &&
-							idProduct == ingredientInProduct.idProduct
-						)
-							idIngredientInProduct = ingredientInProduct.id;
-					});
-
-					var updatedIngredientsInProduct: IngredientInProduct = {
-						id: idIngredientInProduct,
-						idIngredient: ingredient.id,
-						idProduct: idProduct,
-						spendingAmount: this.spendingAmount[index]
-					};
-
-					/*this.productsService
-						.updateIngredientInProduct(updatedIngredientsInProduct)
-						.subscribe(
-							(resolve) => {},
-							(error) => console.error(error)
-						);
-						*/
-				}
-			}
-		});
-	}
-
-	//Events
-	public inputAmountEvent(): void {
-		this.inputAmount.emit(null);
+		return productWithIngredients;
 	}
 }

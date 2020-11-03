@@ -34,28 +34,19 @@ export class ProductsPrincipalFormComponent {
 		this.creating ? this.createProduct() : this.updateProduct();
 	}
 
-	private createProduct(): void {
+	private async createProduct(): Promise<void> {
 		const product: Product = this.formChild.getProductValues();
 
 		if (this.validateProduct(product)) {
 			this.ingredientsChild.createProductWithIngredientes(product);
-			this.router.navigate(['company/products']);
 		}
 	}
 
-	private updateProduct(): void {
+	private async updateProduct(): Promise<void> {
 		const product: Product = this.formChild.getProductValues();
 
 		if (this.validateProduct(product)) {
-			this.productsService.updateProduct(product).subscribe(
-				(resolve) => {
-					this.ingredientsChild.updateIngredientsInProduct(product.id);
-				},
-				(error) => {
-					throw new Error(error);
-				}
-			);
-			this.router.navigate(['company/products']);
+			this.ingredientsChild.updateProduct(product);
 		}
 	}
 
@@ -78,7 +69,7 @@ export class ProductsPrincipalFormComponent {
 
 		this.chartChild.actualizeUtility(
 			this.ingredientsChild.ingredients,
-			this.ingredientsChild.spendingAmount,
+			this.ingredientsChild.spendingAmounts,
 			product.price
 		);
 	}
