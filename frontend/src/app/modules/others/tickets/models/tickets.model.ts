@@ -1,9 +1,9 @@
 export interface Ticket {
-	id?: number;
+	id: number;
 	idClient: number;
 	creationDate: string;
-	homeDelivery?: number;
-	total?: number;
+	total: number;
+	homeDelivery: number;
 }
 
 export function createEmptyTicket(): Ticket {
@@ -13,4 +13,19 @@ export function createEmptyTicket(): Ticket {
 		creationDate: '',
 		homeDelivery: 0
 	} as Ticket;
+}
+
+// For send data to api
+export interface TicketWithProducts {
+	id?: number;
+	idClient: number;
+	creationDate: string;
+	total?: number;
+	homeDelivery?: number;
+	products: ProductWithAmount[];
+}
+
+export interface ProductWithAmount {
+	idProduct: number;
+	amount: number;
 }

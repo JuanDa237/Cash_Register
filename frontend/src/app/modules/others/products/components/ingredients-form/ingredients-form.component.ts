@@ -7,15 +7,7 @@ import { Ingredient, IngredientInProduct } from '@modules/others/ingredients/mod
 import { ProductsService } from '../../services';
 
 import { TableComponent } from '@modules/others/app-common/components';
-import { Product } from '../../models';
-
-interface ProductWithIngredients {
-	id?: number;
-	idCategory: number;
-	name: string;
-	price: number;
-	ingredients: IngredientInProduct[];
-}
+import { Product, ProductWithIngredients } from '../../models';
 
 @Component({
 	selector: 'app-ingredients-form',

@@ -39,11 +39,7 @@
 				<td>Sub-Total</td>
 				<td></td>
 				<td>
-					{{
-						ticket.total != null && ticket.homeDelivery != null
-							? ticket.total - ticket.homeDelivery
-							: (0 | number)
-					}}
+					{{ ticket.total - ticket.homeDelivery | number }}
 				</td>
 			</tr>
 			<tr>

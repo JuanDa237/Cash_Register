@@ -6,20 +6,11 @@ import { Client, createEmptyClient } from '@modules/others/clients/models';
 import { Product } from '@modules/others/products/models';
 import { ProductsService } from '@modules/others/products/services';
 
-import { Ticket } from '@modules/others/tickets/models';
 import { TicketsService } from '@modules/others/tickets/services';
 
 import { ProductInCart } from '../../models';
 import { TicketViewComponent } from '@modules/others/tickets/components';
-
-interface TicketWithProducts extends Ticket {
-	products: ProductWithAmount[];
-}
-
-interface ProductWithAmount {
-	idProduct: number;
-	amount: number;
-}
+import { TicketWithProducts, ProductWithAmount } from '@app/modules/others/tickets/models';
 
 @Component({
 	selector: 'app-shopping-cart',
@@ -108,7 +99,7 @@ export class ShoppingCartComponent {
 		var newTicket: TicketWithProducts = {
 			idClient: this.client.id,
 			creationDate: this.actualDate(),
-			total: this.total != null ? this.total : undefined,
+			total: this.total,
 			homeDelivery: this.homeDelivery != null ? this.homeDelivery : undefined,
 			products: new Array<ProductWithAmount>(0)
 		};

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 //Api
 import { environment } from '@enviroment/environment';
 
-import { Ticket } from '../models/index';
+import { Ticket, TicketWithProducts } from '../models/index';
 import { ProductInTicket } from '../../products/models/index';
 
 @Injectable({
@@ -55,7 +55,7 @@ export class TicketsService {
 	}
 
 	//Post
-	saveTicket(newTicket: any): Observable<any> {
+	saveTicket(newTicket: TicketWithProducts): Observable<any> {
 		let params = JSON.stringify(newTicket);
 		return this.http.post(this.apiUrl + 'ticket', params, { headers: this.headers });
 	}

@@ -1,12 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { Product } from '../../models';
 import { ProductsService } from '../../services';
 import {
 	ProductsFormComponent,
 	UtilityChartComponent,
 	IngredientsFormComponent
 } from '../../components/index';
-import { Product } from '../../models';
 
 @Component({
 	selector: 'app-products-principal-form',

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 //Api
 import { environment } from '@enviroment/environment';
 
-import { Product } from '../models/index';
+import { Product, ProductWithIngredients } from '../models/index';
 import { IngredientInProduct } from '../../ingredients/models/index';
 
 @Injectable({
@@ -48,13 +48,13 @@ export class ProductsService {
 	}
 
 	//Post
-	createProduct(newProduct: any): Observable<any> {
+	createProduct(newProduct: ProductWithIngredients): Observable<any> {
 		let params = JSON.stringify(newProduct);
 		return this.http.post(this.apiUrl + 'product', params, { headers: this.headers });
 	}
 
 	//Update
-	updateProduct(product: any): Observable<any> {
+	updateProduct(product: ProductWithIngredients): Observable<any> {
 		var params = JSON.stringify(product);
 		return this.http.put(this.apiUrl + 'product/' + product.id, params, {
 			headers: this.headers
