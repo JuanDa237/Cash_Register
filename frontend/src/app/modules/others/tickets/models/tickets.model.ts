@@ -1,10 +1,9 @@
 export interface Ticket {
-	id: number;
+	id?: number;
 	idClient: number;
 	creationDate: string;
-	total: number;
-	homeDelivery: boolean;
-	priceOfHomeDelivery: number;
+	homeDelivery?: number;
+	total?: number;
 }
 
 export function createEmptyTicket(): Ticket {
@@ -12,8 +11,6 @@ export function createEmptyTicket(): Ticket {
 		id: 0,
 		idClient: 0,
 		creationDate: '',
-		total: 0,
-		homeDelivery: false,
-		priceOfHomeDelivery: 0
+		homeDelivery: 0
 	} as Ticket;
 }

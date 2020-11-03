@@ -6,8 +6,8 @@
 					<div class="input-group-text">
 						<input
 							type="checkbox"
-							[(ngModel)]="homeDelivery"
-							(change)="priceOfHomeDeliveryChange()"
+							[(ngModel)]="doHomeDelivery"
+							(change)="homeDeliveryChange()"
 						/>
 					</div>
 				</div>
@@ -16,9 +16,9 @@
 					step="1000"
 					type="number"
 					class="form-control"
-					[placeholder]="!homeDelivery ? 'Domicilio' : 'Precio Del Domicilo'"
-					[readonly]="!homeDelivery"
-					[(ngModel)]="priceOfHomeDelivery"
+					[placeholder]="!doHomeDelivery ? 'Domicilio' : 'Precio Del Domicilo'"
+					[readonly]="!doHomeDelivery"
+					[(ngModel)]="homeDelivery"
 					(input)="actualizePrice()"
 				/>
 			</div>
@@ -68,7 +68,7 @@
 	<div class="row mx-md-2">
 		<div class="col-sm-12 col-md-6 p-0">
 			<h4 class="text-dark">
-				Total: <span class="strong text-muted">{{ totalPrice | number }}</span>
+				Total: <span class="strong text-muted">{{ total | number }}</span>
 			</h4>
 		</div>
 		<div class="col-sm-12 col-md-6 p-0 text-right">

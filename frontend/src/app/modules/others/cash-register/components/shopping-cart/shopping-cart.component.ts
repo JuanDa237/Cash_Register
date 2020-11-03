@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { Client, createEmptyClient } from '@modules/others/clients/models';
 
-import { Product, ProductInTicket } from '@modules/others/products/models';
+import { Product } from '@modules/others/products/models';
 import { ProductsService } from '@modules/others/products/services';
 
 import { Ticket } from '@modules/others/tickets/models';
@@ -12,6 +12,15 @@ import { TicketsService } from '@modules/others/tickets/services';
 import { ProductInCart } from '../../models';
 import { TicketViewComponent } from '@modules/others/tickets/components';
 
+interface TicketWithProducts extends Ticket {
+	products: ProductWithAmount[];
+}
+
+interface ProductWithAmount {
+	idProduct: number;
+	amount: number;
+}
+
 @Component({
 	selector: 'app-shopping-cart',
 	templateUrl: './shopping-cart.component.html',
@@ -19,10 +28,10 @@ import { TicketViewComponent } from '@modules/others/tickets/components';
 })
 export class ShoppingCartComponent {
 	public shoppingCart: Array<ProductInCart>;
-	public totalPrice: number;
+	public total: number;
 
-	public homeDelivery: boolean;
-	public priceOfHomeDelivery: number | null;
+	public doHomeDelivery: boolean;
+	public homeDelivery: number | null;
 
 	@ViewChild(TicketViewComponent)
 	public ticketChild!: TicketViewComponent;
@@ -35,16 +44,16 @@ export class ShoppingCartComponent {
 
 	constructor(private productsService: ProductsService, private ticketsService: TicketsService) {
 		this.shoppingCart = new Array<ProductInCart>(0);
-		this.totalPrice = 0;
-		this.homeDelivery = false;
-		this.priceOfHomeDelivery = null;
+		this.total = 0;
+		this.doHomeDelivery = false;
+		this.homeDelivery = null;
 		this.client = createEmptyClient();
 		this.refreshPage = new EventEmitter<null>();
 	}
 
 	//Parent methods
 	public addProduct(product: Product): void {
-		const newProduct: ProductInCart = {
+		this.shoppingCart.push({
 			product: {
 				id: product.id,
 				idCategory: product.idCategory,
@@ -53,9 +62,8 @@ export class ShoppingCartComponent {
 			},
 			amount: 1,
 			total: product.price
-		};
+		} as ProductInCart);
 
-		this.shoppingCart.push(newProduct);
 		this.actualizePrice();
 	}
 
@@ -66,7 +74,7 @@ export class ShoppingCartComponent {
 	}
 
 	public actualizePrice(): void {
-		this.totalPrice = 0;
+		this.total = 0;
 
 		for (var i = 0; i < this.shoppingCart.length; i++) {
 			var amount: number = this.shoppingCart[i].amount;
@@ -78,83 +86,50 @@ export class ShoppingCartComponent {
 
 			var priceForOne: number = this.shoppingCart[i].product.price;
 
-			this.totalPrice += priceForOne * amount;
+			this.total += priceForOne * amount;
 			this.shoppingCart[i].total = priceForOne * amount;
 		}
 
-		if (this.priceOfHomeDelivery == null || this.priceOfHomeDelivery == 0) {
-			this.priceOfHomeDelivery = null;
-			this.homeDelivery = false;
+		if (this.homeDelivery == null || this.homeDelivery == 0) {
+			this.homeDelivery = null;
+			this.doHomeDelivery = false;
 		} else if (this.homeDelivery) {
-			this.totalPrice += this.priceOfHomeDelivery;
+			this.total += this.homeDelivery;
 		}
 	}
 
-	public priceOfHomeDeliveryChange(): void {
-		this.homeDelivery ? (this.priceOfHomeDelivery = 0) : (this.priceOfHomeDelivery = null);
+	public homeDeliveryChange(): void {
+		this.homeDelivery ? (this.homeDelivery = 0) : (this.homeDelivery = null);
 	}
 
 	public finishOrder(): void {
 		this.actualizePrice();
 
-		//Create new ticket
-		var newTicket: Ticket = {
-			id: 0,
+		var newTicket: TicketWithProducts = {
 			idClient: this.client.id,
 			creationDate: this.actualDate(),
-			total: this.totalPrice,
-			homeDelivery: this.homeDelivery,
-			priceOfHomeDelivery: this.priceOfHomeDelivery == null ? 0 : this.priceOfHomeDelivery
+			total: this.total != null ? this.total : undefined,
+			homeDelivery: this.homeDelivery != null ? this.homeDelivery : undefined,
+			products: new Array<ProductWithAmount>(0)
 		};
+
+		this.shoppingCart.forEach((productInCart) => {
+			if (productInCart.amount > 0) {
+				newTicket.products.push({
+					idProduct: productInCart.product.id,
+					amount: productInCart.amount
+				} as ProductWithAmount);
+			}
+		});
 
 		this.ticketsService.saveTicket(newTicket).subscribe(
 			(response) => {
-				//Edit this
-				var id: number = response.id;
-
-				newTicket.id = id;
-
-				var productsInTickets: Array<ProductInTicket> = new Array<ProductInTicket>(0);
-
-				this.shoppingCart.forEach((productInCart) => {
-					//Create relations
-					var newProductInTicket: ProductInTicket = {
-						id: 0,
-						idTicket: id,
-						name: productInCart.product.name,
-						price: productInCart.product.price,
-						amount: productInCart.amount
-					};
-
-					productsInTickets.push(newProductInTicket);
-
-					this.ticketsService.createProductInTicket(newProductInTicket).subscribe(
-						(response) => {},
-						(error) => {
-							throw new Error(error);
-						}
-					);
-				});
-				this.ticketChild.createTicket2(newTicket, productsInTickets, this.client);
+				this.ticketChild.createTicket(response.id);
 			},
 			(error) => {
 				throw new Error(error);
 			}
 		);
-
-		//Actualize Amount Of Products
-		var productsIds: Array<number> = new Array<number>(0);
-
-		this.shoppingCart.forEach((productInCart) => {
-			productsIds.push(productInCart.product.id);
-		});
-
-		/*this.productsService.updateAmountIngredients(productsIds).subscribe(
-			(response) => {},
-			(error) => {
-				throw new Error(error);
-			}
-		);*/
 	}
 
 	private actualDate(): string {
@@ -164,9 +139,9 @@ export class ShoppingCartComponent {
 
 	public refreshPageEvent(): void {
 		this.shoppingCart = new Array<ProductInCart>(0);
-		this.totalPrice = 0;
-		this.homeDelivery = false;
-		this.priceOfHomeDelivery = null;
+		this.total = 0;
+		this.doHomeDelivery = false;
+		this.homeDelivery = null;
 
 		this.refreshPage.emit(null);
 	}

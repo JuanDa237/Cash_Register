@@ -55,13 +55,8 @@ export class TicketsService {
 	}
 
 	//Post
-	saveTicket(newTicket: Ticket): Observable<any> {
+	saveTicket(newTicket: any): Observable<any> {
 		let params = JSON.stringify(newTicket);
 		return this.http.post(this.apiUrl + 'ticket', params, { headers: this.headers });
-	}
-
-	createProductInTicket(productInTicket: ProductInTicket): Observable<any> {
-		var params = JSON.stringify(productInTicket);
-		return this.http.post(this.apiUrl + 'ticket/product', params, { headers: this.headers });
 	}
 }

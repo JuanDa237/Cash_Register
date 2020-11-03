@@ -10,11 +10,13 @@
 <p>
 	<span class="font-weight-bold">Nombre:</span> {{ client.name }} |
 	<ng-container *ngIf="ticket.homeDelivery; else noHomeDelivery">
-		Domicilio |
-		<span *ngIf="client.address"> Direccion: {{ client.address }} | </span>
-		<span *ngIf="client.phoneNumber"> Telefono: {{ client.phoneNumber }} </span>
+		<span class="font-weight-bold">Domicilio</span>
+		<span *ngIf="client.address"> | Direccion: {{ client.address }}</span>
+		<span *ngIf="client.phoneNumber"> | Telefono: {{ client.phoneNumber }} </span>
 	</ng-container>
-	<ng-template #noHomeDelivery> Pedido Local | </ng-template>
+	<ng-template #noHomeDelivery>
+		<span class="font-weight-bold"> Pedido Local </span>
+	</ng-template>
 </p>
 <table class="table table-sm my-2">
 	<thead>
@@ -36,12 +38,18 @@
 			<tr>
 				<td>Sub-Total</td>
 				<td></td>
-				<td>{{ ticket.total - ticket.priceOfHomeDelivery | number }}</td>
+				<td>
+					{{
+						ticket.total != null && ticket.homeDelivery != null
+							? ticket.total - ticket.homeDelivery
+							: (0 | number)
+					}}
+				</td>
 			</tr>
 			<tr>
 				<td>Domicilio</td>
 				<td></td>
-				<td>{{ ticket.priceOfHomeDelivery | number }}</td>
+				<td>{{ ticket.homeDelivery | number }}</td>
 			</tr>
 		</ng-container>
 		<tr>

@@ -93,6 +93,11 @@ export class TicketsComponent implements OnInit {
 	}
 
 	public viewTicket(index: number) {
+		var id: number | undefined = this.tickets[index].id;
+		if (typeof id != 'undefined') {
+			this.ticketChild.createTicket(id);
+		}
+		/*
 		var finalClient: Client = createEmptyClient();
 
 		this.tickets.forEach((ticket) => {
@@ -102,5 +107,6 @@ export class TicketsComponent implements OnInit {
 		});
 
 		this.ticketChild.createTicket3(this.tickets[index], finalClient);
+		*/
 	}
 }

@@ -10,7 +10,7 @@ import { TicketsService } from '../../services';
 	templateUrl: './ticket-view.component.html'
 })
 export class TicketViewComponent implements OnInit {
-	//public company: Company;
+	// public company: Company;
 
 	public client: Client;
 	public ticket: Ticket;
@@ -46,14 +46,16 @@ export class TicketViewComponent implements OnInit {
 			(response) => {
 				this.ticket = response;
 
-				this.ticketsService.getProductsInTicket(this.ticket.id).subscribe(
-					(response) => {
-						this.productsInTicket = response;
-					},
-					(error) => {
-						throw new Error(error);
-					}
-				);
+				if (typeof this.ticket.id != 'undefined') {
+					this.ticketsService.getProductsInTicket(this.ticket.id).subscribe(
+						(response) => {
+							this.productsInTicket = response;
+						},
+						(error) => {
+							throw new Error(error);
+						}
+					);
+				}
 
 				this.clientsService.getClient(this.ticket.idClient).subscribe(
 					(response) => {
@@ -63,30 +65,6 @@ export class TicketViewComponent implements OnInit {
 						throw new Error(error);
 					}
 				);
-			},
-			(error) => {
-				throw new Error(error);
-			}
-		);
-	}
-
-	public createTicket2(
-		ticket: Ticket,
-		productsInTicket: Array<ProductInTicket>,
-		client: Client
-	): void {
-		this.ticket = ticket;
-		this.productsInTicket = productsInTicket;
-		this.client = client;
-	}
-
-	public createTicket3(ticket: Ticket, client: Client): void {
-		this.ticket = ticket;
-		this.client = client;
-
-		this.ticketsService.getProductsInTicket(this.ticket.id).subscribe(
-			(response) => {
-				this.productsInTicket = response;
 			},
 			(error) => {
 				throw new Error(error);
