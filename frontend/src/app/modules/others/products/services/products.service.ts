@@ -42,52 +42,27 @@ export class ProductsService {
 	}
 
 	getIngredientsInProduct(id: number): Observable<IngredientInProduct[]> {
-		return this.http.get<IngredientInProduct[]>(this.apiUrl + 'product/ingredients/' + id, {
+		return this.http.get<IngredientInProduct[]>(this.apiUrl + `product/${id}/ingredients`, {
 			headers: this.headers
 		});
 	}
 
 	//Post
-	saveProduct(newProduct: Product): Observable<any> {
+	createProduct(newProduct: any): Observable<any> {
 		let params = JSON.stringify(newProduct);
 		return this.http.post(this.apiUrl + 'product', params, { headers: this.headers });
 	}
 
-	createIngredientInProduct(ingredientInProduct: IngredientInProduct): Observable<any> {
-		var params = JSON.stringify(ingredientInProduct);
-		return this.http.post(this.apiUrl + 'product/ingredient', params, {
-			headers: this.headers
-		});
-	}
-
 	//Update
-	updateProduct(product: Product): Observable<any> {
+	updateProduct(product: any): Observable<any> {
 		var params = JSON.stringify(product);
 		return this.http.put(this.apiUrl + 'product/' + product.id, params, {
 			headers: this.headers
 		});
 	}
 
-	updateIngredientInProduct(ingredientInProduct: IngredientInProduct): Observable<any> {
-		var params = JSON.stringify(ingredientInProduct);
-		return this.http.put(this.apiUrl + 'product/ingredient/' + ingredientInProduct.id, params, {
-			headers: this.headers
-		});
-	}
-
-	updateAmountIngredients(ids: Array<number>): Observable<any> {
-		var params = JSON.stringify(ids);
-		return this.http.put(this.apiUrl + 'amountIngredients', params, { headers: this.headers });
-	}
-
 	//Delete
 	deleteProduct(id: number): Observable<any> {
 		return this.http.delete(this.apiUrl + 'product/' + id, { headers: this.headers });
-	}
-
-	deleteIngredientInProduct(id: number): Observable<any> {
-		return this.http.delete(this.apiUrl + 'product/ingredient/' + id, {
-			headers: this.headers
-		});
 	}
 }

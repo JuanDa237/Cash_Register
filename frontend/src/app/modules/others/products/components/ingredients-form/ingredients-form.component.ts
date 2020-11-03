@@ -7,6 +7,11 @@ import { Ingredient, IngredientInProduct } from '@modules/others/ingredients/mod
 import { ProductsService } from '../../services';
 
 import { TableComponent } from '@modules/others/app-common/components';
+import { Product } from '../../models';
+
+interface ProductWithIngredients extends Product {
+	ingredients: IngredientInProduct[];
+}
 
 @Component({
 	selector: 'app-ingredients-form',
@@ -102,23 +107,31 @@ export class IngredientsFormComponent implements OnInit {
 	}
 
 	//Public methods
-	public createIngredientsInProduct(id: number): void {
+	public createProductWithIngredientes(product: Product): void {
+		var productWithIngredients: ProductWithIngredients = {
+			id: 0,
+			idCategory: product.idCategory,
+			name: product.name,
+			price: product.price,
+			ingredients: new Array<IngredientInProduct>(0)
+		};
+
 		this.ingredients.forEach((ingredient, index) => {
 			if (this.spendingAmount[index] != null && this.spendingAmount[index] != 0) {
 				//Create Relation
-				let newIngredientInProduct: IngredientInProduct = {
+				productWithIngredients.ingredients.push({
 					id: 0,
-					idProduct: id,
+					idProduct: product.id,
 					idIngredient: ingredient.id,
 					spendingAmount: this.spendingAmount[index]
-				};
-
-				this.productsService.createIngredientInProduct(newIngredientInProduct).subscribe(
-					(response) => {},
-					(error) => console.error(error)
-				);
+				} as IngredientInProduct);
 			}
 		});
+
+		this.productsService.createProduct(productWithIngredients).subscribe(
+			(response) => {},
+			(error) => console.error(error)
+		);
 	}
 
 	public updateIngredientsInProduct(idProduct: number): void {
@@ -137,10 +150,10 @@ export class IngredientsFormComponent implements OnInit {
 							idIngredientInProduct = this.ingredientsInProduct[indexTwo].id;
 					});
 
-					this.productsService.deleteIngredientInProduct(idIngredientInProduct).subscribe(
+					/*this.productsService.deleteIngredientInProduct(idIngredientInProduct).subscribe(
 						(resolve) => {},
 						(error) => console.error(error)
-					);
+					);*/
 				} else if (this.spendingAmountConst[index] == null) {
 					//Create
 					var newIngredientsInProduct: IngredientInProduct = {
@@ -150,12 +163,12 @@ export class IngredientsFormComponent implements OnInit {
 						spendingAmount: this.spendingAmount[index]
 					};
 
-					this.productsService
+					/*this.productsService
 						.createIngredientInProduct(newIngredientsInProduct)
 						.subscribe(
 							(resolve) => {},
 							(error) => console.error(error)
-						);
+						);*/
 				} else {
 					//Update
 					var idIngredientInProduct: number = 0;
@@ -175,12 +188,13 @@ export class IngredientsFormComponent implements OnInit {
 						spendingAmount: this.spendingAmount[index]
 					};
 
-					this.productsService
+					/*this.productsService
 						.updateIngredientInProduct(updatedIngredientsInProduct)
 						.subscribe(
 							(resolve) => {},
 							(error) => console.error(error)
 						);
+						*/
 				}
 			}
 		});

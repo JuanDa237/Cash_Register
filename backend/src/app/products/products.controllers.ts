@@ -7,6 +7,9 @@ import pool from '../../database';
 import { Product } from './models';
 import { IngredientInProduct } from '../ingredients/models';
 
+// Functions
+import { productsFunctions } from './products.functions';
+
 class ProductsController {
 	//Get All List
 	public async listAllProducts(request: Request, response: Response): Promise<Response> {
@@ -79,55 +82,29 @@ class ProductsController {
 	//Post
 
 	public async createProduct(request: Request, response: Response): Promise<Response> {
-		request.body.idCompany = request.user.idCompany;
-
-		const newProduct: any = await (await pool).query('INSERT INTO products SET ?', [
-			request.body
-		]);
+		const idProduct = await productsFunctions.createProduct(
+			request.body,
+			request.user.idCompany
+		);
 
 		return response.status(200).json({
 			message: 'Saved product.',
-			id: newProduct.insertId
-		});
-	}
-
-	public async createIngredientInProduct(
-		request: Request,
-		response: Response
-	): Promise<Response> {
-		request.body.idCompany = request.user.idCompany;
-		const newIngredientInProduct: any = await (
-			await pool
-		).query('INSERT INTO detailProductsIngredients SET ?', [request.body]);
-
-		return response.status(200).json({
-			message: 'Saved ingredient in product.',
-			id: newIngredientInProduct.insertId
+			id: idProduct
 		});
 	}
 
 	//Update
 
 	public async updateProduct(request: Request, response: Response): Promise<Response> {
-		const { id } = request.params;
-		await (await pool).query('UPDATE products SET ? WHERE id = ?', [request.body, id]);
-
-		return response.status(200).json({ message: 'Product updated successfully.' });
-	}
-
-	public async updateIngredientInProduct(
-		request: Request,
-		response: Response
-	): Promise<Response> {
-		const { id } = request.params;
-		await (await pool).query('UPDATE detailProductsIngredients SET ? WHERE id = ?', [
+		productsFunctions.updateProduct(
+			Number(request.params.id),
 			request.body,
-			id
-		]);
+			request.user.idCompany
+		);
 
 		return response
 			.status(200)
-			.json({ message: 'Ingredient in product updated successfully.' });
+			.json({ message: 'Product and ingredients updated successfully.' });
 	}
 
 	//Delete
@@ -137,21 +114,6 @@ class ProductsController {
 		await (await pool).query('UPDATE products SET active = false WHERE id = ?', [id]);
 
 		return response.status(200).json({ message: 'Product eliminated successfully.' });
-	}
-
-	public async deleteIngredientInProduct(
-		request: Request,
-		response: Response
-	): Promise<Response> {
-		const { id } = request.params;
-		await (await pool).query(
-			'UPDATE detailProductsIngredients SET active = false WHERE id = ?',
-			[id]
-		);
-
-		return response
-			.status(200)
-			.json({ message: 'Ingredient in product eliminated successfully.' });
 	}
 }
 

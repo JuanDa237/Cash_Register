@@ -38,17 +38,8 @@ export class ProductsPrincipalFormComponent {
 		const product: Product = this.formChild.getProductValues();
 
 		if (this.validateProduct(product)) {
-			this.productsService.saveProduct(product).subscribe(
-				(response) => {
-					var id: number = response.id;
-
-					this.ingredientsChild.createIngredientsInProduct(id);
-					this.router.navigate(['company/products']);
-				},
-				(error) => {
-					throw new Error(error);
-				}
-			);
+			this.ingredientsChild.createProductWithIngredientes(product);
+			this.router.navigate(['company/products']);
 		}
 	}
 

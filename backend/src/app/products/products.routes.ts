@@ -35,7 +35,7 @@ class ProductsRoutes {
 			productsController.getOneProduct
 		);
 		this.router.get(
-			'/product/ingredients/:id',
+			'/product/:id/ingredients/',
 			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
 			productsController.getIngredientsInProduct
 		);
@@ -46,11 +46,6 @@ class ProductsRoutes {
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			productsController.createProduct
 		);
-		this.router.post(
-			'/product/ingredient',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
-			productsController.createIngredientInProduct
-		);
 
 		//Update
 		this.router.put(
@@ -58,22 +53,12 @@ class ProductsRoutes {
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			productsController.updateProduct
 		);
-		this.router.put(
-			'/product/ingredient/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
-			productsController.updateIngredientInProduct
-		);
 
 		//Delete
 		this.router.delete(
 			'/product/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			productsController.deleteProduct
-		);
-		this.router.delete(
-			'/product/ingredient/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
-			productsController.deleteIngredientInProduct
 		);
 	}
 }

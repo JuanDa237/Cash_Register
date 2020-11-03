@@ -149,12 +149,12 @@ export class ShoppingCartComponent {
 			productsIds.push(productInCart.product.id);
 		});
 
-		this.productsService.updateAmountIngredients(productsIds).subscribe(
+		/*this.productsService.updateAmountIngredients(productsIds).subscribe(
 			(response) => {},
 			(error) => {
 				throw new Error(error);
 			}
-		);
+		);*/
 	}
 
 	private actualDate(): string {

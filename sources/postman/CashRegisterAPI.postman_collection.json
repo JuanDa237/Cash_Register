@@ -381,7 +381,7 @@
 									"response": []
 								},
 								{
-									"name": "/product/ingredients/:id",
+									"name": "/product/:id/ingredients",
 									"request": {
 										"auth": {
 											"type": "bearer",
@@ -396,122 +396,17 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{api}}product/ingredients/:id",
+											"raw": "{{api}}product/:id/ingredients",
 											"host": ["{{api}}product"],
-											"path": ["ingredients", ":id"],
+											"path": [":id", "ingredients"],
 											"variable": [
 												{
 													"key": "id",
-													"value": "",
-													"description": "Product id"
+													"value": ""
 												}
 											]
 										},
 										"description": "Get ingredients in one product."
-									},
-									"response": []
-								},
-								{
-									"name": "/product/ingredient",
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{token}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json",
-												"description": "Define the content in .json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"idProduct\": 0,\n    \"idIngredient\": 0,\n    \"spendingAmount\": 0\n}"
-										},
-										"url": {
-											"raw": "{{api}}product/ingredient",
-											"host": ["{{api}}product"],
-											"path": ["ingredient"]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "/product/ingredient/:id",
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{token}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"idProduct\": 0,\n    \"idIngredient\": 0,\n    \"spendingAmount\": 0\n}"
-										},
-										"url": {
-											"raw": "{{api}}product/ingredient/:id",
-											"host": ["{{api}}product"],
-											"path": ["ingredient", ":id"],
-											"variable": [
-												{
-													"key": "id",
-													"value": "",
-													"description": "Product id"
-												}
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "/product/ingredient/:id",
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{token}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "DELETE",
-										"header": [],
-										"url": {
-											"raw": "{{api}}product/ingredient/:id",
-											"host": ["{{api}}product"],
-											"path": ["ingredient", ":id"],
-											"variable": [
-												{
-													"key": "id",
-													"value": "",
-													"description": "Product id"
-												}
-											]
-										}
 									},
 									"response": []
 								}
@@ -619,7 +514,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"idCategory\": 0,\n    \"name\": \"\",\n    \"price\": 0\n}"
+									"raw": "{\n    \"idCategory\": 0,\n    \"name\": \"\",\n    \"price\": 0,\n    \"ingredients\": [\n        {\n            \"idIngredient\": 0,\n            \"spendingAmount\": 0\n        },\n        {\n            \"idIngredient\": 0,\n            \"spendingAmount\": 0\n        }\n    ]\n}"
 								},
 								"url": {
 									"raw": "{{api}}product",
@@ -651,7 +546,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"idCategory\": 0,\n    \"name\": \"\",\n    \"price\": 0\n}"
+									"raw": "{\n    \"idCategory\": 0,\n    \"name\": \"\",\n    \"price\": 0,\n    \"ingredients\": [\n        {\n            \"idIngredient\": 0,\n            \"spendingAmount\": 0\n        },\n        {\n            \"idIngredient\": 0,\n            \"spendingAmount\": 0\n        }\n    ]\n}"
 								},
 								"url": {
 									"raw": "{{api}}product/:id",
@@ -1297,7 +1192,7 @@
 					"name": "/user && /users",
 					"item": [
 						{
-							"name": "http://localhost:3000/api/user",
+							"name": "/user",
 							"request": {
 								"auth": {
 									"type": "bearer",

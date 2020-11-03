@@ -1,10 +1,10 @@
 export interface Product {
-	id: number;
+	id?: number;
 	idCompany: number;
 	idCategory: number;
 	name: string;
 	price: number;
-	active: boolean;
+	active?: boolean;
 }
 
 export interface ProductInTicket {
