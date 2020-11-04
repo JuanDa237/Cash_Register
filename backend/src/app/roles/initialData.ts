@@ -11,7 +11,7 @@ import { Company } from '../companies/models';
 import keys from '../../keys';
 
 export async function createInitialData() {
-	//Create initial roles
+	// Create initial roles
 	await createRoles();
 
 	// Create initial company and user

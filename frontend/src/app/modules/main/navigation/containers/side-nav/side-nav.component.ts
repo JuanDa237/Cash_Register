@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-//Models
+// Models
 import { SideNavItems, SideNavSection } from '@modules/main/navigation/models';
 
-//Data
+// Data
 import { sideNavItems, sideNavSections } from '@modules/main/navigation/data';
 
-//Services
+// Services
 import { UserService } from '../../services/index';
 
 @Component({

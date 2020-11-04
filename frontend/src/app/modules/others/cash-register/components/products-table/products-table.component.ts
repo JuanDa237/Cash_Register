@@ -39,7 +39,7 @@ export class ProductsTableComponent implements OnInit {
 		);
 	}
 
-	//Html methods
+	// Html methods
 	public addProductEvent(index: number): void {
 		this.addProduct.emit(this.products[index]);
 	}

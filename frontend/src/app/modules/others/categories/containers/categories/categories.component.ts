@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { TableComponent } from '@modules/others/app-common/components';
 import { CategoriesFormComponent } from '../../components';
 
-//Models
+// Models
 import { Category, createEmptyCategory } from '../../models/index';
 
-//Services
+// Services
 import { CategoriesService } from '../../services/index';
 
 @Component({
@@ -50,7 +50,7 @@ export class CategoriesComponent implements OnInit {
 		);
 	}
 
-	//Html methods
+	// Html methods
 
 	public changeModal(category: Category | null): void {
 		if ((this.creating = category == null))
@@ -58,7 +58,7 @@ export class CategoriesComponent implements OnInit {
 		else this.formChild.setCategoryValues(category);
 	}
 
-	//Categories methods
+	// Categories methods
 	public createOrUpdateCategory(): void {
 		this.creating ? this.createCategory() : this.updateCategory();
 	}
@@ -117,7 +117,7 @@ export class CategoriesComponent implements OnInit {
 		}
 	}
 
-	//Auxiliary methods
+	// Auxiliary methods
 
 	private validateCategory(category: Category): boolean {
 		return (

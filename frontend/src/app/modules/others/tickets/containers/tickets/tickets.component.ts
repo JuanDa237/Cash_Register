@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-//Models
+// Models
 import { Client, createEmptyClient } from '../../../clients/models/index';
 import { Ticket } from '../../models/index';
 
-//Services
+// Services
 import { ClientsService } from '../../../clients/services/index';
 import { TicketsService } from '../../services/index';
 import { TableComponent } from '@app/modules/others/app-common/components';
@@ -75,7 +75,7 @@ export class TicketsComponent implements OnInit {
 		);
 	}
 
-	//Methods for html
+	// Methods for html
 	public search(dates: Date[]): void {
 		this.loading = true;
 

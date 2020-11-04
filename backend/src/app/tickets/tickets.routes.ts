@@ -9,7 +9,7 @@ class CategoriesRoutes {
 	}
 
 	routes(): void {
-		//Get Interval
+		// Get Interval
 		this.router.get(
 			'/tickets/:since/:until',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
@@ -21,7 +21,7 @@ class CategoriesRoutes {
 			ticketsControllers.listTicketsInYear
 		);
 
-		//Get list
+		// Get list
 		this.router.get(
 			'/tickets',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
@@ -38,14 +38,14 @@ class CategoriesRoutes {
 			ticketsControllers.getProductsInTicket
 		);
 
-		//Get one
+		// Get one
 		this.router.get(
 			'/ticket/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			ticketsControllers.getOneTicket
 		);
 
-		//Post
+		// Post
 		this.router.post(
 			'/ticket',
 			[authenticationJwt.verifyToken, authenticationJwt.isCashier],

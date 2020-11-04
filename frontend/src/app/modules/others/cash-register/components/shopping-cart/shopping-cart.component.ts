@@ -42,7 +42,7 @@ export class ShoppingCartComponent {
 		this.refreshPage = new EventEmitter<null>();
 	}
 
-	//Parent methods
+	// Parent methods
 	public addProduct(product: Product): void {
 		this.shoppingCart.push({
 			product: {
@@ -58,7 +58,7 @@ export class ShoppingCartComponent {
 		this.actualizePrice();
 	}
 
-	//Html methods
+	// Html methods
 	public deleteProduct(index: number): void {
 		this.shoppingCart.splice(index, 1);
 		this.actualizePrice();
@@ -115,7 +115,7 @@ export class ShoppingCartComponent {
 
 		this.ticketsService.saveTicket(newTicket).subscribe(
 			(response) => {
-				// Do the ticket view
+				//  Do the ticket view
 				const ticket: Ticket = {
 					id: 0,
 					creationDate: this.actualDate(),

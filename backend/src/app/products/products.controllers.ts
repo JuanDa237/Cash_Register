@@ -11,7 +11,7 @@ import { IngredientInProduct } from '../ingredients/models';
 import { productsFunctions } from './products.functions';
 
 class ProductsController {
-	//Get All List
+	// Get All List
 	public async listAllProducts(request: Request, response: Response): Promise<Response> {
 		const products: Product[] = await (
 			await pool
@@ -22,7 +22,7 @@ class ProductsController {
 		return response.status(200).json(products);
 	}
 
-	//Get list
+	// Get list
 
 	public async listProducts(request: Request, response: Response): Promise<Response> {
 		const products: Product[] = await (
@@ -48,7 +48,7 @@ class ProductsController {
 		return response.status(200).json(ingredientsInProduct);
 	}
 
-	//Get one
+	// Get one
 	public async getOneProduct(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
@@ -79,7 +79,7 @@ class ProductsController {
 		return response.status(200).json(ingredientsInProduct);
 	}
 
-	//Post
+	// Post
 
 	public async createProduct(request: Request, response: Response): Promise<Response> {
 		const idProduct = await productsFunctions.createProduct(
@@ -93,7 +93,7 @@ class ProductsController {
 		});
 	}
 
-	//Update
+	// Update
 
 	public async updateProduct(request: Request, response: Response): Promise<Response> {
 		productsFunctions.updateProduct(
@@ -107,7 +107,7 @@ class ProductsController {
 			.json({ message: 'Product and ingredients updated successfully.' });
 	}
 
-	//Delete
+	// Delete
 
 	public async deleteProduct(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;

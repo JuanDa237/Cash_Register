@@ -11,7 +11,7 @@ import { TicketsService } from '../../services';
 	templateUrl: './ticket-view.component.html'
 })
 export class TicketViewComponent implements OnInit {
-	// public company: Company;
+	//public company: Company;
 
 	public client: Client;
 	public ticket: Ticket;
@@ -41,7 +41,7 @@ export class TicketViewComponent implements OnInit {
 	}
 	*/
 
-	//Parents methods
+	// Parents methods
 	public viewTicket(id: number): void {
 		this.ticketsService.getTicket(id).subscribe(
 			(response) => {

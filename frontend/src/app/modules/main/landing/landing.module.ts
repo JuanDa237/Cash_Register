@@ -9,7 +9,7 @@ import * as landingContainers from './containers/index';
 import * as landingServices from './services/index';
 import * as landingGuards from './guards/index';
 
-//Modules
+// Modules
 import { NavigationModule } from '@modules/main/navigation/navigation.module';
 
 @NgModule({

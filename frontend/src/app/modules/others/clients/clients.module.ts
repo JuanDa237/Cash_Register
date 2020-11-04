@@ -6,7 +6,7 @@ import * as clientsServices from './services';
 import * as clientsComponents from './components/index';
 import * as clientsContainers from './containers/index';
 
-//Modules
+// Modules
 import { AppCommonModule } from '../app-common/app-common.module';
 
 @NgModule({

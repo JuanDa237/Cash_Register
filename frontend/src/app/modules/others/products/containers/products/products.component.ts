@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TableComponent } from '@modules/others/app-common/components';
 
-//Models
+// Models
 import { Product } from '../../models/index';
 
-//Services
+// Services
 import { ProductsService } from '../../services/index';
 
 @Component({

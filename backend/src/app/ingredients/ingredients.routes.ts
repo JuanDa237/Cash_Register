@@ -9,35 +9,35 @@ class IngredientsRoutes {
 	}
 
 	routes(): void {
-		//Get list
+		// Get list
 		this.router.get(
 			'/ingredients',
 			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
 			ingredientsControllers.listIngredients
 		);
 
-		//Get one
+		// Get one
 		this.router.get(
 			'/ingredient/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
 			ingredientsControllers.getOneIngredient
 		);
 
-		//Post
+		// Post
 		this.router.post(
 			'/ingredient',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			ingredientsControllers.createIngredient
 		);
 
-		//Update
+		// Update
 		this.router.put(
 			'/ingredient/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			ingredientsControllers.updateIngredient
 		);
 
-		//Delete
+		// Delete
 		this.router.delete(
 			'/ingredient/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],

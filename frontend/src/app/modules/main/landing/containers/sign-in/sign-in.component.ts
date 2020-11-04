@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-//Services
+// Services
 import { AuthenticationService } from '../../services/index';
 
-//Models
+// Models
 import { LogInUser } from '../../models/index';
 
 @Component({
@@ -28,7 +28,7 @@ export class SignInComponent {
 	ngOnInit(): void {
 		this.authenticationService.logOut(false);
 
-		//Get the old user
+		// Get the old user
 		var oldUser: string | null = localStorage.getItem('user');
 		if (oldUser) {
 			this.user = JSON.parse(oldUser);

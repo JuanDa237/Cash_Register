@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-//Services
+// Services
 import { NavigationService } from '@modules/main/navigation/services';
 
 @Component({

@@ -40,5 +40,5 @@ export const multerConfig: multer.Multer = multer({
 			}
 		}
 	})
-	//Limits size here in bytes
+	// Limits size here in bytes
 });

@@ -41,7 +41,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 		this.info = true;
 	}
 
-	//Angular methods
+	// Angular methods
 	ngOnInit(): void {
 		this.checkRequiredFields();
 
@@ -62,12 +62,12 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 		this.dtTrigger.unsubscribe();
 	}
 
-	//Private methods
+	// Private methods
 	private checkRequiredFields(): void {
 		if (this.columns.length <= 0) throw new Error("Attribute 'columns' is required.");
 	}
 
-	//Public methods
+	// Public methods
 
 	public renderTable() {
 		this.dtTrigger.next();

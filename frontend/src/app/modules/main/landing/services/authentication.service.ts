@@ -3,10 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-//Models
+// Models
 import { LogInUser } from '../models/index';
 
-//Api
+// Api
 import { environment } from '@enviroment/environment';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class AuthenticationService {
 		this.apiUrl = environment.apiUrl;
 	}
 
-	//Post
+	// Post
 	signIn(user: LogInUser): Observable<any> {
 		return this.http.post(this.apiUrl + 'authentication/singIn', user, {
 			headers: this.headers,
@@ -30,7 +30,7 @@ export class AuthenticationService {
 	}
 
 	loggedIn(): boolean {
-		return !!localStorage.getItem('token'); //Verify if exists
+		return !!localStorage.getItem('token'); // Verify if exists
 	}
 
 	getToken(): string {

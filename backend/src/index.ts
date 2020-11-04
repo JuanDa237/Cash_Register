@@ -40,17 +40,17 @@ class Server {
 	}
 
 	private othersConfings(): void {
-		//Cors policy configuration
+		// Cors policy configuration
 		this.app.use(cors());
 
-		//Morgan to see peticions in console
+		// Morgan to see peticions in console
 		this.app.use(morgan('dev'));
 	}
 
 	private initialConfig(): void {
 		createInitialData();
 
-		//Public folder
+		// Public folder
 		this.app.use('/api/uploads', express.static('uploads'));
 	}
 

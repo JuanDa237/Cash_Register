@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import * as appCommonComponents from './components/index';
 
-//Imports
+// Imports
 import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({

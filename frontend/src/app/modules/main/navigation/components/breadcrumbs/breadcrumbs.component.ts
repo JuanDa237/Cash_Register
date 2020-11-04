@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-//Models
+// Models
 import { Breadcrumb } from '@modules/main/navigation/models';
 
 @Component({

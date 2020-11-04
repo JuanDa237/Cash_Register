@@ -8,7 +8,7 @@ import { Category } from './models';
 import { Product } from '../products/models';
 
 class CategoriesControllers {
-	//Get List
+	// Get List
 	public async listCategories(request: Request, response: Response): Promise<Response> {
 		const categories: Category[] = await (
 			await pool
@@ -18,7 +18,7 @@ class CategoriesControllers {
 		return response.status(200).json(categories);
 	}
 
-	//Get One
+	// Get One
 	public async getOneCategory(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
@@ -32,7 +32,7 @@ class CategoriesControllers {
 		return response.status(200).json(category[0]);
 	}
 
-	//Post
+	// Post
 	public async createCategory(request: Request, response: Response): Promise<Response> {
 		request.body.idCompany = request.user.idCompany;
 		const newCategory: any = await (await pool).query('INSERT INTO categories SET ?', [
@@ -45,14 +45,14 @@ class CategoriesControllers {
 		});
 	}
 
-	//Update
+	// Update
 	public async updateCategory(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 		await (await pool).query('UPDATE categories SET ? WHERE id = ?', [request.body, id]);
 		return response.status(200).json({ message: 'Category updated successfully.' });
 	}
 
-	//Delete
+	// Delete
 	public async deleteCategory(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 

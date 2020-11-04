@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-//Models
+// Models
 import { SideNavItem } from '@modules/main/navigation/models';
 
 @Component({

@@ -64,7 +64,7 @@ export class ProductsPrincipalFormComponent {
 		);
 	}
 
-	//Chart
+	// Chart
 	public actualizeUtility(): void {
 		const product: Product = this.formChild.getProductValues();
 
@@ -75,7 +75,7 @@ export class ProductsPrincipalFormComponent {
 		);
 	}
 
-	//Private Methods
+	// Private Methods
 	private validateProduct(product: Product): boolean {
 		product.name = product.name.trim();
 

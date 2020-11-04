@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-//Module
+// Module
 import { CompanyModule } from './company.module';
 
-//Models
+// Models
 import { RouteData, Role } from '@modules/main/navigation/models/index';
 
-//Containers
+// Containers
 import * as companyContainers from './containers/index';
 import * as othersContainers from '@modules/others/containers';
 
-//Guards
+// Guards
 import * as companyGuards from './guards/index';
 
 const routes: Routes = [

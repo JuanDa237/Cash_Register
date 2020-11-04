@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-//Models
+// Models
 import { Client, createEmptyClient } from '../../models/index';
 
-//Services
+// Services
 import { ClientsService } from '../../services/index';
 
-//Componets
+// Componets
 import { ClientsChartComponent, ClientsFormComponent } from '../../components/index';
 import { TableComponent } from '@modules/others/app-common/components';
 
@@ -56,7 +56,7 @@ export class ClientsComponent implements OnInit {
 		);
 	}
 
-	//Methods for html
+	// Methods for html
 	public changeModal(client: Client | null): void {
 		if ((this.creating = client == null)) this.formChild.setClientValues(createEmptyClient());
 		else this.formChild.setClientValues(client);

@@ -9,7 +9,7 @@ class UsersRoutes {
 	}
 
 	routes(): void {
-		//Get Interval
+		// Get Interval
 		this.router.get(
 			'/user',
 			[authenticationJwt.verifyToken, authenticationJwt.isCashier],

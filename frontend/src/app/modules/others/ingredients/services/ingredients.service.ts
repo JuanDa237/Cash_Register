@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-//Api
+// Api
 import { environment } from '@enviroment/environment';
 
 import { Ingredient } from '../models/index';
@@ -19,25 +19,25 @@ export class IngredientsService {
 		this.apiUrl = environment.apiUrl;
 	}
 
-	//Get List
+	// Get List
 	getIngredients(): Observable<Ingredient[]> {
 		return this.http.get<Ingredient[]>(this.apiUrl + 'ingredients', { headers: this.headers });
 	}
 
-	//Get One
+	// Get One
 	getIngredient(id: number): Observable<Ingredient> {
 		return this.http.get<Ingredient>(this.apiUrl + 'ingredient/' + id, {
 			headers: this.headers
 		});
 	}
 
-	//Post
+	// Post
 	saveIngredient(newIngredient: Ingredient): Observable<any> {
 		let params = JSON.stringify(newIngredient);
 		return this.http.post(this.apiUrl + 'ingredient', params, { headers: this.headers });
 	}
 
-	//Update
+	// Update
 	updateIngredient(ingredient: Ingredient): Observable<any> {
 		var params = JSON.stringify(ingredient);
 		return this.http.put(this.apiUrl + 'ingredient/' + ingredient.id, params, {
@@ -45,7 +45,7 @@ export class IngredientsService {
 		});
 	}
 
-	//Delete
+	// Delete
 	deleteIngredient(id: number): Observable<any> {
 		return this.http.delete(this.apiUrl + 'ingredient/' + id, { headers: this.headers });
 	}

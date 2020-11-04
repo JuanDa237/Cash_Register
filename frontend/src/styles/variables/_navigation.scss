@@ -3,7 +3,6 @@ $zindex-sidenav: 1080 !default;
 $zindex-topnav: 1090 !default;
 
 // Color variables for the sidenav
-// -- Sidenav Dark
 $sidenav-dark-bg: $gray-900;
 $sidenav-dark-color: fade-out($white, 0.5);
 $sidenav-dark-heading-color: fade-out($white, 0.75);

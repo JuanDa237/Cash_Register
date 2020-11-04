@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-//Models
+// Models
 import { Breadcrumb } from '@modules/main/navigation/models';
 
-//Services
+// Services
 import { NavigationService } from '@modules/main/navigation/services';
 
 @Component({

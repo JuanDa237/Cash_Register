@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-//Api
+// Api
 import { environment } from '@enviroment/environment';
 
 import { Product, ProductWithIngredients } from '../models/index';
@@ -20,7 +20,7 @@ export class ProductsService {
 		this.apiUrl = environment.apiUrl;
 	}
 
-	//Get All List
+	// Get All List
 	getAllProducts(): Observable<Product[]> {
 		return this.http.get<Product[]>(this.apiUrl + 'all/products', { headers: this.headers });
 	}
@@ -31,12 +31,12 @@ export class ProductsService {
 		});
 	}
 
-	//Get List
+	// Get List
 	getProducts(): Observable<Product[]> {
 		return this.http.get<Product[]>(this.apiUrl + 'products', { headers: this.headers });
 	}
 
-	//Get One
+	// Get One
 	getProduct(id: number): Observable<Product> {
 		return this.http.get<Product>(this.apiUrl + 'product/' + id, { headers: this.headers });
 	}
@@ -47,13 +47,13 @@ export class ProductsService {
 		});
 	}
 
-	//Post
+	// Post
 	createProduct(newProduct: ProductWithIngredients): Observable<any> {
 		let params = JSON.stringify(newProduct);
 		return this.http.post(this.apiUrl + 'product', params, { headers: this.headers });
 	}
 
-	//Update
+	// Update
 	updateProduct(product: ProductWithIngredients): Observable<any> {
 		var params = JSON.stringify(product);
 		return this.http.put(this.apiUrl + 'product/' + product.id, params, {
@@ -61,7 +61,7 @@ export class ProductsService {
 		});
 	}
 
-	//Delete
+	// Delete
 	deleteProduct(id: number): Observable<any> {
 		return this.http.delete(this.apiUrl + 'product/' + id, { headers: this.headers });
 	}

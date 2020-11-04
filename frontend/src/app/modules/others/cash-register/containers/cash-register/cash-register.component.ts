@@ -20,7 +20,7 @@ export class CashRegisterComponent {
 		this.client = createEmptyClient();
 	}
 
-	//Html methods
+	// Html methods
 	public addProductEvent(product: Product): void {
 		this.shoppingCartChild.addProduct(product);
 	}

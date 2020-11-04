@@ -7,7 +7,7 @@ import * as ticketsServices from './services/index';
 import * as ticketsComponents from './components/index';
 import * as ticketsContainers from './containers/index';
 
-//Modules
+// Modules
 import { AppCommonModule } from '../app-common/app-common.module';
 
 @NgModule({

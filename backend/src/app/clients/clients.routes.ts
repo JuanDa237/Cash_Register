@@ -9,49 +9,49 @@ class CategoriesRoutes {
 	}
 
 	routes(): void {
-		//Get Interval
+		// Get Interval
 		this.router.get(
 			'/clients/year',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			clientsControllers.listClientsInYear
 		);
 
-		//Get All List
+		// Get All List
 		this.router.get(
 			'/all/clients',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			clientsControllers.listAllClients
 		);
 
-		//Get list
+		// Get list
 		this.router.get(
 			'/clients',
 			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
 			clientsControllers.listClients
 		);
 
-		//Get one
+		// Get one
 		this.router.get(
 			'/client/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
 			clientsControllers.getOneClient
 		);
 
-		//Post
+		// Post
 		this.router.post(
 			'/client',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			clientsControllers.createClient
 		);
 
-		//Update
+		// Update
 		this.router.put(
 			'/client/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			clientsControllers.updateClient
 		);
 
-		//Delete
+		// Delete
 		this.router.delete(
 			'/client/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],

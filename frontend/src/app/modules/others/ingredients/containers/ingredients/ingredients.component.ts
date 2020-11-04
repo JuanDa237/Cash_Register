@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-//Models
+// Models
 import { Ingredient, createEmptyIngredient } from '../../models/index';
 
-//Services
+// Services
 import { IngredientsService } from '../../services/index';
 
-//Components
+// Components
 import { IngredientsFormComponent } from '../../components/index';
 import { TableComponent } from '@modules/others/app-common/components';
 
@@ -52,7 +52,7 @@ export class IngredientsComponent implements OnInit {
 		);
 	}
 
-	//Methods for html
+	// Methods for html
 
 	public deleteIngredient(ingredient: Ingredient): void {
 		if (this.validateIngredient(ingredient)) {
@@ -72,7 +72,7 @@ export class IngredientsComponent implements OnInit {
 		}
 	}
 
-	//Create and update
+	// Create and update
 	public createOrUpdateIngredient(): void {
 		this.creating ? this.createIngredient() : this.updateIngredient();
 	}
@@ -121,7 +121,7 @@ export class IngredientsComponent implements OnInit {
 		);
 	}
 
-	//Html Events
+	// Html Events
 	public changeModal(ingredient: Ingredient | null): void {
 		if ((this.creating = ingredient == null))
 			this.formChild.setIngredientsValues(createEmptyIngredient());

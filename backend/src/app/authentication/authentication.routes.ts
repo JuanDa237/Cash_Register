@@ -9,7 +9,7 @@ class AuthenticationRoutes {
 	}
 
 	private routes(): void {
-		//Post
+		// Post
 		this.router.post('/singIn', authenticationControllers.singIn);
 		this.router.post(
 			'/singUp',

@@ -7,7 +7,7 @@ import * as productsComponents from './components';
 import * as productsContainers from './containers';
 import * as productsServices from './services';
 
-//Modules
+// Modules
 import { AppCommonModule } from '../app-common/app-common.module';
 
 @NgModule({

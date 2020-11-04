@@ -9,14 +9,14 @@ class ProductsRoutes {
 	}
 
 	routes(): void {
-		//Get All List
+		// Get All List
 		this.router.get(
 			'/all/products',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			productsController.listAllProducts
 		);
 
-		//Get list
+		// Get list
 		this.router.get(
 			'/products',
 			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
@@ -28,7 +28,7 @@ class ProductsRoutes {
 			productsController.listIngredientsInProducts
 		);
 
-		//Get one
+		// Get one
 		this.router.get(
 			'/product/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
@@ -40,21 +40,21 @@ class ProductsRoutes {
 			productsController.getIngredientsInProduct
 		);
 
-		//Post
+		// Post
 		this.router.post(
 			'/product',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			productsController.createProduct
 		);
 
-		//Update
+		// Update
 		this.router.put(
 			'/product/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			productsController.updateProduct
 		);
 
-		//Delete
+		// Delete
 		this.router.delete(
 			'/product/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],

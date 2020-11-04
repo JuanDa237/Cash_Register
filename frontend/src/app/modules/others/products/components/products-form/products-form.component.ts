@@ -63,7 +63,7 @@ export class ProductsFormComponent implements OnInit {
 		this.getCategories();
 	}
 
-	//Private methods
+	// Private methods
 	private getUrlParams(): void {
 		const id: number = this.activatedRoute.snapshot.params.id;
 		this.creating = id == null;
@@ -93,7 +93,7 @@ export class ProductsFormComponent implements OnInit {
 		);
 	}
 
-	//Component methods
+	// Component methods
 
 	public submitEvent(): void {
 		if (this.productForm.valid) this.onSubmitEvent.emit(null);
@@ -103,7 +103,7 @@ export class ProductsFormComponent implements OnInit {
 		this.inputPrice.emit(this.productForm.value.price);
 	}
 
-	//Public methods
+	// Public methods
 
 	public getProductValues(): Product {
 		return this.productForm.value as Product;

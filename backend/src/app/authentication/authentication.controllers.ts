@@ -6,7 +6,7 @@ import pool from '../../database';
 import { User, encryptPassword, validatePassword } from '../users/models';
 
 class AuthenticationControllers {
-	//Post
+	// Post
 	public async singIn(request: Request, response: Response): Promise<Response> {
 		const { username, password } = request.body;
 
@@ -24,7 +24,7 @@ class AuthenticationControllers {
 					},
 					process.env.TOKEN_SECRET || 'tokenTest',
 					{
-						expiresIn: 86400 //The token expires in 24 hours
+						expiresIn: 86400 // The token expires in 24 hours
 					}
 				);
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-//Api
+// Api
 import { environment } from '@enviroment/environment';
 
 import { Client } from '../models/index';
@@ -19,33 +19,33 @@ export class ClientsService {
 		this.apiUrl = environment.apiUrl;
 	}
 
-	//Get Interval
+	// Get Interval
 	getNewClientsInYear(): Observable<Client[]> {
 		return this.http.get<Client[]>(this.apiUrl + 'clients/year', { headers: this.headers });
 	}
 
-	//Get All List
+	// Get All List
 	getAllClients(): Observable<Client[]> {
 		return this.http.get<Client[]>(this.apiUrl + 'all/clients', { headers: this.headers });
 	}
 
-	//Get One
+	// Get One
 	getClient(id: number): Observable<Client> {
 		return this.http.get<Client>(this.apiUrl + 'client/' + id, { headers: this.headers });
 	}
 
-	//Get List
+	// Get List
 	getClients(): Observable<Client[]> {
 		return this.http.get<Client[]>(this.apiUrl + 'clients', { headers: this.headers });
 	}
 
-	//Post
+	// Post
 	saveClient(newClient: Client): Observable<any> {
 		let params = JSON.stringify(newClient);
 		return this.http.post(this.apiUrl + 'client', params, { headers: this.headers });
 	}
 
-	//Update
+	// Update
 	updateClient(client: Client): Observable<any> {
 		var params = JSON.stringify(client);
 		return this.http.put(this.apiUrl + 'client/' + client.id, params, {
@@ -53,7 +53,7 @@ export class ClientsService {
 		});
 	}
 
-	//Delete
+	// Delete
 	deleteClient(id: number): Observable<any> {
 		return this.http.delete(this.apiUrl + 'client/' + id, { headers: this.headers });
 	}

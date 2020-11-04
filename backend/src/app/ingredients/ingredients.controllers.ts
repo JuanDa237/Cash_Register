@@ -7,7 +7,7 @@ import pool from '../../database';
 import { Ingredient, IngredientInProduct } from './models';
 
 class IngredientsControllers {
-	//Get list
+	// Get list
 	public async listIngredients(request: Request, response: Response): Promise<Response> {
 		const ingredients: Ingredient[] = await (
 			await pool
@@ -18,7 +18,7 @@ class IngredientsControllers {
 		return response.status(200).json(ingredients);
 	}
 
-	//Get one
+	// Get one
 	public async getOneIngredient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
@@ -36,7 +36,7 @@ class IngredientsControllers {
 		}
 	}
 
-	//Post
+	// Post
 	public async createIngredient(request: Request, response: Response): Promise<Response> {
 		request.body.idCompany = request.user.idCompany;
 		const newIngredient: any = await (await pool).query('INSERT INTO ingredients SET ?', [
@@ -49,7 +49,7 @@ class IngredientsControllers {
 		});
 	}
 
-	//Update
+	// Update
 	public async updateIngredient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
@@ -57,7 +57,7 @@ class IngredientsControllers {
 		return response.status(200).json({ message: 'Ingredient updated successfully.' });
 	}
 
-	//Delete
+	// Delete
 	public async deleteIngredient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 

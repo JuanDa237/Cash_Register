@@ -1,7 +1,7 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-//Services
+// Services
 import { NavigationService } from '@modules/main/navigation/services';
 
 @Component({

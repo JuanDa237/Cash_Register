@@ -11,7 +11,7 @@ import { ProductInTicket } from '../products/models';
 import { ticketFunctions } from './tickets.functions';
 
 class TicketsControllers {
-	//Get Interval
+	// Get Interval
 	public async listTicketsInInterval(request: Request, response: Response): Promise<Response> {
 		const { since, until } = request.params;
 
@@ -38,7 +38,7 @@ class TicketsControllers {
 		return response.status(200).json(tickets);
 	}
 
-	//Get list
+	// Get list
 	public async listTickets(request: Request, response: Response): Promise<Response> {
 		const tickets: Ticket[] = await (
 			await pool
@@ -58,7 +58,7 @@ class TicketsControllers {
 		return response.status(200).json(productsInTickets);
 	}
 
-	//Get one
+	// Get one
 	public async getOneTicket(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
@@ -93,7 +93,7 @@ class TicketsControllers {
 		}
 	}
 
-	//Post
+	// Post
 	public async createTicket(request: Request, response: Response): Promise<Response> {
 		const idCompany: number = request.user.idCompany;
 		const { total, products } = request.body;

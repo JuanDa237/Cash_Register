@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CanActivate } from '@angular/router';
 
-//Services
+// Services
 import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable({

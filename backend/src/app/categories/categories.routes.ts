@@ -9,35 +9,35 @@ class CategoriesRoutes {
 	}
 
 	routes(): void {
-		//Get list
+		// Get list
 		this.router.get(
 			'/categories',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			categoriesControllers.listCategories
 		);
 
-		//Get one
+		// Get one
 		this.router.get(
 			'/category/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			categoriesControllers.getOneCategory
 		);
 
-		//Post
+		// Post
 		this.router.post(
 			'/category',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			categoriesControllers.createCategory
 		);
 
-		//Update
+		// Update
 		this.router.put(
 			'/category/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
 			categoriesControllers.updateCategory
 		);
 
-		//Delete
+		// Delete
 		this.router.delete(
 			'/category/:id',
 			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],

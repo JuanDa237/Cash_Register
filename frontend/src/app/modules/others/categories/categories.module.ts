@@ -6,7 +6,7 @@ import * as categoriesComponents from './components/index';
 import * as categoriesContainers from './containers/index';
 import * as categoriesServices from './services/index';
 
-//Modules
+// Modules
 import { AppCommonModule } from '../app-common/app-common.module';
 
 @NgModule({

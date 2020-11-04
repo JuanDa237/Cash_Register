@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-//Api
+// Api
 import { environment } from '@enviroment/environment';
 
 import { User } from '../models';
@@ -19,7 +19,7 @@ export class UserService {
 		this.apiUrl = environment.apiUrl;
 	}
 
-	//Get logged user
+	// Get logged user
 	getUser(): Observable<User> {
 		return this.http.get<User>(this.apiUrl + 'user', { headers: this.headers });
 	}

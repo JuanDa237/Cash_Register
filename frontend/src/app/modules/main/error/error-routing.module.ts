@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-//Models
+// Models
 import { RouteData } from '@modules/main/navigation/models';
 
-//Module
+// Module
 import { ErrorModule } from './error.module';
 
-//Containers
+// Containers
 import * as errorContainers from './containers';
 
 export const routes: Routes = [

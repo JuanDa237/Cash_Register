@@ -40,7 +40,7 @@ export class ClientPickerComponent implements OnInit {
 		);
 	}
 
-	//Html methods
+	// Html methods
 	public choseClientEvent(index: number): void {
 		this.chosedClientIndex = index;
 		this.choseClient.emit(this.clients[index]);

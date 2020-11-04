@@ -7,7 +7,7 @@ import pool from '../../database';
 import { Company } from './models';
 
 class CompaniesControllers {
-	//Get one
+	// Get one
 	public async getOneCompany(request: Request, response: Response): Promise<Response> {
 		const company: Company[] = await (
 			await pool
@@ -23,7 +23,7 @@ class CompaniesControllers {
 		}
 	}
 
-	//Post
+	// Post
 	public async createCompany(request: Request, response: Response): Promise<Response> {
 		const { name, ticketMessage, visible } = request.body;
 		const image = (request.file as unknown) as {
@@ -45,7 +45,7 @@ class CompaniesControllers {
 		});
 	}
 
-	//Update
+	// Update
 	public async updateCompany(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 		const { name, ticketMessage, visible } = request.body;

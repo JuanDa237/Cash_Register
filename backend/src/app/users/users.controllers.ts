@@ -8,7 +8,7 @@ import { User } from './models';
 import { Role } from '../roles/models';
 
 class UsersControllers {
-	//Get logged user
+	// Get logged user
 	public async loggedUser(request: Request, response: Response): Promise<Response> {
 		const user: User[] = await (
 			await pool

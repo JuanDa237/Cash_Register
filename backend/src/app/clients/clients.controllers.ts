@@ -3,11 +3,11 @@ import { Request, Response } from 'express';
 // Database
 import pool from '../../database';
 
-//Models
+// Models
 import { Client } from './models';
 
 class ClientsControllers {
-	//Get Interval
+	// Get Interval
 	public async listClientsInYear(request: Request, response: Response): Promise<Response> {
 		var year: number = new Date().getFullYear();
 
@@ -21,7 +21,7 @@ class ClientsControllers {
 		return response.status(200).json(clients);
 	}
 
-	//Get All List
+	// Get All List
 	public async listAllClients(request: Request, response: Response): Promise<Response> {
 		const clients: Client[] = await (
 			await pool
@@ -32,7 +32,7 @@ class ClientsControllers {
 		return response.status(200).json(clients);
 	}
 
-	//Get List
+	// Get List
 	public async listClients(request: Request, response: Response): Promise<Response> {
 		const clients: Client[] = await (
 			await pool
@@ -43,7 +43,7 @@ class ClientsControllers {
 		return response.status(200).json(clients);
 	}
 
-	//Get One
+	// Get One
 	public async getOneClient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
@@ -60,7 +60,7 @@ class ClientsControllers {
 		}
 	}
 
-	//Post
+	// Post
 	public async createClient(request: Request, response: Response): Promise<Response> {
 		request.body.idCompany = request.user.idCompany;
 		const newClient: any = await (await pool).query('INSERT INTO clients SET ?', [
@@ -73,14 +73,14 @@ class ClientsControllers {
 		});
 	}
 
-	//Update
+	// Update
 	public async updateClient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 		await (await pool).query('UPDATE clients SET ? WHERE id = ?', [request.body, id]);
 		return response.status(200).json({ message: 'Client updated successfully.' });
 	}
 
-	//Delete
+	// Delete
 	public async deleteClient(request: Request, response: Response): Promise<Response> {
 		var date: Date = new Date();
 		var year: string, month: string, day: string;

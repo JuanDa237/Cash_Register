@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-//Api
+// Api
 import { environment } from '@enviroment/environment';
 
 import { Ticket, TicketWithProducts } from '../models/index';
@@ -20,7 +20,7 @@ export class TicketsService {
 		this.apiUrl = environment.apiUrl;
 	}
 
-	//Get Interval
+	// Get Interval
 	getTicketsInInterval(since: string, until: string): Observable<Ticket[]> {
 		return this.http.get<Ticket[]>(this.apiUrl + 'tickets/' + since + '/' + until, {
 			headers: this.headers
@@ -31,7 +31,7 @@ export class TicketsService {
 		return this.http.get<Ticket[]>(this.apiUrl + 'tickets/year', { headers: this.headers });
 	}
 
-	//Get List
+	// Get List
 	getTickets(): Observable<Ticket[]> {
 		return this.http.get<Ticket[]>(this.apiUrl + 'tickets', { headers: this.headers });
 	}
@@ -42,7 +42,7 @@ export class TicketsService {
 		});
 	}
 
-	//Get One
+	// Get One
 
 	getTicket(id: number): Observable<Ticket> {
 		return this.http.get<Ticket>(this.apiUrl + 'ticket/' + id, { headers: this.headers });
@@ -54,7 +54,7 @@ export class TicketsService {
 		});
 	}
 
-	//Post
+	// Post
 	saveTicket(newTicket: TicketWithProducts): Observable<any> {
 		let params = JSON.stringify(newTicket);
 		return this.http.post(this.apiUrl + 'ticket', params, { headers: this.headers });

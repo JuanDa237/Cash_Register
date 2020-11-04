@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-//Containers
+// Containers
 import * as errorContainers from './containers';
 
-//Modules
+// Modules
 import { NavigationModule } from '@modules/main/navigation/navigation.module';
 
 @NgModule({
