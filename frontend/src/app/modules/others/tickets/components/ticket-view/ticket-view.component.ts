@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Client, createEmptyClient } from '@app/modules/others/clients/models';
 import { ClientsService } from '@app/modules/others/clients/services';
+import { IngredientInProduct } from '@app/modules/others/ingredients/models';
 import { ProductInTicket } from '@app/modules/others/products/models';
 import { Ticket, createEmptyTicket } from '../../models';
 import { TicketsService } from '../../services';
@@ -41,21 +42,19 @@ export class TicketViewComponent implements OnInit {
 	*/
 
 	//Parents methods
-	public createTicket(id: number): void {
+	public viewTicket(id: number): void {
 		this.ticketsService.getTicket(id).subscribe(
 			(response) => {
 				this.ticket = response;
 
-				if (typeof this.ticket.id != 'undefined') {
-					this.ticketsService.getProductsInTicket(this.ticket.id).subscribe(
-						(response) => {
-							this.productsInTicket = response;
-						},
-						(error) => {
-							throw new Error(error);
-						}
-					);
-				}
+				this.ticketsService.getProductsInTicket(this.ticket.id).subscribe(
+					(response) => {
+						this.productsInTicket = response;
+					},
+					(error) => {
+						throw new Error(error);
+					}
+				);
 
 				this.clientsService.getClient(this.ticket.idClient).subscribe(
 					(response) => {
@@ -70,5 +69,25 @@ export class TicketViewComponent implements OnInit {
 				throw new Error(error);
 			}
 		);
+	}
+
+	public viewTicket2(ticket: Ticket, client: Client): void {
+		this.ticket = ticket;
+		this.client = client;
+
+		this.ticketsService.getProductsInTicket(this.ticket.id).subscribe(
+			(response) => {
+				this.productsInTicket = response;
+			},
+			(error) => {
+				throw new Error(error);
+			}
+		);
+	}
+
+	public viewTicket3(ticket: Ticket, client: Client, products: ProductInTicket[]): void {
+		this.ticket = ticket;
+		this.client = client;
+		this.productsInTicket = products;
 	}
 }

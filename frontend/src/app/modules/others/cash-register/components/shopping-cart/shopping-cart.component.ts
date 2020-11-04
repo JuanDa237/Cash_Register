@@ -3,14 +3,14 @@ import { DatePipe } from '@angular/common';
 
 import { Client, createEmptyClient } from '@modules/others/clients/models';
 
-import { Product } from '@modules/others/products/models';
+import { Product, ProductInTicket } from '@modules/others/products/models';
 import { ProductsService } from '@modules/others/products/services';
 
 import { TicketsService } from '@modules/others/tickets/services';
 
 import { ProductInCart } from '../../models';
 import { TicketViewComponent } from '@modules/others/tickets/components';
-import { TicketWithProducts, ProductWithAmount } from '@app/modules/others/tickets/models';
+import { TicketWithProducts, ProductWithAmount, Ticket } from '@app/modules/others/tickets/models';
 
 @Component({
 	selector: 'app-shopping-cart',
@@ -115,7 +115,28 @@ export class ShoppingCartComponent {
 
 		this.ticketsService.saveTicket(newTicket).subscribe(
 			(response) => {
-				this.ticketChild.createTicket(response.id);
+				// Do the ticket view
+				const ticket: Ticket = {
+					id: 0,
+					creationDate: this.actualDate(),
+					idClient: 0,
+					total: this.total,
+					homeDelivery: this.homeDelivery != null ? this.homeDelivery : 0
+				};
+
+				var products: ProductInTicket[] = new Array<ProductInTicket>(0);
+
+				this.shoppingCart.forEach((product) => {
+					products.push({
+						id: 0,
+						idTicket: 0,
+						name: product.product.name,
+						price: product.product.price,
+						amount: product.amount
+					} as ProductInTicket);
+				});
+
+				this.ticketChild.viewTicket3(ticket, this.client, products);
 			},
 			(error) => {
 				throw new Error(error);

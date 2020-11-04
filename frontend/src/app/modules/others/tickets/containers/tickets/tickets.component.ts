@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 //Models
-import { Client } from '../../../clients/models/index';
+import { Client, createEmptyClient } from '../../../clients/models/index';
 import { Ticket } from '../../models/index';
 
 //Services
@@ -93,9 +93,14 @@ export class TicketsComponent implements OnInit {
 	}
 
 	public viewTicket(index: number) {
-		var id: number | undefined = this.tickets[index].id;
-		if (typeof id != 'undefined') {
-			this.ticketChild.createTicket(id);
-		}
+		var finalClient: Client = createEmptyClient();
+
+		this.tickets.forEach((ticket) => {
+			this.clients.forEach((client) => {
+				if (ticket.idClient == client.id) finalClient = client;
+			});
+		});
+
+		this.ticketChild.viewTicket2(this.tickets[index], finalClient);
 	}
 }
