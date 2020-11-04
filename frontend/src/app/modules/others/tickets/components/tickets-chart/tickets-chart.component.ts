@@ -45,10 +45,10 @@ export class TicketsChartComponent implements AfterViewInit {
 		this.ticketsService.getTicketsInYear().subscribe(
 			(response) => {
 				for (var i = 0; i < response.length; i++) {
-					//this.totalInMonths[Number(response[i].creationDate)] += response[i].total;
+					this.totalInMonths[Number(response[i].creationDate) - 1] += response[i].total;
 
 					if (response[i].homeDelivery)
-						this.homeDeliverysInMonths[Number(response[i].creationDate)]++;
+						this.homeDeliverysInMonths[Number(response[i].creationDate) - 1]++;
 				}
 
 				this.redererChart();
