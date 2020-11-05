@@ -1,3 +1,9 @@
+@import 'styles/variables.scss';
+
 header {
 	padding: 156px 0 100px;
+}
+.bg-gradient-primary {
+	background: $primary;
+	background: linear-gradient(to bottom, #0062e6, #33aeff);
 }
