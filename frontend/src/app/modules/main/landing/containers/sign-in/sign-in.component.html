@@ -1,19 +1,16 @@
-<div class="container my-5">
-	<div class="row justify-content-center">
-		<div class="col-lg-5">
-			<div class="card shadow-lg border-0 rounded-lg mt-5">
-				<div class="card-header">
-					<h3 class="text-center font-weight-light my-4">Ingresar</h3>
-				</div>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-5">
+			<div class="card card-signin my-5">
 				<div class="card-body">
-					<form #formSignIn="ngForm">
-						<div class="form-group">
-							<label class="small mb-1" for="username">Usuario</label>
+					<h5 class="card-title text-center">Ingresar</h5>
+					<form class="form-signin" #formSignIn="ngForm">
+						<div class="form-label-group">
 							<input
 								type="text"
 								class="form-control"
 								[ngClass]="{ 'is-invalid': error[0] }"
-								placeholder="Nombre de usuario"
+								placeholder="Usuario"
 								name="username"
 								#username="ngModel"
 								[(ngModel)]="user.username"
@@ -22,8 +19,7 @@
 							/>
 							<div class="invalid-feedback">Ingresa un nombre de usuario valido.</div>
 						</div>
-						<div class="form-group">
-							<label class="small mb-1" for="password">Contraseña</label>
+						<div class="form-label-group">
 							<input
 								type="password"
 								class="form-control"
@@ -37,37 +33,32 @@
 							/>
 							<div class="invalid-feedback">Contraseña incorrecta.</div>
 						</div>
-						<div class="form-group">
-							<div class="custom-control custom-checkbox">
-								<input
-									type="checkbox"
-									class="custom-control-input"
-									id="rememberUser"
-									name="rememberUser"
-									[(ngModel)]="rememberUser"
-								/>
-								<label class="custom-control-label" for="rememberUser"
-									>Recordar usuario</label
-								>
-							</div>
-						</div>
-						<div
-							class="form-group d-flex align-items-center justify-content-between mt-4 mb-0"
-						>
-							<button
-								type="button"
-								class="btn btn-primary ml-auto"
-								(click)="signIn()"
-								[disabled]="formSignIn.invalid"
+
+						<div class="custom-control custom-checkbox mb-3">
+							<input
+								type="checkbox"
+								class="custom-control-input"
+								id="rememberUser"
+								name="rememberUser"
+								[(ngModel)]="rememberUser"
+							/>
+							<label class="custom-control-label" for="rememberUser"
+								>Recordar Usuario</label
 							>
-								Ingresar
-							</button>
 						</div>
+						<button
+							type="button"
+							class="btn btn-lg btn-primary btn-block text-uppercase"
+							(click)="signIn()"
+							[disabled]="formSignIn.invalid"
+						>
+							Ingresar
+						</button>
 					</form>
 				</div>
 				<div class="card-footer text-center">
 					<div class="small">
-						<a routerLink="/home">¿Quieres trabajar con nosotros? contáctanos</a>
+						<a routerLink="/">¿Quieres trabajar con nosotros? contáctanos.</a>
 					</div>
 				</div>
 			</div>

@@ -13,9 +13,9 @@
 toDoList
 
 # Compiled output
-/dist
-/tmp
-/out-tsc
+/frontend/dist
+/frontend/tmp
+/frontend/out-tsc
 
 # Only exists if Bazel was run
 /bazel-out
