@@ -1,5 +1,5 @@
-import { AuthenticationService } from './authentication.service';
+import { AuthService } from './auth.service';
 
-export const services = [AuthenticationService];
+export const services = [AuthService];
 
-export * from './authentication.service';
+export * from './auth.service';

@@ -12,7 +12,7 @@ import productsRoutes from './app/products/products.routes';
 import ingredientsRoutes from './app/ingredients/ingredients.routes';
 import ticketsRoutes from './app/tickets/tickets.routes';
 import clientsRoutes from './app/clients/clients.routes';
-import authenticationRoutes from './app/authentication/authentication.routes';
+import authRoutes from './app/auth/auth.routes';
 
 class Server {
 	public app: Application;
@@ -61,7 +61,7 @@ class Server {
 		this.app.use('/api', ingredientsRoutes);
 		this.app.use('/api', ticketsRoutes);
 		this.app.use('/api', clientsRoutes);
-		this.app.use('/api/authentication', authenticationRoutes);
+		this.app.use('/api/auth', authRoutes);
 	}
 
 	public start(): void {

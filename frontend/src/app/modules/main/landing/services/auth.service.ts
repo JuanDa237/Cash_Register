@@ -12,7 +12,7 @@ import { environment } from '@enviroment/environment';
 @Injectable({
 	providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthService {
 	private apiUrl: string;
 	private headers: HttpHeaders;
 
@@ -23,7 +23,7 @@ export class AuthenticationService {
 
 	// Post
 	signIn(user: LogInUser): Observable<any> {
-		return this.http.post(this.apiUrl + 'authentication/singIn', user, {
+		return this.http.post(this.apiUrl + 'auth/singIn', user, {
 			headers: this.headers,
 			observe: 'response'
 		});

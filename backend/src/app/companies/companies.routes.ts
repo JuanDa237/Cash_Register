@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { companiesControllers } from './companies.controllers';
-import { authenticationJwt } from '../authentication/middlewares';
+import { authJwt } from '../auth/middlewares';
 import { multerConfig } from './middlewares';
 
 class CompaniesRoutes {
@@ -13,29 +13,21 @@ class CompaniesRoutes {
 		// Get one
 		this.router.get(
 			'/company',
-			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
+			[authJwt.verifyToken, authJwt.isCashier],
 			companiesControllers.getOneCompany
 		);
 
 		// Post
 		this.router.post(
 			'/company',
-			[
-				authenticationJwt.verifyToken,
-				authenticationJwt.isSuperAdmin,
-				multerConfig.single('image')
-			],
+			[authJwt.verifyToken, authJwt.isSuperAdmin, multerConfig.single('image')],
 			companiesControllers.createCompany
 		);
 
 		// Update
 		this.router.post(
 			'/company/:id',
-			[
-				authenticationJwt.verifyToken,
-				authenticationJwt.isSuperAdmin,
-				multerConfig.single('image')
-			],
+			[authJwt.verifyToken, authJwt.isSuperAdmin, multerConfig.single('image')],
 			companiesControllers.updateCompany
 		);
 	}

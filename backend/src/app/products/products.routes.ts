@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { productsController } from './products.controllers';
-import { authenticationJwt } from '../authentication/middlewares/index';
+import { authJwt } from '../auth/middlewares/index';
 
 class ProductsRoutes {
 	constructor(public router: Router = Router()) {
@@ -12,52 +12,52 @@ class ProductsRoutes {
 		// Get All List
 		this.router.get(
 			'/all/products',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			productsController.listAllProducts
 		);
 
 		// Get list
 		this.router.get(
 			'/products',
-			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
+			[authJwt.verifyToken, authJwt.isCashier],
 			productsController.listProducts
 		);
 		this.router.get(
 			'/products/ingredients',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			productsController.listIngredientsInProducts
 		);
 
 		// Get one
 		this.router.get(
 			'/product/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			productsController.getOneProduct
 		);
 		this.router.get(
 			'/product/:id/ingredients/',
-			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
+			[authJwt.verifyToken, authJwt.isCashier],
 			productsController.getIngredientsInProduct
 		);
 
 		// Post
 		this.router.post(
 			'/product',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			productsController.createProduct
 		);
 
 		// Update
 		this.router.put(
 			'/product/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			productsController.updateProduct
 		);
 
 		// Delete
 		this.router.delete(
 			'/product/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			productsController.deleteProduct
 		);
 	}

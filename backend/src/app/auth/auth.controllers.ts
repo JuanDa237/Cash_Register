@@ -6,7 +6,7 @@ import pool from '../../database';
 import { User, encryptPassword, validatePassword } from '../users/models';
 import { Role } from '../roles/models';
 
-class AuthenticationControllers {
+class AuthControllers {
 	// Post
 	public async singIn(request: Request, response: Response): Promise<Response> {
 		const { username, password } = request.body;
@@ -104,4 +104,4 @@ class AuthenticationControllers {
 	}
 }
 
-export const authenticationControllers = new AuthenticationControllers();
+export const authControllers = new AuthControllers();

@@ -18,7 +18,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: companyContainers.CompanyComponent,
-		canActivate: [companyGuards.AuthenticationGuard],
+		canActivate: [companyGuards.AuthGuard],
 		children: [
 			{
 				path: '',

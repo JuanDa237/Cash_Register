@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { ticketsControllers } from './tickets.controllers';
-import { authenticationJwt } from '../authentication/middlewares/index';
+import { authJwt } from '../auth/middlewares/index';
 
 class CategoriesRoutes {
 	constructor(public router: Router = Router()) {
@@ -12,43 +12,43 @@ class CategoriesRoutes {
 		// Get Interval
 		this.router.get(
 			'/tickets/:since/:until',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			ticketsControllers.listTicketsInInterval
 		);
 		this.router.get(
 			'/tickets/year',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			ticketsControllers.listTicketsInYear
 		);
 
 		// Get list
 		this.router.get(
 			'/tickets',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			ticketsControllers.listTickets
 		);
 		this.router.get(
 			'/tickets/products',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			ticketsControllers.listProductsInTickets
 		);
 		this.router.get(
 			'/ticket/products/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			ticketsControllers.getProductsInTicket
 		);
 
 		// Get one
 		this.router.get(
 			'/ticket/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			ticketsControllers.getOneTicket
 		);
 
 		// Post
 		this.router.post(
 			'/ticket',
-			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
+			[authJwt.verifyToken, authJwt.isCashier],
 			ticketsControllers.createTicket
 		);
 	}

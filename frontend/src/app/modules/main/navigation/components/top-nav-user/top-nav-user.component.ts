@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { UserService } from '../../services';
 import { User } from '../../models';
-import { AuthenticationService } from '@app/modules/main/landing/services';
+import { AuthService } from '@app/modules/main/landing/services';
 
 @Component({
 	selector: 'app-top-nav-user',
@@ -12,7 +12,7 @@ import { AuthenticationService } from '@app/modules/main/landing/services';
 export class TopNavUserComponent implements OnInit {
 	public user: User;
 
-	constructor(private userService: UserService, private authService: AuthenticationService) {
+	constructor(private userService: UserService, private authService: AuthService) {
 		this.user = {
 			name: '',
 			role: ''

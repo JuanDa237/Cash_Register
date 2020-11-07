@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Services
-import { AuthenticationService } from '../../services/index';
+import { AuthService } from '../../services/index';
 
 // Models
 import { LogInUser } from '../../models/index';
@@ -17,7 +17,7 @@ export class SignInComponent {
 	public error: Array<boolean>;
 	public rememberUser: boolean;
 
-	constructor(private authenticationService: AuthenticationService, private router: Router) {
+	constructor(private authService: AuthService, private router: Router) {
 		this.user = {
 			username: '',
 			password: ''
@@ -27,7 +27,7 @@ export class SignInComponent {
 	}
 
 	ngOnInit(): void {
-		this.authenticationService.logOut(false);
+		this.authService.logOut(false);
 
 		// Get the old user
 		var oldUser: string | null = localStorage.getItem('user');
@@ -38,7 +38,7 @@ export class SignInComponent {
 	}
 
 	public signIn(): void {
-		this.authenticationService.signIn(this.user).subscribe(
+		this.authService.signIn(this.user).subscribe(
 			(resolve) => {
 				localStorage.setItem('token', resolve.headers.get('token'));
 				localStorage.setItem('loggedUser', JSON.stringify(resolve.body));

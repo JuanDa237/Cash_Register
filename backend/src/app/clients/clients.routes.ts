@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { clientsControllers } from './clients.controllers';
-import { authenticationJwt } from '../authentication/middlewares/index';
+import { authJwt } from '../auth/middlewares/index';
 
 class CategoriesRoutes {
 	constructor(public router: Router = Router()) {
@@ -12,49 +12,49 @@ class CategoriesRoutes {
 		// Get Interval
 		this.router.get(
 			'/clients/year',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			clientsControllers.listClientsInYear
 		);
 
 		// Get All List
 		this.router.get(
 			'/all/clients',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			clientsControllers.listAllClients
 		);
 
 		// Get list
 		this.router.get(
 			'/clients',
-			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
+			[authJwt.verifyToken, authJwt.isCashier],
 			clientsControllers.listClients
 		);
 
 		// Get one
 		this.router.get(
 			'/client/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isCashier],
+			[authJwt.verifyToken, authJwt.isCashier],
 			clientsControllers.getOneClient
 		);
 
 		// Post
 		this.router.post(
 			'/client',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			clientsControllers.createClient
 		);
 
 		// Update
 		this.router.put(
 			'/client/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			clientsControllers.updateClient
 		);
 
 		// Delete
 		this.router.delete(
 			'/client/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			clientsControllers.deleteClient
 		);
 	}

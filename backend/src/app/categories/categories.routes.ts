@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { categoriesControllers } from './categories.controllers';
-import { authenticationJwt } from '../authentication/middlewares/index';
+import { authJwt } from '../auth/middlewares/index';
 
 class CategoriesRoutes {
 	constructor(public router: Router = Router()) {
@@ -12,35 +12,35 @@ class CategoriesRoutes {
 		// Get list
 		this.router.get(
 			'/categories',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			categoriesControllers.listCategories
 		);
 
 		// Get one
 		this.router.get(
 			'/category/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			categoriesControllers.getOneCategory
 		);
 
 		// Post
 		this.router.post(
 			'/category',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			categoriesControllers.createCategory
 		);
 
 		// Update
 		this.router.put(
 			'/category/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			categoriesControllers.updateCategory
 		);
 
 		// Delete
 		this.router.delete(
 			'/category/:id',
-			[authenticationJwt.verifyToken, authenticationJwt.isAdministrator],
+			[authJwt.verifyToken, authJwt.isAdministrator],
 			categoriesControllers.deleteCategory
 		);
 	}

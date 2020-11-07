@@ -1189,7 +1189,7 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "/authentication",
+					"name": "/auth",
 					"item": [
 						{
 							"name": "/singIn",
@@ -1207,8 +1207,8 @@
 									"raw": "{\n    \"username\": \"juan\",\n    \"password\": \"contra\"\n}"
 								},
 								"url": {
-									"raw": "{{api}}authentication/singIn",
-									"host": ["{{api}}authentication"],
+									"raw": "{{api}}auth/singIn",
+									"host": ["{{api}}auth"],
 									"path": ["singIn"]
 								}
 							},
@@ -1240,8 +1240,8 @@
 									"raw": "{\n    \"idCompany\": 0,\n    \"roleName\": \"\",\n    \"username\": \"\",\n    \"password\": \"\",\n    \"name\": \"\"\n}"
 								},
 								"url": {
-									"raw": "{{api}}authentication/singUp",
-									"host": ["{{api}}authentication"],
+									"raw": "{{api}}auth/singUp",
+									"host": ["{{api}}auth"],
 									"path": ["singUp"]
 								}
 							},

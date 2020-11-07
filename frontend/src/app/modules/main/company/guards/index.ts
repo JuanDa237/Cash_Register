@@ -1,7 +1,7 @@
-import { AuthenticationGuard } from './authentication.guard';
+import { AuthGuard } from './auth.guard';
 import { RoleGuard } from './role.guard';
 
-export const guards = [AuthenticationGuard, RoleGuard];
+export const guards = [AuthGuard, RoleGuard];
 
-export * from './authentication.guard';
+export * from './auth.guard';
 export * from './role.guard';

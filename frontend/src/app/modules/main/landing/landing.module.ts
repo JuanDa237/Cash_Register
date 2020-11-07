@@ -7,14 +7,13 @@ import { HttpClientModule } from '@angular/common/http';
 import * as landingComponents from './components/index';
 import * as landingContainers from './containers/index';
 import * as landingServices from './services/index';
-import * as landingGuards from './guards/index';
 
 // Modules
 import { NavigationModule } from '@modules/main/navigation/navigation.module';
 
 @NgModule({
 	imports: [CommonModule, RouterModule, FormsModule, HttpClientModule, NavigationModule],
-	providers: [landingServices.services, landingGuards.guards],
+	providers: [landingServices.services],
 	declarations: [landingComponents.components, landingContainers.containers],
 	exports: [landingComponents.components, landingContainers.containers]
 })
