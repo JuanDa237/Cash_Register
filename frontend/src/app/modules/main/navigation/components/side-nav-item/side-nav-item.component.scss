@@ -1,10 +1,7 @@
 @import 'styles/variables.scss';
 
 .nav-link {
-	display: flex;
 	align-items: center;
-	padding-top: 0.75rem;
-	padding-bottom: 0.75rem;
 	position: relative;
 	color: $sidenav-dark-link-color;
 	.sb-nav-link-icon {
@@ -23,13 +20,32 @@
 			transform: rotate(-90deg);
 		}
 	}
-	&:hover {
-		color: $sidenav-dark-link-active-color;
+	&::before {
+		content: '';
+		display: block;
+		position: absolute;
+		height: 1.5rem;
+		width: 0;
+		left: 0;
+		background-color: $sidenav-dark-link-active-color;
+		transition: all 0.2s ease-in-out;
 	}
 	&.active {
 		color: $sidenav-dark-link-active-color;
 		.sb-nav-link-icon {
 			color: $sidenav-dark-link-active-color;
+		}
+		&::before {
+			width: 0.2rem;
+		}
+	}
+	&:hover {
+		color: $sidenav-dark-link-active-color;
+		.sb-nav-link-icon {
+			color: $sidenav-dark-link-active-color;
+		}
+		&::before {
+			width: 0.2rem;
 		}
 	}
 }
