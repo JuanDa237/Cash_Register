@@ -71,9 +71,12 @@ export class IngredientsFormComponent implements OnInit {
 	}
 
 	private getIngredientsInProduct(): void {
-		var id: number = this.activatedRoute.snapshot.params.id;
+		var id: number | null = this.activatedRoute.snapshot.params.id;
 
-		if (id == null) id = Number(this.activatedRoute.snapshot.paramMap.get('from'));
+		if (id == null) {
+			id = Number(this.activatedRoute.snapshot.paramMap.get('from'));
+			if (id == 0) id = null;
+		}
 
 		if (id != null) {
 			this.productsService.getIngredientsInProduct(id).subscribe(
