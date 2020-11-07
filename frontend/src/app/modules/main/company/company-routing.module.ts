@@ -19,6 +19,7 @@ const routes: Routes = [
 		path: '',
 		component: companyContainers.CompanyComponent,
 		canActivate: [companyGuards.AuthGuard],
+		canActivateChild: [companyGuards.RoleGuard],
 		children: [
 			{
 				path: '',
@@ -28,7 +29,6 @@ const routes: Routes = [
 			{
 				path: 'cashRegister',
 				component: othersContainers.CashRegisterComponent,
-				canActivate: [companyGuards.RoleGuard],
 				data: {
 					title: 'Registradora',
 					hideBreadcrumbs: true,
@@ -38,7 +38,6 @@ const routes: Routes = [
 			{
 				path: 'categories',
 				component: othersContainers.CategoriesComponent,
-				canActivate: [companyGuards.RoleGuard],
 				data: {
 					title: 'Categorias',
 					hideBreadcrumbs: true,
@@ -49,7 +48,6 @@ const routes: Routes = [
 				path: 'products',
 				loadChildren: () =>
 					import('@modules/others/routes').then((m) => m.ProductsRoutingModule),
-				canActivate: [companyGuards.RoleGuard],
 				data: {
 					title: 'Productos',
 					hideBreadcrumbs: true,
@@ -59,7 +57,6 @@ const routes: Routes = [
 			{
 				path: 'ingredients',
 				component: othersContainers.IngredientsComponent,
-				canActivate: [companyGuards.RoleGuard],
 				data: {
 					title: 'Ingredientes',
 					hideBreadcrumbs: true,
@@ -69,7 +66,6 @@ const routes: Routes = [
 			{
 				path: 'clients',
 				component: othersContainers.ClientsComponent,
-				canActivate: [companyGuards.RoleGuard],
 				data: {
 					title: 'Clientes',
 					hideBreadcrumbs: true,
@@ -79,7 +75,6 @@ const routes: Routes = [
 			{
 				path: 'tickets',
 				component: othersContainers.TicketsComponent,
-				canActivate: [companyGuards.RoleGuard],
 				data: {
 					title: 'Registros',
 					hideBreadcrumbs: true,
@@ -89,7 +84,6 @@ const routes: Routes = [
 			{
 				path: 'configuration',
 				component: othersContainers.ConfigurationCompanyComponent,
-				canActivate: [companyGuards.RoleGuard],
 				data: {
 					title: 'Configuracion',
 					hideBreadcrumbs: true,

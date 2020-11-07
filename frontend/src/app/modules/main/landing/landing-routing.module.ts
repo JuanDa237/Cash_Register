@@ -19,14 +19,14 @@ export const routes: Routes = [
 				path: '',
 				component: landingContainers.HomeComponent,
 				data: {
-					title: 'Home'
+					title: 'Caja Registradora'
 				} as RouteData
 			},
 			{
 				path: 'signIn',
 				component: landingContainers.SignInComponent,
 				data: {
-					title: 'Sign In'
+					title: 'Ingresar'
 				} as RouteData
 			}
 		]

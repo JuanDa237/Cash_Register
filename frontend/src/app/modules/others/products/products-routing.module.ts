@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductsModule } from './products.module';
 
 // Models
-import { RouteData } from '@modules/main/navigation/models/index';
+import { RouteData, Role } from '@modules/main/navigation/models/index';
 
 // Containers
 import * as productsContainers from './containers/index';
@@ -20,7 +20,8 @@ const routes: Routes = [
 				component: productsContainers.ProductsComponent,
 				data: {
 					title: 'Productos',
-					hideBreadcrumbs: true
+					hideBreadcrumbs: true,
+					roles: [Role.ADMINISTRATOR]
 				} as RouteData
 			},
 			{
@@ -28,6 +29,7 @@ const routes: Routes = [
 				component: productsContainers.ProductsPrincipalFormComponent,
 				data: {
 					title: 'Crea un producto',
+					roles: [Role.ADMINISTRATOR],
 					breadcrumbs: [
 						{
 							text: 'Productos',
@@ -45,6 +47,7 @@ const routes: Routes = [
 				component: productsContainers.ProductsPrincipalFormComponent,
 				data: {
 					title: 'Edita el producto',
+					roles: [Role.ADMINISTRATOR],
 					breadcrumbs: [
 						{
 							text: 'Productos',

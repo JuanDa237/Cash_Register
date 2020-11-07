@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, CanActivateChild } from '@angular/router';
 import { Role } from '../../navigation/models';
 
 import { UserService } from '../../navigation/services/user.service';
@@ -7,10 +7,10 @@ import { UserService } from '../../navigation/services/user.service';
 @Injectable({
 	providedIn: 'root'
 })
-export class RoleGuard implements CanActivate {
+export class RoleGuard implements CanActivateChild {
 	constructor(private userService: UserService, private router: Router) {}
 
-	canActivate(route: ActivatedRouteSnapshot): boolean {
+	canActivateChild(route: ActivatedRouteSnapshot): boolean {
 		const user = this.userService.getUser();
 		const routeRoles: Role[] = route.data.roles;
 

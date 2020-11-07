@@ -18,31 +18,32 @@ export const routes: Routes = [
 	},
 	{
 		path: '401',
-		canActivate: [],
 		component: errorContainers.Error401Component,
 		data: {
-			title: 'Error 401'
+			title: '401 - Unathorized'
 		} as RouteData
 	},
 	{
 		path: '404',
-		canActivate: [],
 		component: errorContainers.Error404Component,
 		data: {
-			title: 'Error 404'
+			title: '404 - Not Found'
 		} as RouteData
 	},
 	{
 		path: '500',
 		component: errorContainers.Error500Component,
 		data: {
-			title: 'Error 500'
+			title: '500 - Server error'
 		} as RouteData
 	},
 	{
 		path: '**',
 		pathMatch: 'full',
-		component: errorContainers.Error404Component
+		component: errorContainers.Error404Component,
+		data: {
+			title: '404 - Not Found'
+		} as RouteData
 	}
 ];
 
