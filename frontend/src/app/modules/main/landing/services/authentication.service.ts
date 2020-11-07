@@ -40,9 +40,10 @@ export class AuthenticationService {
 
 	logOut(redirection: boolean): void {
 		localStorage.removeItem('token');
+		localStorage.removeItem('loggedUser');
 
 		if (redirection) {
-			this.router.navigate(['/home']);
+			this.router.navigate(['/']);
 		}
 	}
 }
