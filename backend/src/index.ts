@@ -12,7 +12,6 @@ import productsRoutes from './app/products/products.routes';
 import ingredientsRoutes from './app/ingredients/ingredients.routes';
 import ticketsRoutes from './app/tickets/tickets.routes';
 import clientsRoutes from './app/clients/clients.routes';
-import usersRoutes from './app/users/users.routes';
 import authenticationRoutes from './app/authentication/authentication.routes';
 
 class Server {
@@ -62,7 +61,6 @@ class Server {
 		this.app.use('/api', ingredientsRoutes);
 		this.app.use('/api', ticketsRoutes);
 		this.app.use('/api', clientsRoutes);
-		this.app.use('/api', usersRoutes);
 		this.app.use('/api/authentication', authenticationRoutes);
 	}
 

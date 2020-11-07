@@ -1189,37 +1189,6 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "/user && /users",
-					"item": [
-						{
-							"name": "/user",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api}}user",
-									"host": ["{{api}}user"]
-								},
-								"description": "To get the name and the role of a user."
-							},
-							"response": []
-						}
-					],
-					"description": "To get the user information.",
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
 					"name": "/authentication",
 					"item": [
 						{

@@ -23,14 +23,7 @@ export class TopNavUserComponent implements OnInit {
 	}
 
 	public getUser(): void {
-		this.userService.getUser().subscribe(
-			(response) => {
-				this.user = response;
-			},
-			(error) => {
-				throw new Error(error);
-			}
-		);
+		this.user = this.userService.getUser();
 	}
 
 	public logOut(): void {}

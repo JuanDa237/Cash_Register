@@ -11,16 +11,8 @@ import { User } from '../models';
 	providedIn: 'root'
 })
 export class UserService {
-	private apiUrl: string;
-	private headers: HttpHeaders;
-
-	constructor(private http: HttpClient) {
-		this.headers = new HttpHeaders().set('Content-type', 'application/json');
-		this.apiUrl = environment.apiUrl;
-	}
-
-	// Get logged user
-	getUser(): Observable<User> {
-		return this.http.get<User>(this.apiUrl + 'user', { headers: this.headers });
+	getUser(): User {
+		var user = localStorage.getItem('loggedUser');
+		return JSON.parse(user ? user : '') as User;
 	}
 }

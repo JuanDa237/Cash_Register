@@ -33,17 +33,11 @@ export class SideNavComponent implements OnInit {
 	}
 
 	private getUser(): void {
-		this.userService.getUser().subscribe(
-			(response) => {
-				this.username = response.name;
-				this.role = response.role;
+		const user = this.userService.getUser();
+		this.username = user.name;
+		this.role = user.role;
 
-				this.actualizeNavSections();
-			},
-			(error) => {
-				throw new Error(error);
-			}
-		);
+		this.actualizeNavSections();
 	}
 
 	private actualizeNavSections(): void {

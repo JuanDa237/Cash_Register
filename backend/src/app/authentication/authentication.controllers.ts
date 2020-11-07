@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import pool from '../../database';
 
 import { User, encryptPassword, validatePassword } from '../users/models';
+import { Role } from '../roles/models';
 
 class AuthenticationControllers {
 	// Post
@@ -12,7 +13,7 @@ class AuthenticationControllers {
 
 		const user: User[] = await (
 			await pool
-		).query('SELECT id, password FROM users WHERE username = ?', [username]);
+		).query('SELECT id, password, name, idRole FROM users WHERE username = ?', [username]);
 
 		if (user.length > 0) {
 			const correctPassword: boolean = await validatePassword(password, user[0].password);
@@ -28,11 +29,19 @@ class AuthenticationControllers {
 					}
 				);
 
+				const role: Role[] = await (await pool).query(
+					'SELECT name FROM roles WHERE id = ?',
+					[user[0].idRole]
+				);
+
 				return response
 					.status(200)
 					.header('token', token)
 					.set('Access-Control-Expose-Headers', 'token')
-					.json({ message: 'Sing in succesfully.' });
+					.json({
+						name: user[0].name,
+						role: role[0].name
+					});
 			} else {
 				return response.status(401).json({ message: 'Password is wrong.' });
 			}
