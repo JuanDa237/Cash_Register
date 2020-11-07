@@ -58,7 +58,7 @@
 					</td>
 					<td class="text-center">
 						<button class="btn btn-danger text-center" (click)="deleteProduct(i)">
-							<i class="far fa-minus-square"></i>
+							<i class="far fa-minus-square" title="Quitar producto del carrito"></i>
 						</button>
 					</td>
 				</tr>
@@ -82,7 +82,7 @@
 				data-toggle="modal"
 				data-target="#modalTickets"
 			>
-				<i class="far fa-file"></i> Terminar Pedido
+				<i class="far fa-file" title="Registro"></i> Terminar Pedido
 			</button>
 		</div>
 	</div>
@@ -96,6 +96,8 @@
 		<button class="btn btn-info text-center" data-dismiss="modal" (click)="refreshPageEvent()">
 			Salir
 		</button>
-		<button class="btn btn-info text-center"><i class="fas fa-print"></i> Imprimir</button>
+		<button class="btn btn-info text-center">
+			<i class="fas fa-print" title="Imprimir"></i> Imprimir
+		</button>
 	</div>
 </app-modal>

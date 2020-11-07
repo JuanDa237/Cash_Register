@@ -1,7 +1,7 @@
 <div class="my-4">
-	<button class="btn btn-info btn-block" routerLink="add">
-		<i class="fas fa-plus-circle"></i> Crear Producto
-	</button>
+	<a class="btn btn-info btn-block" routerLink="add">
+		<i class="fas fa-plus-circle" title="Crear producto"></i> Crear Producto
+	</a>
 </div>
 <div *ngIf="loading">
 	<app-loading colorClass="text-primary" size="10rem"></app-loading>
@@ -14,11 +14,11 @@
 			<td>
 				<div class="text-center">
 					<div class="btn-group">
-						<button class="btn btn-info" [routerLink]="['edit/', product.id]">
-							<i class="far fa-edit"></i>
-						</button>
+						<a class="btn btn-info" [routerLink]="['edit/', product.id]">
+							<i class="far fa-edit" title="Editar"></i>
+						</a>
 						<button class="btn btn-danger" (click)="deleteProduct(product.id)">
-							<i class="far fa-trash-alt"></i>
+							<i class="far fa-trash-alt" title="Eliminar"></i>
 						</button>
 					</div>
 				</div>

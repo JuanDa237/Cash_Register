@@ -11,7 +11,7 @@
 							title="Crea un producto a partir de este"
 							[routerLink]="['../../add', { from: formChild.getProductValues().id }]"
 						>
-							<i class="fas fa-plus"></i>
+							<i class="fas fa-plus" title="Crear"></i>
 						</a>
 					</div>
 				</div>
@@ -32,7 +32,7 @@
 							(click)="createOrUpdateProduct()"
 							[disabled]="invalidForm"
 						>
-							<i class="far fa-save"></i> Guardar
+							<i class="far fa-save" title="Guardar"></i> Guardar
 						</button>
 					</div>
 				</ng-container>
@@ -43,10 +43,10 @@
 							(click)="createOrUpdateProduct()"
 							[disabled]="invalidForm"
 						>
-							<i class="far fa-edit"></i> Editar
+							<i class="far fa-edit" title="Editar"></i> Editar
 						</button>
 						<button class="btn btn-danger" (click)="deleteProduct()">
-							<i class="far fa-trash-alt"></i> Eliminar
+							<i class="far fa-trash-alt" title="Eliminar"></i> Eliminar
 						</button>
 					</div>
 				</ng-template>
