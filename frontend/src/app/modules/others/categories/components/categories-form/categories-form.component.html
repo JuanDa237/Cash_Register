@@ -17,19 +17,21 @@
 			class="invalid-feedback"
 			*ngIf="categoryForm.get('name')?.touched && categoryForm.get('name')?.invalid"
 		>
-			<div *ngIf="categoryForm.get('name')?.errors.required">El nombre es obligatorio.</div>
-			<div *ngIf="categoryForm.get('name')?.errors.minlength">
+			<div *ngIf="categoryForm.get('name')?.errors['required']">
+				El nombre es obligatorio.
+			</div>
+			<div *ngIf="categoryForm.get('name')?.errors['minlength']">
 				{{
-					categoryForm.get('name')?.errors.minlength.actualLength +
+					categoryForm.get('name')?.errors['minlength'].actualLength +
 						' caracteres de ' +
-						categoryForm.get('name')?.errors.minlength.requiredLength +
+						categoryForm.get('name')?.errors['minlength'].requiredLength +
 						' requeridos.'
 				}}
 			</div>
-			<div *ngIf="categoryForm.get('name')?.errors.maxlength">
+			<div *ngIf="categoryForm.get('name')?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						categoryForm.get('name')?.errors.maxlength.requiredLength
+						categoryForm.get('name')?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>

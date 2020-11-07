@@ -24,7 +24,7 @@
 					productForm.get('idCategory')?.touched && productForm.get('idCategory')?.invalid
 				"
 			>
-				<div *ngIf="creating && productForm.get('idCategory')?.errors.required">
+				<div *ngIf="creating && productForm.get('idCategory')?.errors['required']">
 					La categoria es obligatoria.
 				</div>
 			</div>
@@ -46,19 +46,19 @@
 			class="invalid-feedback"
 			*ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid"
 		>
-			<div *ngIf="productForm.get('name')?.errors.required">El nombre es obligatorio.</div>
-			<div *ngIf="productForm.get('name')?.errors.minlength">
+			<div *ngIf="productForm.get('name')?.errors['required']">El nombre es obligatorio.</div>
+			<div *ngIf="productForm.get('name')?.errors['minlength']">
 				{{
-					productForm.get('name')?.errors.minlength.actualLength +
+					productForm.get('name')?.errors['minlength'].actualLength +
 						' caracteres de ' +
-						productForm.get('name')?.errors.minlength.requiredLength +
+						productForm.get('name')?.errors['minlength'].requiredLength +
 						' requeridos.'
 				}}
 			</div>
-			<div *ngIf="productForm.get('name')?.errors.maxlength">
+			<div *ngIf="productForm.get('name')?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						productForm.get('name')?.errors.maxlength.requiredLength
+						productForm.get('name')?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>
@@ -87,7 +87,7 @@
 				class="invalid-feedback"
 				*ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid"
 			>
-				<div *ngIf="productForm.get('price')?.errors.required">
+				<div *ngIf="productForm.get('price')?.errors['required']">
 					El precio es obligatorio
 				</div>
 			</div>
