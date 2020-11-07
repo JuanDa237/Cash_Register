@@ -74,6 +74,7 @@ export class UtilityChartComponent implements OnInit, AfterViewInit {
 
 		if (utility <= 0) {
 			nameOfIngredients.push('Perdida');
+			if (utility == 0) utility = -1;
 		} else if (utility > 0) {
 			nameOfIngredients.push('Utilidad');
 		}

@@ -65,12 +65,14 @@ export class ProductsFormComponent implements OnInit {
 
 	// Private methods
 	private getUrlParams(): void {
-		const id: number = this.activatedRoute.snapshot.params.id;
+		var id: number = this.activatedRoute.snapshot.params.id;
 		this.creating = id == null;
 
 		this.creatingForm.emit(this.creating);
 
-		if (!this.creating) {
+		if (id == null) id = Number(this.activatedRoute.snapshot.paramMap.get('from'));
+
+		if (id != null) {
 			this.productsService.getProduct(id).subscribe(
 				(response) => {
 					this.setProductValues(response);

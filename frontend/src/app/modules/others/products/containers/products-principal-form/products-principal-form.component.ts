@@ -1,4 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import {
+	AfterContentInit,
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	ViewChild
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Product } from '../../models';
@@ -11,9 +17,10 @@ import {
 
 @Component({
 	selector: 'app-products-principal-form',
-	templateUrl: './products-principal-form.component.html'
+	templateUrl: './products-principal-form.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductsPrincipalFormComponent {
+export class ProductsPrincipalFormComponent implements AfterContentInit {
 	public creating: boolean;
 	public invalidForm: boolean;
 
@@ -26,9 +33,17 @@ export class ProductsPrincipalFormComponent {
 	@ViewChild(UtilityChartComponent)
 	public chartChild!: UtilityChartComponent;
 
-	constructor(private productsService: ProductsService, private router: Router) {
+	constructor(
+		private productsService: ProductsService,
+		private router: Router,
+		private ref: ChangeDetectorRef
+	) {
 		this.creating = true;
 		this.invalidForm = true;
+	}
+
+	ngAfterContentInit(): void {
+		this.ref.markForCheck();
 	}
 
 	public createOrUpdateProduct(): void {
