@@ -9,6 +9,7 @@
 <app-modal idModal="modalClients" [title]="creating ? 'Crear Cliente' : 'Editar Cliente'">
 	<div class="modal-body">
 		<app-clients-form
+			idForm="clientForm"
 			(onSubmitEvent)="createOrUpdateClient()"
 			(invalidForm)="invalidForm = $event"
 		></app-clients-form>
@@ -16,11 +17,12 @@
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 		<button
-			type="button"
+			type="submit"
 			class="btn btn-success"
 			(click)="createOrUpdateClient()"
 			[disabled]="invalidForm"
 			data-dismiss="modal"
+			form="clientForm"
 		>
 			{{ creating ? 'Crear' : 'Editar' }}
 		</button>

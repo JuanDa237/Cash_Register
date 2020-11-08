@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Category } from '../../models';
 
@@ -8,6 +8,9 @@ import { Category } from '../../models';
 })
 export class CategoriesFormComponent implements OnInit {
 	public categoryForm: FormGroup;
+
+	@Input()
+	public idForm: string;
 
 	@Output()
 	private onSubmitEvent: EventEmitter<null>;
@@ -24,6 +27,8 @@ export class CategoriesFormComponent implements OnInit {
 				Validators.maxLength(30)
 			])
 		});
+
+		this.idForm = '';
 
 		this.onSubmitEvent = new EventEmitter<null>();
 		this.invalidForm = new EventEmitter<boolean>();

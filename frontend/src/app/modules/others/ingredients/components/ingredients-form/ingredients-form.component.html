@@ -1,4 +1,4 @@
-<form [formGroup]="ingredientForm" (ngSubmit)="submitEvent()" novalidate>
+<form [id]="idForm" [formGroup]="ingredientForm" (ngSubmit)="submitEvent()" novalidate>
 	<div class="form-group">
 		<label for="name"> Ingrediente<span class="text-danger">*</span> </label>
 		<input
@@ -17,19 +17,21 @@
 			class="invalid-feedback"
 			*ngIf="ingredientForm.get('name')?.touched && ingredientForm.get('name')?.invalid"
 		>
-			<div *ngIf="ingredientForm.get('name')?.errors.required">El nombre es obligatorio.</div>
-			<div *ngIf="ingredientForm.get('name')?.errors.minlength">
+			<div *ngIf="ingredientForm.get('name')?.errors['required']">
+				El nombre es obligatorio.
+			</div>
+			<div *ngIf="ingredientForm.get('name')?.errors['minlength']">
 				{{
-					ingredientForm.get('name')?.errors.minlength.actualLength +
+					ingredientForm.get('name')?.errors['minlength'].actualLength +
 						' caracteres de ' +
-						ingredientForm.get('name')?.errors.minlength.requiredLength +
+						ingredientForm.get('name')?.errors['minlength'].requiredLength +
 						' requeridos.'
 				}}
 			</div>
-			<div *ngIf="ingredientForm.get('name')?.errors.maxlength">
+			<div *ngIf="ingredientForm.get('name')?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						ingredientForm.get('name')?.errors.maxlength.requiredLength
+						ingredientForm.get('name')?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>
@@ -78,5 +80,4 @@
 			La cantidad es obligatoria.
 		</div>
 	</div>
-	<input type="submit" [disabled]="ingredientForm.invalid" hidden />
 </form>

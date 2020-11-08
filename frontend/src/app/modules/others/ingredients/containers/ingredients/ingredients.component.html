@@ -12,6 +12,7 @@
 >
 	<div class="modal-body">
 		<app-ingredients-form
+			idForm="ingredientForm"
 			(onSubmitEvent)="createOrUpdateIngredient()"
 			(invalidForm)="invalidForm = $event"
 		></app-ingredients-form>
@@ -19,11 +20,12 @@
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 		<button
-			type="button"
+			type="submit"
 			class="btn btn-success"
 			(click)="createOrUpdateIngredient()"
 			[disabled]="invalidForm"
 			data-dismiss="modal"
+			form="ingredientForm"
 		>
 			{{ creating ? 'Crear' : 'Editar' }}
 		</button>

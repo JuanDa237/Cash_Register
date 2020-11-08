@@ -9,6 +9,7 @@
 <app-modal idModal="modalCategories" [title]="creating ? 'Crear Categoria' : 'Editar Categoria'">
 	<div class="modal-body">
 		<app-categories-form
+			idForm="categoryForm"
 			(onSubmitEvent)="createOrUpdateCategory()"
 			(invalidForm)="invalidForm = $event"
 		></app-categories-form>
@@ -16,11 +17,12 @@
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 		<button
-			type="button"
+			type="submit"
 			class="btn btn-success"
 			(click)="createOrUpdateCategory()"
 			[disabled]="invalidForm"
 			data-dismiss="modal"
+			form="categoryForm"
 		>
 			{{ creating ? 'Crear' : 'Editar' }}
 		</button>

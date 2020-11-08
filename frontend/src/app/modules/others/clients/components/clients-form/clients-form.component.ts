@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Client } from '../../models';
 
@@ -8,6 +8,9 @@ import { Client } from '../../models';
 })
 export class ClientsFormComponent implements OnInit {
 	public clientForm: FormGroup;
+
+	@Input()
+	public idForm: string;
 
 	@Output()
 	private onSubmitEvent: EventEmitter<null>;
@@ -27,6 +30,7 @@ export class ClientsFormComponent implements OnInit {
 			phoneNumber: new FormControl('', Validators.maxLength(30)),
 			creationDate: new FormControl('')
 		});
+		this.idForm = '';
 
 		this.onSubmitEvent = new EventEmitter<null>();
 		this.invalidForm = new EventEmitter<boolean>();

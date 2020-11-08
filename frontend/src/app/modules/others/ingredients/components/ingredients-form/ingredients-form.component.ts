@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Ingredient } from '../../models';
@@ -9,6 +9,9 @@ import { Ingredient } from '../../models';
 })
 export class IngredientsFormComponent implements OnInit {
 	public ingredientForm: FormGroup;
+
+	@Input()
+	public idForm: string;
 
 	@Output()
 	private onSubmitEvent: EventEmitter<null>;
@@ -27,6 +30,7 @@ export class IngredientsFormComponent implements OnInit {
 			priceByUnit: new FormControl(0, Validators.required),
 			amount: new FormControl(0, Validators.required)
 		});
+		this.idForm = '';
 
 		this.onSubmitEvent = new EventEmitter<null>();
 		this.invalidForm = new EventEmitter<boolean>();
