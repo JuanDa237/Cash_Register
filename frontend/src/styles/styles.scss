@@ -8,6 +8,9 @@
 @import '../../node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css';
 @import '../../node_modules/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css';
 
+// Sweet alert
+@import '../../node_modules/@sweetalert2/theme-bootstrap-4/bootstrap-4.min.css';
+
 // Import Custom Variables
 @import 'variables.scss';
 
@@ -16,3 +19,6 @@
 
 // Dashboard Layout
 @import 'layout/dashboard.scss';
+
+// Libs - Sweet alert
+@import 'libs/sweetalert.scss';

@@ -15,6 +15,9 @@ import {
 	IngredientsFormComponent
 } from '../../components/index';
 
+// Libs
+import { Sweet } from '@modules/others/app-common/libs';
+
 @Component({
 	selector: 'app-products-principal-form',
 	templateUrl: './products-principal-form.component.html',
@@ -33,6 +36,8 @@ export class ProductsPrincipalFormComponent implements AfterContentInit {
 	@ViewChild(UtilityChartComponent)
 	public chartChild!: UtilityChartComponent;
 
+	private sweet: Sweet;
+
 	constructor(
 		private productsService: ProductsService,
 		private router: Router,
@@ -40,6 +45,7 @@ export class ProductsPrincipalFormComponent implements AfterContentInit {
 	) {
 		this.creating = true;
 		this.invalidForm = true;
+		this.sweet = new Sweet();
 	}
 
 	ngAfterContentInit(): void {
@@ -66,17 +72,21 @@ export class ProductsPrincipalFormComponent implements AfterContentInit {
 		}
 	}
 
-	public deleteProduct(): void {
+	public async deleteProduct(): Promise<void> {
 		const product: Product = this.formChild.getProductValues();
 
-		this.productsService.deleteProduct(product.id).subscribe(
-			(resolve) => {
-				this.router.navigate(['company/products']);
-			},
-			(error) => {
-				throw new Error(error);
-			}
-		);
+		if (await this.sweet.delete('¿Estas seguro de eliminar el producto?')) {
+			this.productsService.deleteProduct(product.id).subscribe(
+				(resolve) => {
+					this.router.navigate(['company/products']);
+					this.sweet.deleted('Se elimino el producto satisfactoriamente');
+				},
+				(error) => {
+					this.sweet.deleted('Ocurrio un error');
+					throw new Error(error);
+				}
+			);
+		}
 	}
 
 	// Chart

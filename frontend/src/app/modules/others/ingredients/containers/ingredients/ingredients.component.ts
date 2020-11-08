@@ -10,6 +10,9 @@ import { IngredientsService } from '../../services/index';
 import { IngredientsFormComponent } from '../../components/index';
 import { TableComponent } from '@modules/others/app-common/components';
 
+// Libs
+import { Sweet } from '@modules/others/app-common/libs';
+
 @Component({
 	selector: 'app-ingredients',
 	templateUrl: './ingredients.component.html'
@@ -27,11 +30,14 @@ export class IngredientsComponent implements OnInit {
 	@ViewChild(TableComponent)
 	private table!: TableComponent;
 
+	private sweet: Sweet;
+
 	constructor(private ingredientsService: IngredientsService) {
 		this.ingredients = new Array<Ingredient>(0);
 		this.creating = false;
 		this.invalidForm = false;
 		this.loading = true;
+		this.sweet = new Sweet();
 	}
 
 	ngOnInit(): void {
@@ -54,8 +60,11 @@ export class IngredientsComponent implements OnInit {
 
 	// Methods for html
 
-	public deleteIngredient(ingredient: Ingredient): void {
-		if (this.validateIngredient(ingredient)) {
+	public async deleteIngredient(ingredient: Ingredient): Promise<void> {
+		if (
+			this.validateIngredient(ingredient) &&
+			(await this.sweet.delete('¿Estas seguro de eliminar el ingrediente?'))
+		) {
 			this.ingredientsService.deleteIngredient(ingredient.id).subscribe(
 				(response) => {
 					const index: number = this.ingredients
@@ -64,8 +73,10 @@ export class IngredientsComponent implements OnInit {
 						})
 						.indexOf(ingredient.id);
 					this.ingredients.splice(index, 1);
+					this.sweet.deleted('Se elimino el ingrediente satisfactoriamente');
 				},
 				(error) => {
+					this.sweet.created('Ocurrio un error');
 					throw new Error(error);
 				}
 			);
@@ -78,14 +89,17 @@ export class IngredientsComponent implements OnInit {
 	}
 
 	private createIngredient(): void {
-		const ingredient: Ingredient = this.formChild.getIngredientValues();
+		var ingredient: Ingredient = this.formChild.getIngredientValues();
 
 		if (this.validateIngredient(ingredient)) {
 			this.ingredientsService.saveIngredient(ingredient).subscribe(
 				(response) => {
+					ingredient.id = response.id;
 					this.ingredients.push(ingredient);
+					this.sweet.created('Se creo el ingrediente satisfactoriamente');
 				},
 				(error) => {
+					this.sweet.error('Ocurrio un error');
 					throw new Error(error);
 				}
 			);
@@ -104,8 +118,10 @@ export class IngredientsComponent implements OnInit {
 						})
 						.indexOf(ingredient.id);
 					this.ingredients[index] = ingredient;
+					this.sweet.created('Se edito el ingrediente satisfactoriamente');
 				},
 				(error) => {
+					this.sweet.created('Ocurrio un error');
 					throw new Error(error);
 				}
 			);

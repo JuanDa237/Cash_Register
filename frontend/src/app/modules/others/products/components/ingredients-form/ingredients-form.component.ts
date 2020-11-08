@@ -17,6 +17,9 @@ import { ProductsService } from '../../services';
 import { TableComponent } from '@modules/others/app-common/components';
 import { Product, ProductWithIngredients } from '../../models';
 
+// Libs
+import { Sweet } from '@modules/others/app-common/libs';
+
 @Component({
 	selector: 'app-ingredients-form',
 	templateUrl: './ingredients-form.component.html',
@@ -34,6 +37,8 @@ export class IngredientsFormComponent implements OnInit {
 	@Output()
 	public inputAmount: EventEmitter<null>;
 
+	private sweet: Sweet;
+
 	constructor(
 		private ingredientsService: IngredientsService,
 		private productsService: ProductsService,
@@ -47,6 +52,7 @@ export class IngredientsFormComponent implements OnInit {
 		this.loading = true;
 
 		this.inputAmount = new EventEmitter<null>();
+		this.sweet = new Sweet();
 	}
 
 	ngOnInit(): void {
@@ -119,8 +125,12 @@ export class IngredientsFormComponent implements OnInit {
 		this.productsService.createProduct(productWithIngredients).subscribe(
 			(response) => {
 				this.router.navigate(['company/products']);
+				this.sweet.created('Se creo el producto satisfactoriamente');
 			},
-			(error) => console.error(error)
+			(error) => {
+				this.sweet.error('Ocurrio un error');
+				throw new Error(error);
+			}
 		);
 	}
 
@@ -132,8 +142,12 @@ export class IngredientsFormComponent implements OnInit {
 		this.productsService.updateProduct(productWithIngredients).subscribe(
 			(response) => {
 				this.router.navigate(['company/products']);
+				this.sweet.created('Se edito el producto satisfactoriamente');
 			},
-			(error) => console.error(error)
+			(error) => {
+				this.sweet.error('Ocurrio un error');
+				throw new Error(error);
+			}
 		);
 	}
 

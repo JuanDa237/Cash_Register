@@ -7,6 +7,9 @@ import { Product } from '../../models/index';
 // Services
 import { ProductsService } from '../../services/index';
 
+// Libs
+import { Sweet } from '@modules/others/app-common/libs';
+
 @Component({
 	selector: 'app-products',
 	templateUrl: './products.component.html'
@@ -19,9 +22,12 @@ export class ProductsComponent implements OnInit {
 	@ViewChild(TableComponent)
 	private table!: TableComponent;
 
+	private sweet: Sweet;
+
 	constructor(private productsService: ProductsService) {
 		this.products = new Array<Product>(0);
 		this.loading = true;
+		this.sweet = new Sweet();
 	}
 
 	ngOnInit(): void {
@@ -41,19 +47,23 @@ export class ProductsComponent implements OnInit {
 		);
 	}
 
-	public deleteProduct(id: number): void {
-		this.productsService.deleteProduct(id).subscribe(
-			(resolve) => {
-				const index: number = this.products
-					.map((x) => {
-						return x.id;
-					})
-					.indexOf(id);
-				this.products.splice(index, 1);
-			},
-			(error) => {
-				throw new Error(error);
-			}
-		);
+	public async deleteProduct(id: number): Promise<void> {
+		if (await this.sweet.delete('¿Estas seguro de eliminar el producto?')) {
+			this.productsService.deleteProduct(id).subscribe(
+				(resolve) => {
+					const index: number = this.products
+						.map((x) => {
+							return x.id;
+						})
+						.indexOf(id);
+					this.products.splice(index, 1);
+					this.sweet.deleted('Se elimino el producto satisfactoriamente');
+				},
+				(error) => {
+					this.sweet.error('Ocurrio un error');
+					throw new Error(error);
+				}
+			);
+		}
 	}
 }

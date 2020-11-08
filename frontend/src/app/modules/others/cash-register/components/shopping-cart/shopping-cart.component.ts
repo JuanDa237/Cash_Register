@@ -12,6 +12,9 @@ import { ProductInCart } from '../../models';
 import { TicketViewComponent } from '@modules/others/tickets/components';
 import { TicketWithProducts, ProductWithAmount, Ticket } from '@app/modules/others/tickets/models';
 
+// Libs
+import { Sweet } from '@modules/others/app-common/libs';
+
 @Component({
 	selector: 'app-shopping-cart',
 	templateUrl: './shopping-cart.component.html',
@@ -33,6 +36,8 @@ export class ShoppingCartComponent {
 	@Output()
 	public refreshPage: EventEmitter<null>;
 
+	private sweet: Sweet;
+
 	constructor(private productsService: ProductsService, private ticketsService: TicketsService) {
 		this.shoppingCart = new Array<ProductInCart>(0);
 		this.total = 0;
@@ -40,6 +45,7 @@ export class ShoppingCartComponent {
 		this.homeDelivery = null;
 		this.client = createEmptyClient();
 		this.refreshPage = new EventEmitter<null>();
+		this.sweet = new Sweet();
 	}
 
 	// Parent methods
@@ -137,8 +143,11 @@ export class ShoppingCartComponent {
 				});
 
 				this.ticketChild.viewTicket3(ticket, this.client, products);
+
+				this.sweet.created('Se creo el registro satisfactoriamente');
 			},
 			(error) => {
+				this.sweet.error('Ocurrio un error');
 				throw new Error(error);
 			}
 		);

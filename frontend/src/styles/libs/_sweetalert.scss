@@ -1,0 +1,4 @@
+// Change sweet alert z-index
+.swal2-container {
+	z-index: $zindex-sweetalert !important;
+}

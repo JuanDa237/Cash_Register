@@ -8,6 +8,9 @@ import { Category, createEmptyCategory } from '../../models/index';
 // Services
 import { CategoriesService } from '../../services/index';
 
+// Libs
+import { Sweet } from '@modules/others/app-common/libs';
+
 @Component({
 	selector: 'app-categories',
 	templateUrl: './categories.component.html'
@@ -26,11 +29,14 @@ export class CategoriesComponent implements OnInit {
 	@ViewChild(TableComponent)
 	private table!: TableComponent;
 
+	private sweet: Sweet;
+
 	constructor(private categoriesService: CategoriesService) {
 		this.categories = new Array<Category>(0);
 		this.creating = false;
 		this.invalidForm = false;
 		this.loading = true;
+		this.sweet = new Sweet();
 	}
 
 	ngOnInit(): void {
@@ -64,21 +70,24 @@ export class CategoriesComponent implements OnInit {
 	}
 
 	private createCategory(): void {
-		const category: Category = this.formChild.getCategoryValues();
+		var category: Category = this.formChild.getCategoryValues();
 
 		if (this.validateCategory(category)) {
 			this.categoriesService.saveCategory(category).subscribe(
 				(response) => {
+					category.id = response.id;
 					this.categories.push(category);
+					this.sweet.created('Se creo la categoria satisfactoriamente');
 				},
 				(error) => {
+					this.sweet.error('Ocurrio un error');
 					throw new Error(error);
 				}
 			);
 		}
 	}
 
-	private updateCategory(): void {
+	private async updateCategory(): Promise<void> {
 		const category: Category = this.formChild.getCategoryValues();
 
 		if (this.validateCategory(category)) {
@@ -90,17 +99,21 @@ export class CategoriesComponent implements OnInit {
 						})
 						.indexOf(category.id);
 					this.categories[index] = category;
+					this.sweet.created('Se edito la categoria satisfactoriamente');
 				},
 				(error) => {
+					this.sweet.error('Ocurrio un error');
 					throw new Error(error);
 				}
 			);
-		} else {
 		}
 	}
 
-	public deleteCategory(category: Category): void {
-		if (this.validateCategory(category)) {
+	public async deleteCategory(category: Category): Promise<void> {
+		if (
+			this.validateCategory(category) &&
+			(await this.sweet.delete('¿Estas seguro de eliminar la categoria?'))
+		) {
 			this.categoriesService.deleteCategory(category.id).subscribe(
 				(response) => {
 					const index: number = this.categories
@@ -109,8 +122,10 @@ export class CategoriesComponent implements OnInit {
 						})
 						.indexOf(category.id);
 					this.categories.splice(index, 1);
+					this.sweet.deleted('Se elimino la categoria satisfactoriamente');
 				},
 				(error) => {
+					this.sweet.error('Ocurrio un error');
 					throw new Error(error);
 				}
 			);

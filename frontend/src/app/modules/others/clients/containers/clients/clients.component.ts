@@ -11,6 +11,9 @@ import { ClientsService } from '../../services/index';
 import { ClientsChartComponent, ClientsFormComponent } from '../../components/index';
 import { TableComponent } from '@modules/others/app-common/components';
 
+// Libs
+import { Sweet } from '@app/modules/others/app-common/libs';
+
 @Component({
 	selector: 'app-clients',
 	templateUrl: './clients.component.html'
@@ -31,11 +34,14 @@ export class ClientsComponent implements OnInit {
 	@ViewChild(TableComponent)
 	private table!: TableComponent;
 
+	private sweet: Sweet;
+
 	constructor(private clientsService: ClientsService) {
 		this.clients = new Array<Client>(0);
 		this.creating = false;
 		this.invalidForm = false;
 		this.loading = true;
+		this.sweet = new Sweet();
 	}
 
 	ngOnInit(): void {
@@ -74,10 +80,13 @@ export class ClientsComponent implements OnInit {
 
 			this.clientsService.saveClient(client).subscribe(
 				(response) => {
+					client.id = response.id;
 					this.clients.push(client);
 					this.chartChild.newChart();
+					this.sweet.created('Se creo el cliente satisfactoriamente');
 				},
 				(error) => {
+					this.sweet.error('Ocurrio un error');
 					throw new Error(error);
 				}
 			);
@@ -98,16 +107,21 @@ export class ClientsComponent implements OnInit {
 						})
 						.indexOf(client.id);
 					this.clients[index] = client;
+					this.sweet.created('Se edito el cliente satisfactoriamente');
 				},
 				(error) => {
+					this.sweet.error('Ocurrio un error');
 					throw new Error(error);
 				}
 			);
 		}
 	}
 
-	public deleteClient(client: Client): void {
-		if (this.validateClient(client)) {
+	public async deleteClient(client: Client): Promise<void> {
+		if (
+			this.validateClient(client) &&
+			(await this.sweet.delete('¿Estas seguro de eliminar el cliente?'))
+		) {
 			this.clientsService.deleteClient(client.id).subscribe(
 				(response) => {
 					const index: number = this.clients
@@ -116,8 +130,10 @@ export class ClientsComponent implements OnInit {
 						})
 						.indexOf(client.id);
 					this.clients.splice(index, 1);
+					this.sweet.deleted('Se elimino el cliente satisfactoriamente');
 				},
 				(error) => {
+					this.sweet.error('Ocurrio un error');
 					throw new Error(error);
 				}
 			);
