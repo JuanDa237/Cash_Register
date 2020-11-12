@@ -12,7 +12,7 @@ class CompaniesControllers {
 		const company: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, imageUrl, ticketMessage FROM companies WHERE id = ? AND active = true;',
+			'SELECT name, image, ticketMessage FROM companies WHERE id = ? AND active = true;',
 			[request.user.idCompany]
 		);
 

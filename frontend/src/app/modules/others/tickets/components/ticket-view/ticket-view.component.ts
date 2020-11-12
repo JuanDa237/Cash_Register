@@ -1,45 +1,52 @@
 import { Component, OnInit } from '@angular/core';
-import { Client, createEmptyClient } from '@app/modules/others/clients/models';
+
 import { ClientsService } from '@app/modules/others/clients/services';
-import { IngredientInProduct } from '@app/modules/others/ingredients/models';
-import { ProductInTicket } from '@app/modules/others/products/models';
-import { Ticket, createEmptyTicket } from '../../models';
+import { Client, createEmptyClient } from '@app/modules/others/clients/models';
+
+import { CompanyService } from '@app/modules/others/configuration-company/services';
+import { Company, createEmptyCompany } from '@app/modules/others/configuration-company/models';
+
 import { TicketsService } from '../../services';
+import { Ticket, createEmptyTicket } from '../../models';
+
+import { ProductInTicket } from '@app/modules/others/products/models';
 
 @Component({
 	selector: 'app-ticket-view',
 	templateUrl: './ticket-view.component.html'
 })
 export class TicketViewComponent implements OnInit {
-	//public company: Company;
-
+	public company: Company;
 	public client: Client;
 	public ticket: Ticket;
 
 	public productsInTicket: Array<ProductInTicket>;
 
-	constructor(private ticketsService: TicketsService, private clientsService: ClientsService) {
+	constructor(
+		private ticketsService: TicketsService,
+		private clientsService: ClientsService,
+		private companyService: CompanyService
+	) {
 		this.productsInTicket = new Array<ProductInTicket>(0);
 		this.ticket = createEmptyTicket();
 		this.client = createEmptyClient();
+		this.company = createEmptyCompany();
 	}
 
 	ngOnInit(): void {
-		//this.getCompany();
+		this.getCompany();
 	}
 
-	/*
 	private getCompany() {
-
-    this.companiesService.getCompany().subscribe(
-		response => {
-			this.company = response;
-		},
-		error => {throw new Error(error);
-		}
-    );
+		this.companyService.getCompany().subscribe(
+			(response) => {
+				this.company = response;
+			},
+			(error) => {
+				throw new Error(error);
+			}
+		);
 	}
-	*/
 
 	// Parents methods
 	public viewTicket(id: number): void {

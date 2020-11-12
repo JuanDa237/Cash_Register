@@ -1,12 +1,12 @@
-<!-- <div *ngIf="company">
-    <img [src]="company.image" class="rounded" alt title style="width: 54px; height: 54px;">
-    <h2 class="d-inline-block text-center">
-        {{ company.name }}
-    </h2>
-    <p class="text-center text-justify border border-dark p-2 my-2">
-        {{ company.ticketMessage }}
-    </p>
-</div> -->
+<div *ngIf="company">
+	<img [src]="company.image" class="rounded" alt title style="width: 54px; height: 54px" />
+	<h2 class="d-inline-block text-center">
+		{{ company.name }}
+	</h2>
+	<p class="text-center text-justify border border-dark p-2 my-2">
+		{{ company.ticketMessage }}
+	</p>
+</div>
 <p>
 	<span class="font-weight-bold">Nombre:</span> {{ client.name }} |
 	<ng-container *ngIf="ticket.homeDelivery; else noHomeDelivery">
