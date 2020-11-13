@@ -1,3 +1,25 @@
+@import 'styles/variables.scss';
+
 #userDropdown {
 	cursor: pointer;
+}
+
+.dropdown-item {
+	&::before {
+		content: '';
+		display: block;
+		position: absolute;
+		height: 1.5rem;
+		width: 0;
+		left: 0;
+		background-color: #212529;
+		transition: all 0.2s ease-in-out;
+	}
+	&.active {
+		background-color: $white;
+		color: #212529;
+		&::before {
+			width: 0.2rem;
+		}
+	}
 }
