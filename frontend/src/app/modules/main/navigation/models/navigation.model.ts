@@ -30,6 +30,7 @@ export interface SideNavItem {
 	icon?: string;
 	text: string;
 	link?: string;
+	activeClass: boolean;
 	submenu?: SideNavItem[];
 }
 

@@ -82,10 +82,19 @@ const routes: Routes = [
 				} as RouteData
 			},
 			{
-				path: 'configuration',
-				component: othersContainers.ConfigurationCompanyComponent,
+				path: 'configuration/company',
+				component: othersContainers.CompanyComponent,
 				data: {
-					title: 'Configuracion',
+					title: 'Configuracion Empresa',
+					hideBreadcrumbs: true,
+					roles: [Role.CASHIER, Role.ADMINISTRATOR]
+				} as RouteData
+			},
+			{
+				path: 'configuration/me',
+				component: othersContainers.UserComponent,
+				data: {
+					title: 'Configuracion Cuenta',
 					hideBreadcrumbs: true,
 					roles: [Role.CASHIER, Role.ADMINISTRATOR]
 				} as RouteData

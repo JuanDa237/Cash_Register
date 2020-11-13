@@ -1,7 +1,8 @@
 <a
 	class="nav-link my-2 d-flex"
 	[routerLink]="sideNavItem.link"
-	routerLinkActive="active"
+	[routerLinkActive]="sideNavItem.activeClass ? 'active' : ''"
+	[routerLinkActiveOptions]="{ exact: true }"
 	(click)="expanded = !expanded"
 	[ngClass]="{ collapsed: !expanded }"
 >

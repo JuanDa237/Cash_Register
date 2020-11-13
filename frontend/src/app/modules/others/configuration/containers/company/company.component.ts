@@ -3,10 +3,10 @@ import { Company, createEmptyCompany } from '../../models';
 import { CompanyService } from '../../services';
 
 @Component({
-	selector: 'app-configuration-company',
-	templateUrl: './configuration-company.component.html'
+	selector: 'app-config-company',
+	templateUrl: './company.component.html'
 })
-export class ConfigurationCompanyComponent implements OnInit {
+export class CompanyComponent implements OnInit {
 	public company: Company;
 
 	constructor(private companyService: CompanyService) {
