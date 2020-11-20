@@ -5,7 +5,7 @@ CREATE TABLE companies (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
     image VARCHAR(100) NOT NULL,
-    ticketMessage VARCHAR(60) NOT NULL,
+    ticketMessage VARCHAR(255) NOT NULL,
     visible BOOLEAN NOT NULL DEFAULT false,
     active BOOLEAN NOT NULL DEFAULT false
 );

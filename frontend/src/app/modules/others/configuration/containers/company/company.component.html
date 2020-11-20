@@ -1,10 +1,14 @@
-<div class="row mt-2">
+<div class="row mt-2" *ngIf="!loading; else loadingT">
 	<div class="col-12 col-md-4">
 		<div class="card">
 			<div class="card-header">
 				<h6 class="card-title m-0">Compañia</h6>
 			</div>
-			<img [src]="company.image" class="card-img-top shadow-sm" [alt]="company.name" />
+			<img
+				[src]="apiUrl + company.image"
+				class="card-img-top shadow-sm"
+				[alt]="company.name + 'imagen'"
+			/>
 			<div class="card-body">
 				<h4 class="card-title">{{ company.name }}</h4>
 				<p class="card-text">
@@ -20,3 +24,6 @@
 		</div>
 	</div>
 </div>
+<ng-template #loadingT>
+	<app-loading colorClass="text-primary" size="10rem"></app-loading>
+</ng-template>

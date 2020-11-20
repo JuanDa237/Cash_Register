@@ -32,7 +32,7 @@ const routes: Routes = [
 				data: {
 					title: 'Registradora',
 					hideBreadcrumbs: true,
-					roles: [Role.CASHIER, Role.ADMINISTRATOR]
+					roles: [Role.CASHIER, Role.ADMIN]
 				} as RouteData
 			},
 			{
@@ -41,7 +41,7 @@ const routes: Routes = [
 				data: {
 					title: 'Categorias',
 					hideBreadcrumbs: true,
-					roles: [Role.ADMINISTRATOR]
+					roles: [Role.ADMIN]
 				} as RouteData
 			},
 			{
@@ -51,7 +51,7 @@ const routes: Routes = [
 				data: {
 					title: 'Productos',
 					hideBreadcrumbs: true,
-					roles: [Role.ADMINISTRATOR]
+					roles: [Role.ADMIN]
 				} as RouteData
 			},
 			{
@@ -60,7 +60,7 @@ const routes: Routes = [
 				data: {
 					title: 'Ingredientes',
 					hideBreadcrumbs: true,
-					roles: [Role.ADMINISTRATOR]
+					roles: [Role.ADMIN]
 				} as RouteData
 			},
 			{
@@ -69,7 +69,7 @@ const routes: Routes = [
 				data: {
 					title: 'Clientes',
 					hideBreadcrumbs: true,
-					roles: [Role.ADMINISTRATOR]
+					roles: [Role.ADMIN]
 				} as RouteData
 			},
 			{
@@ -78,7 +78,7 @@ const routes: Routes = [
 				data: {
 					title: 'Registros',
 					hideBreadcrumbs: true,
-					roles: [Role.ADMINISTRATOR]
+					roles: [Role.ADMIN]
 				} as RouteData
 			},
 			{
@@ -87,7 +87,7 @@ const routes: Routes = [
 				data: {
 					title: 'Configuracion Empresa',
 					hideBreadcrumbs: true,
-					roles: [Role.CASHIER, Role.ADMINISTRATOR]
+					roles: [Role.CASHIER, Role.ADMIN]
 				} as RouteData
 			},
 			{
@@ -96,7 +96,7 @@ const routes: Routes = [
 				data: {
 					title: 'Configuracion Cuenta',
 					hideBreadcrumbs: true,
-					roles: [Role.CASHIER, Role.ADMINISTRATOR]
+					roles: [Role.CASHIER, Role.ADMIN]
 				} as RouteData
 			}
 		]

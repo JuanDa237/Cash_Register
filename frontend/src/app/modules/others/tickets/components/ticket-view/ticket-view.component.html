@@ -1,5 +1,11 @@
-<div *ngIf="company">
-	<img [src]="company.image" class="rounded" alt title style="width: 54px; height: 54px" />
+<div *ngIf="!loadingCompany">
+	<img
+		[src]="apiUrl + company.image"
+		class="rounded"
+		alt
+		title
+		style="width: 54px; height: 54px"
+	/>
 	<h2 class="d-inline-block text-center">
 		{{ company.name }}
 	</h2>

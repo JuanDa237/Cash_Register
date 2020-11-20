@@ -8,11 +8,11 @@ import { Company } from './models';
 
 class CompaniesControllers {
 	// Get one
-	public async getOneCompany(request: Request, response: Response): Promise<Response> {
+	public async getCompany(request: Request, response: Response): Promise<Response> {
 		const company: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, image, ticketMessage FROM companies WHERE id = ? AND active = true;',
+			'SELECT id, name, image, ticketMessage FROM companies WHERE id = ? AND active = true;',
 			[request.user.idCompany]
 		);
 
@@ -30,39 +30,55 @@ class CompaniesControllers {
 			[fieldname: string]: Express.Multer.File;
 		};
 
-		const newCompany = await (await pool).query('INSERT INTO companies SET ?', [
-			{
-				name,
-				ticketMessage,
-				visible: visible === 'true',
-				image: typeof image != 'undefined' ? image.path : ''
-			}
-		]);
+		try {
+			const newCompany = await (await pool).query('INSERT INTO companies SET ?', [
+				{
+					name,
+					ticketMessage,
+					visible: visible === 'true',
+					image: image.path
+				}
+			]);
 
-		return response.status(200).json({
-			message: 'Saved company.',
-			id: newCompany.insertId
-		});
+			return response.status(200).json({
+				message: 'Saved company.',
+				id: newCompany.insertId
+			});
+		} catch (error) {
+			return response.status(500).json({ message: '¿No provide image?' });
+		}
 	}
 
 	// Update
 	public async updateCompany(request: Request, response: Response): Promise<Response> {
-		const { id } = request.params;
+		const { idCompany } = request.user;
 		const { name, ticketMessage, visible } = request.body;
-		const { image } = request.files as {
-			[fieldname: string]: Express.Multer.File[];
+		const image = (request.file as unknown) as {
+			[fieldname: string]: Express.Multer.File;
 		};
 
-		await (await pool).query('UPDATE companies SET ? WHERE id = ?', [
-			{
-				name,
-				ticketMessage,
-				visible,
-				image: typeof image != 'undefined' ? image[0].path : null
-			},
-			id
+		const oldCompany: Company[] = await (
+			await pool
+		).query('SELECT image, visible FROM companies WHERE id = ? AND active = true;', [
+			idCompany
 		]);
-		return response.status(200).json({ message: 'Company updated successfully.' });
+
+		if (oldCompany != null) {
+			await (await pool).query('UPDATE companies SET ? WHERE id = ?', [
+				{
+					name,
+					ticketMessage,
+					visible:
+						typeof visible != undefined ? visible === 'true' : oldCompany[0].visible,
+					image: typeof image != 'undefined' ? image.path : oldCompany[0].image
+				},
+				idCompany
+			]);
+
+			return response.status(200).json({ message: 'Company updated successfully.' });
+		} else {
+			return response.status(400).json({ message: 'Company not found.' });
+		}
 	}
 }
 

@@ -26,7 +26,7 @@ async function createRoles(): Promise<any> {
 
 		await Promise.all([
 			await (await pool).query(`INSERT INTO roles SET name = '${Role.CASHIER}'`),
-			await (await pool).query(`INSERT INTO roles SET name = '${Role.ADMINISTRATOR}'`),
+			await (await pool).query(`INSERT INTO roles SET name = '${Role.ADMIN}'`),
 			await (await pool).query(`INSERT INTO roles SET name = '${Role.SUPERADMIN}'`)
 		]);
 		console.log('Roles created.');

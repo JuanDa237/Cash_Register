@@ -54,7 +54,7 @@ export async function isCashier(
 	if (
 		userRole.length > 0 &&
 		(userRole[0].name == Role.CASHIER ||
-			userRole[0].name == Role.ADMINISTRATOR ||
+			userRole[0].name == Role.ADMIN ||
 			userRole[0].name == Role.SUPERADMIN)
 	) {
 		return next();
@@ -74,7 +74,7 @@ export async function isAdministrator(
 
 	if (
 		userRole.length > 0 &&
-		(userRole[0].name == Role.ADMINISTRATOR || userRole[0].name == Role.SUPERADMIN)
+		(userRole[0].name == Role.ADMIN || userRole[0].name == Role.SUPERADMIN)
 	) {
 		return next();
 	} else {

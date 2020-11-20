@@ -21,7 +21,7 @@ const routes: Routes = [
 				data: {
 					title: 'Productos',
 					hideBreadcrumbs: true,
-					roles: [Role.ADMINISTRATOR]
+					roles: [Role.ADMIN]
 				} as RouteData
 			},
 			{
@@ -29,7 +29,7 @@ const routes: Routes = [
 				component: productsContainers.ProductsPrincipalFormComponent,
 				data: {
 					title: 'Crea un producto',
-					roles: [Role.ADMINISTRATOR],
+					roles: [Role.ADMIN],
 					breadcrumbs: [
 						{
 							text: 'Productos',
@@ -47,7 +47,7 @@ const routes: Routes = [
 				component: productsContainers.ProductsPrincipalFormComponent,
 				data: {
 					title: 'Edita el producto',
-					roles: [Role.ADMINISTRATOR],
+					roles: [Role.ADMIN],
 					breadcrumbs: [
 						{
 							text: 'Productos',

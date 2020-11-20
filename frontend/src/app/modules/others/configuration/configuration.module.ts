@@ -4,8 +4,11 @@ import { CommonModule } from '@angular/common';
 import * as configurationContainers from './containers';
 import * as configurationServices from './services';
 
+// Modules
+import { AppCommonModule } from '../app-common/app-common.module';
+
 @NgModule({
-	imports: [CommonModule],
+	imports: [CommonModule, AppCommonModule],
 	providers: [configurationServices.services],
 	declarations: [configurationContainers.containers],
 	exports: [configurationContainers.containers]

@@ -17,7 +17,7 @@ export class RoleGuard implements CanActivateChild {
 		var canContinue: boolean = false;
 
 		routeRoles.forEach((role) => {
-			canContinue = user.role == role;
+			if (!canContinue) canContinue = user.role == role;
 		});
 
 		if (!canContinue) this.router.navigate(['/error/401']);

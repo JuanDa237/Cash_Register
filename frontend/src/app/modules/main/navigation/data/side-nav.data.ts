@@ -5,17 +5,17 @@ export const sideNavSections: SideNavSection[] = [
 	{
 		text: 'REGISTRAR',
 		items: ['cashRegister'],
-		roles: [Role.CASHIER, Role.ADMINISTRATOR]
+		roles: [Role.CASHIER, Role.ADMIN]
 	},
 	{
 		text: 'EDITAR',
 		items: ['categories', 'products', 'ingredients', 'clients', 'tickets'],
-		roles: [Role.ADMINISTRATOR]
+		roles: [Role.ADMIN]
 	},
 	{
 		text: 'CONFIGURACION',
 		items: ['configuration'],
-		roles: [Role.ADMINISTRATOR]
+		roles: [Role.ADMIN]
 	}
 ];
 

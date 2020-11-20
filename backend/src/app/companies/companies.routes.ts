@@ -14,7 +14,7 @@ class CompaniesRoutes {
 		this.router.get(
 			'/company',
 			[authJwt.verifyToken, authJwt.isCashier],
-			companiesControllers.getOneCompany
+			companiesControllers.getCompany
 		);
 
 		// Post
@@ -25,9 +25,9 @@ class CompaniesRoutes {
 		);
 
 		// Update
-		this.router.post(
-			'/company/:id',
-			[authJwt.verifyToken, authJwt.isSuperAdmin, multerConfig.single('image')],
+		this.router.put(
+			'/company',
+			[authJwt.verifyToken, authJwt.isAdministrator, multerConfig.single('image')],
 			companiesControllers.updateCompany
 		);
 	}

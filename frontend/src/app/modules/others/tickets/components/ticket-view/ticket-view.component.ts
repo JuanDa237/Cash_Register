@@ -11,6 +11,9 @@ import { Ticket, createEmptyTicket } from '../../models';
 
 import { ProductInTicket } from '@app/modules/others/products/models';
 
+//Api
+import { environment } from '@enviroment/environment';
+
 @Component({
 	selector: 'app-ticket-view',
 	templateUrl: './ticket-view.component.html'
@@ -22,6 +25,9 @@ export class TicketViewComponent implements OnInit {
 
 	public productsInTicket: Array<ProductInTicket>;
 
+	public apiUrl: string;
+	public loadingCompany: boolean;
+
 	constructor(
 		private ticketsService: TicketsService,
 		private clientsService: ClientsService,
@@ -31,6 +37,9 @@ export class TicketViewComponent implements OnInit {
 		this.ticket = createEmptyTicket();
 		this.client = createEmptyClient();
 		this.company = createEmptyCompany();
+
+		this.apiUrl = environment.apiUrl;
+		this.loadingCompany = true;
 	}
 
 	ngOnInit(): void {
@@ -41,6 +50,7 @@ export class TicketViewComponent implements OnInit {
 		this.companyService.getCompany().subscribe(
 			(response) => {
 				this.company = response;
+				this.loadingCompany = false;
 			},
 			(error) => {
 				throw new Error(error);
