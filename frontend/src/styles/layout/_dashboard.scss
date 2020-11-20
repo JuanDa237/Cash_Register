@@ -2,7 +2,7 @@
 // The default positioning for the sidenav is a static position
 #layoutSidenav {
 	display: flex;
-	// Wraps the .sb-sidenav element and sets the size
+	// Wraps the .sidenav element and sets the size
 	#layoutSidenav_nav {
 		flex-basis: $sidenav-base-width;
 		flex-shrink: 0;
@@ -13,9 +13,9 @@
 		@extend .fixed-top;
 		width: $sidenav-base-width;
 		height: 100vh;
-		.sb-sidenav {
+		.sidenav {
 			padding-top: $topnav-base-height;
-			.sb-sidenav-menu {
+			.sidenav-menu {
 				overflow-y: auto;
 			}
 		}
@@ -36,7 +36,7 @@
 }
 
 // Default behavior for the static sidenav collapse
-.sb-sidenav-toggled {
+.sidenav-toggled {
 	#layoutSidenav {
 		#layoutSidenav_nav {
 			transform: translateX(0);
@@ -71,7 +71,7 @@
 		}
 	}
 	// Behavior for the sidenav collapse on screens larger than the med breakpoint
-	.sb-sidenav-toggled {
+	.sidenav-toggled {
 		#layoutSidenav {
 			#layoutSidenav_nav {
 				transform: translateX(-$sidenav-base-width);

@@ -10,7 +10,7 @@ import { NavigationService } from '@modules/main/navigation/services';
 	styleUrls: ['./layout-dashboard.component.scss']
 })
 export class LayoutDashboardComponent implements OnInit, OnDestroy {
-	@HostBinding('class.sb-sidenav-toggled')
+	@HostBinding('class.sidenav-toggled')
 	public sideNavHidden = false;
 
 	private subscription: Subscription = new Subscription();

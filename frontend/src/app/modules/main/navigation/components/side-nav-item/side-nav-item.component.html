@@ -6,15 +6,15 @@
 	(click)="expanded = !expanded"
 	[ngClass]="{ collapsed: !expanded }"
 >
-	<div class="sb-nav-link-icon" *ngIf="sideNavItem.icon">
+	<div class="nav-link-icon" *ngIf="sideNavItem.icon">
 		<i [ngClass]="['fas', sideNavItem.icon]" [title]="sideNavItem.text"></i>
 	</div>
 	{{ sideNavItem.text }}
-	<div class="sb-sidenav-collapse-arrow">
+	<div class="sidenav-collapse-arrow">
 		<i class="fas fa-angle-down ml-auto" title="Desplegar" *ngIf="sideNavItem.submenu"></i>
 	</div>
 </a>
-<nav class="sb-sidenav-menu-nested nav" *ngIf="sideNavItem.submenu && expanded">
+<nav class="sidenav-menu-nested nav" *ngIf="sideNavItem.submenu && expanded">
 	<app-side-nav-item
 		class="submenu"
 		*ngFor="let submenuItem of sideNavItem.submenu"

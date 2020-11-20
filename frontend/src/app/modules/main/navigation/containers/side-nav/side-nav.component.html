@@ -1,15 +1,15 @@
-<nav class="sb-sidenav accordion" id="sidenavAccordion">
-	<div class="sb-sidenav-menu">
+<nav class="sidenav accordion" id="sidenavAccordion">
+	<div class="sidenav-menu">
 		<div class="nav">
 			<ng-container *ngFor="let section of sideNavSections">
-				<div class="sb-sidenav-menu-heading" *ngIf="section.text">{{ section.text }}</div>
+				<div class="sidenav-menu-heading" *ngIf="section.text">{{ section.text }}</div>
 				<ng-container *ngFor="let item of section.items">
 					<app-side-nav-item [sideNavItem]="sideNavItems[item]"></app-side-nav-item>
 				</ng-container>
 			</ng-container>
 		</div>
 	</div>
-	<div class="sb-sidenav-footer">
+	<div class="sidenav-footer">
 		<div class="small">Conectado como:</div>
 		<span>{{ username }}</span>
 	</div>
