@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 // Api
 import { environment } from '@enviroment/environment';
 
-import { Company } from '../models';
+import { Company, CompanyFile } from '../models';
 
 @Injectable({
 	providedIn: 'root'
@@ -21,5 +21,16 @@ export class CompanyService {
 
 	getCompany(): Observable<Company> {
 		return this.http.get<Company>(this.apiUrl + 'company', { headers: this.headers });
+	}
+
+	updateCompany(company: CompanyFile): Observable<any> {
+		var fd = new FormData();
+		fd.append('name', company.name);
+		fd.append('ticketMessage', company.ticketMessage);
+		fd.append('visible', company.visible ? 'true' : 'false');
+
+		if (company.imageFile) fd.append('image', company.imageFile, company.imageFile.name);
+
+		return this.http.put<any>(this.apiUrl + 'company', fd);
 	}
 }

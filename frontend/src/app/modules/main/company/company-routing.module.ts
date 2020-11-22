@@ -87,7 +87,25 @@ const routes: Routes = [
 				data: {
 					title: 'Configuracion Empresa',
 					hideBreadcrumbs: true,
-					roles: [Role.CASHIER, Role.ADMIN]
+					roles: [Role.ADMIN, Role.SUPERADMIN]
+				} as RouteData
+			},
+			{
+				path: 'configuration/company/edit',
+				component: othersContainers.CompanyMainFormComponent,
+				data: {
+					title: 'Configuracion Empresa',
+					breadcrumbs: [
+						{
+							text: 'Configuracion',
+							link: '/company/configuration/company'
+						},
+						{
+							text: 'Editando Empresa',
+							active: true
+						}
+					],
+					roles: [Role.ADMIN, Role.SUPERADMIN]
 				} as RouteData
 			},
 			{

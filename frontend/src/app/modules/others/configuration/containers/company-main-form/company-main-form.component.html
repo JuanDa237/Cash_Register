@@ -1,0 +1,24 @@
+<div class="card">
+	<div class="card-body">
+		<app-company-form
+			idForm="companyForm"
+			(onSubmitEvent)="updateCompany()"
+			(invalidForm)="invalidForm = $event"
+		></app-company-form>
+	</div>
+	<div class="card-footer text-right">
+		<div class="btn-group">
+			<a class="btn btn-secondary" routerLink="../">Cancelar</a>
+			<button
+				type="submit"
+				class="btn btn-success"
+				(click)="updateCompany()"
+				[disabled]="invalidForm"
+				data-dismiss="modal"
+				form="companyForm"
+			>
+				Editar
+			</button>
+		</div>
+	</div>
+</div>
