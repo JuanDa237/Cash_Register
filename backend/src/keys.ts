@@ -18,5 +18,9 @@ export default {
 			username: 'juan',
 			password: 'contra'
 		}
+	},
+	noEnv: {
+		PORT: 3000,
+		TOKEN: 'JuAnDaViDgAvIrIACoRrEaNOTENV'
 	}
 };

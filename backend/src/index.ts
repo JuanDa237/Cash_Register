@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import keys from './keys';
 import { createInitialData } from './app/roles/initialData';
 
 import indexRoutes from './app/index/index.routes';
@@ -33,7 +34,7 @@ class Server {
 	}
 
 	private configExpress(): void {
-		this.app.set('port', process.env.PORT || 3000);
+		this.app.set('port', process.env.PORT || keys.noEnv.PORT);
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: false }));
 	}

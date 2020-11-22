@@ -1,10 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
+
 import jwt from 'jsonwebtoken';
 import pool from '../../../database';
+import keys from '../../../keys';
 
 import { User } from '../../users/models';
 import { Role } from '../../roles/data';
 import { Role as IRole } from '../../roles/models';
+import { Company } from '../../companies/models';
 
 interface Payload {
 	id: number;
@@ -24,19 +27,24 @@ export async function verifyToken(
 
 		const payload: Payload = jwt.verify(
 			token,
-			process.env.TOKEN_SECRET || 'tokentest'
+			process.env.TOKEN_SECRET || keys.noEnv.TOKEN
 		) as Payload;
 
 		const user: User[] = await (
 			await pool
 		).query('SELECT id, idCompany, idRole, username FROM users WHERE id = ?', [payload.id]);
 
-		if (user.length > 0) {
-			request.user = user[0];
-			return next();
-		} else {
-			return response.status(404).json({ message: 'User not found.' });
-		}
+		if (user.length <= 0) return response.status(404).json({ message: 'User not found.' });
+
+		const company: Company[] = await (
+			await pool
+		).query('SELECT id FROM companies WHERE active = true AND id = ?', [user[0].idCompany]);
+
+		if (company.length <= 0)
+			return response.status(404).json({ message: 'Company not found.' });
+
+		request.user = user[0];
+		return next();
 	} catch (error) {
 		return response.status(401).json({ message: 'Unauthorized.' });
 	}

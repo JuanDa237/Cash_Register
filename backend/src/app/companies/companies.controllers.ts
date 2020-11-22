@@ -23,6 +23,21 @@ class CompaniesControllers {
 		}
 	}
 
+	public async getCompanyById(request: Request, response: Response): Promise<Response> {
+		const company: Company[] = await (
+			await pool
+		).query(
+			'SELECT name, image, ticketMessage, visible FROM companies WHERE id = ? AND active = true;',
+			[request.params.id]
+		);
+
+		if (company.length > 0) {
+			return response.status(200).json(company[0]);
+		} else {
+			return response.status(404).json({ message: 'Not found.' });
+		}
+	}
+
 	// Post
 	public async createCompany(request: Request, response: Response): Promise<Response> {
 		const { name, ticketMessage, visible } = request.body;
@@ -36,7 +51,8 @@ class CompaniesControllers {
 					name,
 					ticketMessage,
 					visible: visible === 'true',
-					image: image.path
+					image: image.path,
+					active: true
 				}
 			]);
 

@@ -2,9 +2,11 @@ import { Request, Response } from 'express';
 
 import jwt from 'jsonwebtoken';
 import pool from '../../database';
+import keys from '../../keys';
 
 import { User, encryptPassword, validatePassword } from '../users/models';
 import { Role } from '../roles/models';
+import { Company } from '../companies/models';
 
 class AuthControllers {
 	// Post
@@ -13,41 +15,49 @@ class AuthControllers {
 
 		const user: User[] = await (
 			await pool
-		).query('SELECT id, password, name, idRole FROM users WHERE username = ?', [username]);
+		).query('SELECT id, password, name, idRole, idCompany FROM users WHERE username = ?', [
+			username
+		]);
 
-		if (user.length > 0) {
-			const correctPassword: boolean = await validatePassword(password, user[0].password);
+		// Validate username
+		if (user.length <= 0) return response.status(404).json({ message: 'Username not found.' });
 
-			if (correctPassword) {
-				const token: string = jwt.sign(
-					{
-						id: user[0].id
-					},
-					process.env.TOKEN_SECRET || 'tokenTest',
-					{
-						expiresIn: 86400 // The token expires in 24 hours
-					}
-				);
+		const company: Company[] = await (await pool).query(
+			'SELECT id FROM companies WHERE active = true AND id = ?',
+			user[0].idCompany
+		);
 
-				const role: Role[] = await (await pool).query(
-					'SELECT name FROM roles WHERE id = ?',
-					[user[0].idRole]
-				);
+		// Validate if comany is active
+		if (company.length <= 0)
+			return response.status(401).json({ message: 'Company not found.' });
 
-				return response
-					.status(200)
-					.header('token', token)
-					.set('Access-Control-Expose-Headers', 'token')
-					.json({
-						name: user[0].name,
-						role: role[0].name
-					});
-			} else {
-				return response.status(401).json({ message: 'Password is wrong.' });
+		const correctPassword: boolean = await validatePassword(password, user[0].password);
+
+		// Validate password
+		if (!correctPassword) return response.status(401).json({ message: 'Password is wrong.' });
+
+		const token: string = jwt.sign(
+			{
+				id: user[0].id
+			},
+			process.env.TOKEN_SECRET || keys.noEnv.TOKEN,
+			{
+				expiresIn: 86400 // The token expires in 24 hours
 			}
-		} else {
-			return response.status(404).json({ message: 'Username not found.' });
-		}
+		);
+
+		const role: Role[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
+			user[0].idRole
+		]);
+
+		return response
+			.status(200)
+			.header('token', token)
+			.set('Access-Control-Expose-Headers', 'token')
+			.json({
+				name: user[0].name,
+				role: role[0].name
+			});
 	}
 
 	public async singUp(request: Request, response: Response): Promise<Response> {
@@ -86,7 +96,6 @@ class AuthControllers {
 			name
 		};
 
-		console.log(newUser);
 		const insertedNewUser: any = await (await pool).query('INSERT INTO users SET ?', [newUser]);
 
 		const exportUser = {

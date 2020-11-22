@@ -17,6 +17,8 @@ class CompaniesRoutes {
 			companiesControllers.getCompany
 		);
 
+		this.router.get('/company/:id', companiesControllers.getCompanyById);
+
 		// Post
 		this.router.post(
 			'/company',
