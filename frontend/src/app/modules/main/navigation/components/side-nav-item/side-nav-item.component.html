@@ -14,7 +14,7 @@
 		<i class="fas fa-angle-down ml-auto" title="Desplegar" *ngIf="sideNavItem.submenu"></i>
 	</div>
 </a>
-<nav class="sidenav-menu-nested nav" *ngIf="sideNavItem.submenu && expanded">
+<nav class="sidenav-menu-nested nav" *ngIf="sideNavItem.submenu && expanded" [@fade]>
 	<app-side-nav-item
 		class="submenu"
 		*ngFor="let submenuItem of sideNavItem.submenu"
