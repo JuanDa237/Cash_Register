@@ -1,32 +1,41 @@
-<h1>PerreroApp</h1>
-<h2>V- 0.0.2</h2>
-<img src="https://raw.githubusercontent.com/JuanDa237/Cash_Register/main/sources/images/image.png" alt="appImage.png">
-<h2>Installation</h2>
-<h4>Dependecies</h4>
-<ul>
-    <li>NodeJS</li>
-    <li>Angular</li>
-    <li>MySql</li>
-</ul>
-<p>If you have the dependencies installed you must create the MySql database <a href="https://github.com/JuanDa237/Cash_Register/tree/main/sources/database">(files in Database folder)</a>, then in the Backend folder do the following commands:</p>
-<ul>
-    <li>
-        Do the build: <br>
-        <strong>$ npm run build</strong>
-    </li>
-    <br>
-    <li>
-        Start the server: <br>
-        <strong>$ npm start</strong>
-    </li>
-    <br>
-</ul>
-<p>Then in Frontend folder do the next command:</p>
-<ul>
-    <li>
-        Start the Angular server:<br>
-        <strong>$ npm start</strong>
-    </li>
-    <br>
-</ul>
-<p>Then go to http://localhost:4000 and use the amazing cash register in a web page.</p>
+<h1 align="center">Cash Register :moneybag:</h1>
+#### V- 0.0.2
+
+This is a personal project, it consists of a web page where companies can be registered and each one has functions to be managed itself.
+
+[![Administrator Dashboard](https://raw.githubusercontent.com/JuanDa237/Cash_Register/main/sources/images/image.png 'Administrator Dashboard')][frontend]
+
+## Built With :bricks:
+
+-   Angular
+-   Node.js (With TypeScript)
+-   Express
+-   MySql
+
+## Development Setup :desktop_computer::keyboard:
+
+1. Install [Angular][angular], [Node.js][node.js] and [MySql][mysql].
+2. [Create database][dbfiles]
+3. Do the following commands in [backend][backend]:
+    1. Do the build
+    ```
+    npm run build
+    ```
+    2. Do the build
+    ```
+    npm start
+    ```
+4. Start [frontend][frontend]:
+
+```
+npm start
+```
+
+5. Go to http://localhost:4000, to see home page.
+
+[frontend]: https://github.com/JuanDa237/Cash_Register/tree/main/frontend
+[backend]: https://github.com/JuanDa237/Cash_Register/tree/main/backend
+[dbfiles]: https://github.com/JuanDa237/Cash_Register/tree/main/sources/database
+[angular]: https://angular.io/cli
+[node.js]: https://nodejs.org/es/download/
+[mysql]: https://dev.mysql.com/downloads/mysql/
