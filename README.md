@@ -1,5 +1,5 @@
 <h1 align="center">Cash Register :moneybag:</h1>
-#### V- 0.0.2
+<h4 align="right">V- 0.0.2</h4>
 
 This is a personal project, it consists of a web page where companies can be registered and each one has functions to be managed itself.
 
@@ -12,7 +12,7 @@ This is a personal project, it consists of a web page where companies can be reg
 -   Express
 -   MySql
 
-## Development Setup :desktop_computer::keyboard:
+## Development Setup :desktop_computer: :keyboard:
 
 1. Install [Angular][angular], [Node.js][node.js] and [MySql][mysql].
 2. [Create database][dbfiles]
@@ -21,7 +21,7 @@ This is a personal project, it consists of a web page where companies can be reg
     ```
     npm run build
     ```
-    2. Do the build
+    2. Start server
     ```
     npm start
     ```
