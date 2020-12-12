@@ -11,7 +11,15 @@
 	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 		<h6 class="dropdown-header">
 			<div class="dropdown-user-details">
-				<div class="dropdown-user-details-name">{{ user.name }}</div>
+				<div class="dropdown-user-details-name text-dark">{{ user.name }}</div>
+				<div class="dropdown-user-details-email">
+					<ng-container [ngSwitch]="user.role">
+						<span *ngSwitchCase="'cashier'">Cajero</span>
+						<span *ngSwitchCase="'admin'">Administrador</span>
+						<span *ngSwitchCase="'superadmin'">Super Administrador</span>
+						<div *ngSwitchDefault>Sin rol</div>
+					</ng-container>
+				</div>
 			</div>
 		</h6>
 		<div class="dropdown-divider"></div>

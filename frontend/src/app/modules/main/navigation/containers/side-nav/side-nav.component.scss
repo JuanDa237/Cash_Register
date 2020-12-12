@@ -25,5 +25,15 @@
 	.sidenav-footer {
 		padding: 0.75rem;
 		background-color: $sidenav-dark-footer-bg;
+		.company-name {
+			color: $white;
+			position: relative;
+			.navbar-brand {
+				margin: 0;
+				position: absolute;
+				top: 50%;
+				transform: translate(0, -50%);
+			}
+		}
 	}
 }

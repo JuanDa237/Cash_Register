@@ -2,12 +2,17 @@ import { Component, OnInit } from '@angular/core';
 
 // Models
 import { SideNavItems, SideNavSection } from '@modules/main/navigation/models';
+import { Company, createEmptyCompany } from '@app/modules/others/configuration/models';
 
 // Data
 import { sideNavItems, sideNavSections } from '@modules/main/navigation/data';
 
 // Services
 import { UserService } from '../../services/index';
+import { CompanyService } from '@app/modules/others/configuration/services';
+
+//Api
+import { environment } from '@enviroment/environment';
 
 @Component({
 	selector: 'app-side-nav',
@@ -18,34 +23,48 @@ export class SideNavComponent implements OnInit {
 	public sideNavItems: SideNavItems;
 	public sideNavSections: SideNavSection[];
 
-	public username: string;
+	public company: Company;
 	public role: string;
+	public apiUrl: string;
 
-	constructor(private userService: UserService) {
+	public loadingCompany: boolean;
+
+	constructor(private userService: UserService, private companyService: CompanyService) {
 		this.sideNavItems = sideNavItems;
 		this.sideNavSections = sideNavSections;
-		this.username = '';
 		this.role = '';
+		this.apiUrl = environment.apiUrl;
+		this.company = createEmptyCompany();
+		this.loadingCompany = true;
 	}
 
 	ngOnInit(): void {
 		this.getUser();
+		this.getCompany();
 	}
 
 	private getUser(): void {
-		const user = this.userService.getUser();
-		this.username = user.name;
-		this.role = user.role;
-
-		this.actualizeNavSections();
+		this.actualizeNavSections(this.userService.getUser().role);
 	}
 
-	private actualizeNavSections(): void {
+	private getCompany(): void {
+		this.companyService.getCompany().subscribe(
+			(resolve) => {
+				this.company = resolve;
+				this.loadingCompany = false;
+			},
+			(error) => {
+				throw new Error(error);
+			}
+		);
+	}
+
+	private actualizeNavSections(userRole: string): void {
 		this.sideNavSections = [];
 
 		sideNavSections.forEach((section) => {
 			section.roles.forEach((role) => {
-				if (this.role == role) this.sideNavSections.push(section);
+				if (userRole == role) this.sideNavSections.push(section);
 			});
 		});
 	}

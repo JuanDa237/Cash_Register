@@ -10,7 +10,17 @@
 		</div>
 	</div>
 	<div class="sidenav-footer">
-		<div class="small">Conectado como:</div>
-		<span>{{ username }}</span>
+		<div class="row" *ngIf="!loadingCompany">
+			<div class="col-4">
+				<img
+					[src]="apiUrl + company.image"
+					class="rounded float-left img-fluid"
+					[alt]="company.name"
+				/>
+			</div>
+			<div class="col company-name">
+				<div class="navbar-brand">{{ company.name }}</div>
+			</div>
+		</div>
 	</div>
 </nav>
