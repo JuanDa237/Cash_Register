@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7cea787b-1bbe-45d7-a24c-6fe8fa07ed69",
+		"_postman_id": "0e248061-2546-4511-b321-2986a7875274",
 		"name": "Cash Register API",
 		"description": "This is the api for the cash resgister app in Angular.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -61,7 +61,64 @@
 					"name": "/companies & /company",
 					"item": [
 						{
+							"name": "/companies",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}companies",
+									"host": ["{{api}}companies"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/all/companies",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}all/companies",
+									"host": ["{{api}}all"],
+									"path": ["companies"]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "/company",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}company",
+									"host": ["{{api}}company"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/company/:id",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -166,20 +223,14 @@
 										{
 											"key": "visible",
 											"value": "",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										}
 									]
 								},
 								"url": {
-									"raw": "{{api}}company/:id",
-									"host": ["{{api}}company"],
-									"path": [":id"],
-									"variable": [
-										{
-											"key": "id",
-											"value": ""
-										}
-									]
+									"raw": "{{api}}company",
+									"host": ["{{api}}company"]
 								}
 							},
 							"response": []
@@ -599,7 +650,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5c865045-02ae-4c98-b51e-26789c9214a1",
+								"id": "619356fc-ad98-4b28-bed0-60214a85a3ca",
 								"type": "text/javascript",
 								"exec": [""]
 							}
@@ -607,7 +658,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2d76df0c-d9bf-48b5-b3ff-ddaec9075e73",
+								"id": "9c73e2be-ac1f-4f50-9015-ce221bdb9f1c",
 								"type": "text/javascript",
 								"exec": [""]
 							}
@@ -1204,7 +1255,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"juan\",\n    \"password\": \"contra\"\n}"
+									"raw": "{\n    \"username\": \"\",\n    \"password\": \"\"\n}"
 								},
 								"url": {
 									"raw": "{{api}}auth/singIn",

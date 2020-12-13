@@ -7,6 +7,21 @@ import pool from '../../database';
 import { Company } from './models';
 
 class CompaniesControllers {
+	// Get
+	public async getCompanies(request: Request, response: Response): Promise<Response> {
+		const companies: Company[] = await (await pool).query(
+			'SELECT name, image, ticketMessage FROM companies WHERE visible = true AND active = true;'
+		);
+		return response.status(200).json(companies);
+	}
+
+	public async getAllCompanies(request: Request, response: Response): Promise<Response> {
+		const companies: Company[] = await (await pool).query(
+			'SELECT name, image, ticketMessage FROM companies WHERE active = true;'
+		);
+		return response.status(200).json(companies);
+	}
+
 	// Get one
 	public async getCompany(request: Request, response: Response): Promise<Response> {
 		const company: Company[] = await (

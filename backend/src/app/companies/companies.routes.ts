@@ -10,6 +10,14 @@ class CompaniesRoutes {
 	}
 
 	routes(): void {
+		// Get
+		this.router.get('/companies', companiesControllers.getCompanies);
+		this.router.get(
+			'/all/companies',
+			[authJwt.verifyToken, authJwt.isSuperAdmin],
+			companiesControllers.getAllCompanies
+		);
+
 		// Get one
 		this.router.get(
 			'/company',
