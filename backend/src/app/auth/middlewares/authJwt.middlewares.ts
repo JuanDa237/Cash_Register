@@ -15,7 +15,7 @@ interface Payload {
 	exp: number;
 }
 
-export async function verifyToken(
+async function verifyToken(
 	request: Request,
 	response: Response,
 	next: NextFunction
@@ -55,20 +55,22 @@ export async function isCashier(
 	response: Response,
 	next: NextFunction
 ): Promise<void | Response<any>> {
-	const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
-		request.user.idRole
-	]);
+	return verifyToken(request, response, async function () {
+		const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
+			request.user.idRole
+		]);
 
-	if (
-		userRole.length > 0 &&
-		(userRole[0].name == Role.CASHIER ||
-			userRole[0].name == Role.ADMIN ||
-			userRole[0].name == Role.SUPERADMIN)
-	) {
-		return next();
-	} else {
-		return response.status(401).json({ message: 'Unauthorized.' });
-	}
+		if (
+			userRole.length > 0 &&
+			(userRole[0].name == Role.CASHIER ||
+				userRole[0].name == Role.ADMIN ||
+				userRole[0].name == Role.SUPERADMIN)
+		) {
+			return next();
+		} else {
+			return response.status(401).json({ message: 'Unauthorized.' });
+		}
+	});
 }
 
 export async function isAdministrator(
@@ -76,18 +78,20 @@ export async function isAdministrator(
 	response: Response,
 	next: NextFunction
 ): Promise<void | Response<any>> {
-	const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
-		request.user.idRole
-	]);
+	return verifyToken(request, response, async function () {
+		const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
+			request.user.idRole
+		]);
 
-	if (
-		userRole.length > 0 &&
-		(userRole[0].name == Role.ADMIN || userRole[0].name == Role.SUPERADMIN)
-	) {
-		return next();
-	} else {
-		return response.status(401).json({ message: 'Unauthorized.' });
-	}
+		if (
+			userRole.length > 0 &&
+			(userRole[0].name == Role.ADMIN || userRole[0].name == Role.SUPERADMIN)
+		) {
+			return next();
+		} else {
+			return response.status(401).json({ message: 'Unauthorized.' });
+		}
+	});
 }
 
 export async function isSuperAdmin(
@@ -95,13 +99,15 @@ export async function isSuperAdmin(
 	response: Response,
 	next: NextFunction
 ): Promise<void | Response<any>> {
-	const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
-		request.user.idRole
-	]);
+	return verifyToken(request, response, async function () {
+		const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
+			request.user.idRole
+		]);
 
-	if (userRole.length > 0 && userRole[0].name == Role.SUPERADMIN) {
-		return next();
-	} else {
-		return response.status(401).json({ message: 'Unauthorized.' });
-	}
+		if (userRole.length > 0 && userRole[0].name == Role.SUPERADMIN) {
+			return next();
+		} else {
+			return response.status(401).json({ message: 'Unauthorized.' });
+		}
+	});
 }

@@ -12,52 +12,44 @@ class ProductsRoutes {
 		// Get All List
 		this.router.get(
 			'/all/products',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			productsController.listAllProducts
 		);
 
 		// Get list
-		this.router.get(
-			'/products',
-			[authJwt.verifyToken, authJwt.isCashier],
-			productsController.listProducts
-		);
+		this.router.get('/products', [authJwt.isCashier], productsController.listProducts);
 		this.router.get(
 			'/products/ingredients',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			productsController.listIngredientsInProducts
 		);
 
 		// Get one
 		this.router.get(
 			'/product/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			productsController.getOneProduct
 		);
 		this.router.get(
 			'/product/:id/ingredients/',
-			[authJwt.verifyToken, authJwt.isCashier],
+			[authJwt.isCashier],
 			productsController.getIngredientsInProduct
 		);
 
 		// Post
-		this.router.post(
-			'/product',
-			[authJwt.verifyToken, authJwt.isAdministrator],
-			productsController.createProduct
-		);
+		this.router.post('/product', [authJwt.isAdministrator], productsController.createProduct);
 
 		// Update
 		this.router.put(
 			'/product/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			productsController.updateProduct
 		);
 
 		// Delete
 		this.router.delete(
 			'/product/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			productsController.deleteProduct
 		);
 	}

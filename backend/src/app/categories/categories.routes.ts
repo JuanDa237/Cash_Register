@@ -12,35 +12,35 @@ class CategoriesRoutes {
 		// Get list
 		this.router.get(
 			'/categories',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			categoriesControllers.listCategories
 		);
 
 		// Get one
 		this.router.get(
 			'/category/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			categoriesControllers.getOneCategory
 		);
 
 		// Post
 		this.router.post(
 			'/category',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			categoriesControllers.createCategory
 		);
 
 		// Update
 		this.router.put(
 			'/category/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			categoriesControllers.updateCategory
 		);
 
 		// Delete
 		this.router.delete(
 			'/category/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			categoriesControllers.deleteCategory
 		);
 	}

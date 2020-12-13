@@ -14,30 +14,26 @@ class CompaniesRoutes {
 		this.router.get('/companies', companiesControllers.getCompanies);
 		this.router.get(
 			'/all/companies',
-			[authJwt.verifyToken, authJwt.isSuperAdmin],
+			[authJwt.isSuperAdmin],
 			companiesControllers.getAllCompanies
 		);
 
 		// Get one
-		this.router.get(
-			'/company',
-			[authJwt.verifyToken, authJwt.isCashier],
-			companiesControllers.getCompany
-		);
+		this.router.get('/company', [authJwt.isCashier], companiesControllers.getCompany);
 
 		this.router.get('/company/:id', companiesControllers.getCompanyById);
 
 		// Post
 		this.router.post(
 			'/company',
-			[authJwt.verifyToken, authJwt.isSuperAdmin, multerConfig.single('image')],
+			[authJwt.isSuperAdmin, multerConfig.single('image')],
 			companiesControllers.createCompany
 		);
 
 		// Update
 		this.router.put(
 			'/company',
-			[authJwt.verifyToken, authJwt.isAdministrator, multerConfig.single('image')],
+			[authJwt.isAdministrator, multerConfig.single('image')],
 			companiesControllers.updateCompany
 		);
 	}

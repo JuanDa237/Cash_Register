@@ -11,11 +11,7 @@ class AuthRoutes {
 	private routes(): void {
 		// Post
 		this.router.post('/singIn', authControllers.singIn);
-		this.router.post(
-			'/singUp',
-			[authJwt.verifyToken, authJwt.isSuperAdmin],
-			authControllers.singUp
-		);
+		this.router.post('/singUp', [authJwt.isSuperAdmin], authControllers.singUp);
 	}
 }
 

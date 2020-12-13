@@ -12,49 +12,33 @@ class CategoriesRoutes {
 		// Get Interval
 		this.router.get(
 			'/clients/year',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			clientsControllers.listClientsInYear
 		);
 
 		// Get All List
 		this.router.get(
 			'/all/clients',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			clientsControllers.listAllClients
 		);
 
 		// Get list
-		this.router.get(
-			'/clients',
-			[authJwt.verifyToken, authJwt.isCashier],
-			clientsControllers.listClients
-		);
+		this.router.get('/clients', [authJwt.isCashier], clientsControllers.listClients);
 
 		// Get one
-		this.router.get(
-			'/client/:id',
-			[authJwt.verifyToken, authJwt.isCashier],
-			clientsControllers.getOneClient
-		);
+		this.router.get('/client/:id', [authJwt.isCashier], clientsControllers.getOneClient);
 
 		// Post
-		this.router.post(
-			'/client',
-			[authJwt.verifyToken, authJwt.isAdministrator],
-			clientsControllers.createClient
-		);
+		this.router.post('/client', [authJwt.isAdministrator], clientsControllers.createClient);
 
 		// Update
-		this.router.put(
-			'/client/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
-			clientsControllers.updateClient
-		);
+		this.router.put('/client/:id', [authJwt.isAdministrator], clientsControllers.updateClient);
 
 		// Delete
 		this.router.delete(
 			'/client/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			clientsControllers.deleteClient
 		);
 	}

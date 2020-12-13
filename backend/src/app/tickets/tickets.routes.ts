@@ -12,45 +12,33 @@ class CategoriesRoutes {
 		// Get Interval
 		this.router.get(
 			'/tickets/:since/:until',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			ticketsControllers.listTicketsInInterval
 		);
 		this.router.get(
 			'/tickets/year',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			ticketsControllers.listTicketsInYear
 		);
 
 		// Get list
-		this.router.get(
-			'/tickets',
-			[authJwt.verifyToken, authJwt.isAdministrator],
-			ticketsControllers.listTickets
-		);
+		this.router.get('/tickets', [authJwt.isAdministrator], ticketsControllers.listTickets);
 		this.router.get(
 			'/tickets/products',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			ticketsControllers.listProductsInTickets
 		);
 		this.router.get(
 			'/ticket/products/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			ticketsControllers.getProductsInTicket
 		);
 
 		// Get one
-		this.router.get(
-			'/ticket/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
-			ticketsControllers.getOneTicket
-		);
+		this.router.get('/ticket/:id', [authJwt.isAdministrator], ticketsControllers.getOneTicket);
 
 		// Post
-		this.router.post(
-			'/ticket',
-			[authJwt.verifyToken, authJwt.isCashier],
-			ticketsControllers.createTicket
-		);
+		this.router.post('/ticket', [authJwt.isCashier], ticketsControllers.createTicket);
 	}
 }
 

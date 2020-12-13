@@ -12,35 +12,35 @@ class IngredientsRoutes {
 		// Get list
 		this.router.get(
 			'/ingredients',
-			[authJwt.verifyToken, authJwt.isCashier],
+			[authJwt.isCashier],
 			ingredientsControllers.listIngredients
 		);
 
 		// Get one
 		this.router.get(
 			'/ingredient/:id',
-			[authJwt.verifyToken, authJwt.isCashier],
+			[authJwt.isCashier],
 			ingredientsControllers.getOneIngredient
 		);
 
 		// Post
 		this.router.post(
 			'/ingredient',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			ingredientsControllers.createIngredient
 		);
 
 		// Update
 		this.router.put(
 			'/ingredient/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			ingredientsControllers.updateIngredient
 		);
 
 		// Delete
 		this.router.delete(
 			'/ingredient/:id',
-			[authJwt.verifyToken, authJwt.isAdministrator],
+			[authJwt.isAdministrator],
 			ingredientsControllers.deleteIngredient
 		);
 	}
