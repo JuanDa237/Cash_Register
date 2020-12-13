@@ -3,34 +3,42 @@ import { Role } from '../models/index';
 
 export const sideNavSections: SideNavSection[] = [
 	{
+		text: 'ADMINISTRAR',
+		items: ['admin'],
+		roles: [Role.SUPERADMIN]
+	},
+	{
 		text: 'REGISTRAR',
 		items: ['cashRegister'],
-		roles: [Role.CASHIER, Role.ADMIN, Role.SUPERADMIN]
+		roles: [Role.CASHIER, Role.ADMIN]
 	},
 	{
 		text: 'EDITAR',
 		items: ['categories', 'products', 'ingredients', 'clients', 'tickets'],
-		roles: [Role.ADMIN, Role.SUPERADMIN]
+		roles: [Role.ADMIN]
 	},
 	{
 		text: 'CONFIGURACION',
 		items: ['configuration'],
-		roles: [Role.ADMIN, Role.SUPERADMIN]
+		roles: [Role.ADMIN]
 	}
 ];
 
 export const sideNavItems: SideNavItems = {
+	admin: {
+		icon: 'fa-cash-register',
+		text: 'Registrar',
+		link: '/company/cashRegister'
+	},
 	cashRegister: {
 		icon: 'fa-cash-register',
 		text: 'Registrar',
-		link: '/company/cashRegister',
-		activeClass: true
+		link: '/company/cashRegister'
 	},
 	categories: {
 		icon: 'fa-stream',
 		text: 'Categorias',
-		link: '/company/categories',
-		activeClass: true
+		link: '/company/categories'
 	},
 	products: {
 		icon: 'fa-boxes',
@@ -38,34 +46,28 @@ export const sideNavItems: SideNavItems = {
 		submenu: [
 			{
 				text: 'Mis productos',
-				link: '/company/products',
-				activeClass: true
+				link: '/company/products'
 			},
 			{
 				text: 'Crear',
-				link: '/company/products/add',
-				activeClass: true
+				link: '/company/products/add'
 			}
-		],
-		activeClass: false
+		]
 	},
 	ingredients: {
 		icon: 'fa-bread-slice',
 		text: 'Ingredientes',
-		link: '/company/ingredients',
-		activeClass: true
+		link: '/company/ingredients'
 	},
 	clients: {
 		icon: 'fa-users',
 		text: 'Clientes',
-		link: '/company/clients',
-		activeClass: true
+		link: '/company/clients'
 	},
 	tickets: {
 		icon: 'fa-clipboard',
 		text: 'Registros',
-		link: '/company/tickets',
-		activeClass: true
+		link: '/company/tickets'
 	},
 	configuration: {
 		icon: 'fa-cog',
@@ -73,15 +75,12 @@ export const sideNavItems: SideNavItems = {
 		submenu: [
 			{
 				text: 'Empresa',
-				link: '/company/configuration/company',
-				activeClass: true
+				link: '/company/configuration/company'
 			},
 			{
 				text: 'Tu',
-				link: '/company/configuration/me',
-				activeClass: true
+				link: '/company/configuration/me'
 			}
-		],
-		activeClass: false
+		]
 	}
 };
