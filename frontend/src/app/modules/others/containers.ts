@@ -9,3 +9,4 @@ export {
 	CompanyMainFormComponent,
 	UserComponent
 } from './configuration/containers';
+export { CompaniesComponent } from './companies/containers';

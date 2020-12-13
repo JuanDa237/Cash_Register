@@ -17,6 +17,11 @@ const routes: Routes = [
 			)
 	},
 	{
+		path: 'admin',
+		loadChildren: () =>
+			import('@modules/main/company/admin-routing.module').then((m) => m.AdminRoutingModule)
+	},
+	{
 		path: 'error',
 		loadChildren: () =>
 			import('@modules/main/error/error-routing.module').then((m) => m.ErrorRoutingModule)
