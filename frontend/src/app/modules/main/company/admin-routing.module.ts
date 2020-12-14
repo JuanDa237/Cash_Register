@@ -34,6 +34,42 @@ const routes: Routes = [
 					hideBreadcrumbs: true,
 					roles: [Role.SUPERADMIN]
 				} as RouteData
+			},
+			{
+				path: 'companies/add',
+				component: othersContainers.CompaniesFormComponent,
+				data: {
+					title: 'Crea una compañia',
+					roles: [Role.SUPERADMIN],
+					breadcrumbs: [
+						{
+							text: 'Compañias',
+							link: '/admin/companies'
+						},
+						{
+							text: 'Crear',
+							active: true
+						}
+					]
+				} as RouteData
+			},
+			{
+				path: 'companies/edit/:id',
+				component: othersContainers.CompaniesFormComponent,
+				data: {
+					title: 'Edita La Compañia',
+					roles: [Role.SUPERADMIN],
+					breadcrumbs: [
+						{
+							text: 'Compañias',
+							link: '/admin/companies'
+						},
+						{
+							text: 'Editar',
+							active: true
+						}
+					]
+				} as RouteData
 			}
 		]
 	}

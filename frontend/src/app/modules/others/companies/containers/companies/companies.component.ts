@@ -31,8 +31,6 @@ export class CompaniesComponent implements OnInit {
 				this.companies = resolve;
 				this.loading = false;
 				this.table.renderTable();
-
-				console.log(this.companies);
 			},
 			(error) => {
 				throw new Error(error);

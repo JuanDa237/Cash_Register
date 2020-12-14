@@ -9,10 +9,11 @@ import * as companiesServices from './services';
 
 // Modules
 import { AppCommonModule } from '../app-common/app-common.module';
+import { CompaniesFormComponent } from './containers/companies-form/companies-form.component';
 
 @NgModule({
 	imports: [CommonModule, RouterModule, ReactiveFormsModule, AppCommonModule],
-	declarations: [companiesContainers.containers, companiesComponents.components],
+	declarations: [companiesContainers.containers, companiesComponents.components, CompaniesFormComponent],
 	providers: [companiesServices.services],
 	exports: [companiesContainers.containers, companiesComponents.components]
 })
