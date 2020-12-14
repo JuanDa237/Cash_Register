@@ -1,1 +1,44 @@
-<p>companies works!</p>
+<div class="my-4">
+	<a class="btn btn-info btn-block" routerLink="add">
+		<i class="fas fa-plus-circle" title="Crear producto"></i> Crear Compañia
+	</a>
+</div>
+<div *ngIf="loading">
+	<app-loading colorClass="text-primary" size="10rem"></app-loading>
+</div>
+<div [hidden]="loading">
+	<app-table [columns]="['Nombre', 'Visible', 'Acciones']">
+		<tr *ngFor="let company of companies">
+			<td class="align-middle">{{ company.name }}</td>
+			<td class="align-middle text-center">
+				<ng-container *ngIf="company.visible; then exist; else notExist"></ng-container>
+			</td>
+			<td>
+				<div class="text-center">
+					<div class="btn-group">
+						<a class="btn btn-info" [routerLink]="['edit/', company.id]">
+							<i class="far fa-edit" title="Editar"></i>
+						</a>
+						<button class="btn btn-danger" (click)="deleteCompany(company.id)">
+							<i class="far fa-trash-alt" title="Eliminar"></i>
+						</button>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</app-table>
+</div>
+<ng-template #exist>
+	<div class="text-center">
+		<a class="btn btn-success">
+			<i class="fas fa-check" title="Existe"></i>
+		</a>
+	</div>
+</ng-template>
+<ng-template #notExist>
+	<div class="text-center">
+		<a class="btn btn-danger">
+			<i class="fas fa-times" title="No existe"></i>
+		</a>
+	</div>
+</ng-template>

@@ -20,12 +20,12 @@ export class CompanyService {
 	}
 
 	// Get
-	getCompanies(): Observable<Company> {
-		return this.http.get<Company>(this.apiUrl + 'companies', { headers: this.headers });
+	getCompanies(): Observable<Company[]> {
+		return this.http.get<Company[]>(this.apiUrl + 'companies', { headers: this.headers });
 	}
 
-	getAllCompanies(): Observable<Company> {
-		return this.http.get<Company>(this.apiUrl + 'all/companies', { headers: this.headers });
+	getAllCompanies(): Observable<Company[]> {
+		return this.http.get<Company[]>(this.apiUrl + 'all/companies', { headers: this.headers });
 	}
 
 	// Get One

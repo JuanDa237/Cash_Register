@@ -10,14 +10,14 @@ class CompaniesControllers {
 	// Get
 	public async getCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT name, image, ticketMessage FROM companies WHERE visible = true AND active = true;'
+			'SELECT id, name, image, ticketMessage FROM companies WHERE visible = true AND active = true;'
 		);
 		return response.status(200).json(companies);
 	}
 
 	public async getAllCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT name, image, ticketMessage FROM companies WHERE active = true;'
+			'SELECT id, name, image, ticketMessage, visible FROM companies WHERE active = true;'
 		);
 		return response.status(200).json(companies);
 	}
