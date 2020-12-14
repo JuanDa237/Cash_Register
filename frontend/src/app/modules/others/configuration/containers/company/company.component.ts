@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Company, createEmptyCompany } from '../../models';
-import { CompanyService } from '../../services';
+import { Company, createEmptyCompany } from '../../../companies/models';
+import { CompanyService } from '../../../companies/services';
 
 //Api
 import { environment } from '@enviroment/environment';

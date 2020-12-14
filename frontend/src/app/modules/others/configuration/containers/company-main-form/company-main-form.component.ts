@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CompanyFormComponent } from '../../components';
+import { CompanyFormComponent } from '../../../companies/components';
 
-import { Company, createEmptyCompany } from '../../models';
-import { CompanyService } from '../../services';
+import { Company, createEmptyCompany } from '../../../companies/models';
+import { CompanyService } from '../../../companies/services';
 
 // Libs
 import { Sweet } from '@modules/others/app-common/libs';

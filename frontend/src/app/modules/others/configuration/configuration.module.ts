@@ -1,19 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
 
-import * as configurationComponents from './components';
 import * as configurationContainers from './containers';
-import * as configurationServices from './services';
 
 // Modules
 import { AppCommonModule } from '../app-common/app-common.module';
+import { CompaniesModule } from '../companies/companies.module';
 
 @NgModule({
-	imports: [CommonModule, ReactiveFormsModule, RouterModule, AppCommonModule],
-	providers: [configurationServices.services],
-	declarations: [configurationContainers.containers, configurationComponents.components],
+	imports: [CommonModule, AppCommonModule, CompaniesModule],
+	declarations: [configurationContainers.containers],
 	exports: [configurationContainers.containers]
 })
 export class ConfigurationModule {}

@@ -19,6 +19,16 @@ export class CompanyService {
 		this.apiUrl = environment.apiUrl;
 	}
 
+	// Get
+	getCompanies(): Observable<Company> {
+		return this.http.get<Company>(this.apiUrl + 'companies', { headers: this.headers });
+	}
+
+	getAllCompanies(): Observable<Company> {
+		return this.http.get<Company>(this.apiUrl + 'all/companies', { headers: this.headers });
+	}
+
+	// Get One
 	getCompany(): Observable<Company> {
 		return this.http.get<Company>(this.apiUrl + 'company', { headers: this.headers });
 	}

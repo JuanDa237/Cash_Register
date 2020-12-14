@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 
 // Models
 import { SideNavItems, SideNavSection } from '@modules/main/navigation/models';
-import { Company, createEmptyCompany } from '@app/modules/others/configuration/models';
+import { Company, createEmptyCompany } from '@app/modules/others/companies/models';
 
 // Data
 import { sideNavItems, sideNavSections } from '@modules/main/navigation/data';
 
 // Services
 import { UserService } from '../../services/index';
-import { CompanyService } from '@app/modules/others/configuration/services';
+import { CompanyService } from '@app/modules/others/companies/services';
 
 //Api
 import { environment } from '@enviroment/environment';
