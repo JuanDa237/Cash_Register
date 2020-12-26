@@ -25,7 +25,7 @@ export class CompanyComponent implements OnInit {
 	}
 
 	private getCompany(): void {
-		this.companyService.getCompany().subscribe(
+		this.companyService.getMyCompany().subscribe(
 			(resolve) => {
 				this.company = resolve;
 				this.loading = false;

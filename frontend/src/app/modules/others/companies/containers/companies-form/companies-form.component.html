@@ -1,1 +1,43 @@
-<p>companies-form works!</p>
+<div class="row">
+	<div class="col">
+		<app-card-component>
+			<div class="card-header">
+				<div class="row">Compañia</div>
+			</div>
+			<div class="card-body">
+				<app-company-form
+					idForm="companyForm"
+					(onSubmitEvent)="updateCompany()"
+					(invalidForm)="invalidForm = $event"
+				></app-company-form>
+			</div>
+			<div class="card-footer">
+				<ng-container *ngIf="creating; else editButtons">
+					<div class="btn-group text-center d-block">
+						<button
+							class="btn btn-success btn-block"
+							(click)="createOrUpdateCompany()"
+							[disabled]="invalidForm"
+						>
+							<i class="far fa-save" title="Guardar"></i> Guardar
+						</button>
+					</div>
+				</ng-container>
+				<ng-template #editButtons>
+					<div class="btn-group w-100">
+						<button
+							class="btn btn-info"
+							(click)="createOrUpdateCompany()"
+							[disabled]="invalidForm"
+						>
+							<i class="far fa-edit" title="Editar"></i> Editar
+						</button>
+						<button class="btn btn-danger" (click)="deleteCompany()">
+							<i class="far fa-trash-alt" title="Eliminar"></i> Eliminar
+						</button>
+					</div>
+				</ng-template>
+			</div>
+		</app-card-component>
+	</div>
+</div>

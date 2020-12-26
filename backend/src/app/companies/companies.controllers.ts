@@ -82,11 +82,13 @@ class CompaniesControllers {
 
 	// Update
 	public async updateCompany(request: Request, response: Response): Promise<Response> {
-		const { idCompany } = request.user;
 		const { name, ticketMessage, visible } = request.body;
 		const image = (request.file as unknown) as {
 			[fieldname: string]: Express.Multer.File;
 		};
+		var idCompany = request.params.id;
+
+		if (typeof idCompany == 'undefined') idCompany = request.user.idCompany;
 
 		const oldCompany: Company[] = await (
 			await pool
@@ -94,7 +96,7 @@ class CompaniesControllers {
 			idCompany
 		]);
 
-		if (oldCompany != null) {
+		if (oldCompany != null && typeof oldCompany[0] != 'undefined') {
 			await (await pool).query('UPDATE companies SET ? WHERE id = ?', [
 				{
 					name,

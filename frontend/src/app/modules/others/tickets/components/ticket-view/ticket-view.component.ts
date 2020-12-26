@@ -47,7 +47,7 @@ export class TicketViewComponent implements OnInit {
 	}
 
 	private getCompany() {
-		this.companyService.getCompany().subscribe(
+		this.companyService.getMyCompany().subscribe(
 			(response) => {
 				this.company = response;
 				this.loadingCompany = false;

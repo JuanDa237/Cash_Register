@@ -29,10 +29,15 @@ export class CompanyService {
 	}
 
 	// Get One
-	getCompany(): Observable<Company> {
-		return this.http.get<Company>(this.apiUrl + 'company', { headers: this.headers });
+	getCompany(id: number): Observable<Company> {
+		return this.http.get<Company>(this.apiUrl + 'company/' + id, { headers: this.headers });
 	}
 
+	getMyCompany(): Observable<Company> {
+		return this.http.get<Company>(this.apiUrl + 'my/company', { headers: this.headers });
+	}
+
+	// Put
 	updateCompany(company: CompanyFile): Observable<any> {
 		var fd = new FormData();
 		fd.append('name', company.name);
@@ -41,6 +46,29 @@ export class CompanyService {
 
 		if (company.imageFile) fd.append('image', company.imageFile, company.imageFile.name);
 
-		return this.http.put<any>(this.apiUrl + 'company', fd);
+		return this.http.put<any>(this.apiUrl + 'company/' + company.id, fd);
+	}
+
+	updateMyCompany(company: CompanyFile): Observable<any> {
+		var fd = new FormData();
+		fd.append('name', company.name);
+		fd.append('ticketMessage', company.ticketMessage);
+		fd.append('visible', company.visible ? 'true' : 'false');
+
+		if (company.imageFile) fd.append('image', company.imageFile, company.imageFile.name);
+
+		return this.http.put<any>(this.apiUrl + 'my/company', fd);
+	}
+
+	// Post
+	createCompany(company: CompanyFile): Observable<any> {
+		var fd = new FormData();
+		fd.append('name', company.name);
+		fd.append('ticketMessage', company.ticketMessage);
+		fd.append('visible', company.visible ? 'true' : 'false');
+
+		if (company.imageFile) fd.append('image', company.imageFile, company.imageFile.name);
+
+		return this.http.post<any>(this.apiUrl + 'company', fd);
 	}
 }

@@ -48,7 +48,7 @@ export class SideNavComponent implements OnInit {
 	}
 
 	private getCompany(): void {
-		this.companyService.getCompany().subscribe(
+		this.companyService.getMyCompany().subscribe(
 			(resolve) => {
 				this.company = resolve;
 				this.loadingCompany = false;

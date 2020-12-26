@@ -23,6 +23,7 @@ export class CompanyFormComponent implements OnInit {
 
 	constructor() {
 		this.companyForm = new FormGroup({
+			id: new FormControl(null),
 			name: new FormControl('', [
 				Validators.required,
 				Validators.minLength(3),
@@ -59,6 +60,7 @@ export class CompanyFormComponent implements OnInit {
 
 	public setCompanyValues(company: Company): void {
 		this.companyForm.patchValue({
+			id: company.id,
 			name: company.name,
 			ticketMessage: company.ticketMessage,
 			visible: company.visible

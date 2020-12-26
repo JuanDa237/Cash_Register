@@ -32,7 +32,7 @@ export class CompanyMainFormComponent implements OnInit {
 	}
 
 	private getCompany(): void {
-		this.companyServices.getCompany().subscribe(
+		this.companyServices.getMyCompany().subscribe(
 			(resolve) => {
 				this.company = resolve;
 
@@ -46,7 +46,7 @@ export class CompanyMainFormComponent implements OnInit {
 
 	public async updateCompany(): Promise<void> {
 		if (await this.sweet.update('¿Estas seguro de editar la empresa?')) {
-			this.companyServices.updateCompany(this.formChild.getCompanyValues()).subscribe(
+			this.companyServices.updateMyCompany(this.formChild.getCompanyValues()).subscribe(
 				(resolve) => {
 					this.sweet.created('Se edito la empresa satisfactoriamente');
 					this.router.navigate(['company/configuration/company']);

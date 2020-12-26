@@ -39,5 +39,5 @@ export class CompaniesComponent implements OnInit {
 	}
 
 	// Html methods
-	public deleteCompany(): void {}
+	public deleteCompany(id: number): void {}
 }

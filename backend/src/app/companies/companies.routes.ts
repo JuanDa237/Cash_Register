@@ -19,7 +19,7 @@ class CompaniesRoutes {
 		);
 
 		// Get one
-		this.router.get('/company', [authJwt.isCashier], companiesControllers.getCompany);
+		this.router.get('/my/company', [authJwt.isCashier], companiesControllers.getCompany);
 
 		this.router.get('/company/:id', companiesControllers.getCompanyById);
 
@@ -32,7 +32,13 @@ class CompaniesRoutes {
 
 		// Update
 		this.router.put(
-			'/company',
+			'/company/:id',
+			[authJwt.isSuperAdmin, multerConfig.single('image')],
+			companiesControllers.updateCompany
+		);
+
+		this.router.put(
+			'/my/company',
 			[authJwt.isAdministrator, multerConfig.single('image')],
 			companiesControllers.updateCompany
 		);
