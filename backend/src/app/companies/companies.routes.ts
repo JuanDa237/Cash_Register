@@ -42,6 +42,13 @@ class CompaniesRoutes {
 			[authJwt.isAdministrator, multerConfig.single('image')],
 			companiesControllers.updateCompany
 		);
+
+		// Delete
+		this.router.delete(
+			'/company/:id',
+			[authJwt.isSuperAdmin],
+			companiesControllers.deleteCompany
+		);
 	}
 }
 

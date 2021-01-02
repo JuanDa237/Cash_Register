@@ -25,8 +25,7 @@
 					"response": []
 				}
 			],
-			"description": "Index routes.",
-			"protocolProfileBehavior": {}
+			"description": "Index routes."
 		},
 		{
 			"name": "/api",
@@ -53,9 +52,7 @@
 							},
 							"response": []
 						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					]
 				},
 				{
 					"name": "/companies & /company",
@@ -96,7 +93,30 @@
 							"response": []
 						},
 						{
-							"name": "/company",
+							"name": "/my/company",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}my/company",
+									"host": ["{{api}}my"],
+									"path": ["company"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/company/:id",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -130,11 +150,18 @@
 										}
 									]
 								},
-								"method": "GET",
+								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{api}}company",
-									"host": ["{{api}}company"]
+									"raw": "{{api}}company/:id",
+									"host": ["{{api}}company"],
+									"path": [":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
 								}
 							},
 							"response": []
@@ -187,7 +214,7 @@
 							"response": []
 						},
 						{
-							"name": "/company",
+							"name": "/my/company",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -229,15 +256,14 @@
 									]
 								},
 								"url": {
-									"raw": "{{api}}company",
-									"host": ["{{api}}company"]
+									"raw": "{{api}}my/company",
+									"host": ["{{api}}my"],
+									"path": ["company"]
 								}
 							},
 							"response": []
 						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					]
 				},
 				{
 					"name": "/categories & /category",
@@ -397,9 +423,7 @@
 							"response": []
 						}
 					],
-					"description": "Categories and category endpoint.",
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					"description": "Categories and category endpoint."
 				},
 				{
 					"name": "/products & /product",
@@ -462,9 +486,7 @@
 									"response": []
 								}
 							],
-							"description": "Ingredients in product endpoint.",
-							"protocolProfileBehavior": {},
-							"_postman_isSubFolder": true
+							"description": "Ingredients in product endpoint."
 						},
 						{
 							"name": "/products",
@@ -650,7 +672,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "619356fc-ad98-4b28-bed0-60214a85a3ca",
 								"type": "text/javascript",
 								"exec": [""]
 							}
@@ -658,14 +679,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9c73e2be-ac1f-4f50-9015-ce221bdb9f1c",
 								"type": "text/javascript",
 								"exec": [""]
 							}
 						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					]
 				},
 				{
 					"name": "/ingredients & /ingredient",
@@ -825,9 +843,7 @@
 							"response": []
 						}
 					],
-					"description": "Ingresients and ingredient endpoint.",
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					"description": "Ingresients and ingredient endpoint."
 				},
 				{
 					"name": "/tickets & /ticket",
@@ -1026,9 +1042,7 @@
 							"response": []
 						}
 					],
-					"description": "Tickets and ticket endpoint.",
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					"description": "Tickets and ticket endpoint."
 				},
 				{
 					"name": "/clients & /client",
@@ -1235,9 +1249,7 @@
 							"response": []
 						}
 					],
-					"description": "Clients and client endpoint.",
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					"description": "Clients and client endpoint."
 				},
 				{
 					"name": "/auth",
@@ -1299,14 +1311,10 @@
 							"response": []
 						}
 					],
-					"description": "Authentication endpoint.",
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					"description": "Authentication endpoint."
 				}
 			],
-			"description": "API folder.",
-			"protocolProfileBehavior": {}
+			"description": "API folder."
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

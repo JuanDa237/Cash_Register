@@ -88,13 +88,17 @@ export class CompaniesFormComponent {
 	}
 
 	public async deleteCompany(): Promise<void> {
-		if (await this.sweet.delete('¿Estas seguro de eliminar el producto?')) {
-			/*this.companyService.deleteCompany(this.company.id).subscribe(
-				(resolve) => {},
+		if (await this.sweet.delete('¿Estas seguro de borrar la compañia?')) {
+			this.companyService.deleteCompany(this.company.id).subscribe(
+				(resolve) => {
+					this.router.navigate(['/admin/companies']);
+					this.sweet.deleted('La compañia se elimino satisfactoriamente');
+				},
 				(error) => {
+					this.sweet.error('Ocurrio un error');
 					throw new Error(error);
 				}
-			);*/
+			);
 		}
 	}
 }

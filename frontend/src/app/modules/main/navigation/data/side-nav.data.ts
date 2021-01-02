@@ -28,7 +28,16 @@ export const sideNavItems: SideNavItems = {
 	companies: {
 		icon: 'fa-building',
 		text: 'Compañias',
-		link: '/admin/companies'
+		submenu: [
+			{
+				text: 'Ver compañias',
+				link: '/admin/companies'
+			},
+			{
+				text: 'Crear',
+				link: '/admin/companies/add'
+			}
+		]
 	},
 	cashRegister: {
 		icon: 'fa-cash-register',

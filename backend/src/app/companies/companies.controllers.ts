@@ -113,6 +113,18 @@ class CompaniesControllers {
 			return response.status(400).json({ message: 'Company not found.' });
 		}
 	}
+
+	// Delete
+	public async deleteCompany(request: Request, response: Response): Promise<Response> {
+		const { id } = request.params;
+
+		await (
+			await pool
+		).query('UPDATE companies SET active = false, visible = false WHERE id = ?', [id]);
+
+		// Delete all photos
+		return response.status(200).json({ message: 'Company eliminated successfully.' });
+	}
 }
 
 export const companiesControllers = new CompaniesControllers();

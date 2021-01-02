@@ -71,4 +71,9 @@ export class CompanyService {
 
 		return this.http.post<any>(this.apiUrl + 'company', fd);
 	}
+
+	//Delete
+	deleteCompany(id: number): Observable<any> {
+		return this.http.delete<any>(this.apiUrl + 'company/' + id, { headers: this.headers });
+	}
 }
