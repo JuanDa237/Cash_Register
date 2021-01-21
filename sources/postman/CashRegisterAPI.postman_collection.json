@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "0e248061-2546-4511-b321-2986a7875274",
-		"name": "Cash Register API",
+		"name": "CashRegisterAPI",
 		"description": "This is the api for the cash resgister app in Angular.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -200,6 +200,11 @@
 											"type": "text"
 										},
 										{
+											"key": "homeDeliveries",
+											"value": "",
+											"type": "text"
+										},
+										{
 											"key": "visible",
 											"value": "",
 											"type": "text"
@@ -234,7 +239,8 @@
 										{
 											"key": "name",
 											"value": "",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "image",
@@ -245,7 +251,72 @@
 										{
 											"key": "ticketMessage",
 											"value": "",
-											"type": "text"
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "homeDeliveries",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "visible",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{api}}my/company",
+									"host": ["{{api}}my"],
+									"path": ["company"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/company/:id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": [],
+											"disabled": true
+										},
+										{
+											"key": "ticketMessage",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "homeDeliveries",
+											"value": "",
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "visible",
@@ -1032,7 +1103,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    // Optional fields\n    //\"total\": 0,\n    //\"homeDelivery\": 0,\n    \"idClient\": 0,\n    \"creationDate\": \"\",\n    \"products\": [\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        },\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        }\n    ]\n}"
+									"raw": "{\n    // Optional fields\n    //\"homeDelivery\": 0,\n    \"idClient\": 0,\n    \"creationDate\": \"\",\n    \"products\": [\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        },\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        }\n    ]\n}"
 								},
 								"url": {
 									"raw": "{{api}}ticket",

@@ -64,10 +64,10 @@ class CompaniesControllers {
 			const newCompany = await (await pool).query('INSERT INTO companies SET ?', [
 				{
 					name,
-					ticketMessage,
+					ticketMessage: typeof ticketMessage != 'undefined' ? ticketMessage : '',
 					visible: visible === 'true',
 					homeDeliveries: homeDeliveries === 'true',
-					image: image.path,
+					image: typeof image != 'undefined' ? image.path : '',
 					active: true
 				}
 			]);
