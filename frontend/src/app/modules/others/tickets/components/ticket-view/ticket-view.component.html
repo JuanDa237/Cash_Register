@@ -1,9 +1,10 @@
 <div *ngIf="!loadingCompany">
 	<img
 		[src]="apiUrl + company.image"
+		noImage
 		class="rounded"
-		alt
-		title
+		alt="company.name"
+		title="company.name"
 		style="width: 54px; height: 54px"
 	/>
 	<h2 class="d-inline-block text-center">

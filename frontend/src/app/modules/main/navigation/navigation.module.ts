@@ -9,9 +9,10 @@ import * as navigationServices from './services';
 
 // Modules
 import * as landingServices from '../landing/services';
+import { AppCommonModule } from '@modules/others/app-common/app-common.module';
 
 @NgModule({
-	imports: [CommonModule, RouterModule],
+	imports: [CommonModule, RouterModule, AppCommonModule],
 	providers: [navigationServices.services, landingServices.services],
 	declarations: [
 		navigationContainers.containers,
