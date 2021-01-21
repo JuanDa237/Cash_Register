@@ -10,14 +10,14 @@ class CompaniesControllers {
 	// Get
 	public async getCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT id, name, image, ticketMessage FROM companies WHERE visible = true AND active = true;'
+			'SELECT id, name, image, ticketMessage, homeDeliveries FROM companies WHERE visible = true AND active = true;'
 		);
 		return response.status(200).json(companies);
 	}
 
 	public async getAllCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT id, name, image, ticketMessage, visible FROM companies WHERE active = true;'
+			'SELECT id, name, image, ticketMessage, homeDeliveries, visible FROM companies WHERE active = true;'
 		);
 		return response.status(200).json(companies);
 	}
@@ -27,7 +27,7 @@ class CompaniesControllers {
 		const company: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, image, ticketMessage, visible FROM companies WHERE id = ? AND active = true;',
+			'SELECT name, image, ticketMessage, homeDeliveries, visible FROM companies WHERE id = ? AND active = true;',
 			[request.user.idCompany]
 		);
 
@@ -42,7 +42,7 @@ class CompaniesControllers {
 		const company: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, image, ticketMessage, visible FROM companies WHERE id = ? AND active = true;',
+			'SELECT name, image, ticketMessage, homeDeliveries, visible FROM companies WHERE id = ? AND active = true;',
 			[request.params.id]
 		);
 
@@ -55,7 +55,7 @@ class CompaniesControllers {
 
 	// Post
 	public async createCompany(request: Request, response: Response): Promise<Response> {
-		const { name, ticketMessage, visible } = request.body;
+		const { name, ticketMessage, homeDeliveries, visible } = request.body;
 		const image = (request.file as unknown) as {
 			[fieldname: string]: Express.Multer.File;
 		};
@@ -66,6 +66,7 @@ class CompaniesControllers {
 					name,
 					ticketMessage,
 					visible: visible === 'true',
+					homeDeliveries: homeDeliveries === 'true',
 					image: image.path,
 					active: true
 				}
@@ -82,7 +83,7 @@ class CompaniesControllers {
 
 	// Update
 	public async updateCompany(request: Request, response: Response): Promise<Response> {
-		const { name, ticketMessage, visible } = request.body;
+		const { name, ticketMessage, homeDeliveries, visible } = request.body;
 		const image = (request.file as unknown) as {
 			[fieldname: string]: Express.Multer.File;
 		};
@@ -92,17 +93,25 @@ class CompaniesControllers {
 
 		const oldCompany: Company[] = await (
 			await pool
-		).query('SELECT image, visible FROM companies WHERE id = ? AND active = true;', [
-			idCompany
-		]);
+		).query(
+			'SELECT name, ticketMessage, image, visible FROM companies WHERE id = ? AND active = true;',
+			[idCompany]
+		);
 
 		if (oldCompany != null && typeof oldCompany[0] != 'undefined') {
 			await (await pool).query('UPDATE companies SET ? WHERE id = ?', [
 				{
-					name,
-					ticketMessage,
+					name: typeof name != 'undefined' ? name : oldCompany[0].name,
+					ticketMessage:
+						typeof ticketMessage != 'undefined'
+							? ticketMessage
+							: oldCompany[0].ticketMessage,
 					visible:
 						typeof visible != undefined ? visible === 'true' : oldCompany[0].visible,
+					homeDeliveries:
+						typeof homeDeliveries != undefined
+							? homeDeliveries === 'true'
+							: oldCompany[0].homeDeliveries,
 					image: typeof image != 'undefined' ? image.path : oldCompany[0].image
 				},
 				idCompany

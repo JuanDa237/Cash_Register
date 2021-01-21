@@ -42,6 +42,7 @@ export class CompanyService {
 		var fd = new FormData();
 		fd.append('name', company.name);
 		fd.append('ticketMessage', company.ticketMessage);
+		fd.append('homeDeliveries', company.homeDeliveries ? 'true' : 'false');
 		fd.append('visible', company.visible ? 'true' : 'false');
 
 		if (company.imageFile) fd.append('image', company.imageFile, company.imageFile.name);
@@ -53,6 +54,7 @@ export class CompanyService {
 		var fd = new FormData();
 		fd.append('name', company.name);
 		fd.append('ticketMessage', company.ticketMessage);
+		fd.append('homeDeliveries', company.homeDeliveries ? 'true' : 'false');
 		fd.append('visible', company.visible ? 'true' : 'false');
 
 		if (company.imageFile) fd.append('image', company.imageFile, company.imageFile.name);
@@ -65,6 +67,7 @@ export class CompanyService {
 		var fd = new FormData();
 		fd.append('name', company.name);
 		fd.append('ticketMessage', company.ticketMessage);
+		fd.append('homeDeliveries', company.homeDeliveries ? 'true' : 'false');
 		fd.append('visible', company.visible ? 'true' : 'false');
 
 		if (company.imageFile) fd.append('image', company.imageFile, company.imageFile.name);

@@ -1,6 +1,6 @@
 <ng-container *ngIf="shoppingCart.length > 0; else noContent">
-	<div class="row mx-md-2">
-		<div>
+	<div class="row mx-md-2" *ngIf="company.homeDeliveries">
+		<div class="col-12 col-md-4 col-ld-2">
 			<div class="input-group">
 				<div class="input-group-prepend">
 					<div class="input-group-text">

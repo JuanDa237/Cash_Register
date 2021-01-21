@@ -9,6 +9,7 @@ import { ProductInTicket } from '../products/models';
 
 // Functions
 import { ticketFunctions } from './tickets.functions';
+import { Company } from '../companies/models';
 
 class TicketsControllers {
 	// Get Interval
@@ -96,16 +97,30 @@ class TicketsControllers {
 	// Post
 	public async createTicket(request: Request, response: Response): Promise<Response> {
 		const idCompany: number = request.user.idCompany;
-		const { total, products } = request.body;
+		const { products } = request.body;
 
 		delete request.body.products;
-		delete request.body.total;
-		if (request.body.homeDelivery <= 0) delete request.body.homeDelivery;
 
-		const finalTotal =
-			typeof total != 'undefined'
-				? total
-				: await ticketFunctions.getTotalOfTicket(products, request.body.homeDelivery);
+		if (request.body.homeDelivery <= 0) {
+			delete request.body.homeDelivery;
+		} else if (typeof request.body.homeDelivery != 'undefined') {
+			// Company have homeDeliveries?
+			const company: Company[] = await (
+				await pool
+			).query('SELECT homeDeliveries FROM companies WHERE id = ? AND active = true;', [
+				idCompany
+			]);
+
+			if (!company[0].homeDeliveries)
+				return response.status(409).json({
+					message: 'Home deliveries are disabled.'
+				});
+		}
+
+		const finalTotal = await ticketFunctions.getTotalOfTicket(
+			products,
+			request.body.homeDelivery
+		);
 
 		var ticket: Ticket = request.body;
 		ticket.idCompany = idCompany;
@@ -118,7 +133,7 @@ class TicketsControllers {
 		return response.status(200).json({
 			message: 'Saved ticket.',
 			id: newTicket.insertId,
-			total: finalTotal != total ? finalTotal : undefined
+			total: finalTotal
 		});
 	}
 }

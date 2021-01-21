@@ -6,6 +6,7 @@ CREATE TABLE companies (
     name VARCHAR(30) NOT NULL,
     image VARCHAR(100) NOT NULL,
     ticketMessage VARCHAR(255) NOT NULL,
+    homeDeliveries BOOLEAN NOT NULL DEFAULT false,
     visible BOOLEAN NOT NULL DEFAULT false,
     active BOOLEAN NOT NULL DEFAULT false
 );

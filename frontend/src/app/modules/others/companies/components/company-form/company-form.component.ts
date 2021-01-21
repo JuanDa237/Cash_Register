@@ -30,6 +30,7 @@ export class CompanyFormComponent implements OnInit {
 				Validators.maxLength(30)
 			]),
 			ticketMessage: new FormControl('', [Validators.maxLength(255)]),
+			homeDeliveries: new FormControl(false, [Validators.required]),
 			visible: new FormControl(false, [Validators.required]),
 			image: new FormControl(null)
 		});
@@ -63,6 +64,7 @@ export class CompanyFormComponent implements OnInit {
 			id: company.id,
 			name: company.name,
 			ticketMessage: company.ticketMessage,
+			homeDeliveries: company.homeDeliveries,
 			visible: company.visible
 		});
 	}

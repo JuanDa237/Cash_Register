@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { Client, createEmptyClient } from '@modules/others/clients/models';
 
 import { Product, ProductInTicket } from '@modules/others/products/models';
-import { ProductsService } from '@modules/others/products/services';
 
 import { TicketsService } from '@modules/others/tickets/services';
 
@@ -14,18 +13,22 @@ import { TicketWithProducts, ProductWithAmount, Ticket } from '@app/modules/othe
 
 // Libs
 import { Sweet } from '@modules/others/app-common/libs';
+import { Company, createEmptyCompany } from '@app/modules/others/companies/models';
+import { CompanyService } from '@app/modules/others/companies/services';
 
 @Component({
 	selector: 'app-shopping-cart',
 	templateUrl: './shopping-cart.component.html',
 	styleUrls: ['./shopping-cart.component.scss']
 })
-export class ShoppingCartComponent {
+export class ShoppingCartComponent implements OnInit {
 	public shoppingCart: Array<ProductInCart>;
 	public total: number;
 
 	public doHomeDelivery: boolean;
 	public homeDelivery: number | null;
+
+	public company: Company;
 
 	@ViewChild(TicketViewComponent)
 	public ticketChild!: TicketViewComponent;
@@ -38,14 +41,26 @@ export class ShoppingCartComponent {
 
 	private sweet: Sweet;
 
-	constructor(private productsService: ProductsService, private ticketsService: TicketsService) {
+	constructor(private ticketsService: TicketsService, private companyService: CompanyService) {
 		this.shoppingCart = new Array<ProductInCart>(0);
 		this.total = 0;
 		this.doHomeDelivery = false;
 		this.homeDelivery = null;
+		this.company = createEmptyCompany();
 		this.client = createEmptyClient();
 		this.refreshPage = new EventEmitter<null>();
 		this.sweet = new Sweet();
+	}
+
+	ngOnInit(): void {
+		this.companyService.getMyCompany().subscribe(
+			(resolve) => {
+				this.company = resolve;
+			},
+			(error) => {
+				throw new Error(error);
+			}
+		);
 	}
 
 	// Parent methods
