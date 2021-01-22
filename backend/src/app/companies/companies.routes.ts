@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { companiesControllers } from './companies.controllers';
 import { authJwt } from '../auth/middlewares';
-import { multerConfig } from './middlewares';
+import { multerConfigCompanies } from './middlewares';
 
 class CompaniesRoutes {
 	constructor(public router: Router = Router()) {
@@ -26,20 +26,20 @@ class CompaniesRoutes {
 		// Post
 		this.router.post(
 			'/company',
-			[authJwt.isSuperAdmin, multerConfig.single('image')],
+			[authJwt.isSuperAdmin, multerConfigCompanies.single('image')],
 			companiesControllers.createCompany
 		);
 
 		// Update
 		this.router.put(
 			'/company/:id',
-			[authJwt.isSuperAdmin, multerConfig.single('image')],
+			[authJwt.isSuperAdmin, multerConfigCompanies.single('image')],
 			companiesControllers.updateCompany
 		);
 
 		this.router.put(
 			'/my/company',
-			[authJwt.isAdministrator, multerConfig.single('image')],
+			[authJwt.isAdministrator, multerConfigCompanies.single('image')],
 			companiesControllers.updateCompany
 		);
 

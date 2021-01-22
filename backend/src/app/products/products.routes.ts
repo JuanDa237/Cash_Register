@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import { productsController } from './products.controllers';
 import { authJwt } from '../auth/middlewares/index';
+import { multerConfigProducts } from './middlewares';
 
 class ProductsRoutes {
 	constructor(public router: Router = Router()) {
@@ -37,12 +38,16 @@ class ProductsRoutes {
 		);
 
 		// Post
-		this.router.post('/product', [authJwt.isAdministrator], productsController.createProduct);
+		this.router.post(
+			'/product',
+			[authJwt.isAdministrator, multerConfigProducts.single('image')],
+			productsController.createProduct
+		);
 
 		// Update
 		this.router.put(
 			'/product/:id',
-			[authJwt.isAdministrator],
+			[authJwt.isAdministrator, multerConfigProducts.single('image')],
 			productsController.updateProduct
 		);
 

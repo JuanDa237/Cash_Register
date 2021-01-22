@@ -1,1 +1,1 @@
-export * from './multer.middleware';
+export * from './multerCompanies.middleware';

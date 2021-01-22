@@ -3,19 +3,27 @@ import { v4 as uuid } from 'uuid';
 import path from 'path';
 import fs from 'fs-extra';
 
-export const multerConfig: multer.Multer = multer({
+import pool from '../../../database';
+import { Company } from '../../companies/models';
+
+export const multerConfigProducts: multer.Multer = multer({
 	storage: multer.diskStorage({
 		destination: async (request, file, callback): Promise<void> => {
-			const companyName: string = request.body.name;
+			const idCompany: string = request.user.idCompany;
 
-			if (typeof companyName == 'undefined') callback(new Error('No provided name'), '');
+			const companies: Company[] = await (
+				await pool
+			).query('SELECT name FROM companies WHERE id = ?', [idCompany]);
 
-			const dir: string = `uploads/${companyName}`.replace(/ /g, '_');
+			if (typeof companies == 'undefined' || typeof companies[0] == 'undefined')
+				callback(new Error('Company not found.'), '');
+
+			const dir: string = `uploads/${companies[0].name}/products`.replace(/ /g, '_');
 			const dirExists = await fs.pathExists(dir);
 
 			if (!dirExists) {
-				return await fs.mkdir(dir, (error: Error) => {
-					callback(error, dir);
+				return await fs.mkdir(dir, { recursive: true }, (error: Error) => {
+					return callback(error, dir);
 				});
 			}
 

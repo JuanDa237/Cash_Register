@@ -3,32 +3,77 @@ import pool from '../../database';
 
 // Models
 import { Product } from '../products/models';
-import { IngredientInProduct } from '../ingredients/models';
-import { ingredientsControllers } from '../ingredients/ingredients.controllers';
+import { Ingredient, IngredientInProduct } from '../ingredients/models';
+import { Category } from '../categories/models';
 
 interface ProductWithIngredients extends Product {
 	ingredients: IngredientInProduct[];
 }
 
 class ProductsFunctions {
-	public async createProduct(body: ProductWithIngredients, idCompany: number): Promise<number> {
+	public async verifyIngredients(
+		ingredients: IngredientInProduct[],
+		idCompany: number
+	): Promise<boolean> {
+		var ingredientsValid: boolean = true;
+
+		for (let i = 0; i < ingredients.length; i++) {
+			const ingredient = ingredients[i];
+
+			const foundIngredient: Ingredient[] = await (
+				await pool
+			).query('SELECT name FROM ingredients WHERE id = ? AND idCompany = ?', [
+				ingredient.idIngredient,
+				idCompany
+			]);
+
+			if (typeof foundIngredient == 'undefined' || typeof foundIngredient[0] == 'undefined') {
+				ingredientsValid = false;
+			}
+		}
+
+		return ingredientsValid;
+	}
+
+	public async validCategory(idCategory: number, idCompany: number): Promise<boolean> {
+		const category: Category[] = await (
+			await pool
+		).query('SELECT name FROM categories WHERE id = ? AND idCompany = ?', [
+			idCategory,
+			idCompany
+		]);
+
+		return typeof category == 'undefined' || typeof category[0] != 'undefined';
+	}
+
+	public async hisProduct(idProduct: number, idCompany: number): Promise<boolean> {
+		const oldProduct: Product[] = await (
+			await pool
+		).query('SELECT name FROM products WHERE id = ? AND idCompany = ?', [idProduct, idCompany]);
+
+		return typeof oldProduct[0] != 'undefined';
+	}
+
+	public async createProduct(body: any, idCompany: number, image: string): Promise<number> {
 		const product: Product = {
 			idCompany,
-			idCategory: body.idCategory,
+			idCategory: Number(body.idCategory),
 			name: body.name,
-			price: body.price
+			price: Number(body.price),
+			description: body.description,
+			image
 		};
 
 		const newProduct: any = await (await pool).query('INSERT INTO products SET ?', [product]);
 
-		var ingredientsInProduct: IngredientInProduct[] = body.ingredients;
+		var ingredientsInProduct: IngredientInProduct[] = JSON.parse(body.ingredients);
 
 		await ingredientsInProduct.forEach(async (ingredientInProduct) => {
 			if (ingredientInProduct.spendingAmount > 0) {
 				ingredientInProduct.idCompany = idCompany;
 				ingredientInProduct.idProduct = newProduct.insertId;
 
-				(await pool).query('INSERT INTO detailProductsIngredients SET ?', [
+				await (await pool).query('INSERT INTO detailProductsIngredients SET ?', [
 					ingredientInProduct
 				]);
 			}
@@ -39,19 +84,22 @@ class ProductsFunctions {
 
 	public async updateProduct(
 		idProduct: number,
-		body: ProductWithIngredients,
-		idCompany: number
+		body: any,
+		idCompany: number,
+		image: string
 	): Promise<void> {
 		const product: Product = {
 			idCompany,
 			idCategory: body.idCategory,
 			name: body.name,
-			price: body.price
+			price: body.price,
+			description: body.description,
+			image
 		};
 
 		(await pool).query('UPDATE products SET ? WHERE id = ?', [product, idProduct]);
 
-		const newIngredients: IngredientInProduct[] = body.ingredients;
+		const newIngredients: IngredientInProduct[] = JSON.parse(body.ingredients);
 
 		newIngredients.forEach((ingredient) => {
 			ingredient.idCompany = idCompany;

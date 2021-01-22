@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { json, Request, Response } from 'express';
 
 // Database
 import pool from '../../database';
@@ -82,38 +82,97 @@ class ProductsController {
 	// Post
 
 	public async createProduct(request: Request, response: Response): Promise<Response> {
-		const idProduct = await productsFunctions.createProduct(
-			request.body,
-			request.user.idCompany
-		);
+		const image = (request.file as unknown) as {
+			[fieldname: string]: Express.Multer.File;
+		};
+		const idCompany: number = request.user.idCompany;
 
-		return response.status(200).json({
-			message: 'Saved product.',
-			id: idProduct
-		});
+		const imagePath: string = String(typeof image != 'undefined' ? image.path : '');
+
+		// Verify category
+		if (await productsFunctions.validCategory(request.body.idCategory, idCompany)) {
+			// Verify ingredients
+			if (
+				await productsFunctions.verifyIngredients(
+					JSON.parse(request.body.ingredients),
+					idCompany
+				)
+			) {
+				const idProduct = await productsFunctions.createProduct(
+					request.body,
+					idCompany,
+					imagePath
+				);
+
+				return response.status(200).json({
+					message: 'Saved product.',
+					id: idProduct
+				});
+			} else {
+				return response.status(400).json({ message: 'Invalid ingredients.' });
+			}
+		} else {
+			return response.status(400).json({ message: 'Invalid category.' });
+		}
 	}
 
 	// Update
 
 	public async updateProduct(request: Request, response: Response): Promise<Response> {
-		productsFunctions.updateProduct(
-			Number(request.params.id),
-			request.body,
-			request.user.idCompany
-		);
+		const idProduct = Number(request.params.id);
+		const idCompany = request.user.idCompany;
+		const image = (request.file as unknown) as {
+			[fieldname: string]: Express.Multer.File;
+		};
 
-		return response
-			.status(200)
-			.json({ message: 'Product and ingredients updated successfully.' });
+		const imagePath: string = String(typeof image != 'undefined' ? image.path : '');
+
+		// Check if it is his product.
+		if (await productsFunctions.hisProduct(idProduct, idCompany)) {
+			// Verify category
+			if (await productsFunctions.validCategory(request.body.idCategory, idCompany)) {
+				// Verify ingredients
+				if (
+					await productsFunctions.verifyIngredients(
+						JSON.parse(request.body.ingredients),
+						idCompany
+					)
+				) {
+					// Update
+					await productsFunctions.updateProduct(
+						idProduct,
+						request.body,
+						idCompany,
+						imagePath
+					);
+
+					return response
+						.status(200)
+						.json({ message: 'Product and ingredients updated successfully.' });
+				} else {
+					return response.status(401).json({ message: 'No valid ingredients.' });
+				}
+			} else {
+				return response.status(401).json({ message: 'No valid category.' });
+			}
+		} else {
+			return response.status(401).json({ message: 'This product is not from your company.' });
+		}
 	}
 
 	// Delete
 
 	public async deleteProduct(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
-		await (await pool).query('UPDATE products SET active = false WHERE id = ?', [id]);
 
-		return response.status(200).json({ message: 'Product eliminated successfully.' });
+		// Check if it is his product.
+		if (await productsFunctions.hisProduct(Number(id), request.user.idCompany)) {
+			await (await pool).query('UPDATE products SET active = false WHERE id = ?', [id]);
+
+			return response.status(200).json({ message: 'Product eliminated successfully.' });
+		} else {
+			return response.status(401).json({ message: 'This product is not from your company.' });
+		}
 	}
 }
 

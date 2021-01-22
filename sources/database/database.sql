@@ -4,8 +4,8 @@ USE cashRegisterDatabase;
 CREATE TABLE companies (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
-    image VARCHAR(100) NOT NULL,
-    ticketMessage VARCHAR(255) NOT NULL,
+    image VARCHAR(100),
+    ticketMessage VARCHAR(255),
     homeDeliveries BOOLEAN NOT NULL DEFAULT false,
     visible BOOLEAN NOT NULL DEFAULT false,
     active BOOLEAN NOT NULL DEFAULT false
@@ -43,7 +43,9 @@ CREATE TABLE products (
     CONSTRAINT fkCategoriyProduct FOREIGN KEY (idCategory) REFERENCES categories (id) ON DELETE CASCADE ON UPDATE CASCADE,
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
-    price INT NOT NULL,
+    price INT NOT NULL DEFAULT 0,
+    description VARCHAR(255),
+	image VARCHAR(100),
     active BOOLEAN NOT NULL DEFAULT true
 );
 

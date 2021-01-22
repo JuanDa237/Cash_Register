@@ -60,25 +60,21 @@ class CompaniesControllers {
 			[fieldname: string]: Express.Multer.File;
 		};
 
-		try {
-			const newCompany = await (await pool).query('INSERT INTO companies SET ?', [
-				{
-					name,
-					ticketMessage: typeof ticketMessage != 'undefined' ? ticketMessage : '',
-					visible: visible === 'true',
-					homeDeliveries: homeDeliveries === 'true',
-					image: typeof image != 'undefined' ? image.path : '',
-					active: true
-				}
-			]);
+		const newCompany = await (await pool).query('INSERT INTO companies SET ?', [
+			{
+				name,
+				ticketMessage,
+				visible: visible === 'true',
+				homeDeliveries: homeDeliveries === 'true',
+				image: typeof image != 'undefined' ? image.path : '',
+				active: true
+			}
+		]);
 
-			return response.status(200).json({
-				message: 'Saved company.',
-				id: newCompany.insertId
-			});
-		} catch (error) {
-			return response.status(500).json({ message: '¿No provide image?' });
-		}
+		return response.status(200).json({
+			message: 'Saved company.',
+			id: newCompany.insertId
+		});
 	}
 
 	// Update
