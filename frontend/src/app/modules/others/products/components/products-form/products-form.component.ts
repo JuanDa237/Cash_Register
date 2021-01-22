@@ -90,6 +90,10 @@ export class ProductsFormComponent implements OnInit {
 		if (id != null) {
 			this.productsService.getProduct(id).subscribe(
 				(response) => {
+					if (this.creating) {
+						response.image = '';
+					}
+
 					this.setProductValues(response);
 				},
 				(error) => {
