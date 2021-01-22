@@ -1,15 +1,19 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
-import { Product, ProductIngredientsFile } from '../../models';
 import { Category } from '@modules/others/categories/models';
 import { CategoriesService } from '@modules/others/categories/services/categories.service';
-import { ActivatedRoute } from '@angular/router';
+
+import { Product, ProductIngredientsFile } from '../../models';
 import { ProductsService } from '../../services';
+
+import { environment } from '@enviroment/environment';
 
 @Component({
 	selector: 'app-products-form',
-	templateUrl: './products-form.component.html'
+	templateUrl: './products-form.component.html',
+	styleUrls: ['./products-form.component.scss']
 })
 export class ProductsFormComponent implements OnInit {
 	public productForm: FormGroup;
@@ -30,6 +34,7 @@ export class ProductsFormComponent implements OnInit {
 	public categories: Array<Category>;
 
 	private selectedFile: File | null;
+	public imagePreview: ArrayBuffer | string | null;
 
 	constructor(
 		private categoriesService: CategoriesService,
@@ -58,6 +63,7 @@ export class ProductsFormComponent implements OnInit {
 		this.categories = new Array<Category>(0);
 
 		this.selectedFile = null;
+		this.imagePreview = '';
 	}
 
 	ngOnInit(): void {
@@ -130,9 +136,18 @@ export class ProductsFormComponent implements OnInit {
 			price: product.price,
 			description: product.description
 		});
+
+		this.imagePreview = environment.apiUrl + product.image;
 	}
 
 	public onFileChange(event: any): void {
-		this.selectedFile = event.target.files[0];
+		if (event.target.files && event.target.files[0]) {
+			this.selectedFile = event.target.files[0];
+
+			// Image preview
+			const reader = new FileReader();
+			reader.onload = (e) => (this.imagePreview = reader.result);
+			reader.readAsDataURL(this.selectedFile as Blob);
+		}
 	}
 }

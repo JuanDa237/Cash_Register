@@ -52,14 +52,14 @@
 				</ng-template>
 			</div>
 		</app-card-component>
+	</div>
+	<div class="col-md-7">
+		<app-ingredients-form (inputAmount)="actualizeUtility()"></app-ingredients-form>
 		<app-card-component>
 			<div class="card-header">Utilidad</div>
 			<div class="card-body">
 				<app-utility-chart chartId="utilityChart"></app-utility-chart>
 			</div>
 		</app-card-component>
-	</div>
-	<div class="col-md-7">
-		<app-ingredients-form (inputAmount)="actualizeUtility()"></app-ingredients-form>
 	</div>
 </div>

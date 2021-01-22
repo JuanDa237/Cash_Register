@@ -119,27 +119,41 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" id="image">Imagen</span>
-			</div>
-			<div class="custom-file">
-				<input
-					tabindex="5"
-					type="file"
-					id="image"
-					class="custom-file-input"
-					name="image"
-					[class.is-invalid]="
-						productForm.get('image')?.touched && productForm.get('image')?.invalid
-					"
-					formControlName="image"
-					accept=".jpg, .jpeg, .png"
-					(change)="onFileChange($event)"
-				/>
-				<label class="custom-file-label" for="image">{{
-					productForm.value.image ? productForm.value.image : 'Escojer Archivo'
-				}}</label>
+		<div class="card mb-3">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+					<img
+						[src]="imagePreview"
+						noImage
+						class="card-img-top border-bottom image-input"
+						title="Subir imagen"
+						[alt]="productForm.value.name + '-logo'"
+						(click)="imageInput.click()"
+					/>
+				</div>
+				<div class="col-md-8">
+					<div class="card-body">
+						<h4 class="card-title">Escojer Imagen</h4>
+						<button
+							type="button"
+							class="btn btn-info btn-block"
+							(click)="imageInput.click()"
+						>
+							<i class="fas fa-file-upload" title="Subir imagen"></i> Subir imagen
+						</button>
+						<input
+							#imageInput
+							tabindex="5"
+							type="file"
+							id="image"
+							class="d-none"
+							name="image"
+							formControlName="image"
+							accept=".jpg, .jpeg, .png"
+							(change)="onFileChange($event)"
+						/>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

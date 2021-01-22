@@ -63,59 +63,74 @@
 		</div>
 	</div>
 	<div class="form-row">
-		<div class="col-6">
-			<div class="form-group">
-				<div class="form-check">
-					<input
-						tabindex="3"
-						class="form-check-input"
-						type="checkbox"
-						id="visible"
-						name="visible"
-						formControlName="visible"
-					/>
-					<label class="form-check-label" for="visible">Visible</label>
-				</div>
-			</div>
-		</div>
-		<div class="col-6">
-			<div class="form-group">
-				<div class="form-check">
-					<input
-						tabindex="3"
-						class="form-check-input"
-						type="checkbox"
-						id="homeDeliveries"
-						name="homeDeliveries"
-						formControlName="homeDeliveries"
-					/>
-					<label class="form-check-label" for="homeDeliveries">Domicilios</label>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" id="image">Imagen</span>
-			</div>
-			<div class="custom-file">
-				<input
-					tabindex="4"
-					type="file"
-					id="image"
-					class="custom-file-input"
-					name="image"
-					[class.is-invalid]="
-						companyForm.get('image')?.touched && companyForm.get('image')?.invalid
-					"
-					formControlName="image"
-					accept=".jpg, .jpeg, .png"
-					(change)="onFileChange($event)"
+		<div class="col-12 col-md-4">
+			<div class="card card-image">
+				<img
+					[src]="imagePreview"
+					noImage
+					class="card-img-top border-bottom image-input"
+					title="Subir imagen"
+					[alt]="companyForm.value.name + '-logo'"
+					(click)="imageInput.click()"
 				/>
-				<label class="custom-file-label" for="image">{{
-					companyForm.value.image ? companyForm.value.image : 'Escojer Archivo'
-				}}</label>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-8">
+							<h5 class="card-title m-0">Escojer Imagen</h5>
+						</div>
+						<div class="col text-center">
+							<button type="button" class="btn btn-info" (click)="imageInput.click()">
+								<i class="fas fa-file-upload" title="Subir imagen"></i>
+							</button>
+						</div>
+					</div>
+					<input
+						#imageInput
+						tabindex="4"
+						type="file"
+						id="image"
+						class="d-none"
+						name="image"
+						formControlName="image"
+						accept=".jpg, .jpeg, .png"
+						(change)="onFileChange($event)"
+					/>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-md-8 mt-2 mt-md-0">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="card-title m-0">Otras opciones</h5>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<div class="form-check">
+							<input
+								tabindex="3"
+								class="form-check-input"
+								type="checkbox"
+								id="visible"
+								name="visible"
+								formControlName="visible"
+							/>
+							<label class="form-check-label" for="visible">Visible</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-check">
+							<input
+								tabindex="3"
+								class="form-check-input"
+								type="checkbox"
+								id="homeDeliveries"
+								name="homeDeliveries"
+								formControlName="homeDeliveries"
+							/>
+							<label class="form-check-label" for="homeDeliveries">Domicilios</label>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

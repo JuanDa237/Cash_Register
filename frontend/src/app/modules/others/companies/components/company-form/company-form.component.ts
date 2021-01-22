@@ -2,10 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Company, CompanyFile } from '../../models';
+import { environment } from '@enviroment/environment';
 
 @Component({
 	selector: 'app-company-form',
-	templateUrl: './company-form.component.html'
+	templateUrl: './company-form.component.html',
+	styleUrls: ['./company-form.component.scss']
 })
 export class CompanyFormComponent implements OnInit {
 	public companyForm: FormGroup;
@@ -19,7 +21,8 @@ export class CompanyFormComponent implements OnInit {
 	@Output()
 	private invalidForm: EventEmitter<boolean>;
 
-	private selectedFile: File | null;
+	public selectedFile: File | null;
+	public imagePreview: ArrayBuffer | string | null;
 
 	constructor() {
 		this.companyForm = new FormGroup({
@@ -41,6 +44,7 @@ export class CompanyFormComponent implements OnInit {
 		this.invalidForm = new EventEmitter<boolean>();
 
 		this.selectedFile = null;
+		this.imagePreview = '';
 	}
 
 	ngOnInit(): void {
@@ -67,9 +71,18 @@ export class CompanyFormComponent implements OnInit {
 			homeDeliveries: company.homeDeliveries,
 			visible: company.visible
 		});
+
+		this.imagePreview = environment.apiUrl + company.image;
 	}
 
 	public onFileChange(event: any): void {
-		this.selectedFile = event.target.files[0];
+		if (event.target.files && event.target.files[0]) {
+			this.selectedFile = event.target.files[0];
+
+			// Image preview
+			const reader = new FileReader();
+			reader.onload = (e) => (this.imagePreview = reader.result);
+			reader.readAsDataURL(this.selectedFile as Blob);
+		}
 	}
 }
