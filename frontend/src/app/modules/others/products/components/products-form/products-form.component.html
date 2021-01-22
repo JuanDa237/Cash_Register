@@ -1,35 +1,33 @@
 <form [formGroup]="productForm" (ngSubmit)="submitEvent()" novalidate>
 	<div class="form-group">
-		<div class="form-group">
-			<label for="idCategory"> Categoria<span class="text-danger">*</span> </label>
-			<select
-				tabindex="1"
-				type="text"
-				id="idCategory"
-				class="form-control"
-				name="idCategory"
-				formControlName="idCategory"
-				[class.is-invalid]="
-					productForm.get('idCategory')?.touched && productForm.get('idCategory')?.invalid
-				"
-			>
-				<option *ngIf="creating" [ngValue]="null">Ninguna</option>
-				<option *ngFor="let category of categories" [ngValue]="category.id">
-					{{ category.name }}
-				</option>
-			</select>
-			<div
-				class="invalid-feedback"
-				*ngIf="
-					productForm.get('idCategory')?.touched && productForm.get('idCategory')?.invalid
-				"
-			>
-				<div *ngIf="creating && productForm.get('idCategory')?.errors['required']">
-					La categoria es obligatoria.
-				</div>
+		<label for="idCategory">Categoria<span class="text-danger">*</span> </label>
+		<select
+			tabindex="1"
+			type="text"
+			id="idCategory"
+			class="form-control"
+			name="idCategory"
+			formControlName="idCategory"
+			[class.is-invalid]="
+				productForm.get('idCategory')?.touched && productForm.get('idCategory')?.invalid
+			"
+		>
+			<option *ngIf="creating" [ngValue]="null">Ninguna</option>
+			<option *ngFor="let category of categories" [ngValue]="category.id">
+				{{ category.name }}
+			</option>
+		</select>
+		<div
+			class="invalid-feedback"
+			*ngIf="productForm.get('idCategory')?.touched && productForm.get('idCategory')?.invalid"
+		>
+			<div *ngIf="creating && productForm.get('idCategory')?.errors['required']">
+				La categoria es obligatoria.
 			</div>
 		</div>
-		<label for="name"> Producto<span class="text-danger">*</span> </label>
+	</div>
+	<div class="form-group">
+		<label for="name">Producto<span class="text-danger">*</span> </label>
 		<input
 			tabindex="2"
 			type="text"
@@ -64,6 +62,33 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label for="description">Descripcion</label>
+		<textarea
+			rows="4"
+			tabindex="3"
+			class="form-control"
+			id="description"
+			name="description"
+			formControlName="description"
+			[class.is-invalid]="
+				productForm.get('description')?.touched && productForm.get('description')?.invalid
+			"
+		></textarea>
+		<div
+			class="invalid-feedback"
+			*ngIf="
+				productForm.get('description')?.touched && productForm.get('description')?.invalid
+			"
+		>
+			<div *ngIf="productForm.get('description')?.errors['maxlength']">
+				{{
+					'El maximo de caracteres permitidos son ' +
+						productForm.get('description')?.errors['maxlength'].requiredLength
+				}}
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
 		<label for="price">Precio</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
@@ -72,7 +97,7 @@
 				</span>
 			</div>
 			<input
-				tabindex="3"
+				tabindex="4"
 				step="100"
 				type="number"
 				id="price"
@@ -90,6 +115,31 @@
 				<div *ngIf="productForm.get('price')?.errors['required']">
 					El precio es obligatorio
 				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="image">Imagen</span>
+			</div>
+			<div class="custom-file">
+				<input
+					tabindex="5"
+					type="file"
+					id="image"
+					class="custom-file-input"
+					name="image"
+					[class.is-invalid]="
+						productForm.get('image')?.touched && productForm.get('image')?.invalid
+					"
+					formControlName="image"
+					accept=".jpg, .jpeg, .png"
+					(change)="onFileChange($event)"
+				/>
+				<label class="custom-file-label" for="image">{{
+					productForm.value.image ? productForm.value.image : 'Escojer Archivo'
+				}}</label>
 			</div>
 		</div>
 	</div>

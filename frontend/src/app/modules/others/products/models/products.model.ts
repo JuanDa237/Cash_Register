@@ -5,6 +5,8 @@ export interface Product {
 	idCategory: number;
 	name: string;
 	price: number;
+	description: string;
+	image: string;
 }
 
 export function createEmptyProduct(): Product {
@@ -12,7 +14,9 @@ export function createEmptyProduct(): Product {
 		id: 0,
 		idCategory: 0,
 		name: '',
-		price: 0
+		price: 0,
+		description: '',
+		image: ''
 	} as Product;
 }
 
@@ -25,10 +29,7 @@ export interface ProductInTicket {
 }
 
 // For send data to api
-export interface ProductWithIngredients {
-	id?: number;
-	idCategory: number;
-	name: string;
-	price: number;
+export interface ProductIngredientsFile extends Product {
 	ingredients: IngredientInProduct[];
+	imageFile?: File | null;
 }

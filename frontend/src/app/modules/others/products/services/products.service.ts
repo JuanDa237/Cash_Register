@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 // Api
 import { environment } from '@enviroment/environment';
 
-import { Product, ProductWithIngredients } from '../models/index';
+import { Product, ProductIngredientsFile } from '../models/index';
 import { IngredientInProduct } from '../../ingredients/models/index';
 
 @Injectable({
@@ -48,17 +48,31 @@ export class ProductsService {
 	}
 
 	// Post
-	createProduct(newProduct: ProductWithIngredients): Observable<any> {
-		let params = JSON.stringify(newProduct);
-		return this.http.post(this.apiUrl + 'product', params, { headers: this.headers });
+	createProduct(product: ProductIngredientsFile): Observable<any> {
+		var fd = new FormData();
+		fd.append('idCategory', String(product.idCategory));
+		fd.append('name', product.name);
+		fd.append('price', String(product.price));
+		fd.append('ingredients', JSON.stringify(product.ingredients));
+		fd.append('description', product.description);
+
+		if (product.imageFile) fd.append('image', product.imageFile, product.imageFile.name);
+
+		return this.http.post(this.apiUrl + 'product', fd);
 	}
 
 	// Update
-	updateProduct(product: ProductWithIngredients): Observable<any> {
-		var params = JSON.stringify(product);
-		return this.http.put(this.apiUrl + 'product/' + product.id, params, {
-			headers: this.headers
-		});
+	updateProduct(product: ProductIngredientsFile): Observable<any> {
+		var fd = new FormData();
+		fd.append('idCategory', String(product.idCategory));
+		fd.append('name', product.name);
+		fd.append('price', String(product.price));
+		fd.append('ingredients', JSON.stringify(product.ingredients));
+		fd.append('description', product.description);
+
+		if (product.imageFile) fd.append('image', product.imageFile, product.imageFile.name);
+
+		return this.http.put(this.apiUrl + 'product/' + product.id, fd);
 	}
 
 	// Delete

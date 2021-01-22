@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Product } from '../../models';
+import { Product, ProductIngredientsFile } from '../../models';
 import { ProductsService } from '../../services';
 import {
 	ProductsFormComponent,
@@ -57,7 +57,7 @@ export class ProductsPrincipalFormComponent implements AfterContentInit {
 	}
 
 	private async createProduct(): Promise<void> {
-		const product: Product = this.formChild.getProductValues();
+		const product: ProductIngredientsFile = this.formChild.getProductValues();
 
 		if (this.validateProduct(product)) {
 			this.ingredientsChild.createProductWithIngredientes(product);
@@ -65,7 +65,7 @@ export class ProductsPrincipalFormComponent implements AfterContentInit {
 	}
 
 	private async updateProduct(): Promise<void> {
-		const product: Product = this.formChild.getProductValues();
+		const product: ProductIngredientsFile = this.formChild.getProductValues();
 
 		if (this.validateProduct(product)) {
 			this.ingredientsChild.updateProduct(product);
@@ -91,7 +91,7 @@ export class ProductsPrincipalFormComponent implements AfterContentInit {
 
 	// Chart
 	public actualizeUtility(): void {
-		const product: Product = this.formChild.getProductValues();
+		const product: ProductIngredientsFile = this.formChild.getProductValues();
 
 		this.chartChild.actualizeUtility(
 			this.ingredientsChild.ingredients,
@@ -101,7 +101,7 @@ export class ProductsPrincipalFormComponent implements AfterContentInit {
 	}
 
 	// Private Methods
-	private validateProduct(product: Product): boolean {
+	private validateProduct(product: ProductIngredientsFile): boolean {
 		product.name = product.name.trim();
 
 		return product.name.length >= 1;

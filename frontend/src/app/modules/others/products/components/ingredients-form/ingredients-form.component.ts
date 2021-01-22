@@ -15,7 +15,7 @@ import { Ingredient, IngredientInProduct } from '@modules/others/ingredients/mod
 import { ProductsService } from '../../services';
 
 import { TableComponent } from '@modules/others/app-common/components';
-import { Product, ProductWithIngredients } from '../../models';
+import { ProductIngredientsFile } from '../../models';
 
 // Libs
 import { Sweet } from '@modules/others/app-common/libs';
@@ -117,8 +117,8 @@ export class IngredientsFormComponent implements OnInit {
 	}
 
 	// Public functions to parents
-	public createProductWithIngredientes(product: Product): void {
-		var productWithIngredients: ProductWithIngredients = this.getProductWithIngredients(
+	public createProductWithIngredientes(product: ProductIngredientsFile): void {
+		var productWithIngredients: ProductIngredientsFile = this.getProductWithIngredients(
 			product
 		);
 
@@ -134,8 +134,8 @@ export class IngredientsFormComponent implements OnInit {
 		);
 	}
 
-	public updateProduct(product: Product): void {
-		var productWithIngredients: ProductWithIngredients = this.getProductWithIngredients(
+	public updateProduct(product: ProductIngredientsFile): void {
+		var productWithIngredients: ProductIngredientsFile = this.getProductWithIngredients(
 			product
 		);
 
@@ -151,13 +151,16 @@ export class IngredientsFormComponent implements OnInit {
 		);
 	}
 
-	private getProductWithIngredients(product: Product): ProductWithIngredients {
-		var productWithIngredients: ProductWithIngredients = {
-			id: product.id != null ? product.id : undefined,
+	private getProductWithIngredients(product: ProductIngredientsFile): ProductIngredientsFile {
+		var productWithIngredients: ProductIngredientsFile = {
+			id: product.id,
 			idCategory: product.idCategory,
 			name: product.name,
 			price: product.price,
-			ingredients: new Array<IngredientInProduct>(0)
+			ingredients: new Array<IngredientInProduct>(0),
+			description: product.description,
+			image: product.image,
+			imageFile: product.imageFile
 		};
 
 		this.spendingAmounts.forEach((spendingAmount, index) => {

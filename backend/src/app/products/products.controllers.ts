@@ -15,7 +15,7 @@ class ProductsController {
 	public async listAllProducts(request: Request, response: Response): Promise<Response> {
 		const products: Product[] = await (
 			await pool
-		).query('SELECT id, name, price FROM products WHERE idCompany = ?', [
+		).query('SELECT id, name, price, description, image FROM products WHERE idCompany = ?', [
 			request.user.idCompany
 		]);
 
@@ -27,9 +27,10 @@ class ProductsController {
 	public async listProducts(request: Request, response: Response): Promise<Response> {
 		const products: Product[] = await (
 			await pool
-		).query('SELECT id, name, price FROM products WHERE active = true AND idCompany = ?', [
-			request.user.idCompany
-		]);
+		).query(
+			'SELECT id, name, price, description, image FROM products WHERE active = true AND idCompany = ?',
+			[request.user.idCompany]
+		);
 
 		return response.status(200).json(products);
 	}
@@ -55,7 +56,7 @@ class ProductsController {
 		const product: Product[] = await (
 			await pool
 		).query(
-			'SELECT id, idCategory , name, price FROM products WHERE id = ? AND active = true AND idCompany = ?',
+			'SELECT id, idCategory , name, price, description, image FROM products WHERE id = ? AND active = true AND idCompany = ?',
 			[id, request.user.idCompany]
 		);
 

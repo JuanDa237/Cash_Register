@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Product } from '../../models';
+import { Product, ProductIngredientsFile } from '../../models';
 import { Category } from '@modules/others/categories/models';
 import { CategoriesService } from '@modules/others/categories/services/categories.service';
 import { ActivatedRoute } from '@angular/router';
@@ -29,6 +29,8 @@ export class ProductsFormComponent implements OnInit {
 	public creating: boolean;
 	public categories: Array<Category>;
 
+	private selectedFile: File | null;
+
 	constructor(
 		private categoriesService: CategoriesService,
 		private productsService: ProductsService,
@@ -42,7 +44,9 @@ export class ProductsFormComponent implements OnInit {
 				Validators.minLength(3),
 				Validators.maxLength(30)
 			]),
-			price: new FormControl(0, Validators.required)
+			description: new FormControl('', Validators.maxLength(255)),
+			price: new FormControl(0, Validators.required),
+			image: new FormControl(null)
 		});
 
 		this.onSubmitEvent = new EventEmitter<null>();
@@ -52,6 +56,8 @@ export class ProductsFormComponent implements OnInit {
 
 		this.creating = true;
 		this.categories = new Array<Category>(0);
+
+		this.selectedFile = null;
 	}
 
 	ngOnInit(): void {
@@ -110,8 +116,10 @@ export class ProductsFormComponent implements OnInit {
 
 	// Public methods
 
-	public getProductValues(): Product {
-		return this.productForm.value as Product;
+	public getProductValues(): ProductIngredientsFile {
+		var product: ProductIngredientsFile = this.productForm.value as ProductIngredientsFile;
+		product.imageFile = this.selectedFile;
+		return product;
 	}
 
 	public setProductValues(product: Product): void {
@@ -119,7 +127,12 @@ export class ProductsFormComponent implements OnInit {
 			id: product.id,
 			idCategory: product.idCategory,
 			name: product.name,
-			price: product.price
+			price: product.price,
+			description: product.description
 		});
+	}
+
+	public onFileChange(event: any): void {
+		this.selectedFile = event.target.files[0];
 	}
 }
