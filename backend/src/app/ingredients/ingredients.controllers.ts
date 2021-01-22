@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import pool from '../../database';
 
 // Models
-import { Ingredient, IngredientInProduct } from './models';
+import { Ingredient } from './models';
 
 class IngredientsControllers {
 	// Get list
@@ -53,16 +53,37 @@ class IngredientsControllers {
 	public async updateIngredient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		await (await pool).query('UPDATE ingredients SET ? WHERE id = ?', [request.body, id]);
-		return response.status(200).json({ message: 'Ingredient updated successfully.' });
+		const status: any = await (
+			await pool
+		).query('UPDATE ingredients SET ? WHERE id = ? AND idCompany = ?', [
+			request.body,
+			id,
+			request.user.idCompany
+		]);
+
+		if (status.affectedRows > 0) {
+			return response.status(200).json({ message: 'Ingredient updated successfully.' });
+		} else {
+			return response.status(404).json({ message: 'Ingredient not found.' });
+		}
 	}
 
 	// Delete
 	public async deleteIngredient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		await (await pool).query('UPDATE ingredients SET active = false WHERE id = ?', [id]);
-		return response.status(200).json({ message: 'Ingredient eliminated successfully.' });
+		const status: any = await (
+			await pool
+		).query('UPDATE ingredients SET active = false WHERE id = ? AND idCompany = ?', [
+			id,
+			request.user.idCompany
+		]);
+
+		if (status.affectedRows > 0) {
+			return response.status(200).json({ message: 'Ingredient eliminated successfully.' });
+		} else {
+			return response.status(404).json({ message: 'Ingredient not found.' });
+		}
 	}
 }
 

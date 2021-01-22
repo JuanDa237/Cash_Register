@@ -166,13 +166,17 @@ class ProductsController {
 	public async deleteProduct(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		// Check if it is his product.
-		if (await productsFunctions.hisProduct(Number(id), request.user.idCompany)) {
-			await (await pool).query('UPDATE products SET active = false WHERE id = ?', [id]);
+		const status: any = await (
+			await pool
+		).query('UPDATE products SET active = false WHERE id = ? AND idCompany = ?', [
+			id,
+			request.user.idCompany
+		]);
 
+		if (status.affectedRows > 0) {
 			return response.status(200).json({ message: 'Product eliminated successfully.' });
 		} else {
-			return response.status(401).json({ message: 'This product is not from your company.' });
+			return response.status(400).json({ message: 'Product not found.' });
 		}
 	}
 }

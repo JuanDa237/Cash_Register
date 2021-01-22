@@ -48,25 +48,46 @@ class CategoriesControllers {
 	// Update
 	public async updateCategory(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
-		await (await pool).query('UPDATE categories SET ? WHERE id = ?', [request.body, id]);
-		return response.status(200).json({ message: 'Category updated successfully.' });
+
+		const status: any = await (
+			await pool
+		).query('UPDATE categories SET ? WHERE id = ? AND idCompany = ?', [
+			request.body,
+			id,
+			request.user.idCompany
+		]);
+
+		if (status.affectedRows > 0) {
+			return response.status(200).json({ message: 'Category updated successfully.' });
+		} else {
+			return response.status(404).json({ message: 'Category not found.' });
+		}
 	}
 
 	// Delete
 	public async deleteCategory(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		(await pool).query('UPDATE categories SET active = false WHERE id = ?', [id]);
-
-		const productsInCategory: Product[] = await (
+		const status: any = (
 			await pool
-		).query('SELECT id FROM products WHERE idCategory = ? AND active = true', [id]);
+		).query('UPDATE categories SET active = false WHERE id = ? AND idCompany = ?', [
+			id,
+			request.user.idCompany
+		]);
 
-		productsInCategory.forEach(async (product) => {
-			(await pool).query('UPDATE products SET active = false WHERE id = ?', [product.id]);
-		});
+		if (status.affectedRows > 0) {
+			const productsInCategory: Product[] = await (
+				await pool
+			).query('SELECT id FROM products WHERE idCategory = ? AND active = true', [id]);
 
-		return response.status(200).json({ message: 'Category eliminated successfully.' });
+			productsInCategory.forEach(async (product) => {
+				(await pool).query('UPDATE products SET active = false WHERE id = ?', [product.id]);
+			});
+
+			return response.status(200).json({ message: 'Category eliminated successfully.' });
+		} else {
+			return response.status(404).json({ message: 'Category not found.' });
+		}
 	}
 }
 
