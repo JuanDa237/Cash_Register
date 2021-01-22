@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import fs from 'fs-extra';
+import path from 'path';
 
 // Database
 import pool from '../../database';
@@ -68,7 +70,7 @@ class CategoriesControllers {
 	public async deleteCategory(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		const status: any = (
+		const status: any = await (
 			await pool
 		).query('UPDATE categories SET active = false WHERE id = ? AND idCompany = ?', [
 			id,
@@ -78,10 +80,19 @@ class CategoriesControllers {
 		if (status.affectedRows > 0) {
 			const productsInCategory: Product[] = await (
 				await pool
-			).query('SELECT id FROM products WHERE idCategory = ? AND active = true', [id]);
+			).query('SELECT id, image FROM products WHERE idCategory = ? AND active = true', [id]);
 
 			productsInCategory.forEach(async (product) => {
-				(await pool).query('UPDATE products SET active = false WHERE id = ?', [product.id]);
+				// Delete images
+				if (product.image != '') {
+					try {
+						await fs.unlink(path.resolve(product.image));
+					} catch (error) {}
+				}
+
+				(await pool).query('UPDATE products SET active = false, image = "" WHERE id = ?', [
+					product.id
+				]);
 			});
 
 			return response.status(200).json({ message: 'Category eliminated successfully.' });

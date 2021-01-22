@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import fs from 'fs-extra';
+import path from 'path';
 
 // Database
 import pool from '../../database';
@@ -95,6 +97,11 @@ class CompaniesControllers {
 		);
 
 		if (oldCompany != null && typeof oldCompany[0] != 'undefined') {
+			// Delete old image
+			if (typeof image != 'undefined' && oldCompany[0].image != '') {
+				await fs.unlink(path.resolve(oldCompany[0].image));
+			}
+
 			await (await pool).query('UPDATE companies SET ? WHERE id = ?', [
 				{
 					name: typeof name != 'undefined' ? name : oldCompany[0].name,
@@ -123,12 +130,24 @@ class CompaniesControllers {
 	public async deleteCompany(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		await (
+		const company: Company[] = await (
 			await pool
-		).query('UPDATE companies SET active = false, visible = false WHERE id = ?', [id]);
+		).query('SELECT image FROM companies WHERE id = ?', [id]);
 
-		// Delete all photos
-		return response.status(200).json({ message: 'Company eliminated successfully.' });
+		if (typeof company != 'undefined' && typeof company[0] != 'undefined') {
+			// Delete old image
+			if (company[0].image != '') {
+				await fs.unlink(path.resolve(company[0].image));
+			}
+
+			await (
+				await pool
+			).query('UPDATE companies SET active = false, visible = false WHERE id = ?', [id]);
+
+			return response.status(200).json({ message: 'Company eliminated successfully.' });
+		} else {
+			return response.status(404).json({ message: 'Company not found.' });
+		}
 	}
 }
 

@@ -1,4 +1,6 @@
-import { json, Request, Response } from 'express';
+import { Request, Response } from 'express';
+import fs from 'fs-extra';
+import path from 'path';
 
 // Database
 import pool from '../../database';
@@ -126,8 +128,6 @@ class ProductsController {
 			[fieldname: string]: Express.Multer.File;
 		};
 
-		const imagePath: string = String(typeof image != 'undefined' ? image.path : '');
-
 		// Check if it is his product.
 		if (await productsFunctions.hisProduct(idProduct, idCompany)) {
 			// Verify category
@@ -139,6 +139,20 @@ class ProductsController {
 						idCompany
 					)
 				) {
+					// Delete image
+					const oldProduct: Product[] = await (
+						await pool
+					).query('SELECT image FROM products WHERE id = ?', [idProduct]);
+					const imagePath: string = String(
+						typeof image != 'undefined' ? image.path : oldProduct[0].image
+					);
+
+					if (typeof image != 'undefined' && oldProduct[0].image != '') {
+						try {
+							await fs.unlink(path.resolve(oldProduct[0].image));
+						} catch (error) {}
+					}
+
 					// Update
 					await productsFunctions.updateProduct(
 						idProduct,
@@ -154,10 +168,10 @@ class ProductsController {
 					return response.status(401).json({ message: 'No valid ingredients.' });
 				}
 			} else {
-				return response.status(401).json({ message: 'No valid category.' });
+				return response.status(401).json({ message: 'No found category.' });
 			}
 		} else {
-			return response.status(401).json({ message: 'This product is not from your company.' });
+			return response.status(404).json({ message: 'Not found product.' });
 		}
 	}
 
@@ -166,14 +180,26 @@ class ProductsController {
 	public async deleteProduct(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		const status: any = await (
+		const oldProduct: Product[] = await (
 			await pool
-		).query('UPDATE products SET active = false WHERE id = ? AND idCompany = ?', [
+		).query('SELECT image FROM products WHERE id = ? AND idCompany = ?', [
 			id,
 			request.user.idCompany
 		]);
 
-		if (status.affectedRows > 0) {
+		if (typeof oldProduct != 'undefined' && typeof oldProduct[0] != 'undefined') {
+			// Delete image
+			if (oldProduct[0].image != '') {
+				try {
+					await fs.unlink(path.resolve(oldProduct[0].image));
+				} catch (error) {}
+			}
+
+			await (await pool).query(
+				'UPDATE products SET active = false, image = "" WHERE id = ?',
+				[id]
+			);
+
 			return response.status(200).json({ message: 'Product eliminated successfully.' });
 		} else {
 			return response.status(400).json({ message: 'Product not found.' });
