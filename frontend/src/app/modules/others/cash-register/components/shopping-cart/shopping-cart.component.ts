@@ -53,7 +53,12 @@ export class ShoppingCartComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.getCompany();
+	}
+
+	private getCompany(): void {
 		this.company = this.userData.getCompany();
+		this.userData.company$.subscribe((x) => (this.company = x));
 	}
 
 	// Parent methods

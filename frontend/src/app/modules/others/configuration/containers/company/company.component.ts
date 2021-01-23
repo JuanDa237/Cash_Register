@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Company, createEmptyCompany } from '../../../companies/models';
-import { CompanyService } from '../../../companies/services';
 
 //Api
 import { environment } from '@enviroment/environment';
@@ -21,5 +21,6 @@ export class CompanyComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.company = this.userData.getCompany();
+		this.userData.company$.subscribe((x) => (this.company = x));
 	}
 }

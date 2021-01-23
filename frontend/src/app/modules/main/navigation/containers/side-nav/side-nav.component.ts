@@ -45,6 +45,7 @@ export class SideNavComponent implements OnInit {
 
 	private getCompany(): void {
 		this.company = this.userData.getCompany();
+		this.userData.company$.subscribe((x) => (this.company = x));
 	}
 
 	private actualizeNavSections(userRole: string): void {

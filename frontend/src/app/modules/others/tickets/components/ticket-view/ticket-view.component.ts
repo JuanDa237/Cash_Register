@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ClientsService } from '@app/modules/others/clients/services';
 import { Client, createEmptyClient } from '@app/modules/others/clients/models';
 
-import { CompanyService } from '@app/modules/others/companies/services';
 import { Company, createEmptyCompany } from '@app/modules/others/companies/models';
 
 import { TicketsService } from '../../services';
@@ -47,6 +46,7 @@ export class TicketViewComponent implements OnInit {
 
 	private getCompany() {
 		this.company = this.userData.getCompany();
+		this.userData.company$.subscribe((x) => (this.company = x));
 	}
 
 	// Parents methods

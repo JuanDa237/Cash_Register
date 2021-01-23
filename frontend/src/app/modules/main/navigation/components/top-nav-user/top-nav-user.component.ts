@@ -25,6 +25,7 @@ export class TopNavUserComponent implements OnInit {
 
 	public getUser(): void {
 		this.user = this.userData.getUser();
+		this.userData.user$.subscribe((x) => (this.user = x));
 	}
 
 	public logOut(): void {

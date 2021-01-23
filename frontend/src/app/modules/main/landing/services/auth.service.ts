@@ -77,7 +77,6 @@ export class AuthService {
 	}
 
 	setRememberedUser(user: LogInUser): void {
-		console.log('lo guardo', user);
 		localStorage.setItem(this.rememberedUser, JSON.stringify(user));
 	}
 
