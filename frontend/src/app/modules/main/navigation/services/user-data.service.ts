@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Company, createEmptyCompany } from '@app/modules/others/companies/models';
-import { User } from '../models';
+import { User, createEmptyUser } from '../models';
 
 @Injectable({
 	providedIn: 'root'
@@ -29,7 +29,7 @@ export class UserDataService {
 
 	public getUser(): User {
 		const user = localStorage.getItem('user');
-		return JSON.parse(user ? user : '') as User;
+		return user ? JSON.parse(user) : createEmptyUser();
 	}
 
 	public setCompany(company: Company): void {

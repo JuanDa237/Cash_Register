@@ -9,6 +9,13 @@ export interface User {
 	role: string;
 }
 
+export function createEmptyUser(): User {
+	return {
+		name: '',
+		role: ''
+	} as User;
+}
+
 export interface RouteData {
 	title?: string;
 	activeTopNav?: string;
