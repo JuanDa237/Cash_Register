@@ -8,8 +8,7 @@ import { Company, createEmptyCompany } from '@app/modules/others/companies/model
 import { sideNavItems, sideNavSections } from '@modules/main/navigation/data';
 
 // Services
-import { UserService } from '../../services/index';
-import { CompanyService } from '@app/modules/others/companies/services';
+import { UserDataService } from '../../services';
 
 //Api
 import { environment } from '@enviroment/environment';
@@ -27,15 +26,12 @@ export class SideNavComponent implements OnInit {
 	public role: string;
 	public apiUrl: string;
 
-	public loadingCompany: boolean;
-
-	constructor(private userService: UserService, private companyService: CompanyService) {
+	constructor(private userData: UserDataService) {
 		this.sideNavItems = sideNavItems;
 		this.sideNavSections = sideNavSections;
 		this.role = '';
 		this.apiUrl = environment.apiUrl;
 		this.company = createEmptyCompany();
-		this.loadingCompany = true;
 	}
 
 	ngOnInit(): void {
@@ -44,19 +40,11 @@ export class SideNavComponent implements OnInit {
 	}
 
 	private getUser(): void {
-		this.actualizeNavSections(this.userService.getUser().role);
+		this.actualizeNavSections(this.userData.getUser().role);
 	}
 
 	private getCompany(): void {
-		this.companyService.getMyCompany().subscribe(
-			(resolve) => {
-				this.company = resolve;
-				this.loadingCompany = false;
-			},
-			(error) => {
-				throw new Error(error);
-			}
-		);
+		this.company = this.userData.getCompany();
 	}
 
 	private actualizeNavSections(userRole: string): void {

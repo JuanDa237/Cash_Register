@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, CanActivateChild } from '@angular/router';
 import { Role } from '../../navigation/models';
 
-import { UserService } from '../../navigation/services/user.service';
+import { UserDataService } from '../../navigation/services';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class RoleToCompanyGuard implements CanActivateChild {
-	constructor(private userService: UserService, private router: Router) {}
+	constructor(private userData: UserDataService, private router: Router) {}
 
 	canActivateChild(route: ActivatedRouteSnapshot): boolean {
-		const user = this.userService.getUser();
+		const user = this.userData.getUser();
 		const routeRoles: Role[] = route.data.roles;
 
 		var canContinue: boolean = false;

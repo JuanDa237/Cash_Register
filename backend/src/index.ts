@@ -14,6 +14,7 @@ import ingredientsRoutes from './app/ingredients/ingredients.routes';
 import ticketsRoutes from './app/tickets/tickets.routes';
 import clientsRoutes from './app/clients/clients.routes';
 import authRoutes from './app/auth/auth.routes';
+import usersRoutes from './app/users/users.routes';
 
 class Server {
 	public app: Application;
@@ -62,6 +63,7 @@ class Server {
 		this.app.use('/api', ingredientsRoutes);
 		this.app.use('/api', ticketsRoutes);
 		this.app.use('/api', clientsRoutes);
+		this.app.use('/api', usersRoutes);
 		this.app.use('/api/auth', authRoutes);
 	}
 

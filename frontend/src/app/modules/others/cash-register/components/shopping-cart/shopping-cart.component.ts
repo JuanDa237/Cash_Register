@@ -14,7 +14,7 @@ import { TicketWithProducts, ProductWithAmount, Ticket } from '@app/modules/othe
 // Libs
 import { Sweet } from '@modules/others/app-common/libs';
 import { Company, createEmptyCompany } from '@app/modules/others/companies/models';
-import { CompanyService } from '@app/modules/others/companies/services';
+import { UserDataService } from '@app/modules/main/navigation/services';
 
 @Component({
 	selector: 'app-shopping-cart',
@@ -41,7 +41,7 @@ export class ShoppingCartComponent implements OnInit {
 
 	private sweet: Sweet;
 
-	constructor(private ticketsService: TicketsService, private companyService: CompanyService) {
+	constructor(private ticketsService: TicketsService, private userData: UserDataService) {
 		this.shoppingCart = new Array<ProductInCart>(0);
 		this.total = 0;
 		this.doHomeDelivery = false;
@@ -53,14 +53,7 @@ export class ShoppingCartComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.companyService.getMyCompany().subscribe(
-			(resolve) => {
-				this.company = resolve;
-			},
-			(error) => {
-				throw new Error(error);
-			}
-		);
+		this.company = this.userData.getCompany();
 	}
 
 	// Parent methods

@@ -7,6 +7,7 @@ import { CompanyService } from '../../../companies/services';
 // Libs
 import { Sweet } from '@modules/others/app-common/libs';
 import { Router } from '@angular/router';
+import { UserDataService } from '@app/modules/main/navigation/services';
 
 @Component({
 	selector: 'app-company-main-form',
@@ -21,7 +22,11 @@ export class CompanyMainFormComponent implements OnInit {
 
 	private sweet: Sweet;
 
-	constructor(private companyServices: CompanyService, private router: Router) {
+	constructor(
+		private companyServices: CompanyService,
+		private userData: UserDataService,
+		private router: Router
+	) {
 		this.company = createEmptyCompany();
 		this.invalidForm = false;
 		this.sweet = new Sweet();
@@ -36,6 +41,7 @@ export class CompanyMainFormComponent implements OnInit {
 			(resolve) => {
 				this.company = resolve;
 
+				this.userData.setCompany(this.company);
 				this.formChild.setCompanyValues(this.company);
 			},
 			(error) => {
@@ -46,8 +52,12 @@ export class CompanyMainFormComponent implements OnInit {
 
 	public async updateCompany(): Promise<void> {
 		if (await this.sweet.update('¿Estas seguro de editar la empresa?')) {
-			this.companyServices.updateMyCompany(this.formChild.getCompanyValues()).subscribe(
+			var company = this.formChild.getCompanyValues();
+			this.companyServices.updateMyCompany(company).subscribe(
 				(resolve) => {
+					company.image = resolve.imagePath;
+					this.userData.setCompany(company);
+
 					this.sweet.created('Se edito la empresa satisfactoriamente');
 					this.router.navigate(['company/configuration/company']);
 				},

@@ -13,6 +13,7 @@ import { ProductInTicket } from '@app/modules/others/products/models';
 
 //Api
 import { environment } from '@enviroment/environment';
+import { UserDataService } from '@app/modules/main/navigation/services';
 
 @Component({
 	selector: 'app-ticket-view',
@@ -26,12 +27,11 @@ export class TicketViewComponent implements OnInit {
 	public productsInTicket: Array<ProductInTicket>;
 
 	public apiUrl: string;
-	public loadingCompany: boolean;
 
 	constructor(
 		private ticketsService: TicketsService,
 		private clientsService: ClientsService,
-		private companyService: CompanyService
+		private userData: UserDataService
 	) {
 		this.productsInTicket = new Array<ProductInTicket>(0);
 		this.ticket = createEmptyTicket();
@@ -39,7 +39,6 @@ export class TicketViewComponent implements OnInit {
 		this.company = createEmptyCompany();
 
 		this.apiUrl = environment.apiUrl;
-		this.loadingCompany = true;
 	}
 
 	ngOnInit(): void {
@@ -47,15 +46,7 @@ export class TicketViewComponent implements OnInit {
 	}
 
 	private getCompany() {
-		this.companyService.getMyCompany().subscribe(
-			(response) => {
-				this.company = response;
-				this.loadingCompany = false;
-			},
-			(error) => {
-				throw new Error(error);
-			}
-		);
+		this.company = this.userData.getCompany();
 	}
 
 	// Parents methods

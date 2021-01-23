@@ -34,7 +34,7 @@ export class CompanyService {
 	}
 
 	getMyCompany(): Observable<Company> {
-		return this.http.get<Company>(this.apiUrl + 'my/company', { headers: this.headers });
+		return this.http.get<Company>(this.apiUrl + 'user/company', { headers: this.headers });
 	}
 
 	// Put

@@ -19,8 +19,6 @@ class CompaniesRoutes {
 		);
 
 		// Get one
-		this.router.get('/my/company', [authJwt.isCashier], companiesControllers.getCompany);
-
 		this.router.get('/company/:id', companiesControllers.getCompanyById);
 
 		// Post

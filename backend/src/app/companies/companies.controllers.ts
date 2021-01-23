@@ -25,20 +25,6 @@ class CompaniesControllers {
 	}
 
 	// Get one
-	public async getCompany(request: Request, response: Response): Promise<Response> {
-		const company: Company[] = await (
-			await pool
-		).query(
-			'SELECT name, image, ticketMessage, homeDeliveries, visible FROM companies WHERE id = ? AND active = true;',
-			[request.user.idCompany]
-		);
-
-		if (company.length > 0) {
-			return response.status(200).json(company[0]);
-		} else {
-			return response.status(404).json({ message: 'Not found.' });
-		}
-	}
 
 	public async getCompanyById(request: Request, response: Response): Promise<Response> {
 		const company: Company[] = await (
@@ -99,8 +85,13 @@ class CompaniesControllers {
 		if (oldCompany != null && typeof oldCompany[0] != 'undefined') {
 			// Delete old image
 			if (typeof image != 'undefined' && oldCompany[0].image != '') {
-				await fs.unlink(path.resolve(oldCompany[0].image));
+				try {
+					await fs.unlink(path.resolve(oldCompany[0].image));
+				} catch (error) {}
 			}
+
+			const imagePath: string =
+				typeof image != 'undefined' ? String(image.path) : oldCompany[0].image;
 
 			await (await pool).query('UPDATE companies SET ? WHERE id = ?', [
 				{
@@ -115,12 +106,14 @@ class CompaniesControllers {
 						typeof homeDeliveries != undefined
 							? homeDeliveries === 'true'
 							: oldCompany[0].homeDeliveries,
-					image: typeof image != 'undefined' ? image.path : oldCompany[0].image
+					image: imagePath
 				},
 				idCompany
 			]);
 
-			return response.status(200).json({ message: 'Company updated successfully.' });
+			return response
+				.status(200)
+				.json({ message: 'Company updated successfully.', imagePath });
 		} else {
 			return response.status(400).json({ message: 'Company not found.' });
 		}

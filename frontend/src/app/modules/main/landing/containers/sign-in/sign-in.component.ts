@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Services
-import { AuthService } from '../../services/index';
+import { AuthService } from '../../services';
 
 // Models
-import { LogInUser } from '../../models/index';
+import { LogInUser } from '../../models';
+import { UserDataService } from '@app/modules/main/navigation/services';
 
 @Component({
 	selector: 'app-sign-in',
@@ -15,38 +16,42 @@ import { LogInUser } from '../../models/index';
 export class SignInComponent {
 	public user: LogInUser;
 	public error: Array<boolean>;
-	public rememberUser: boolean;
+	public rememberedUser: boolean;
 
-	constructor(private authService: AuthService, private router: Router) {
+	constructor(
+		private authService: AuthService,
+		private userData: UserDataService,
+		private router: Router
+	) {
 		this.user = {
 			username: '',
 			password: ''
 		};
 		this.error = new Array<boolean>(2);
-		this.rememberUser = false;
+		this.rememberedUser = false;
 	}
 
 	ngOnInit(): void {
 		this.authService.logOut(false);
 
 		// Get the old user
-		var oldUser: string | null = localStorage.getItem('user');
+		var oldUser = this.authService.getRememberedUser();
 		if (oldUser) {
-			this.user = JSON.parse(oldUser);
-			this.rememberUser = true;
+			this.user = oldUser;
+			this.rememberedUser = true;
 		}
 	}
 
 	public signIn(): void {
 		this.authService.signIn(this.user).subscribe(
 			(resolve) => {
-				localStorage.setItem('token', resolve.headers.get('token'));
-				localStorage.setItem('loggedUser', JSON.stringify(resolve.body));
+				this.authService.setToken(resolve.headers.get('token'));
+				this.userData.setUser(resolve.body);
 
-				if (this.rememberUser) {
-					localStorage.setItem('user', JSON.stringify(this.user));
+				if (this.rememberedUser) {
+					this.authService.setRememberedUser(this.user);
 				} else {
-					localStorage.removeItem('user');
+					this.authService.deleteRememberedUser();
 				}
 
 				this.router.navigate(['/company']);

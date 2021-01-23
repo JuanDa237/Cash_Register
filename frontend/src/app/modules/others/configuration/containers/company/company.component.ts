@@ -4,6 +4,7 @@ import { CompanyService } from '../../../companies/services';
 
 //Api
 import { environment } from '@enviroment/environment';
+import { UserDataService } from '@app/modules/main/navigation/services';
 
 @Component({
 	selector: 'app-config-company',
@@ -12,27 +13,13 @@ import { environment } from '@enviroment/environment';
 export class CompanyComponent implements OnInit {
 	public company: Company;
 	public apiUrl: string;
-	public loading: boolean;
 
-	constructor(private companyService: CompanyService) {
+	constructor(private userData: UserDataService) {
 		this.company = createEmptyCompany();
 		this.apiUrl = environment.apiUrl;
-		this.loading = true;
 	}
 
 	ngOnInit(): void {
-		this.getCompany();
-	}
-
-	private getCompany(): void {
-		this.companyService.getMyCompany().subscribe(
-			(resolve) => {
-				this.company = resolve;
-				this.loading = false;
-			},
-			(error) => {
-				throw new Error(error);
-			}
-		);
+		this.company = this.userData.getCompany();
 	}
 }
