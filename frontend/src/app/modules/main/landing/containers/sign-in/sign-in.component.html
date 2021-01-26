@@ -7,6 +7,7 @@
 					<form class="form-signin" #formSignIn="ngForm">
 						<div class="form-label-group">
 							<input
+								tabindex="1"
 								type="text"
 								class="form-control"
 								[ngClass]="{ 'is-invalid': error[0] }"
@@ -14,13 +15,13 @@
 								name="username"
 								#username="ngModel"
 								[(ngModel)]="user.username"
-								autofocus
 								required
 							/>
 							<div class="invalid-feedback">Ingresa un nombre de usuario valido.</div>
 						</div>
 						<div class="form-label-group">
 							<input
+								tabindex="2"
 								type="password"
 								class="form-control"
 								[ngClass]="{ 'is-invalid': error[1] }"
@@ -36,6 +37,7 @@
 
 						<div class="custom-control custom-checkbox mb-3">
 							<input
+								tabindex="3"
 								type="checkbox"
 								class="custom-control-input"
 								id="rememberedUser"
@@ -47,6 +49,7 @@
 							>
 						</div>
 						<button
+							tabindex="4"
 							type="button"
 							class="btn btn-lg btn-primary btn-block text-uppercase"
 							(click)="signIn()"
