@@ -4,6 +4,7 @@ import path from 'path';
 
 // Database
 import pool from '../../database';
+import { Role } from '../roles/data';
 
 // Models
 import { Company } from './models';
@@ -123,19 +124,28 @@ class CompaniesControllers {
 	public async deleteCompany(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		const company: Company[] = await (
-			await pool
-		).query('SELECT image FROM companies WHERE id = ?', [id]);
+		const company: Company = (
+			await (await pool).query('SELECT image FROM companies WHERE id = ?', [id])
+		)[0];
 
-		if (typeof company != 'undefined' && typeof company[0] != 'undefined') {
+		if (typeof company != 'undefined') {
 			// Delete old image
-			if (company[0].image != '') {
-				await fs.unlink(path.resolve(company[0].image));
+			if (company.image != '') {
+				await fs.unlink(path.resolve(company.image));
 			}
 
 			await (
 				await pool
 			).query('UPDATE companies SET active = false, visible = false WHERE id = ?', [id]);
+
+			// Delete all company users with admin role
+			await (await pool).query(
+				`UPDATE users u
+				INNER JOIN roles r ON u.idRole = r.id
+				SET u.active = false
+				WHERE idCompany = ? AND r.name = ?;`,
+				[id, Role.ADMIN]
+			);
 
 			return response.status(200).json({ message: 'Company eliminated successfully.' });
 		} else {

@@ -55,7 +55,7 @@
 					]
 				},
 				{
-					"name": "/companies & /company",
+					"name": "/companies",
 					"item": [
 						{
 							"name": "/companies",
@@ -88,29 +88,6 @@
 									"raw": "{{api}}all/companies",
 									"host": ["{{api}}all"],
 									"path": ["companies"]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/my/company",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api}}my/company",
-									"host": ["{{api}}my"],
-									"path": ["company"]
 								}
 							},
 							"response": []
@@ -334,10 +311,26 @@
 							},
 							"response": []
 						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						}
 					]
 				},
 				{
-					"name": "/categories & /category",
+					"name": "/categories",
 					"item": [
 						{
 							"name": "/categories",
@@ -494,10 +487,26 @@
 							"response": []
 						}
 					],
-					"description": "Categories and category endpoint."
+					"description": "Categories and category endpoint.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						}
+					]
 				},
 				{
-					"name": "/products & /product",
+					"name": "/products",
 					"item": [
 						{
 							"name": "/ingredients & /ingredient",
@@ -649,16 +658,41 @@
 									]
 								},
 								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
+								"header": [],
 								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"idCategory\": 0,\n    \"name\": \"\",\n    \"price\": 0,\n    \"ingredients\": [\n        {\n            \"idIngredient\": 0,\n            \"spendingAmount\": 0\n        },\n        {\n            \"idIngredient\": 0,\n            \"spendingAmount\": 0\n        }\n    ]\n}"
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "idCategory",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "ingredients",
+											"value": "{\n    \"idIngredient\": 0,\n    \"spendingAmount\": 0\n},\n{\n    \"idIngredient\": 0,\n    \"spendingAmount\": 0\n}",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										}
+									]
 								},
 								"url": {
 									"raw": "{{api}}product",
@@ -681,16 +715,41 @@
 									]
 								},
 								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"idCategory\": 0,\n    \"name\": \"\",\n    \"price\": 0,\n    \"ingredients\": [\n        {\n            \"idIngredient\": 0,\n            \"spendingAmount\": 0\n        },\n        {\n            \"idIngredient\": 0,\n            \"spendingAmount\": 0\n        }\n    ]\n}"
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "idCategory",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "ingredients",
+											"value": "[\n    {\n        \"idIngredient\": 0,\n        \"spendingAmount\": 0\n    },\n    {\n        \"idIngredient\": 0,\n        \"spendingAmount\": 0\n    }\n]",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										}
+									]
 								},
 								"url": {
 									"raw": "{{api}}product/:id",
@@ -757,7 +816,7 @@
 					]
 				},
 				{
-					"name": "/ingredients & /ingredient",
+					"name": "/ingredients",
 					"item": [
 						{
 							"name": "/ingredients",
@@ -914,10 +973,26 @@
 							"response": []
 						}
 					],
-					"description": "Ingresients and ingredient endpoint."
+					"description": "Ingresients and ingredient endpoint.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						}
+					]
 				},
 				{
-					"name": "/tickets & /ticket",
+					"name": "/tickets",
 					"item": [
 						{
 							"name": "/tickets",
@@ -1113,10 +1188,26 @@
 							"response": []
 						}
 					],
-					"description": "Tickets and ticket endpoint."
+					"description": "Tickets and ticket endpoint.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						}
+					]
 				},
 				{
-					"name": "/clients & /client",
+					"name": "/clients",
 					"item": [
 						{
 							"name": "/clients",
@@ -1320,7 +1411,158 @@
 							"response": []
 						}
 					],
-					"description": "Clients and client endpoint."
+					"description": "Clients and client endpoint.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						}
+					]
+				},
+				{
+					"name": "/users",
+					"item": [
+						{
+							"name": "/user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}user",
+									"host": ["{{api}}user"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/all/user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}/all/user",
+									"host": ["{{api}}"],
+									"path": ["all", "user"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/user/company",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}user/company",
+									"host": ["{{api}}user"],
+									"path": ["company"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users/admins",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}users/admins",
+									"host": ["{{api}}users"],
+									"path": ["admins"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users/cashiers",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}users/cashiers",
+									"host": ["{{api}}users"],
+									"path": ["cashiers"]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [""]
+							}
+						}
+					]
 				},
 				{
 					"name": "/auth",
