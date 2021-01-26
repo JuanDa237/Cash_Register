@@ -11,10 +11,9 @@ class ClientsControllers {
 	public async listClientsInYear(request: Request, response: Response): Promise<Response> {
 		var year: number = new Date().getFullYear();
 
-		const clients: Client[] = await (
-			await pool
-		).query(
-			"SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, active FROM clients WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31' AND idCompany = ?",
+		const clients: Client[] = await (await pool).query(
+			`SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, active FROM clients
+			WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31' AND idCompany = ?`,
 			[year, year, request.user.idCompany]
 		);
 
@@ -23,10 +22,9 @@ class ClientsControllers {
 
 	// Get All List
 	public async listAllClients(request: Request, response: Response): Promise<Response> {
-		const clients: Client[] = await (
-			await pool
-		).query(
-			"SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE idCompany = ?",
+		const clients: Client[] = await (await pool).query(
+			`SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate
+			FROM clients WHERE idCompany = ?`,
 			[request.user.idCompany]
 		);
 		return response.status(200).json(clients);
@@ -34,11 +32,9 @@ class ClientsControllers {
 
 	// Get List
 	public async listClients(request: Request, response: Response): Promise<Response> {
-		const clients: Client[] = await (
-			await pool
-		).query(
-			"SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE active = true AND idCompany = ?",
-			[request.user.idCompany]
+		const clients: Client[] = await (await pool).query(
+			`SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate
+			FROM clients WHERE active = true AND idCompany = ?"`[request.user.idCompany]
 		);
 		return response.status(200).json(clients);
 	}
@@ -47,10 +43,9 @@ class ClientsControllers {
 	public async getOneClient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		const client: Client[] = await (
-			await pool
-		).query(
-			"SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate FROM clients WHERE id = ? AND active = true AND idCompany = ?",
+		const client: Client[] = await (await pool).query(
+			`SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate
+			FROM clients WHERE id = ? AND active = true AND idCompany = ?`,
 			[id, request.user.idCompany]
 		);
 		if (client.length > 0) {

@@ -4,22 +4,12 @@ import jwt from 'jsonwebtoken';
 import pool from '../../../database';
 import keys from '../../../keys';
 
-import { User } from '../../users/models';
 import { Role } from '../../roles/data';
-import { Role as IRole } from '../../roles/models';
-import { Company } from '../../companies/models';
 
-interface Payload {
-	id: number;
-	iat: number;
-	exp: number;
-}
+import { AuthUser, Payload } from '../models';
 
-async function verifyToken(
-	request: Request,
-	response: Response,
-	next: NextFunction
-): Promise<void | Response<any>> {
+// All functions have to be return type Promise<void | Response<any>>
+async function verifyToken(request: Request, response: Response, next: NextFunction) {
 	try {
 		const token = request.header('Authorization')?.split(' ')[1];
 
@@ -30,42 +20,32 @@ async function verifyToken(
 			process.env.TOKEN_SECRET || keys.noEnv.TOKEN
 		) as Payload;
 
-		const user: User[] = await (
-			await pool
-		).query('SELECT id, idCompany, idRole, username FROM users WHERE id = ?', [payload.id]);
+		const user: AuthUser = (
+			await (await pool).query(
+				`SELECT u.id, u.username, r.name as role, u.idCompany, c.name as company
+				FROM users u
+				INNER JOIN roles r ON u.idRole = r.id
+				INNER JOIN companies c ON u.idCompany = c.id
+				WHERE c.active = true AND u.id = ?`,
+				[payload.id]
+			)
+		)[0];
 
-		if (user.length <= 0) return response.status(404).json({ message: 'User not found.' });
+		if (typeof user == 'undefined')
+			return response.status(404).json({ message: 'User or company not found.' });
 
-		const company: Company[] = await (
-			await pool
-		).query('SELECT id FROM companies WHERE active = true AND id = ?', [user[0].idCompany]);
-
-		if (company.length <= 0)
-			return response.status(404).json({ message: 'Company not found.' });
-
-		request.user = user[0];
+		request.user = user;
 		return next();
 	} catch (error) {
 		return response.status(401).json({ message: 'Unauthorized.' });
 	}
 }
 
-export async function isCashier(
-	request: Request,
-	response: Response,
-	next: NextFunction
-): Promise<void | Response<any>> {
-	return verifyToken(request, response, async function () {
-		const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
-			request.user.idRole
-		]);
+export async function isCashier(request: Request, response: Response, next: NextFunction) {
+	return await verifyToken(request, response, async function () {
+		const role = request.user.role;
 
-		if (
-			userRole.length > 0 &&
-			(userRole[0].name == Role.CASHIER ||
-				userRole[0].name == Role.ADMIN ||
-				userRole[0].name == Role.SUPERADMIN)
-		) {
+		if (role == Role.CASHIER || role == Role.ADMIN || role == Role.SUPERADMIN) {
 			return next();
 		} else {
 			return response.status(401).json({ message: 'Unauthorized.' });
@@ -73,20 +53,11 @@ export async function isCashier(
 	});
 }
 
-export async function isAdministrator(
-	request: Request,
-	response: Response,
-	next: NextFunction
-): Promise<void | Response<any>> {
-	return verifyToken(request, response, async function () {
-		const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
-			request.user.idRole
-		]);
+export async function isAdministrator(request: Request, response: Response, next: NextFunction) {
+	return await verifyToken(request, response, async function () {
+		const role = request.user.role;
 
-		if (
-			userRole.length > 0 &&
-			(userRole[0].name == Role.ADMIN || userRole[0].name == Role.SUPERADMIN)
-		) {
+		if (role == Role.ADMIN || role == Role.SUPERADMIN) {
 			return next();
 		} else {
 			return response.status(401).json({ message: 'Unauthorized.' });
@@ -94,17 +65,11 @@ export async function isAdministrator(
 	});
 }
 
-export async function isSuperAdmin(
-	request: Request,
-	response: Response,
-	next: NextFunction
-): Promise<void | Response<any>> {
-	return verifyToken(request, response, async function () {
-		const userRole: IRole[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
-			request.user.idRole
-		]);
+export async function isSuperAdmin(request: Request, response: Response, next: NextFunction) {
+	return await verifyToken(request, response, async function () {
+		const role = request.user.role;
 
-		if (userRole.length > 0 && userRole[0].name == Role.SUPERADMIN) {
+		if (role == Role.SUPERADMIN) {
 			return next();
 		} else {
 			return response.status(401).json({ message: 'Unauthorized.' });

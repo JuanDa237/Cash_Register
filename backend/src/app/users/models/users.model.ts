@@ -5,7 +5,7 @@ export interface User {
 	idCompany: number;
 	idRole: number;
 	username: string;
-	password: string;
+	password?: string;
 	name: string;
 	active?: boolean;
 }

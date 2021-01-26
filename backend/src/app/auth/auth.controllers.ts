@@ -3,42 +3,40 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import pool from '../../database';
 import keys from '../../keys';
+import { Role } from '../roles/models';
 
 import { User, encryptPassword, validatePassword } from '../users/models';
-import { Role } from '../roles/models';
-import { Company } from '../companies/models';
+import { SignInUser } from './models';
 
 class AuthControllers {
 	// Post
 	public async singIn(request: Request, response: Response): Promise<Response> {
 		const { username, password } = request.body;
 
-		const user: User[] = await (
-			await pool
-		).query('SELECT id, password, name, idRole, idCompany FROM users WHERE username = ?', [
-			username
-		]);
+		// Get user and verify if company is active
+		const user: SignInUser = (
+			await (await pool).query(
+				`SELECT u.id, u.name, u.password, r.name as role, c.name as company
+				FROM users u
+				INNER JOIN roles r ON u.idRole = r.id
+				INNER JOIN companies c ON u.idCompany = c.id
+				WHERE c.active = true AND BINARY u.username = ?`,
+				[username]
+			)
+		)[0];
 
 		// Validate username
-		if (user.length <= 0) return response.status(404).json({ message: 'Username not found.' });
-
-		const company: Company[] = await (await pool).query(
-			'SELECT id FROM companies WHERE active = true AND id = ?',
-			user[0].idCompany
-		);
-
-		// Validate if comany is active
-		if (company.length <= 0)
-			return response.status(401).json({ message: 'Company not found.' });
-
-		const correctPassword: boolean = await validatePassword(password, user[0].password);
+		if (typeof user == 'undefined')
+			return response.status(404).json({ message: 'Username not found.' });
 
 		// Validate password
+		const correctPassword: boolean = await validatePassword(password, user.password);
+
 		if (!correctPassword) return response.status(401).json({ message: 'Password is wrong.' });
 
 		const token: string = jwt.sign(
 			{
-				id: user[0].id
+				id: user.id
 			},
 			process.env.TOKEN_SECRET || keys.noEnv.TOKEN,
 			{
@@ -46,17 +44,13 @@ class AuthControllers {
 			}
 		);
 
-		const role: Role[] = await (await pool).query('SELECT name FROM roles WHERE id = ?', [
-			user[0].idRole
-		]);
-
 		return response
 			.status(200)
 			.header('token', token)
 			.set('Access-Control-Expose-Headers', 'token')
 			.json({
-				name: user[0].name,
-				role: role[0].name
+				name: user.name,
+				role: user.role
 			});
 	}
 
@@ -64,10 +58,9 @@ class AuthControllers {
 		const { idCompany, roleName, username, password, name } = request.body;
 
 		// Validate username
-		const userWithUsername = await (await pool).query(
-			'SELECT id FROM users WHERE username = ?',
-			[username]
-		);
+		const userWithUsername: User[] = await (
+			await pool
+		).query('SELECT id FROM users WHERE BINARY username = ?', [username]);
 
 		if (userWithUsername.length > 0) {
 			return response.status(401).json({ message: `Username '${username}' is in use.` });
@@ -77,10 +70,12 @@ class AuthControllers {
 		var idRole: number;
 
 		if (roleName != null) {
-			const role = await (await pool).query('SELECT * FROM roles WHERE name = ?', [roleName]);
+			const role: Role = (
+				await (await pool).query('SELECT * FROM roles WHERE name = ?', [roleName])
+			)[0];
 
-			if (role.length > 0) {
-				idRole = role[0].id;
+			if (typeof role != 'undefined') {
+				idRole = role.id;
 			} else {
 				return response.status(400).json({ message: `Role '${roleName}' not found.` });
 			}
@@ -98,17 +93,12 @@ class AuthControllers {
 
 		const insertedNewUser: any = await (await pool).query('INSERT INTO users SET ?', [newUser]);
 
-		const exportUser = {
-			id: insertedNewUser.insertId,
-			idCompany: newUser.idCompany,
-			idRole: newUser.idRole,
-			username: newUser.username,
-			name: newUser.name
-		};
+		newUser.id = insertedNewUser.insertId;
+		delete newUser.password;
 
 		return response.status(200).json({
 			message: 'Saved user.',
-			user: exportUser
+			user: newUser
 		});
 	}
 }

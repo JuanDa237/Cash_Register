@@ -8,7 +8,7 @@ class UsersController {
 	// Get
 
 	public async getUser(request: Request, response: Response): Promise<Response> {
-		const user: any = await usersFunctions.getUserQuery(request.user.id);
+		const user: any = await usersFunctions.getUserQuery(request.user.id, request.user.role);
 
 		return response.status(200).json(user);
 	}
@@ -20,9 +20,9 @@ class UsersController {
 	}
 
 	public async getUserAndCompany(request: Request, response: Response): Promise<Response> {
-		const { id, idCompany } = request.user;
+		const { id, idCompany, role } = request.user;
 
-		const user: any = await usersFunctions.getUserQuery(id);
+		const user: any = await usersFunctions.getUserQuery(id, role);
 
 		const company: Company = await usersFunctions.getCompanyQuery(idCompany);
 

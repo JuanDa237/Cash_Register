@@ -5,15 +5,11 @@ import pool from '../../database';
 import { Company } from '../companies/models';
 
 class UsersFunctions {
-	public async getUserQuery(id: number): Promise<any> {
-		const user: any[] = await (
-			await pool
-		).query(
-			'SELECT u.name, r.name as role FROM users u INNER JOIN roles r ON u.idRole = r.id WHERE u.id = ?',
-			[id]
-		);
+	public async getUserQuery(id: number, role: string): Promise<any> {
+		var user: any = (await (await pool).query('SELECT name FROM users WHERE id = ?', [id]))[0];
+		user.role = role;
 
-		return user[0];
+		return user;
 	}
 
 	public async getCompanyQuery(idCompany: number): Promise<Company> {

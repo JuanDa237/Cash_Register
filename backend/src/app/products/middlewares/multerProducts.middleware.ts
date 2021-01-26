@@ -9,7 +9,7 @@ import { Company } from '../../companies/models';
 export const multerConfigProducts: multer.Multer = multer({
 	storage: multer.diskStorage({
 		destination: async (request, file, callback): Promise<void> => {
-			const idCompany: string = request.user.idCompany;
+			const idCompany: number = request.user.idCompany;
 
 			const companies: Company[] = await (
 				await pool

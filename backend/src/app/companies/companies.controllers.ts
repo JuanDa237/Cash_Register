@@ -71,7 +71,7 @@ class CompaniesControllers {
 		const image = (request.file as unknown) as {
 			[fieldname: string]: Express.Multer.File;
 		};
-		var idCompany = request.params.id;
+		var idCompany: number = Number(request.params.id);
 
 		if (typeof idCompany == 'undefined') idCompany = request.user.idCompany;
 
