@@ -57,6 +57,9 @@ export class ProductsComponent implements OnInit {
 						})
 						.indexOf(id);
 					this.products.splice(index, 1);
+
+					// Events
+					this.table.rerenderTable();
 					this.sweet.deleted('Se elimino el producto satisfactoriamente');
 				},
 				(error) => {

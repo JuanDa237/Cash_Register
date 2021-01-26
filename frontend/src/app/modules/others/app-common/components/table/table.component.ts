@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 import { datatableLanguage } from '../../data/index';
 
@@ -25,6 +26,9 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
 	@Input()
 	public info: boolean;
+
+	@ViewChild(DataTableDirective, { static: false })
+	dtElement!: DataTableDirective;
 
 	public dtOptions: DataTables.Settings;
 	public dtTrigger: Subject<any>;
@@ -71,5 +75,14 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
 	public renderTable() {
 		this.dtTrigger.next();
+	}
+
+	public rerenderTable() {
+		this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+			// Destroy the table first
+			dtInstance.destroy();
+			// Call the dtTrigger to rerender again
+			this.dtTrigger.next();
+		});
 	}
 }

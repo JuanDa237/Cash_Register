@@ -54,6 +54,8 @@ export class CompaniesComponent implements OnInit {
 						.indexOf(id);
 					this.companies.splice(index, 1);
 
+					// Events
+					this.table.rerenderTable();
 					this.sweet.deleted('La compañia se elimino satisfactoriamente');
 				},
 				(error) => {

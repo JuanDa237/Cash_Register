@@ -34,7 +34,8 @@ class ClientsControllers {
 	public async listClients(request: Request, response: Response): Promise<Response> {
 		const clients: Client[] = await (await pool).query(
 			`SELECT id, name, address, phoneNumber, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate
-			FROM clients WHERE active = true AND idCompany = ?"`[request.user.idCompany]
+			FROM clients WHERE active = true AND idCompany = ?`,
+			[request.user.idCompany]
 		);
 		return response.status(200).json(clients);
 	}

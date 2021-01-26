@@ -77,6 +77,9 @@ export class CategoriesComponent implements OnInit {
 				(response) => {
 					category.id = response.id;
 					this.categories.push(category);
+
+					// Events
+					this.table.rerenderTable();
 					this.sweet.created('Se creo la categoria satisfactoriamente');
 				},
 				(error) => {
@@ -99,6 +102,9 @@ export class CategoriesComponent implements OnInit {
 						})
 						.indexOf(category.id);
 					this.categories[index] = category;
+
+					// Events
+					this.table.rerenderTable();
 					this.sweet.created('Se edito la categoria satisfactoriamente');
 				},
 				(error) => {
@@ -122,6 +128,9 @@ export class CategoriesComponent implements OnInit {
 						})
 						.indexOf(category.id);
 					this.categories.splice(index, 1);
+
+					// Events
+					this.table.rerenderTable();
 					this.sweet.deleted('Se elimino la categoria satisfactoriamente');
 				},
 				(error) => {

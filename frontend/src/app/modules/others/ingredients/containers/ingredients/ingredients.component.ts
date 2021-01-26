@@ -73,6 +73,9 @@ export class IngredientsComponent implements OnInit {
 						})
 						.indexOf(ingredient.id);
 					this.ingredients.splice(index, 1);
+
+					// Events
+					this.table.rerenderTable();
 					this.sweet.deleted('Se elimino el ingrediente satisfactoriamente');
 				},
 				(error) => {
@@ -96,6 +99,9 @@ export class IngredientsComponent implements OnInit {
 				(response) => {
 					ingredient.id = response.id;
 					this.ingredients.push(ingredient);
+
+					// Events
+					this.table.rerenderTable();
 					this.sweet.created('Se creo el ingrediente satisfactoriamente');
 				},
 				(error) => {
@@ -118,6 +124,9 @@ export class IngredientsComponent implements OnInit {
 						})
 						.indexOf(ingredient.id);
 					this.ingredients[index] = ingredient;
+
+					// Events
+					this.table.rerenderTable();
 					this.sweet.created('Se edito el ingrediente satisfactoriamente');
 				},
 				(error) => {

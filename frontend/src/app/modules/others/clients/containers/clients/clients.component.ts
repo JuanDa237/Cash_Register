@@ -82,6 +82,9 @@ export class ClientsComponent implements OnInit {
 				(response) => {
 					client.id = response.id;
 					this.clients.push(client);
+
+					// Events
+					this.table.rerenderTable();
 					this.chartChild.newChart();
 					this.sweet.created('Se creo el cliente satisfactoriamente');
 				},
@@ -107,6 +110,9 @@ export class ClientsComponent implements OnInit {
 						})
 						.indexOf(client.id);
 					this.clients[index] = client;
+
+					// Events
+					this.table.rerenderTable();
 					this.sweet.created('Se edito el cliente satisfactoriamente');
 				},
 				(error) => {
@@ -130,6 +136,9 @@ export class ClientsComponent implements OnInit {
 						})
 						.indexOf(client.id);
 					this.clients.splice(index, 1);
+
+					// Events
+					this.table.rerenderTable();
 					this.sweet.deleted('Se elimino el cliente satisfactoriamente');
 				},
 				(error) => {
