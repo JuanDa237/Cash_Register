@@ -70,6 +70,15 @@ const routes: Routes = [
 						}
 					]
 				} as RouteData
+			},
+			{
+				path: 'administrators',
+				component: othersContainers.AdminsComponent,
+				data: {
+					title: 'Administradores',
+					hideBreadcrumbs: true,
+					roles: [Role.SUPERADMIN]
+				} as RouteData
 			}
 		]
 	}

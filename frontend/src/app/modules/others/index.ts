@@ -6,6 +6,7 @@ import { ClientsModule } from './clients/clients.module';
 import { TicketsModule } from './tickets/tickets.module';
 import { ConfigurationModule } from './configuration/configuration.module';
 import { CompaniesModule } from './companies/companies.module';
+import { UsersModule } from './users/users.module';
 
 export const modules = [
 	CashRegisterModule,
@@ -15,7 +16,8 @@ export const modules = [
 	ClientsModule,
 	TicketsModule,
 	ConfigurationModule,
-	CompaniesModule
+	CompaniesModule,
+	UsersModule
 ];
 
 export * from './cash-register/cash-register.module';
@@ -26,3 +28,4 @@ export * from './clients/clients.module';
 export * from './tickets/tickets.module';
 export * from './configuration/configuration.module';
 export * from './companies/companies.module';
+export * from './users/users.module';

@@ -23,7 +23,7 @@ export class UserService {
 		this.apiUrl = environment.apiUrl;
 	}
 
-	// Get
+	// Get One
 	getUser(): Observable<User> {
 		return this.http.get<User>(this.apiUrl + 'user', { headers: this.headers });
 	}
@@ -34,5 +34,14 @@ export class UserService {
 
 	getCompany(): Observable<Company> {
 		return this.http.get<Company>(this.apiUrl + 'user/company', { headers: this.headers });
+	}
+
+	// Get List
+	getAdmins(): Observable<User[]> {
+		return this.http.get<User[]>(this.apiUrl + 'users/admins', { headers: this.headers });
+	}
+
+	getCashiers(): Observable<User[]> {
+		return this.http.get<User[]>(this.apiUrl + 'users/cashiers', { headers: this.headers });
 	}
 }

@@ -4,7 +4,7 @@ import { Role } from '../models/index';
 export const sideNavSections: SideNavSection[] = [
 	{
 		text: 'ADMINISTRAR',
-		items: ['companies'],
+		items: ['companies', 'administrators'],
 		roles: [Role.SUPERADMIN]
 	},
 	{
@@ -38,6 +38,11 @@ export const sideNavItems: SideNavItems = {
 				link: '/admin/companies/add'
 			}
 		]
+	},
+	administrators: {
+		icon: 'fa-user-cog',
+		text: 'Administradores',
+		link: '/admin/administrators'
 	},
 	cashRegister: {
 		icon: 'fa-cash-register',

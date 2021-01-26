@@ -10,3 +10,4 @@ export {
 	UserComponent
 } from './configuration/containers';
 export { CompaniesComponent, CompaniesFormComponent } from './companies/containers';
+export { AdminsComponent } from './users/containers';
