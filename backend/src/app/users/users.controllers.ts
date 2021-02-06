@@ -34,7 +34,7 @@ class UsersController {
 	// Get List
 	public async getAdmins(request: Request, response: Response): Promise<Response> {
 		const admins: any = await (await pool).query(
-			`SELECT u.id, u.username, u.name, c.name as company FROM users u
+			`SELECT u.id, u.username, u.name, u.idCompany, c.name as company FROM users u
 			INNER JOIN roles r ON u.idRole = r.id
 			INNER JOIN companies c ON u.idCompany = c.id
 			WHERE u.active = true AND r.name = ?`,

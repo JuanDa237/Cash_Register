@@ -1,0 +1,99 @@
+<form [id]="idForm" [formGroup]="adminForm" (ngSubmit)="submitEvent()" novalidate>
+	<div class="form-group">
+		<label for="username">Nombre De Usuario<span class="text-danger">*</span> </label>
+		<input
+			tabindex="1"
+			type="text"
+			id="username"
+			class="form-control"
+			placeholder="Deben ser al menos 3 caracteres"
+			name="username"
+			formControlName="username"
+			[class.is-invalid]="
+				adminForm.get('username')?.touched && adminForm.get('username')?.invalid
+			"
+		/>
+		<div
+			class="invalid-feedback"
+			*ngIf="adminForm.get('username')?.touched && adminForm.get('username')?.invalid"
+		>
+			<div *ngIf="adminForm.get('username')?.errors['required']">
+				El nombre de usuario es obligatorio.
+			</div>
+			<div *ngIf="adminForm.get('username')?.errors['minlength']">
+				{{
+					adminForm.get('username')?.errors['minlength'].actualLength +
+						' caracteres de ' +
+						adminForm.get('username')?.errors['minlength'].requiredLength +
+						' requeridos.'
+				}}
+			</div>
+			<div *ngIf="adminForm.get('username')?.errors['maxlength']">
+				{{
+					'El maximo de caracteres permitidos son ' +
+						adminForm.get('username')?.errors['maxlength'].requiredLength
+				}}
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="name">Nombre<span class="text-danger">*</span> </label>
+		<input
+			tabindex="2"
+			type="text"
+			id="name"
+			class="form-control"
+			placeholder="Deben ser al menos 3 caracteres"
+			name="name"
+			formControlName="name"
+			[class.is-invalid]="adminForm.get('name')?.touched && adminForm.get('name')?.invalid"
+		/>
+		<div
+			class="invalid-feedback"
+			*ngIf="adminForm.get('name')?.touched && adminForm.get('name')?.invalid"
+		>
+			<div *ngIf="adminForm.get('name')?.errors['required']">El nombre es obligatorio.</div>
+			<div *ngIf="adminForm.get('name')?.errors['minlength']">
+				{{
+					adminForm.get('name')?.errors['minlength'].actualLength +
+						' caracteres de ' +
+						adminForm.get('name')?.errors['minlength'].requiredLength +
+						' requeridos.'
+				}}
+			</div>
+			<div *ngIf="adminForm.get('name')?.errors['maxlength']">
+				{{
+					'El maximo de caracteres permitidos son ' +
+						adminForm.get('name')?.errors['maxlength'].requiredLength
+				}}
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="idCompany">Compañia<span class="text-danger">*</span> </label>
+		<select
+			tabindex="3"
+			type="text"
+			id="idCompany"
+			class="form-control"
+			name="idCompany"
+			formControlName="idCompany"
+			[class.is-invalid]="
+				adminForm.get('idCompany')?.touched && adminForm.get('idCompany')?.invalid
+			"
+		>
+			<option *ngIf="creating" [ngValue]="null">Ninguna</option>
+			<option *ngFor="let company of companies" [ngValue]="company.id">
+				{{ company.name }}
+			</option>
+		</select>
+		<div
+			class="invalid-feedback"
+			*ngIf="adminForm.get('idCompany')?.touched && adminForm.get('idCompany')?.invalid"
+		>
+			<div *ngIf="creating && adminForm.get('idCompany')?.errors['required']">
+				La compañia es obligatoria.
+			</div>
+		</div>
+	</div>
+</form>

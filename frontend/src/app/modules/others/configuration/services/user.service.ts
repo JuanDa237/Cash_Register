@@ -37,8 +37,8 @@ export class UserService {
 	}
 
 	// Get List
-	getAdmins(): Observable<User[]> {
-		return this.http.get<User[]>(this.apiUrl + 'users/admins', { headers: this.headers });
+	getAdmins(): Observable<any[]> {
+		return this.http.get<any[]>(this.apiUrl + 'users/admins', { headers: this.headers });
 	}
 
 	getCashiers(): Observable<User[]> {

@@ -1,1 +1,65 @@
-<p>admins works!</p>
+<button
+	class="btn btn-info btn-block"
+	data-toggle="modal"
+	data-target="#modalCategories"
+	(click)="changeModal(null)"
+>
+	<i class="fas fa-plus-circle" title="Crear categoria"></i> Crear Administrador
+</button>
+<app-modal
+	idModal="modalCategories"
+	[title]="creating ? 'Crear Administrador' : 'Editar Administrador'"
+>
+	<div class="modal-body">
+		<app-admins-form
+			idForm="adminForm"
+			[creating]="creating"
+			(onSubmitEvent)="createOrUpdateAdmin()"
+			(invalidForm)="invalidForm = $event"
+		></app-admins-form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+		<button
+			type="submit"
+			class="btn btn-success"
+			(click)="createOrUpdateAdmin()"
+			[disabled]="invalidForm"
+			data-dismiss="modal"
+			form="adminForm"
+		>
+			{{ creating ? 'Crear' : 'Editar' }}
+		</button>
+	</div>
+</app-modal>
+<div *ngIf="loading">
+	<app-loading colorClass="text-primary" size="10rem"></app-loading>
+</div>
+<div [hidden]="loading">
+	<div class="my-4">
+		<app-table [columns]="['Usuario', 'Nombre', 'Compañia', 'Acciones']">
+			<tr *ngFor="let admin of admins">
+				<td class="align-middle">{{ admin.username }}</td>
+				<td class="align-middle">{{ admin.name }}</td>
+				<td class="align-middle">{{ admin.company }}</td>
+				<td>
+					<div class="text-center">
+						<div class="btn-group">
+							<button
+								class="btn btn-info"
+								(click)="changeModal(admin)"
+								data-toggle="modal"
+								data-target="#modalCategories"
+							>
+								<i class="far fa-edit" title="Editar"></i>
+							</button>
+							<button class="btn btn-danger" (click)="deleteAdmin(admin)">
+								<i class="far fa-trash-alt" title="Eliminar"></i>
+							</button>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</app-table>
+	</div>
+</div>
