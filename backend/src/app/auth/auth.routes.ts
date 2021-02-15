@@ -11,7 +11,12 @@ class AuthRoutes {
 	private routes(): void {
 		// Post
 		this.router.post('/singIn', authControllers.singIn);
-		this.router.post('/singUp', [authJwt.isSuperAdmin], authControllers.singUp);
+		this.router.post('/singUp/admin', [authJwt.isSuperAdmin], authControllers.singUpAdmin);
+		this.router.post(
+			'/singUp/cashier',
+			[authJwt.isAdministrator],
+			authControllers.singUpCashier
+		);
 	}
 }
 

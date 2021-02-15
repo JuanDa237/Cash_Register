@@ -11,6 +11,12 @@ interface UserCompany {
 	company: Company;
 }
 
+interface UserToUpdate {
+	id: number;
+	name: string;
+	username: string;
+}
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -43,5 +49,18 @@ export class UserService {
 
 	getCashiers(): Observable<User[]> {
 		return this.http.get<User[]>(this.apiUrl + 'users/cashiers', { headers: this.headers });
+	}
+
+	// Put
+	updateUser(user: UserToUpdate): Observable<any> {
+		var params = JSON.stringify(user);
+		return this.http.put(this.apiUrl + 'user/' + user.id, params, {
+			headers: this.headers
+		});
+	}
+
+	// Delete
+	deleteUser(id: number): any {
+		return this.http.delete<any>(this.apiUrl + 'user/' + id, { headers: this.headers });
 	}
 }

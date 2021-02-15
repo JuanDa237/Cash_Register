@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { usersController } from './users.controllers';
 import { authJwt } from '../auth/middlewares/index';
 
-class ProductsRoutes {
+class UsersRoutes {
 	constructor(public router: Router = Router()) {
 		this.routes();
 	}
@@ -17,8 +17,14 @@ class ProductsRoutes {
 		// Get List
 		this.router.get('/users/admins', [authJwt.isSuperAdmin], usersController.getAdmins);
 		this.router.get('/users/cashiers', [authJwt.isAdministrator], usersController.getCashiers);
+
+		// Put
+		this.router.put('/user/:id', [authJwt.isAdministrator], usersController.updateUser);
+
+		// Delete
+		this.router.delete('/user/:id', [authJwt.isAdministrator], usersController.deleteUser);
 	}
 }
 
-const usersRoutes = new ProductsRoutes();
+const usersRoutes = new UsersRoutes();
 export default usersRoutes.router;

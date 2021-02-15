@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import pool from '../../database';
 import keys from '../../keys';
+import { Company } from '../companies/models';
+import { Role as ERole } from '../roles/data';
 import { Role } from '../roles/models';
 
 import { User, encryptPassword, validatePassword } from '../users/models';
@@ -54,8 +56,8 @@ class AuthControllers {
 			});
 	}
 
-	public async singUp(request: Request, response: Response): Promise<Response> {
-		const { idCompany, roleName, username, password, name } = request.body;
+	public async singUpAdmin(request: Request, response: Response): Promise<Response> {
+		const { idCompany, username, name } = request.body;
 
 		// Validate username
 		const userWithUsername: User[] = await (
@@ -66,40 +68,73 @@ class AuthControllers {
 			return response.status(401).json({ message: `Username '${username}' is in use.` });
 		}
 
-		// Validate role
-		var idRole: number;
+		const role: Role = (
+			await (await pool).query('SELECT id FROM roles WHERE name = ?', [ERole.ADMIN])
+		)[0];
 
-		if (roleName != null) {
-			const role: Role = (
-				await (await pool).query('SELECT * FROM roles WHERE name = ?', [roleName])
-			)[0];
+		if (typeof role == 'undefined') {
+			return response.status(500).json({ message: 'Role error.' });
+		}
 
-			if (typeof role != 'undefined') {
-				idRole = role.id;
-			} else {
-				return response.status(400).json({ message: `Role '${roleName}' not found.` });
-			}
-		} else {
-			return response.status(400).json({ message: 'No provided role.' });
+		const company: Company = (
+			await (await pool).query('SELECT name FROM companies WHERE active = true AND id = ?', [
+				idCompany
+			])
+		)[0];
+
+		if (typeof company == 'undefined') {
+			return response.status(404).json({ message: 'Company not found.' });
 		}
 
 		const newUser: User = {
 			idCompany,
-			idRole,
+			idRole: role.id,
 			username,
-			password: await encryptPassword(password),
+			password: await encryptPassword(company.name + '123'),
 			name
 		};
 
 		const insertedNewUser: any = await (await pool).query('INSERT INTO users SET ?', [newUser]);
 
-		newUser.id = insertedNewUser.insertId;
-		delete newUser.password;
-
 		return response.status(200).json({
 			message: 'Saved user.',
-			user: newUser
+			id: insertedNewUser.insertId,
+			company: company.name
 		});
+	}
+
+	public async singUpCashier(request: Request, response: Response): Promise<Response> {
+		const { username, name } = request.body;
+		const { idCompany } = request.user;
+
+		// Validate username
+		const userWithUsername: User[] = await (
+			await pool
+		).query('SELECT id FROM users WHERE BINARY username = ?', [username]);
+
+		if (userWithUsername.length > 0) {
+			return response.status(401).json({ message: `Username '${username}' is in use.` });
+		}
+
+		const role: Role = (
+			await (await pool).query('SELECT id FROM roles WHERE name = ?', [ERole.CASHIER])
+		)[0];
+
+		if (typeof role == 'undefined') {
+			return response.status(500).json({ message: 'Role error.' });
+		}
+
+		const newUser: User = {
+			idCompany,
+			idRole: role.id,
+			username,
+			password: await encryptPassword(username + '123'),
+			name
+		};
+
+		const insertedNewUser: any = await (await pool).query('INSERT INTO users SET ?', [newUser]);
+
+		return response.status(200).json({ message: 'Saved user.', id: insertedNewUser.insertId });
 	}
 }
 

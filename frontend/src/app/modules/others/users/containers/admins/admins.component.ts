@@ -4,6 +4,7 @@ import { Sweet } from '@app/modules/others/app-common/libs';
 import { UserService } from '@app/modules/others/configuration/services';
 import { AdminsFormComponent } from '../../components';
 import { Admin, createEmptyAdmin } from '../../model';
+import { SingUpService } from '../../services';
 
 @Component({
 	selector: 'app-admins',
@@ -25,7 +26,7 @@ export class AdminsComponent implements OnInit {
 
 	private sweet: Sweet;
 
-	constructor(private userService: UserService) {
+	constructor(private userService: UserService, private singUpService: SingUpService) {
 		this.admins = new Array<Admin>(0);
 		this.creating = false;
 		this.invalidForm = false;
@@ -64,107 +65,83 @@ export class AdminsComponent implements OnInit {
 	}
 
 	private createAdmin(): void {
-		console.log('creo');
-		// var category: Category = this.formChild.getCategoryValues();
-		// if (this.validateCategory(category)) {
-		// 	this.categoriesService.saveCategory(category).subscribe(
-		// 		(response) => {
-		// 			category.id = response.id;
-		// 			this.categories.push(category);
-		// 			// Events
-		// 			this.table.rerenderTable();
-		// 			this.sweet.created('Se creo la categoria satisfactoriamente');
-		// 		},
-		// 		(error) => {
-		// 			this.sweet.error('Ocurrio un error');
-		// 			throw new Error(error);
-		// 		}
-		// 	);
-		// }
+		var admin: Admin = this.formChild.getAdminValues();
+		if (this.validateAdmin(admin)) {
+			this.singUpService.singUpAdmin(admin).subscribe(
+				(response) => {
+					admin.id = response.id;
+					admin.company = response.company;
+					this.admins.push(admin);
+
+					// Events
+					this.table.rerenderTable();
+					this.sweet.created('Se creo la categoria satisfactoriamente');
+				},
+				(error) => {
+					if (error.status == 401 && error.error.message != '') {
+						this.sweet.error(`El usuario '${admin.username} esta en uso.'`);
+					} else {
+						this.sweet.error('Ocurrio un error.');
+						throw new Error(error);
+					}
+				}
+			);
+		}
 	}
 
 	private async updateAdmin(): Promise<void> {
-		console.log('edito');
-		// 	const category: Category = this.formChild.getCategoryValues();
-		// 	if (this.validateCategory(category)) {
-		// 		this.categoriesService.updateCategory(category).subscribe(
-		// 			(response) => {
-		// 				const index: number = this.categories
-		// 					.map((x) => {
-		// 						return x.id;
-		// 					})
-		// 					.indexOf(category.id);
-		// 				this.categories[index] = category;
-		// 				// Events
-		// 				this.table.rerenderTable();
-		// 				this.sweet.created('Se edito la categoria satisfactoriamente');
-		// 			},
-		// 			(error) => {
-		// 				this.sweet.error('Ocurrio un error');
-		// 				throw new Error(error);
-		// 			}
-		// 		);
-		// 	}
-		// }
-		// public async deleteCategory(category: Category): Promise<void> {
-		// 	if (
-		// 		this.validateCategory(category) &&
-		// 		(await this.sweet.delete('¿Estas seguro de eliminar la categoria?'))
-		// 	) {
-		// 		this.categoriesService.deleteCategory(category.id).subscribe(
-		// 			(response) => {
-		// 				const index: number = this.categories
-		// 					.map((x) => {
-		// 						return x.id;
-		// 					})
-		// 					.indexOf(category.id);
-		// 				this.categories.splice(index, 1);
-		// 				// Events
-		// 				this.table.rerenderTable();
-		// 				this.sweet.deleted('Se elimino la categoria satisfactoriamente');
-		// 			},
-		// 			(error) => {
-		// 				this.sweet.error('Ocurrio un error');
-		// 				throw new Error(error);
-		// 			}
-		// 		);
-		// 	}
+		var admin: Admin = this.formChild.getAdminValues();
+		if (this.validateAdmin(admin)) {
+			this.userService.updateUser(admin).subscribe(
+				(response) => {
+					const index: number = this.admins
+						.map((x) => {
+							return x.id;
+						})
+						.indexOf(admin.id);
+					this.admins[index] = admin;
+
+					// Events
+					this.table.rerenderTable();
+					this.sweet.created('Se edito el usuario satisfactoriamente');
+				},
+				(error) => {
+					this.sweet.error('Ocurrio un error');
+					throw new Error(error);
+				}
+			);
+		}
 	}
+
 	public async deleteAdmin(admin: any): Promise<void> {
-		console.log('elimino');
-		// if (
-		// 	this.validateCategory(category) &&
-		// 	(await this.sweet.delete('¿Estas seguro de eliminar la categoria?'))
-		// ) {
-		// 	this.categoriesService.deleteCategory(category.id).subscribe(
-		// 		(response) => {
-		// 			const index: number = this.categories
-		// 				.map((x) => {
-		// 					return x.id;
-		// 				})
-		// 				.indexOf(category.id);
-		// 			this.categories.splice(index, 1);
-		// 			// Events
-		// 			this.table.rerenderTable();
-		// 			this.sweet.deleted('Se elimino la categoria satisfactoriamente');
-		// 		},
-		// 		(error) => {
-		// 			this.sweet.error('Ocurrio un error');
-		// 			throw new Error(error);
-		// 		}
-		// 	);
-		// }
+		if (
+			this.validateAdmin(admin) &&
+			(await this.sweet.delete('¿Estas seguro de eliminar el usuario?'))
+		) {
+			this.userService.deleteUser(admin.id).subscribe(
+				() => {
+					const index: number = this.admins
+						.map((x) => {
+							return x.id;
+						})
+						.indexOf(admin.id);
+					this.admins.splice(index, 1);
+
+					// Events
+					this.table.rerenderTable();
+					this.sweet.deleted('Se elimino el usuario satisfactoriamente');
+				},
+				(error: any) => {
+					this.sweet.error('Ocurrio un error');
+					throw new Error(error);
+				}
+			);
+		}
 	}
 
 	// Auxiliary methods
 
-	private validateAdmin(admin: any): boolean {
-		return true;
-		// return (
-		// 	category != null &&
-		// 	category.id != null &&
-		// 	category.name.trim() != '' &&
-		// 	category.name != null
-		// );
+	private validateAdmin(admin: Admin): boolean {
+		return admin != null && admin.username.trim() != '' && admin.name.trim() != '';
 	}
 }

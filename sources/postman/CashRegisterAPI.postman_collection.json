@@ -1501,7 +1501,7 @@
 							"response": []
 						},
 						{
-							"name": "users/admins",
+							"name": "/users/admins",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1524,7 +1524,7 @@
 							"response": []
 						},
 						{
-							"name": "users/cashiers",
+							"name": "/users/cashiers",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1542,6 +1542,75 @@
 									"raw": "{{api}}users/cashiers",
 									"host": ["{{api}}users"],
 									"path": ["cashiers"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/user/:id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api}}user/:id",
+									"host": ["{{api}}user"],
+									"path": [":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/user/:id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"\",\n    \"name\": \"\"\n}"
+								},
+								"url": {
+									"raw": "{{api}}user/:id",
+									"host": ["{{api}}user"],
+									"path": [":id"],
+									"variable": [
+										{
+											"description": "User id",
+											"key": "id",
+											"value": ""
+										}
+									]
 								}
 							},
 							"response": []
@@ -1591,7 +1660,7 @@
 							"response": []
 						},
 						{
-							"name": "/singUp",
+							"name": "/singUp/admin",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1613,12 +1682,45 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"idCompany\": 0,\n    \"roleName\": \"\",\n    \"username\": \"\",\n    \"password\": \"\",\n    \"name\": \"\"\n}"
+									"raw": "{\n    \"idCompany\": 0,\n    \"username\": \"\",\n    \"name\": \"\"\n}"
 								},
 								"url": {
-									"raw": "{{api}}auth/singUp",
+									"raw": "{{api}}auth/singUp/admin",
 									"host": ["{{api}}auth"],
-									"path": ["singUp"]
+									"path": ["singUp", "admin"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/singUp/cashier",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"\",\n    \"name\": \"\"\n}"
+								},
+								"url": {
+									"raw": "{{api}}auth/singUp/cashier",
+									"host": ["{{api}}auth"],
+									"path": ["singUp", "cashier"]
 								}
 							},
 							"response": []
