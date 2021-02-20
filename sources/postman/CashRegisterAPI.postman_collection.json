@@ -610,7 +610,7 @@
 									"host": ["{{api}}all"],
 									"path": ["products"]
 								},
-								"description": "Get all products even the eliminated products."
+								"description": "Get all products even the deleted products."
 							},
 							"response": []
 						},
@@ -1304,7 +1304,7 @@
 									"host": ["{{api}}all"],
 									"path": ["clients"]
 								},
-								"description": "Get all clients even the eliminated clients."
+								"description": "Get all clients even the deleted clients."
 							},
 							"response": []
 						},

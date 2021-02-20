@@ -147,7 +147,7 @@ class CompaniesControllers {
 				[id, Role.ADMIN]
 			);
 
-			return response.status(200).json({ message: 'Company eliminated successfully.' });
+			return response.status(200).json({ message: 'Company deleted successfully.' });
 		} else {
 			return response.status(404).json({ message: 'Company not found.' });
 		}

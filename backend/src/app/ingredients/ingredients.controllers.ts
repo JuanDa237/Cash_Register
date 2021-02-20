@@ -80,7 +80,7 @@ class IngredientsControllers {
 		]);
 
 		if (status.affectedRows > 0) {
-			return response.status(200).json({ message: 'Ingredient eliminated successfully.' });
+			return response.status(200).json({ message: 'Ingredient deleted successfully.' });
 		} else {
 			return response.status(404).json({ message: 'Ingredient not found.' });
 		}

@@ -100,7 +100,7 @@ class ClientsControllers {
 			'UPDATE clients SET active = false, creationDate = ? WHERE id = ?',
 			[newDate, id]
 		);
-		return response.status(200).json({ message: 'Client eliminated successfully.' });
+		return response.status(200).json({ message: 'Client deleted successfully.' });
 	}
 }
 

@@ -200,7 +200,7 @@ class ProductsController {
 				[id]
 			);
 
-			return response.status(200).json({ message: 'Product eliminated successfully.' });
+			return response.status(200).json({ message: 'Product deleted successfully.' });
 		} else {
 			return response.status(400).json({ message: 'Product not found.' });
 		}

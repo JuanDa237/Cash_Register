@@ -95,7 +95,7 @@ class CategoriesControllers {
 				]);
 			});
 
-			return response.status(200).json({ message: 'Category eliminated successfully.' });
+			return response.status(200).json({ message: 'Category deleted successfully.' });
 		} else {
 			return response.status(404).json({ message: 'Category not found.' });
 		}
