@@ -37,10 +37,15 @@
 	</div>
 	<app-modal idModal="modalTickets" title="Registro">
 		<div class="modal-body">
-			<app-ticket-view></app-ticket-view>
+			<app-ticket-view id="ticket"></app-ticket-view>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+			<app-print-pdf
+				elementId="ticket"
+				[ticket]="selectedTicket"
+				[client]="selectedClient"
+			></app-print-pdf>
 		</div>
 	</app-modal>
 </div>

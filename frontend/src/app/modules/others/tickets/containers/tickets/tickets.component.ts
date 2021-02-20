@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 // Models
-import { Client, createEmptyClient } from '../../../clients/models/index';
+import { Client } from '../../../clients/models/index';
 import { Ticket } from '../../models/index';
 
 // Services
@@ -16,10 +16,11 @@ import { TicketViewComponent } from '../../components';
 	templateUrl: './tickets.component.html'
 })
 export class TicketsComponent implements OnInit {
-	public clients: Array<Client>;
-	public tickets: Array<Ticket>;
-	public since: Date;
-	public until: Date;
+	public clients: Client[];
+	public tickets: Ticket[];
+
+	public selectedTicket: Ticket;
+	public selectedClient: Client;
 
 	public loading: boolean;
 
@@ -32,8 +33,9 @@ export class TicketsComponent implements OnInit {
 	constructor(private clientsService: ClientsService, private ticketsService: TicketsService) {
 		this.clients = new Array<Client>(0);
 		this.tickets = new Array<Ticket>(0);
-		this.since = new Date();
-		this.until = new Date();
+
+		this.selectedTicket = {} as Ticket;
+		this.selectedClient = {} as Client;
 
 		this.loading = true;
 	}
@@ -93,14 +95,13 @@ export class TicketsComponent implements OnInit {
 	}
 
 	public viewTicket(index: number) {
-		var finalClient: Client = createEmptyClient();
-
 		this.tickets.forEach((ticket) => {
 			this.clients.forEach((client) => {
-				if (ticket.idClient == client.id) finalClient = client;
+				if (ticket.idClient == client.id) this.selectedClient = client;
 			});
 		});
 
-		this.ticketChild.viewTicket2(this.tickets[index], finalClient);
+		this.selectedTicket = this.tickets[index];
+		this.ticketChild.viewTicket2(this.selectedTicket, this.selectedClient);
 	}
 }

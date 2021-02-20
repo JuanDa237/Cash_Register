@@ -90,14 +90,12 @@
 <ng-template #noContent> Aun no tienes ningun producto seleccionado. </ng-template>
 <app-modal idModal="modalTickets" title="Pedido Finalizado">
 	<div class="modal-body">
-		<app-ticket-view></app-ticket-view>
+		<app-ticket-view id="ticket"></app-ticket-view>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-info text-center" data-dismiss="modal" (click)="refreshPageEvent()">
 			Salir
 		</button>
-		<button class="btn btn-info text-center">
-			<i class="fas fa-print" title="Imprimir"></i> Imprimir
-		</button>
+		<app-print-pdf elementId="ticket" [client]="client"></app-print-pdf>
 	</div>
 </app-modal>
