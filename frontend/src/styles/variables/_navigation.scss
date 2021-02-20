@@ -1,6 +1,13 @@
+// Spacing variables for navigation
+$topnav-base-height: 56px;
+$sidenav-base-width: 225px;
+
 // Z index variables
 $zindex-sidenav: 1080 !default;
 $zindex-topnav: 1090 !default;
+// Alerts up modals
+$zindex-companyModal: 2000 !default;
+$zindex-sweetalert: 2100 !default;
 
 // Color variables for the sidenav
 $sidenav-dark-bg: $gray-900;

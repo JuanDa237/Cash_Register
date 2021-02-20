@@ -1,12 +1,6 @@
 // Import Bootstrap variables for use within theme
-@import '../../node_modules/bootstrap/scss/_functions';
-@import '../../node_modules/bootstrap/scss/_variables';
-
-// Import spacing variables
-@import './variables/_spacing';
+@import 'bootstrap/scss/_functions';
+@import 'bootstrap/scss/_variables';
 
 // Import navigation variables
 @import './variables/_navigation';
-
-// Import navigation variables
-@import './variables/_common';

@@ -45,7 +45,7 @@
 						"assets": ["src/assets/favicon.ico", "src/assets"],
 						"styles": ["src/styles/styles.scss"],
 						"stylePreprocessorOptions": {
-							"includePaths": ["src"]
+							"includePaths": ["src", "./node_modules"]
 						},
 						"scripts": [
 							"node_modules/jquery/dist/jquery.min.js",
