@@ -1,5 +1,8 @@
+// Custom Variables
+@import 'variables';
+
 // Bootstrap
-@import 'bootstrap/scss/bootstrap.scss';
+@import 'bootstrap/scss/bootstrap';
 
 // Font Awesome Icons
 @import '@fortawesome/fontawesome-free/css/all.css';
@@ -11,11 +14,8 @@
 // Sweet alert with bootstrap
 @import '@sweetalert2/theme-bootstrap-4/bootstrap-4.min.css';
 
-// Import Custom Variables
-@import 'variables.scss';
-
 // Dashboard Layout
-@import 'layout/dashboard.scss';
+@import 'layout/dashboard';
 
 // Libs - Sweet alert
-@import 'libs/sweetalert.scss';
+@import 'libs/sweetalert';

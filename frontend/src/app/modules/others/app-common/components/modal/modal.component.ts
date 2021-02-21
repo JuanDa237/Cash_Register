@@ -2,8 +2,7 @@ import { Component, Input, OnInit, OnChanges } from '@angular/core';
 
 @Component({
 	selector: 'app-modal',
-	templateUrl: './modal.component.html',
-	styleUrls: ['./modal.component.scss']
+	templateUrl: './modal.component.html'
 })
 export class ModalComponent implements OnInit, OnChanges {
 	@Input()
