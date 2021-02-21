@@ -5,6 +5,7 @@
 # Builds
 /backend/build
 /frontend/build
+/frontend/electron/dist
 
 # Backend uploads
 /backend/uploads/*
