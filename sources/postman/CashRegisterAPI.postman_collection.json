@@ -172,7 +172,7 @@
 											"src": []
 										},
 										{
-											"key": "ticketMessage",
+											"key": "billMessage",
 											"value": "",
 											"type": "text"
 										},
@@ -226,7 +226,7 @@
 											"disabled": true
 										},
 										{
-											"key": "ticketMessage",
+											"key": "billMessage",
 											"value": "",
 											"type": "text",
 											"disabled": true
@@ -284,7 +284,7 @@
 											"disabled": true
 										},
 										{
-											"key": "ticketMessage",
+											"key": "billMessage",
 											"value": "",
 											"type": "text",
 											"disabled": true
@@ -610,7 +610,7 @@
 									"host": ["{{api}}all"],
 									"path": ["products"]
 								},
-								"description": "Get all products even the deleted products."
+								"description": "Get all products even the eliminated products."
 							},
 							"response": []
 						},
@@ -992,10 +992,10 @@
 					]
 				},
 				{
-					"name": "/tickets",
+					"name": "/bills",
 					"item": [
 						{
-							"name": "/tickets",
+							"name": "/bills",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1010,14 +1010,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{api}}tickets",
-									"host": ["{{api}}tickets"]
+									"raw": "{{api}}bills",
+									"host": ["{{api}}bills"]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "/ticket/:id",
+							"name": "/bill/:id",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1032,14 +1032,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{api}}ticket/:id",
-									"host": ["{{api}}ticket"],
+									"raw": "{{api}}bill/:id",
+									"host": ["{{api}}bill"],
 									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
 											"value": "",
-											"description": "Ticket id"
+											"description": "Bill id"
 										}
 									]
 								}
@@ -1047,7 +1047,7 @@
 							"response": []
 						},
 						{
-							"name": "/tickets/:since/:until",
+							"name": "/bills/:since/:until",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1062,8 +1062,8 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{api}}tickets/:since/:until",
-									"host": ["{{api}}tickets"],
+									"raw": "{{api}}bills/:since/:until",
+									"host": ["{{api}}bills"],
 									"path": [":since", ":until"],
 									"variable": [
 										{
@@ -1080,7 +1080,7 @@
 							"response": []
 						},
 						{
-							"name": "/tickets/year",
+							"name": "/bills/year",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1095,15 +1095,15 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{api}}tickets/year",
-									"host": ["{{api}}tickets"],
+									"raw": "{{api}}bills/year",
+									"host": ["{{api}}bills"],
 									"path": ["year"]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "/tickets/products",
+							"name": "/bills/products",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1118,15 +1118,15 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{api}}tickets/products",
-									"host": ["{{api}}tickets"],
+									"raw": "{{api}}bills/products",
+									"host": ["{{api}}bills"],
 									"path": ["products"]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "/ticket/products/:id",
+							"name": "/bill/products/:id",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1141,14 +1141,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{api}}ticket/products/:id",
-									"host": ["{{api}}ticket"],
+									"raw": "{{api}}bill/products/:id",
+									"host": ["{{api}}bill"],
 									"path": ["products", ":id"],
 									"variable": [
 										{
 											"key": "id",
 											"value": "",
-											"description": "Ticket id"
+											"description": "Bill id"
 										}
 									]
 								}
@@ -1156,7 +1156,7 @@
 							"response": []
 						},
 						{
-							"name": "/ticket",
+							"name": "/bill",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1181,14 +1181,14 @@
 									"raw": "{\n    // Optional fields\n    //\"homeDelivery\": 0,\n    \"idClient\": 0,\n    \"creationDate\": \"\",\n    \"products\": [\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        },\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        }\n    ]\n}"
 								},
 								"url": {
-									"raw": "{{api}}ticket",
-									"host": ["{{api}}ticket"]
+									"raw": "{{api}}bill",
+									"host": ["{{api}}bill"]
 								}
 							},
 							"response": []
 						}
 					],
-					"description": "Tickets and ticket endpoint.",
+					"description": "Bills and bill endpoint.",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1304,7 +1304,7 @@
 									"host": ["{{api}}all"],
 									"path": ["clients"]
 								},
-								"description": "Get all clients even the deleted clients."
+								"description": "Get all clients even the eliminated clients."
 							},
 							"response": []
 						},

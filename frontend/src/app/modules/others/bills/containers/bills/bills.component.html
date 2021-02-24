@@ -1,0 +1,55 @@
+<a class="btn btn-info btn-block mb-4" routerLink="/company/cashRegister">
+	<i class="fas fa-plus-circle" title="Crear registro"></i> Crear Registro
+</a>
+<app-bills-datepicker (dates)="search($event)"></app-bills-datepicker>
+<div class="mt-4">
+	<div *ngIf="loading">
+		<app-loading colorClass="text-primary" size="10rem"></app-loading>
+	</div>
+	<div [hidden]="loading">
+		<app-table [columns]="['Cliente', 'Fecha', 'Total', 'Acciones']">
+			<tr *ngFor="let bill of bills; let i = index">
+				<td class="align-middle">
+					<div *ngFor="let client of clients">
+						<div *ngIf="client.id == bill.idClient">
+							{{ client.name }}
+						</div>
+					</div>
+				</td>
+				<td class="align-middle">{{ bill.creationDate }}</td>
+				<td class="align-middle text-center">{{ bill.total | number }}</td>
+				<td>
+					<div class="text-center">
+						<div class="btn-group">
+							<button
+								class="btn btn-info"
+								(click)="viewBill(i)"
+								data-toggle="modal"
+								data-target="#modalBills"
+							>
+								<i class="fas fa-eye" title="Mirar registro"></i>
+							</button>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</app-table>
+	</div>
+	<app-modal idModal="modalBills" title="Registro">
+		<div class="modal-body">
+			<app-bill-view id="bill"></app-bill-view>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+			<app-print-pdf
+				elementId="bill"
+				[bill]="selectedBill"
+				[client]="selectedClient"
+			></app-print-pdf>
+		</div>
+	</app-modal>
+</div>
+<!-- Chart -->
+<div class="row my-3">
+	<app-bills-chart chartId="billsChart"></app-bills-chart>
+</div>

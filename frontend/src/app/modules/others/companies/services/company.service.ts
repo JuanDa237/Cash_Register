@@ -41,7 +41,7 @@ export class CompanyService {
 	updateCompany(company: CompanyFile): Observable<any> {
 		var fd = new FormData();
 		fd.append('name', company.name);
-		fd.append('ticketMessage', company.ticketMessage);
+		fd.append('billMessage', company.billMessage);
 		fd.append('homeDeliveries', company.homeDeliveries ? 'true' : 'false');
 		fd.append('visible', company.visible ? 'true' : 'false');
 
@@ -53,7 +53,7 @@ export class CompanyService {
 	updateMyCompany(company: CompanyFile): Observable<any> {
 		var fd = new FormData();
 		fd.append('name', company.name);
-		fd.append('ticketMessage', company.ticketMessage);
+		fd.append('billMessage', company.billMessage);
 		fd.append('homeDeliveries', company.homeDeliveries ? 'true' : 'false');
 		fd.append('visible', company.visible ? 'true' : 'false');
 
@@ -66,7 +66,7 @@ export class CompanyService {
 	createCompany(company: CompanyFile): Observable<any> {
 		var fd = new FormData();
 		fd.append('name', company.name);
-		fd.append('ticketMessage', company.ticketMessage);
+		fd.append('billMessage', company.billMessage);
 		fd.append('homeDeliveries', company.homeDeliveries ? 'true' : 'false');
 		fd.append('visible', company.visible ? 'true' : 'false');
 

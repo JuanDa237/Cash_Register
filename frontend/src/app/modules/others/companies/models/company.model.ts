@@ -2,7 +2,7 @@ export interface Company {
 	id: number;
 	name: string;
 	image: string;
-	ticketMessage: string;
+	billMessage: string;
 	homeDeliveries: boolean;
 	visible: boolean;
 }
@@ -11,7 +11,7 @@ export function createEmptyCompany(): Company {
 	return {
 		name: '',
 		image: '',
-		ticketMessage: '',
+		billMessage: '',
 		visible: false
 	} as Company;
 }

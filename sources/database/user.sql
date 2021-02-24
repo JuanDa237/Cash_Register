@@ -12,8 +12,8 @@ GRANT SELECT, INSERT, UPDATE ON cashRegisterDatabase.products TO 'cashier'@'loca
 GRANT SELECT, INSERT, UPDATE ON cashRegisterDatabase.ingredients TO 'cashier'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON cashRegisterDatabase.detailProductsIngredients TO 'cashier'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON cashRegisterDatabase.clients TO 'cashier'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON cashRegisterDatabase.tickets TO 'cashier'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON cashRegisterDatabase.productsInTickets TO 'cashier'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON cashRegisterDatabase.bills TO 'cashier'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON cashRegisterDatabase.productsInBills TO 'cashier'@'localhost';
 
 -- Set password
 ALTER USER 'cashier'@'localhost' IDENTIFIED WITH mysql_native_password BY 'cashier321';

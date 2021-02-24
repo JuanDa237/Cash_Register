@@ -8,10 +8,10 @@ import * as cashRegisterContainers from './containers';
 
 // Modules
 import { AppCommonModule } from '@modules/others/app-common/app-common.module';
-import { TicketsModule } from '@modules/others/tickets/tickets.module';
+import { BillsModule } from '@modules/others/bills/bills.module';
 
 @NgModule({
-	imports: [CommonModule, RouterModule, FormsModule, AppCommonModule, TicketsModule],
+	imports: [CommonModule, RouterModule, FormsModule, AppCommonModule, BillsModule],
 	declarations: [cashRegisterComponents.components, cashRegisterContainers.containers],
 	exports: [cashRegisterComponents.components, cashRegisterContainers.containers]
 })

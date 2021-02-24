@@ -14,7 +14,7 @@ export const sideNavSections: SideNavSection[] = [
 	},
 	{
 		text: 'EDITAR',
-		items: ['categories', 'products', 'ingredients', 'clients', 'tickets'],
+		items: ['categories', 'products', 'ingredients', 'clients', 'bills'],
 		roles: [Role.ADMIN]
 	},
 	{
@@ -78,10 +78,10 @@ export const sideNavItems: SideNavItems = {
 		text: 'Clientes',
 		link: '/company/clients'
 	},
-	tickets: {
+	bills: {
 		icon: 'fa-clipboard',
 		text: 'Registros',
-		link: '/company/tickets'
+		link: '/company/bills'
 	},
 	configuration: {
 		icon: 'fa-cog',

@@ -1,0 +1,64 @@
+<div>
+	<img
+		[src]="apiUrl + company.image"
+		noImage
+		class="rounded"
+		alt="company.name"
+		title="company.name"
+		style="width: 54px; height: 54px"
+	/>
+	<h2 class="d-inline-block text-center">
+		{{ company.name }}
+	</h2>
+	<p class="text-center text-justify border border-dark p-2 my-2">
+		{{ company.billMessage }}
+	</p>
+</div>
+<p>
+	<span class="font-weight-bold">Nombre:</span> {{ client.name }} |
+	<ng-container *ngIf="bill.homeDelivery; else noHomeDelivery">
+		<span class="font-weight-bold">Domicilio</span>
+		<span *ngIf="client.address"> | Direccion: {{ client.address }}</span>
+		<span *ngIf="client.phoneNumber"> | Telefono: {{ client.phoneNumber }} </span>
+	</ng-container>
+	<ng-template #noHomeDelivery>
+		<span class="font-weight-bold"> Pedido Local </span>
+	</ng-template>
+</p>
+<table class="table table-sm my-2">
+	<thead>
+		<tr>
+			<th>Producto</th>
+			<th>Cantidad</th>
+			<th>Precio</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let product of productsInBill">
+			<td>{{ product.name }}</td>
+			<td>{{ product.amount | number }}</td>
+			<td>{{ product.price * product.amount | number }}</td>
+		</tr>
+	</tbody>
+	<tfoot class="font-weight-bold">
+		<ng-container *ngIf="bill.homeDelivery">
+			<tr>
+				<td>Sub-Total</td>
+				<td></td>
+				<td>
+					{{ bill.total - bill.homeDelivery | number }}
+				</td>
+			</tr>
+			<tr>
+				<td>Domicilio</td>
+				<td></td>
+				<td>{{ bill.homeDelivery | number }}</td>
+			</tr>
+		</ng-container>
+		<tr>
+			<td>Total</td>
+			<td></td>
+			<td>{{ bill.total | number }}</td>
+		</tr>
+	</tfoot>
+</table>
