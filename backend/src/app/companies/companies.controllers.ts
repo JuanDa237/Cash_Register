@@ -72,9 +72,10 @@ class CompaniesControllers {
 		const image = (request.file as unknown) as {
 			[fieldname: string]: Express.Multer.File;
 		};
+
 		var idCompany: number = Number(request.params.id);
 
-		if (typeof idCompany == 'undefined') idCompany = request.user.idCompany;
+		if (typeof idCompany == 'undefined' || isNaN(idCompany)) idCompany = request.user.idCompany;
 
 		const oldCompany: Company[] = await (
 			await pool
