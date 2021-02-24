@@ -31,7 +31,7 @@ class BillsRoutes {
 		);
 
 		// Get one
-		this.router.get('/bill/:id', [authJwt.isAdministrator], billsControllers.getOneBill);
+		this.router.get('/bill/:id', [authJwt.isAdministrator], billsControllers.getBill);
 
 		// Post
 		this.router.post('/bill', [authJwt.isCashier], billsControllers.createBill);

@@ -20,7 +20,7 @@ class CategoriesRoutes {
 		this.router.get(
 			'/category/:id',
 			[authJwt.isAdministrator],
-			categoriesControllers.getOneCategory
+			categoriesControllers.getCategory
 		);
 
 		// Post

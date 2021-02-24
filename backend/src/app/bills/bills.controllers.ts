@@ -60,7 +60,7 @@ class BillsControllers {
 	}
 
 	// Get one
-	public async getOneBill(request: Request, response: Response): Promise<Response> {
+	public async getBill(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
 		const bill: Bill[] = await (

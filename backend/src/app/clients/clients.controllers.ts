@@ -41,7 +41,7 @@ class ClientsControllers {
 	}
 
 	// Get One
-	public async getOneClient(request: Request, response: Response): Promise<Response> {
+	public async getClient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
 		const client: Client[] = await (await pool).query(

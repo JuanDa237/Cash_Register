@@ -21,7 +21,7 @@ class CategoriesControllers {
 	}
 
 	// Get One
-	public async getOneCategory(request: Request, response: Response): Promise<Response> {
+	public async getCategory(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
 		const category: Category[] = await (
