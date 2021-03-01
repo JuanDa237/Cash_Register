@@ -16,7 +16,7 @@ class UsersFunctions {
 		const company: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, image, ticketMessage, homeDeliveries, visible FROM companies WHERE id = ? AND active = true',
+			'SELECT name, image, billMessage, homeDeliveries, visible FROM companies WHERE id = ? AND active = true',
 			[idCompany]
 		);
 

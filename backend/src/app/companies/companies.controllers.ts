@@ -13,14 +13,14 @@ class CompaniesControllers {
 	// Get
 	public async getCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT id, name, image, ticketMessage, homeDeliveries FROM companies WHERE visible = true AND active = true;'
+			'SELECT id, name, image, billMessage, homeDeliveries FROM companies WHERE visible = true AND active = true;'
 		);
 		return response.status(200).json(companies);
 	}
 
 	public async getAllCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT id, name, image, ticketMessage, homeDeliveries, visible FROM companies WHERE active = true;'
+			'SELECT id, name, image, billMessage, homeDeliveries, visible FROM companies WHERE active = true;'
 		);
 		return response.status(200).json(companies);
 	}
@@ -31,7 +31,7 @@ class CompaniesControllers {
 		const company: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, image, ticketMessage, homeDeliveries, visible FROM companies WHERE id = ? AND active = true;',
+			'SELECT name, image, billMessage, homeDeliveries, visible FROM companies WHERE id = ? AND active = true;',
 			[request.params.id]
 		);
 
@@ -44,7 +44,7 @@ class CompaniesControllers {
 
 	// Post
 	public async createCompany(request: Request, response: Response): Promise<Response> {
-		const { name, ticketMessage, homeDeliveries, visible } = request.body;
+		const { name, billMessage, homeDeliveries, visible } = request.body;
 		const image = (request.file as unknown) as {
 			[fieldname: string]: Express.Multer.File;
 		};
@@ -52,7 +52,7 @@ class CompaniesControllers {
 		const newCompany = await (await pool).query('INSERT INTO companies SET ?', [
 			{
 				name,
-				ticketMessage,
+				billMessage,
 				visible: visible === 'true',
 				homeDeliveries: homeDeliveries === 'true',
 				image: typeof image != 'undefined' ? image.path : '',
@@ -68,18 +68,19 @@ class CompaniesControllers {
 
 	// Update
 	public async updateCompany(request: Request, response: Response): Promise<Response> {
-		const { name, ticketMessage, homeDeliveries, visible } = request.body;
+		const { name, billMessage, homeDeliveries, visible } = request.body;
 		const image = (request.file as unknown) as {
 			[fieldname: string]: Express.Multer.File;
 		};
+
 		var idCompany: number = Number(request.params.id);
 
-		if (typeof idCompany == 'undefined') idCompany = request.user.idCompany;
+		if (typeof idCompany == 'undefined' || isNaN(idCompany)) idCompany = request.user.idCompany;
 
 		const oldCompany: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, ticketMessage, image, visible FROM companies WHERE id = ? AND active = true;',
+			'SELECT name, billMessage, image, visible FROM companies WHERE id = ? AND active = true;',
 			[idCompany]
 		);
 
@@ -97,10 +98,8 @@ class CompaniesControllers {
 			await (await pool).query('UPDATE companies SET ? WHERE id = ?', [
 				{
 					name: typeof name != 'undefined' ? name : oldCompany[0].name,
-					ticketMessage:
-						typeof ticketMessage != 'undefined'
-							? ticketMessage
-							: oldCompany[0].ticketMessage,
+					billMessage:
+						typeof billMessage != 'undefined' ? billMessage : oldCompany[0].billMessage,
 					visible:
 						typeof visible != undefined ? visible === 'true' : oldCompany[0].visible,
 					homeDeliveries:

@@ -26,11 +26,7 @@ class ProductsRoutes {
 		);
 
 		// Get one
-		this.router.get(
-			'/product/:id',
-			[authJwt.isAdministrator],
-			productsController.getOneProduct
-		);
+		this.router.get('/product/:id', [authJwt.isAdministrator], productsController.getProduct);
 		this.router.get(
 			'/product/:id/ingredients/',
 			[authJwt.isCashier],

@@ -20,9 +20,9 @@ export function createEmptyProduct(): Product {
 	} as Product;
 }
 
-export interface ProductInTicket {
+export interface ProductInBill {
 	id: number;
-	idTicket: number;
+	idBill: number;
 	name: string;
 	price: number;
 	amount: number;

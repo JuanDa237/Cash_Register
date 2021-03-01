@@ -5,7 +5,7 @@ CREATE TABLE companies (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
     image VARCHAR(100),
-    ticketMessage VARCHAR(255),
+    billMessage VARCHAR(255),
     homeDeliveries BOOLEAN NOT NULL DEFAULT false,
     visible BOOLEAN NOT NULL DEFAULT false,
     active BOOLEAN NOT NULL DEFAULT false
@@ -82,22 +82,22 @@ CREATE TABLE clients (
     active BOOLEAN NOT NULL DEFAULT true
 );
 
-CREATE TABLE tickets (
+CREATE TABLE bills (
     idCompany INT NOT NULL,
     idClient INT NOT NULL,
-    CONSTRAINT fkCompanyTicket FOREIGN KEY (idCompany) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fkClientTicket FOREIGN KEY (idClient) REFERENCES clients (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fkCompanyBill FOREIGN KEY (idCompany) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fkClientBill FOREIGN KEY (idClient) REFERENCES clients (id) ON DELETE CASCADE ON UPDATE CASCADE,
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     creationDate DATE NOT NULL,
     total INT NOT NULL,
     homeDelivery INT
 );
 
-CREATE TABLE productsInTickets (
+CREATE TABLE productsInBills (
     idCompany INT NOT NULL,
-    idTicket INT NOT NULL,
-    CONSTRAINT fkCompanyProductsInTickets FOREIGN KEY (idCompany) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fkTickets FOREIGN KEY (idTicket) REFERENCES tickets (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    idBill INT NOT NULL,
+    CONSTRAINT fkCompanyProductsInBills FOREIGN KEY (idCompany) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fkBills FOREIGN KEY (idBill) REFERENCES bills (id) ON DELETE CASCADE ON UPDATE CASCADE,
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
     price INT NOT NULL,

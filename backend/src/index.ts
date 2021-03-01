@@ -11,7 +11,7 @@ import companiesRoutes from './app/companies/companies.routes';
 import categoriesRoutes from './app/categories/categories.routes';
 import productsRoutes from './app/products/products.routes';
 import ingredientsRoutes from './app/ingredients/ingredients.routes';
-import ticketsRoutes from './app/tickets/tickets.routes';
+import billsRoutes from './app/bills/bills.routes';
 import clientsRoutes from './app/clients/clients.routes';
 import authRoutes from './app/auth/auth.routes';
 import usersRoutes from './app/users/users.routes';
@@ -61,7 +61,7 @@ class Server {
 		this.app.use('/api', categoriesRoutes);
 		this.app.use('/api', productsRoutes);
 		this.app.use('/api', ingredientsRoutes);
-		this.app.use('/api', ticketsRoutes);
+		this.app.use('/api', billsRoutes);
 		this.app.use('/api', clientsRoutes);
 		this.app.use('/api', usersRoutes);
 		this.app.use('/api/auth', authRoutes);

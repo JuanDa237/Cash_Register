@@ -9,7 +9,7 @@ export default {
 		company: {
 			name: 'Nueva Empresa',
 			image: '',
-			ticketMessage: '',
+			billMessage: '',
 			visible: false,
 			active: true
 		},

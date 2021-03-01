@@ -73,8 +73,8 @@ const routes: Routes = [
 				} as RouteData
 			},
 			{
-				path: 'tickets',
-				component: othersContainers.TicketsComponent,
+				path: 'bills',
+				component: othersContainers.BillsComponent,
 				data: {
 					title: 'Registros',
 					hideBreadcrumbs: true,

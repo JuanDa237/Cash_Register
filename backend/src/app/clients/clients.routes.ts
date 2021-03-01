@@ -27,7 +27,7 @@ class CategoriesRoutes {
 		this.router.get('/clients', [authJwt.isCashier], clientsControllers.listClients);
 
 		// Get one
-		this.router.get('/client/:id', [authJwt.isCashier], clientsControllers.getOneClient);
+		this.router.get('/client/:id', [authJwt.isCashier], clientsControllers.getClient);
 
 		// Post
 		this.router.post('/client', [authJwt.isAdministrator], clientsControllers.createClient);

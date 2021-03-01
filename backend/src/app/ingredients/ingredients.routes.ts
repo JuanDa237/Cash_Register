@@ -20,7 +20,7 @@ class IngredientsRoutes {
 		this.router.get(
 			'/ingredient/:id',
 			[authJwt.isCashier],
-			ingredientsControllers.getOneIngredient
+			ingredientsControllers.getIngredient
 		);
 
 		// Post

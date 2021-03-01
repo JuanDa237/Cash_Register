@@ -32,7 +32,7 @@ export class CompanyFormComponent implements OnInit {
 				Validators.minLength(3),
 				Validators.maxLength(30)
 			]),
-			ticketMessage: new FormControl('', [Validators.maxLength(255)]),
+			billMessage: new FormControl('', [Validators.maxLength(255)]),
 			homeDeliveries: new FormControl(false, [Validators.required]),
 			visible: new FormControl(false, [Validators.required]),
 			image: new FormControl(null)
@@ -67,7 +67,7 @@ export class CompanyFormComponent implements OnInit {
 		this.companyForm.patchValue({
 			id: company.id,
 			name: company.name,
-			ticketMessage: company.ticketMessage,
+			billMessage: company.billMessage,
 			homeDeliveries: company.homeDeliveries,
 			visible: company.visible
 		});

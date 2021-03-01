@@ -52,7 +52,7 @@ class ProductsController {
 	}
 
 	// Get one
-	public async getOneProduct(request: Request, response: Response): Promise<Response> {
+	public async getProduct(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
 		const product: Product[] = await (

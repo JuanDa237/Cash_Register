@@ -19,7 +19,7 @@ class IngredientsControllers {
 	}
 
 	// Get one
-	public async getOneIngredient(request: Request, response: Response): Promise<Response> {
+	public async getIngredient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
 		const ingredient: Ingredient[] = await (

@@ -80,7 +80,7 @@
 				[disabled]="client.name.length <= 0 || shoppingCart.length == 0"
 				(click)="finishOrder()"
 				data-toggle="modal"
-				data-target="#modalTickets"
+				data-target="#modalBills"
 			>
 				<i class="far fa-file" title="Registro"></i> Terminar Pedido
 			</button>
@@ -88,14 +88,14 @@
 	</div>
 </ng-container>
 <ng-template #noContent> Aun no tienes ningun producto seleccionado. </ng-template>
-<app-modal idModal="modalTickets" title="Pedido Finalizado">
+<app-modal idModal="modalBills" title="Pedido Finalizado">
 	<div class="modal-body">
-		<app-ticket-view id="ticket"></app-ticket-view>
+		<app-bill-view id="bill"></app-bill-view>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-info text-center" data-dismiss="modal" (click)="refreshPageEvent()">
 			Salir
 		</button>
-		<app-print-pdf elementId="ticket" [client]="client"></app-print-pdf>
+		<app-print-pdf elementId="bill" [client]="client"></app-print-pdf>
 	</div>
 </app-modal>

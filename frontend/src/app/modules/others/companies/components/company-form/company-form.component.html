@@ -35,29 +35,27 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="ticketMessage">Mensaje Del Registro</label>
+		<label for="billMessage">Mensaje Del Registro</label>
 		<textarea
 			tabindex="2"
-			id="ticketMessage"
+			id="billMessage"
 			class="form-control"
-			name="ticketMessage"
-			formControlName="ticketMessage"
+			name="billMessage"
+			formControlName="billMessage"
 			[class.is-invalid]="
-				companyForm.get('ticketMessage')?.touched &&
-				companyForm.get('ticketMessage')?.invalid
+				companyForm.get('billMessage')?.touched && companyForm.get('billMessage')?.invalid
 			"
 		></textarea>
 		<div
 			class="invalid-feedback"
 			*ngIf="
-				companyForm.get('ticketMessage')?.touched &&
-				companyForm.get('ticketMessage')?.invalid
+				companyForm.get('billMessage')?.touched && companyForm.get('billMessage')?.invalid
 			"
 		>
-			<div *ngIf="companyForm.get('ticketMessage')?.errors['maxlength']">
+			<div *ngIf="companyForm.get('billMessage')?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						companyForm.get('ticketMessage')?.errors['maxlength'].requiredLength
+						companyForm.get('billMessage')?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>

@@ -9,10 +9,10 @@ export interface Product {
 	active?: boolean;
 }
 
-export interface ProductInTicket {
+export interface ProductInBill {
 	id?: number;
 	idCompany: number;
-	idTicket: number;
+	idBill: number;
 	name: string;
 	price: number;
 	amount: number;

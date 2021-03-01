@@ -3,13 +3,13 @@ import { DatePipe } from '@angular/common';
 
 import { Client, createEmptyClient } from '@modules/others/clients/models';
 
-import { Product, ProductInTicket } from '@modules/others/products/models';
+import { Product, ProductInBill } from '@modules/others/products/models';
 
-import { TicketsService } from '@modules/others/tickets/services';
+import { BillsService } from '@modules/others/bills/services';
 
 import { ProductInCart } from '../../models';
-import { TicketViewComponent } from '@modules/others/tickets/components';
-import { TicketWithProducts, ProductWithAmount, Ticket } from '@app/modules/others/tickets/models';
+import { BillViewComponent } from '@modules/others/bills/components';
+import { BillWithProducts, ProductWithAmount, Bill } from '@app/modules/others/bills/models';
 
 // Libs
 import { Sweet } from '@modules/others/app-common/libs';
@@ -30,8 +30,8 @@ export class ShoppingCartComponent implements OnInit {
 
 	public company: Company;
 
-	@ViewChild(TicketViewComponent)
-	public ticketChild!: TicketViewComponent;
+	@ViewChild(BillViewComponent)
+	public billChild!: BillViewComponent;
 
 	@Input()
 	public client: Client;
@@ -41,7 +41,7 @@ export class ShoppingCartComponent implements OnInit {
 
 	private sweet: Sweet;
 
-	constructor(private ticketsService: TicketsService, private userData: UserDataService) {
+	constructor(private billsService: BillsService, private userData: UserDataService) {
 		this.shoppingCart = new Array<ProductInCart>(0);
 		this.total = 0;
 		this.doHomeDelivery = false;
@@ -115,7 +115,7 @@ export class ShoppingCartComponent implements OnInit {
 	public finishOrder(): void {
 		this.actualizePrice();
 
-		var newTicket: TicketWithProducts = {
+		var newBill: BillWithProducts = {
 			idClient: this.client.id,
 			creationDate: this.actualDate(),
 			total: this.total,
@@ -125,17 +125,17 @@ export class ShoppingCartComponent implements OnInit {
 
 		this.shoppingCart.forEach((productInCart) => {
 			if (productInCart.amount > 0) {
-				newTicket.products.push({
+				newBill.products.push({
 					idProduct: productInCart.product.id,
 					amount: productInCart.amount
 				} as ProductWithAmount);
 			}
 		});
 
-		this.ticketsService.saveTicket(newTicket).subscribe(
+		this.billsService.saveBill(newBill).subscribe(
 			(response) => {
-				//  Do the ticket view
-				const ticket: Ticket = {
+				//  Do the bill view
+				const bill: Bill = {
 					id: 0,
 					creationDate: this.actualDate(),
 					idClient: 0,
@@ -143,19 +143,19 @@ export class ShoppingCartComponent implements OnInit {
 					homeDelivery: this.homeDelivery != null ? this.homeDelivery : 0
 				};
 
-				var products: ProductInTicket[] = new Array<ProductInTicket>(0);
+				var products: ProductInBill[] = new Array<ProductInBill>(0);
 
 				this.shoppingCart.forEach((product) => {
 					products.push({
 						id: 0,
-						idTicket: 0,
+						idBill: 0,
 						name: product.product.name,
 						price: product.product.price,
 						amount: product.amount
-					} as ProductInTicket);
+					} as ProductInBill);
 				});
 
-				this.ticketChild.viewTicket3(ticket, this.client, products);
+				this.billChild.viewBill3(bill, this.client, products);
 
 				this.sweet.created('Se creo el registro satisfactoriamente');
 			},
