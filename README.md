@@ -25,13 +25,11 @@ This is a personal project, it consists of a web page where companies can be reg
     ```
     npm start
     ```
-4. Start [frontend][frontend]:
+4. Start [frontend][frontend] with electron:
 
 ```
-npm start
+npm run build:electron
 ```
-
-5. Go to http://localhost:4000, to see home page.
 
 [frontend]: https://github.com/JuanDa237/Cash_Register/tree/main/frontend
 [backend]: https://github.com/JuanDa237/Cash_Register/tree/main/backend
