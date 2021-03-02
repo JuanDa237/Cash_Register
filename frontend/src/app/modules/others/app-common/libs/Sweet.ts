@@ -38,6 +38,20 @@ export class Sweet {
 		return response;
 	}
 
+	public async create(message: string): Promise<boolean> {
+		const response: boolean = await Swal.fire({
+			title: message,
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonText: 'Crear',
+			confirmButtonColor: this.bootstrapColors.info
+		}).then((result) => {
+			return result.isConfirmed;
+		});
+
+		return response;
+	}
+
 	public created(message: string): void {
 		const toast = Swal.mixin({
 			toast: true,

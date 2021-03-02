@@ -49,4 +49,12 @@ export class ClientPickerComponent implements OnInit {
 	public refreshPage(): void {
 		this.chosedClientIndex = -1;
 	}
+
+	// Dad functions
+	public setNewClient(client: Client): void {
+		this.clients.push(client);
+		this.table.rerenderTable();
+
+		this.choseClientEvent(this.clients.length - 1);
+	}
 }

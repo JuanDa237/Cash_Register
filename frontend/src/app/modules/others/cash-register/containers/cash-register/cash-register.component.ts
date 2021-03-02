@@ -29,4 +29,8 @@ export class CashRegisterComponent {
 		this.client = createEmptyClient();
 		this.clientPickerChild.refreshPage();
 	}
+
+	public newClient(client: Client): void {
+		this.clientPickerChild.setNewClient(client);
+	}
 }

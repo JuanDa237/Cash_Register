@@ -7,8 +7,9 @@
 					<app-client-picker (choseClient)="client = $event"></app-client-picker>
 				</div>
 				<div class="mt-2">
-					<app-client-form [client]="client"></app-client-form>
+					<app-view-client [client]="client"></app-view-client>
 				</div>
+				<app-create-client (newClient)="newClient($event)"></app-create-client>
 			</div>
 		</app-card-component>
 	</div>

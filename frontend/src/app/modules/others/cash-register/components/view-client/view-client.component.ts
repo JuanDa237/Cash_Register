@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { Client, createEmptyClient } from '@app/modules/others/clients/models';
 
 @Component({
-	selector: 'app-client-form',
-	templateUrl: './client-form.component.html',
-	styleUrls: ['./client-form.component.scss']
+	selector: 'app-view-client',
+	templateUrl: './view-client.component.html',
+	styleUrls: ['./view-client.component.scss']
 })
-export class ClientFormComponent {
+export class ViewClientComponent {
 	@Input()
 	public client: Client;
 

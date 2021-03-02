@@ -1,0 +1,30 @@
+<button
+	class="btn btn-info btn-block mb-4"
+	data-toggle="modal"
+	data-target="#modalClients"
+	(click)="closeModal()"
+>
+	<i class="fas fa-plus-circle" title="Crear cliente"></i> Crear Cliente
+</button>
+<app-modal idModal="modalClients" title="Crear Cliente">
+	<div class="modal-body">
+		<app-clients-form
+			idForm="clientForm"
+			(onSubmitEvent)="createClient()"
+			(invalidForm)="invalidForm = $event"
+		></app-clients-form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+		<button
+			type="submit"
+			class="btn btn-success"
+			(click)="createClient()"
+			[disabled]="invalidForm"
+			data-dismiss="modal"
+			form="clientForm"
+		>
+			Crear
+		</button>
+	</div>
+</app-modal>

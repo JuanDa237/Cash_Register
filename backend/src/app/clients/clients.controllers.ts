@@ -58,10 +58,11 @@ class ClientsControllers {
 
 	// Post
 	public async createClient(request: Request, response: Response): Promise<Response> {
-		request.body.idCompany = request.user.idCompany;
-		const newClient: any = await (await pool).query('INSERT INTO clients SET ?', [
-			request.body
-		]);
+		var client: any = request.body;
+		client.idCompany = request.user.idCompany;
+		delete client.id;
+
+		const newClient: any = await (await pool).query('INSERT INTO clients SET ?', [client]);
 
 		return response.status(200).json({
 			message: 'Saved client.',
