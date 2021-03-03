@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { Client, createEmptyClient } from '@modules/others/clients/models';
-
-import { Product, ProductInBill } from '@modules/others/products/models';
-
+// Services
 import { BillsService } from '@modules/others/bills/services';
 
+// Models
+import { Client, createEmptyClient } from '@modules/others/clients/models';
+import { Product, ProductInBill } from '@modules/others/products/models';
 import { ProductInCart } from '../../models';
 import { BillViewComponent } from '@modules/others/bills/components';
 import { BillWithProducts, ProductWithAmount, Bill } from '@app/modules/others/bills/models';
@@ -22,7 +22,7 @@ import { UserDataService } from '@app/modules/main/navigation/services';
 	styleUrls: ['./shopping-cart.component.scss']
 })
 export class ShoppingCartComponent implements OnInit {
-	public shoppingCart: Array<ProductInCart>;
+	public shoppingCart: ProductInCart[];
 	public total: number;
 
 	public doHomeDelivery: boolean;
@@ -71,7 +71,8 @@ export class ShoppingCartComponent implements OnInit {
 				price: product.price
 			},
 			amount: 1,
-			total: product.price
+			total: product.price,
+			message: ''
 		} as ProductInCart);
 
 		this.actualizePrice();
@@ -151,7 +152,8 @@ export class ShoppingCartComponent implements OnInit {
 						idBill: 0,
 						name: product.product.name,
 						price: product.product.price,
-						amount: product.amount
+						amount: product.amount,
+						message: product.message
 					} as ProductInBill);
 				});
 

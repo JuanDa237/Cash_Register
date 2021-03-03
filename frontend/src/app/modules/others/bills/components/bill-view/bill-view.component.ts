@@ -27,6 +27,8 @@ export class BillViewComponent implements OnInit {
 
 	public apiUrl: string;
 
+	public messages: boolean;
+
 	constructor(
 		private billsService: BillsService,
 		private clientsService: ClientsService,
@@ -36,6 +38,7 @@ export class BillViewComponent implements OnInit {
 		this.bill = createEmptyBill();
 		this.client = createEmptyClient();
 		this.company = createEmptyCompany();
+		this.messages = false;
 
 		this.apiUrl = environment.apiUrl;
 	}
@@ -49,6 +52,14 @@ export class BillViewComponent implements OnInit {
 		this.userData.company$.subscribe((x) => (this.company = x));
 	}
 
+	private viewMessages(): void {
+		for (const product of this.productsInBill) {
+			if (!this.messages && typeof product.message != 'undefined') {
+				this.messages = true;
+			}
+		}
+	}
+
 	// Parents methods
 	public viewBill(id: number): void {
 		this.billsService.getBill(id).subscribe(
@@ -58,6 +69,7 @@ export class BillViewComponent implements OnInit {
 				this.billsService.getProductsInBill(this.bill.id).subscribe(
 					(response) => {
 						this.productsInBill = response;
+						this.viewMessages();
 					},
 					(error) => {
 						throw new Error(error);
@@ -86,6 +98,7 @@ export class BillViewComponent implements OnInit {
 		this.billsService.getProductsInBill(this.bill.id).subscribe(
 			(response) => {
 				this.productsInBill = response;
+				this.viewMessages();
 			},
 			(error) => {
 				throw new Error(error);
@@ -97,5 +110,6 @@ export class BillViewComponent implements OnInit {
 		this.bill = bill;
 		this.client = client;
 		this.productsInBill = products;
+		this.viewMessages();
 	}
 }

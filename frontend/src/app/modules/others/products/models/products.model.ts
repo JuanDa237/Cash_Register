@@ -26,6 +26,7 @@ export interface ProductInBill {
 	name: string;
 	price: number;
 	amount: number;
+	message?: string;
 }
 
 // For send data to api

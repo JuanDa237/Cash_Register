@@ -39,6 +39,7 @@
 					<th>Nombre</th>
 					<th>Precio</th>
 					<th>Cantidad</th>
+					<th>Mensaje</th>
 					<th>Acciones</th>
 				</tr>
 			</tbody>
@@ -55,6 +56,14 @@
 							(keydown.enter)="actualizePrice()"
 							(focusout)="actualizePrice()"
 						/>
+					</td>
+					<td>
+						<textarea
+							name="message"
+							class="form-control"
+							rows="2"
+							[(ngModel)]="productInCart.message"
+						></textarea>
 					</td>
 					<td class="text-center">
 						<button class="btn btn-danger text-center" (click)="deleteProduct(i)">
