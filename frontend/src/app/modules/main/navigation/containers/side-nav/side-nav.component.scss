@@ -8,8 +8,10 @@
 	flex-wrap: nowrap;
 	background-color: $sidenav-dark-bg;
 	color: $sidenav-dark-color;
+	padding-top: $topnav-base-height;
 	.sidenav-menu {
 		flex-grow: 1;
+		overflow-y: auto;
 		.nav {
 			flex-direction: column;
 			flex-wrap: nowrap;

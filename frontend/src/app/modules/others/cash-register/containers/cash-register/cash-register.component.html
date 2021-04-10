@@ -1,6 +1,6 @@
-<div class="row my-2">
+<div class="row my-3">
 	<div class="col-md-6">
-		<app-card-component>
+		<div class="card h-100">
 			<div class="card-header">Cliente</div>
 			<div class="card-body">
 				<div>
@@ -11,20 +11,20 @@
 				</div>
 				<app-create-client (newClient)="newClient($event)"></app-create-client>
 			</div>
-		</app-card-component>
+		</div>
 	</div>
 	<div class="col-md-6">
-		<app-card-component>
+		<div class="card h-100">
 			<div class="card-header">Productos</div>
 			<div class="card-body">
 				<app-products-table (addProduct)="addProductEvent($event)"></app-products-table>
 			</div>
-		</app-card-component>
+		</div>
 	</div>
 </div>
 <div class="row">
 	<div class="col">
-		<app-card-component>
+		<div class="card">
 			<div class="card-header">Lista</div>
 			<div class="card-body">
 				<app-shopping-cart
@@ -32,6 +32,6 @@
 					(refreshPage)="refreshPage()"
 				></app-shopping-cart>
 			</div>
-		</app-card-component>
+		</div>
 	</div>
 </div>

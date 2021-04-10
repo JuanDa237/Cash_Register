@@ -2,21 +2,14 @@
 #layoutSidenav {
 	display: flex;
 	#layoutSidenav_nav {
-		@extend .fixed-top;
 		flex-basis: $sidenav-base-width;
 		flex-shrink: 0;
-		transition: transform 0.15s ease-in-out;
-		z-index: $zindex-sidenav;
 		width: $sidenav-base-width;
-		height: 100vh;
+		height: 100%;
+		z-index: $zindex-sidenav;
 		// By default the sidenav will be moved off-canvas
 		transform: translateX(-$sidenav-base-width);
-		.sidenav {
-			padding-top: $topnav-base-height;
-			.sidenav-menu {
-				overflow-y: auto;
-			}
-		}
+		transition: transform 0.15s ease-in-out;
 	}
 	// Wraps the content when using the sidenav layout
 	#layoutSidenav_content {
@@ -24,9 +17,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		min-width: 0;
 		flex-grow: 1;
-		min-height: calc(100vh - #{$topnav-base-height});
 		margin-left: -$sidenav-base-width;
 		padding-left: $sidenav-base-width;
 		margin-top: $topnav-base-height;

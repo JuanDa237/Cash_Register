@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-5">
-		<app-card-component>
+		<div class="card">
 			<div class="card-header">
 				<div class="row">
 					<div class="col">Producto</div>
@@ -51,15 +51,15 @@
 					</div>
 				</ng-template>
 			</div>
-		</app-card-component>
+		</div>
 	</div>
 	<div class="col-md-7">
 		<app-ingredients-form (inputAmount)="actualizeUtility()"></app-ingredients-form>
-		<app-card-component>
+		<div class="card">
 			<div class="card-header">Utilidad</div>
 			<div class="card-body">
 				<app-utility-chart chartId="utilityChart"></app-utility-chart>
 			</div>
-		</app-card-component>
+		</div>
 	</div>
 </div>
