@@ -2,12 +2,7 @@
 	"name": "frontend",
 	"version": "0.0.2",
 	"scripts": {
-		"ng": "ng",
-		"start": "ng serve --port 4000",
-		"build": "ng build",
-		"test": "ng test",
-		"lint": "ng lint",
-		"e2e": "ng e2e"
+		"start:dev": "ng serve --port 4000"
 	},
 	"private": true,
 	"dependencies": {
