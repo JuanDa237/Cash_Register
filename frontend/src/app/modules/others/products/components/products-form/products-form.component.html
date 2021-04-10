@@ -8,20 +8,15 @@
 			class="form-control"
 			name="idCategory"
 			formControlName="idCategory"
-			[class.is-invalid]="
-				productForm.get('idCategory')?.touched && productForm.get('idCategory')?.invalid
-			"
+			[class.is-invalid]="idCategory?.touched && idCategory?.invalid"
 		>
 			<option *ngIf="creating" [ngValue]="null">Ninguna</option>
 			<option *ngFor="let category of categories" [ngValue]="category.id">
 				{{ category.name }}
 			</option>
 		</select>
-		<div
-			class="invalid-feedback"
-			*ngIf="productForm.get('idCategory')?.touched && productForm.get('idCategory')?.invalid"
-		>
-			<div *ngIf="creating && productForm.get('idCategory')?.errors['required']">
+		<div class="invalid-feedback" *ngIf="idCategory?.touched && idCategory?.invalid">
+			<div *ngIf="creating && idCategory?.errors['required']">
 				La categoria es obligatoria.
 			</div>
 		</div>
@@ -36,27 +31,22 @@
 			placeholder="Deben ser al menos 3 caracteres"
 			name="name"
 			formControlName="name"
-			[class.is-invalid]="
-				productForm.get('name')?.touched && productForm.get('name')?.invalid
-			"
+			[class.is-invalid]="name?.touched && name?.invalid"
 		/>
-		<div
-			class="invalid-feedback"
-			*ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid"
-		>
-			<div *ngIf="productForm.get('name')?.errors['required']">El nombre es obligatorio.</div>
-			<div *ngIf="productForm.get('name')?.errors['minlength']">
+		<div class="invalid-feedback" *ngIf="name?.touched && name?.invalid">
+			<div *ngIf="name?.errors['required']">El nombre es obligatorio.</div>
+			<div *ngIf="name?.errors['minlength']">
 				{{
-					productForm.get('name')?.errors['minlength'].actualLength +
+					name?.errors['minlength'].actualLength +
 						' caracteres de ' +
-						productForm.get('name')?.errors['minlength'].requiredLength +
+						name?.errors['minlength'].requiredLength +
 						' requeridos.'
 				}}
 			</div>
-			<div *ngIf="productForm.get('name')?.errors['maxlength']">
+			<div *ngIf="name?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						productForm.get('name')?.errors['maxlength'].requiredLength
+						name?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>
@@ -70,20 +60,13 @@
 			id="description"
 			name="description"
 			formControlName="description"
-			[class.is-invalid]="
-				productForm.get('description')?.touched && productForm.get('description')?.invalid
-			"
+			[class.is-invalid]="description?.touched && description?.invalid"
 		></textarea>
-		<div
-			class="invalid-feedback"
-			*ngIf="
-				productForm.get('description')?.touched && productForm.get('description')?.invalid
-			"
-		>
-			<div *ngIf="productForm.get('description')?.errors['maxlength']">
+		<div class="invalid-feedback" *ngIf="description?.touched && description?.invalid">
+			<div *ngIf="description?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						productForm.get('description')?.errors['maxlength'].requiredLength
+						description?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>
@@ -103,18 +86,11 @@
 				id="price"
 				class="form-control"
 				formControlName="price"
-				[class.is-invalid]="
-					productForm.get('price')?.touched && productForm.get('price')?.invalid
-				"
+				[class.is-invalid]="price?.touched && price?.invalid"
 				(input)="inputPriceEvent()"
 			/>
-			<div
-				class="invalid-feedback"
-				*ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid"
-			>
-				<div *ngIf="productForm.get('price')?.errors['required']">
-					El precio es obligatorio
-				</div>
+			<div class="invalid-feedback" *ngIf="price?.touched && price?.invalid">
+				<div *ngIf="price?.errors['required']">El precio es obligatorio</div>
 			</div>
 		</div>
 	</div>
@@ -127,7 +103,7 @@
 						noImage
 						class="card-img-top border-bottom image-input"
 						title="Subir imagen"
-						[alt]="productForm.value.name + '-logo'"
+						[alt]="name?.value + '-logo'"
 						(click)="imageInput.click()"
 					/>
 				</div>

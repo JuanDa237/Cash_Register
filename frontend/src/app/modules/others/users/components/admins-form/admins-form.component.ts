@@ -91,4 +91,22 @@ export class AdminsFormComponent implements OnInit {
 			? this.adminForm.get('idCompany')?.disable()
 			: this.adminForm.get('idCompany')?.enable();
 	}
+
+	// Getters
+
+	get id() {
+		return this.adminForm.get('id');
+	}
+
+	get name() {
+		return this.adminForm.get('name');
+	}
+
+	get username() {
+		return this.adminForm.get('username');
+	}
+
+	get idCompany() {
+		return this.adminForm.get('idCompany');
+	}
 }

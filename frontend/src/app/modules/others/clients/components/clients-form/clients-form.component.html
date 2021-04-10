@@ -9,25 +9,22 @@
 			placeholder="Deben ser al menos 3 caracteres"
 			name="name"
 			formControlName="name"
-			[class.is-invalid]="clientForm.get('name')?.touched && clientForm.get('name')?.invalid"
+			[class.is-invalid]="name?.touched && name?.invalid"
 		/>
-		<div
-			class="invalid-feedback"
-			*ngIf="clientForm.get('name')?.touched && clientForm.get('name')?.invalid"
-		>
-			<div *ngIf="clientForm.get('name')?.errors['required']">El nombre es obligatorio.</div>
-			<div *ngIf="clientForm.get('name')?.errors['minlength']">
+		<div class="invalid-feedback" *ngIf="name?.touched && name?.invalid">
+			<div *ngIf="name?.errors['required']">El nombre es obligatorio.</div>
+			<div *ngIf="name?.errors['minlength']">
 				{{
-					clientForm.get('name')?.errors['minlength'].actualLength +
+					name?.errors['minlength'].actualLength +
 						' caracteres de ' +
-						clientForm.get('name')?.errors['minlength'].requiredLength +
+						name?.errors['minlength'].requiredLength +
 						' requeridos.'
 				}}
 			</div>
-			<div *ngIf="clientForm.get('name')?.errors['maxlength']">
+			<div *ngIf="name?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						clientForm.get('name')?.errors['maxlength'].requiredLength
+						name?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>

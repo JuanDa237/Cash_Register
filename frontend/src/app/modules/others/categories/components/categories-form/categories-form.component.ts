@@ -54,4 +54,14 @@ export class CategoriesFormComponent implements OnInit {
 			name: category.name
 		});
 	}
+
+	// Getters
+
+	get id() {
+		return this.categoryForm.get('id');
+	}
+
+	get name() {
+		return this.categoryForm.get('name');
+	}
 }

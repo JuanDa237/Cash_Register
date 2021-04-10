@@ -9,27 +9,22 @@
 			placeholder="Deben ser al menos 3 caracteres"
 			name="name"
 			formControlName="name"
-			[class.is-invalid]="
-				companyForm.get('name')?.touched && companyForm.get('name')?.invalid
-			"
+			[class.is-invalid]="name?.touched && name?.invalid"
 		/>
-		<div
-			class="invalid-feedback"
-			*ngIf="companyForm.get('name')?.touched && companyForm.get('name')?.invalid"
-		>
-			<div *ngIf="companyForm.get('name')?.errors['required']">El nombre es obligatorio.</div>
-			<div *ngIf="companyForm.get('name')?.errors['minlength']">
+		<div class="invalid-feedback" *ngIf="name?.touched && name?.invalid">
+			<div *ngIf="name?.errors['required']">El nombre es obligatorio.</div>
+			<div *ngIf="name?.errors['minlength']">
 				{{
-					companyForm.get('name')?.errors['minlength'].actualLength +
+					name?.errors['minlength'].actualLength +
 						' caracteres de ' +
-						companyForm.get('name')?.errors['minlength'].requiredLength +
+						name?.errors['minlength'].requiredLength +
 						' requeridos.'
 				}}
 			</div>
-			<div *ngIf="companyForm.get('name')?.errors['maxlength']">
+			<div *ngIf="name?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						companyForm.get('name')?.errors['maxlength'].requiredLength
+						name?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>
@@ -42,20 +37,13 @@
 			class="form-control"
 			name="billMessage"
 			formControlName="billMessage"
-			[class.is-invalid]="
-				companyForm.get('billMessage')?.touched && companyForm.get('billMessage')?.invalid
-			"
+			[class.is-invalid]="billMessage?.touched && billMessage?.invalid"
 		></textarea>
-		<div
-			class="invalid-feedback"
-			*ngIf="
-				companyForm.get('billMessage')?.touched && companyForm.get('billMessage')?.invalid
-			"
-		>
-			<div *ngIf="companyForm.get('billMessage')?.errors['maxlength']">
+		<div class="invalid-feedback" *ngIf="billMessage?.touched && billMessage?.invalid">
+			<div *ngIf="billMessage?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						companyForm.get('billMessage')?.errors['maxlength'].requiredLength
+						billMessage?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>
@@ -68,7 +56,7 @@
 					noImage
 					class="card-img-top border-bottom image-input"
 					title="Subir imagen"
-					[alt]="companyForm.value.name + '-logo'"
+					[alt]="name?.value + '-logo'"
 					(click)="imageInput.click()"
 				/>
 				<div class="card-body">

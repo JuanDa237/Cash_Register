@@ -9,29 +9,22 @@
 			placeholder="Deben ser al menos 3 caracteres"
 			name="name"
 			formControlName="name"
-			[class.is-invalid]="
-				ingredientForm.get('name')?.touched && ingredientForm.get('name')?.invalid
-			"
+			[class.is-invalid]="name?.touched && name?.invalid"
 		/>
-		<div
-			class="invalid-feedback"
-			*ngIf="ingredientForm.get('name')?.touched && ingredientForm.get('name')?.invalid"
-		>
-			<div *ngIf="ingredientForm.get('name')?.errors['required']">
-				El nombre es obligatorio.
-			</div>
-			<div *ngIf="ingredientForm.get('name')?.errors['minlength']">
+		<div class="invalid-feedback" *ngIf="name?.touched && name?.invalid">
+			<div *ngIf="name?.errors['required']">El nombre es obligatorio.</div>
+			<div *ngIf="name?.errors['minlength']">
 				{{
-					ingredientForm.get('name')?.errors['minlength'].actualLength +
+					name?.errors['minlength'].actualLength +
 						' caracteres de ' +
-						ingredientForm.get('name')?.errors['minlength'].requiredLength +
+						name?.errors['minlength'].requiredLength +
 						' requeridos.'
 				}}
 			</div>
-			<div *ngIf="ingredientForm.get('name')?.errors['maxlength']">
+			<div *ngIf="name?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						ingredientForm.get('name')?.errors['maxlength'].requiredLength
+						name?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>
@@ -45,18 +38,9 @@
 			id="priceByUnit"
 			class="form-control"
 			formControlName="priceByUnit"
-			[class.is-invalid]="
-				ingredientForm.get('priceByUnit')?.touched &&
-				ingredientForm.get('priceByUnit')?.invalid
-			"
+			[class.is-invalid]="priceByUnit?.touched && priceByUnit?.invalid"
 		/>
-		<div
-			class="invalid-feedback"
-			*ngIf="
-				ingredientForm.get('priceByUnit')?.touched &&
-				ingredientForm.get('priceByUnit')?.invalid
-			"
-		>
+		<div class="invalid-feedback" *ngIf="priceByUnit?.touched && priceByUnit?.invalid">
 			El precio por unidad es obligatorio.
 		</div>
 	</div>
@@ -69,14 +53,9 @@
 			id="amount"
 			class="form-control"
 			formControlName="amount"
-			[class.is-invalid]="
-				ingredientForm.get('amount')?.touched && ingredientForm.get('amount')?.invalid
-			"
+			[class.is-invalid]="amount?.touched && amount?.invalid"
 		/>
-		<div
-			class="invalid-feedback"
-			*ngIf="ingredientForm.get('amount')?.touched && ingredientForm.get('amount')?.invalid"
-		>
+		<div class="invalid-feedback" *ngIf="amount?.touched && amount?.invalid">
 			La cantidad es obligatoria.
 		</div>
 	</div>

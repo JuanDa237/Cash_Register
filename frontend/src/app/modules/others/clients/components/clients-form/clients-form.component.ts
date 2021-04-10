@@ -59,4 +59,26 @@ export class ClientsFormComponent implements OnInit {
 			creationDate: client.creationDate
 		});
 	}
+
+	// Getters
+
+	get id() {
+		return this.clientForm.get('id');
+	}
+
+	get name() {
+		return this.clientForm.get('name');
+	}
+
+	get address() {
+		return this.clientForm.get('adress');
+	}
+
+	get phoneNumber() {
+		return this.clientForm.get('phoneNumber');
+	}
+
+	get creationDate() {
+		return this.clientForm.get('creationDate');
+	}
 }

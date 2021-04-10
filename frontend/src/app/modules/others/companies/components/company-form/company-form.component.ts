@@ -85,4 +85,26 @@ export class CompanyFormComponent implements OnInit {
 			reader.readAsDataURL(this.selectedFile as Blob);
 		}
 	}
+
+	// Getters
+
+	get id() {
+		return this.companyForm.get('id');
+	}
+
+	get name() {
+		return this.companyForm.get('name');
+	}
+
+	get billMessage() {
+		return this.companyForm.get('billMessage');
+	}
+
+	get homeDeliveries() {
+		return this.companyForm.get('homeDeliveries');
+	}
+
+	get visible() {
+		return this.companyForm.get('visible');
+	}
 }

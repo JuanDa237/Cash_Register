@@ -154,4 +154,30 @@ export class ProductsFormComponent implements OnInit {
 			reader.readAsDataURL(this.selectedFile as Blob);
 		}
 	}
+
+	// Getters
+
+	get id() {
+		return this.productForm.get('id');
+	}
+
+	get idCategory() {
+		return this.productForm.get('idCategory');
+	}
+
+	get name() {
+		return this.productForm.get('name');
+	}
+
+	get description() {
+		return this.productForm.get('description');
+	}
+
+	get price() {
+		return this.productForm.get('price');
+	}
+
+	get image() {
+		return this.productForm.get('image');
+	}
 }

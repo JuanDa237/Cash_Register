@@ -58,4 +58,22 @@ export class IngredientsFormComponent implements OnInit {
 			amount: ingredient.amount
 		});
 	}
+
+	// Getters
+
+	get id() {
+		return this.ingredientForm.get('id');
+	}
+
+	get name() {
+		return this.ingredientForm.get('name');
+	}
+
+	get priceByUnit() {
+		return this.ingredientForm.get('priceByUnit');
+	}
+
+	get amount() {
+		return this.ingredientForm.get('amount');
+	}
 }

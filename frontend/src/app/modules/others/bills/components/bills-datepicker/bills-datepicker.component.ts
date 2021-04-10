@@ -24,7 +24,16 @@ export class BillsDatepickerComponent {
 	}
 
 	public submitEvent(): void {
-		if (this.billForm.valid)
-			this.dates.emit([this.billForm.get('since')?.value, this.billForm.get('until')?.value]);
+		if (this.billForm.valid) this.dates.emit([this.since?.value, this.until?.value]);
+	}
+
+	// Getters
+
+	get since() {
+		return this.billForm.get('since');
+	}
+
+	get until() {
+		return this.billForm.get('until');
 	}
 }

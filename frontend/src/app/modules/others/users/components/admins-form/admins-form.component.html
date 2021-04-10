@@ -9,29 +9,22 @@
 			placeholder="Deben ser al menos 3 caracteres"
 			name="username"
 			formControlName="username"
-			[class.is-invalid]="
-				adminForm.get('username')?.touched && adminForm.get('username')?.invalid
-			"
+			[class.is-invalid]="username?.touched && username?.invalid"
 		/>
-		<div
-			class="invalid-feedback"
-			*ngIf="adminForm.get('username')?.touched && adminForm.get('username')?.invalid"
-		>
-			<div *ngIf="adminForm.get('username')?.errors['required']">
-				El nombre de usuario es obligatorio.
-			</div>
-			<div *ngIf="adminForm.get('username')?.errors['minlength']">
+		<div class="invalid-feedback" *ngIf="username?.touched && username?.invalid">
+			<div *ngIf="username?.errors['required']">El nombre de usuario es obligatorio.</div>
+			<div *ngIf="username?.errors['minlength']">
 				{{
-					adminForm.get('username')?.errors['minlength'].actualLength +
+					username?.errors['minlength'].actualLength +
 						' caracteres de ' +
-						adminForm.get('username')?.errors['minlength'].requiredLength +
+						username?.errors['minlength'].requiredLength +
 						' requeridos.'
 				}}
 			</div>
-			<div *ngIf="adminForm.get('username')?.errors['maxlength']">
+			<div *ngIf="username?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						adminForm.get('username')?.errors['maxlength'].requiredLength
+						username?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>
@@ -46,25 +39,22 @@
 			placeholder="Deben ser al menos 3 caracteres"
 			name="name"
 			formControlName="name"
-			[class.is-invalid]="adminForm.get('name')?.touched && adminForm.get('name')?.invalid"
+			[class.is-invalid]="name?.touched && name?.invalid"
 		/>
-		<div
-			class="invalid-feedback"
-			*ngIf="adminForm.get('name')?.touched && adminForm.get('name')?.invalid"
-		>
-			<div *ngIf="adminForm.get('name')?.errors['required']">El nombre es obligatorio.</div>
-			<div *ngIf="adminForm.get('name')?.errors['minlength']">
+		<div class="invalid-feedback" *ngIf="name?.touched && name?.invalid">
+			<div *ngIf="name?.errors['required']">El nombre es obligatorio.</div>
+			<div *ngIf="name?.errors['minlength']">
 				{{
-					adminForm.get('name')?.errors['minlength'].actualLength +
+					name?.errors['minlength'].actualLength +
 						' caracteres de ' +
-						adminForm.get('name')?.errors['minlength'].requiredLength +
+						name?.errors['minlength'].requiredLength +
 						' requeridos.'
 				}}
 			</div>
-			<div *ngIf="adminForm.get('name')?.errors['maxlength']">
+			<div *ngIf="name?.errors['maxlength']">
 				{{
 					'El maximo de caracteres permitidos son ' +
-						adminForm.get('name')?.errors['maxlength'].requiredLength
+						name?.errors['maxlength'].requiredLength
 				}}
 			</div>
 		</div>
@@ -78,22 +68,15 @@
 			class="form-control"
 			name="idCompany"
 			formControlName="idCompany"
-			[class.is-invalid]="
-				adminForm.get('idCompany')?.touched && adminForm.get('idCompany')?.invalid
-			"
+			[class.is-invalid]="idCompany?.touched && idCompany?.invalid"
 		>
 			<option *ngIf="creating" [ngValue]="null">Ninguna</option>
 			<option *ngFor="let company of companies" [ngValue]="company.id">
 				{{ company.name }}
 			</option>
 		</select>
-		<div
-			class="invalid-feedback"
-			*ngIf="adminForm.get('idCompany')?.touched && adminForm.get('idCompany')?.invalid"
-		>
-			<div *ngIf="creating && adminForm.get('idCompany')?.errors['required']">
-				La compañia es obligatoria.
-			</div>
+		<div class="invalid-feedback" *ngIf="idCompany?.touched && idCompany?.invalid">
+			<div *ngIf="creating && idCompany?.errors['required']">La compañia es obligatoria.</div>
 		</div>
 	</div>
 </form>
