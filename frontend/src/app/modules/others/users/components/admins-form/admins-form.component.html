@@ -9,25 +9,11 @@
 			placeholder="Deben ser al menos 3 caracteres"
 			name="username"
 			formControlName="username"
-			[class.is-invalid]="username?.touched && username?.invalid"
+			[class.is-invalid]="username?.invalid && username?.touched"
 		/>
-		<div class="invalid-feedback" *ngIf="username?.touched && username?.invalid">
-			<div *ngIf="username?.errors['required']">El nombre de usuario es obligatorio.</div>
-			<div *ngIf="username?.errors['minlength']">
-				{{
-					username?.errors['minlength'].actualLength +
-						' caracteres de ' +
-						username?.errors['minlength'].requiredLength +
-						' requeridos.'
-				}}
-			</div>
-			<div *ngIf="username?.errors['maxlength']">
-				{{
-					'El maximo de caracteres permitidos son ' +
-						username?.errors['maxlength'].requiredLength
-				}}
-			</div>
-		</div>
+		<ng-container
+			*ngIf="username?.invalid && username?.touched; then usernameError"
+		></ng-container>
 	</div>
 	<div class="form-group">
 		<label for="name">Nombre<span class="text-danger">*</span> </label>
@@ -39,25 +25,9 @@
 			placeholder="Deben ser al menos 3 caracteres"
 			name="name"
 			formControlName="name"
-			[class.is-invalid]="name?.touched && name?.invalid"
+			[class.is-invalid]="name?.invalid && name?.touched"
 		/>
-		<div class="invalid-feedback" *ngIf="name?.touched && name?.invalid">
-			<div *ngIf="name?.errors['required']">El nombre es obligatorio.</div>
-			<div *ngIf="name?.errors['minlength']">
-				{{
-					name?.errors['minlength'].actualLength +
-						' caracteres de ' +
-						name?.errors['minlength'].requiredLength +
-						' requeridos.'
-				}}
-			</div>
-			<div *ngIf="name?.errors['maxlength']">
-				{{
-					'El maximo de caracteres permitidos son ' +
-						name?.errors['maxlength'].requiredLength
-				}}
-			</div>
-		</div>
+		<ng-container *ngIf="name?.invalid && name?.touched; then nameError"></ng-container>
 	</div>
 	<div class="form-group">
 		<label for="idCompany">Compañia<span class="text-danger">*</span> </label>
@@ -68,15 +38,44 @@
 			class="form-control"
 			name="idCompany"
 			formControlName="idCompany"
-			[class.is-invalid]="idCompany?.touched && idCompany?.invalid"
+			[class.is-invalid]="idCompany?.invalid && idCompany?.touched"
 		>
 			<option *ngIf="creating" [ngValue]="null">Ninguna</option>
 			<option *ngFor="let company of companies" [ngValue]="company.id">
 				{{ company.name }}
 			</option>
 		</select>
-		<div class="invalid-feedback" *ngIf="idCompany?.touched && idCompany?.invalid">
-			<div *ngIf="creating && idCompany?.errors['required']">La compañia es obligatoria.</div>
-		</div>
+		<ng-container
+			*ngIf="idCompany?.invalid && idCompany?.touched; then idCompanyError"
+		></ng-container>
 	</div>
 </form>
+<ng-template #usernameError>
+	<div class="invalid-feedback">
+		<div *ngIf="name?.errors?.required">El nombre de usuario es obligatorio.</div>
+		<div *ngIf="name?.errors?.minlength">
+			{{ name?.errors?.minlength.actualLength }} caracteres de
+			{{ name?.errors?.minlength.requiredLength }} requeridos.
+		</div>
+		<div *ngIf="name?.errors?.maxlength">
+			El maximo de caracteres permitidos son {{ name?.errors?.maxlength.requiredLength }}
+		</div>
+	</div>
+</ng-template>
+<ng-template #nameError>
+	<div class="invalid-feedback">
+		<div *ngIf="name?.errors?.required">El nombre es obligatorio.</div>
+		<div *ngIf="name?.errors?.minlength">
+			{{ name?.errors?.minlength.actualLength }} caracteres de
+			{{ name?.errors?.minlength.requiredLength }} requeridos.
+		</div>
+		<div *ngIf="name?.errors?.maxlength">
+			El maximo de caracteres permitidos son {{ name?.errors?.maxlength.requiredLength }}
+		</div>
+	</div>
+</ng-template>
+<ng-template #idCompanyError>
+	<div class="invalid-feedback">
+		<div *ngIf="creating && idCompany?.errors?.required">La compañia es obligatoria.</div>
+	</div>
+</ng-template>

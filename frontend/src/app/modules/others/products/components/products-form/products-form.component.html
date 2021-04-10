@@ -8,18 +8,16 @@
 			class="form-control"
 			name="idCategory"
 			formControlName="idCategory"
-			[class.is-invalid]="idCategory?.touched && idCategory?.invalid"
+			[class.is-invalid]="idCategory?.invalid && idCategory?.touched"
 		>
 			<option *ngIf="creating" [ngValue]="null">Ninguna</option>
 			<option *ngFor="let category of categories" [ngValue]="category.id">
 				{{ category.name }}
 			</option>
 		</select>
-		<div class="invalid-feedback" *ngIf="idCategory?.touched && idCategory?.invalid">
-			<div *ngIf="creating && idCategory?.errors['required']">
-				La categoria es obligatoria.
-			</div>
-		</div>
+		<ng-container
+			*ngIf="idCategory?.invalid && idCategory?.touched; then idCategoryError"
+		></ng-container>
 	</div>
 	<div class="form-group">
 		<label for="name">Producto<span class="text-danger">*</span> </label>
@@ -31,25 +29,9 @@
 			placeholder="Deben ser al menos 3 caracteres"
 			name="name"
 			formControlName="name"
-			[class.is-invalid]="name?.touched && name?.invalid"
+			[class.is-invalid]="name?.invalid && name?.touched"
 		/>
-		<div class="invalid-feedback" *ngIf="name?.touched && name?.invalid">
-			<div *ngIf="name?.errors['required']">El nombre es obligatorio.</div>
-			<div *ngIf="name?.errors['minlength']">
-				{{
-					name?.errors['minlength'].actualLength +
-						' caracteres de ' +
-						name?.errors['minlength'].requiredLength +
-						' requeridos.'
-				}}
-			</div>
-			<div *ngIf="name?.errors['maxlength']">
-				{{
-					'El maximo de caracteres permitidos son ' +
-						name?.errors['maxlength'].requiredLength
-				}}
-			</div>
-		</div>
+		<ng-container *ngIf="name?.invalid && name?.touched; then nameError"></ng-container>
 	</div>
 	<div class="form-group">
 		<label for="description">Descripcion</label>
@@ -60,16 +42,11 @@
 			id="description"
 			name="description"
 			formControlName="description"
-			[class.is-invalid]="description?.touched && description?.invalid"
+			[class.is-invalid]="description?.invalid && description?.touched"
 		></textarea>
-		<div class="invalid-feedback" *ngIf="description?.touched && description?.invalid">
-			<div *ngIf="description?.errors['maxlength']">
-				{{
-					'El maximo de caracteres permitidos son ' +
-						description?.errors['maxlength'].requiredLength
-				}}
-			</div>
-		</div>
+		<ng-container
+			*ngIf="description?.invalid && description?.touched; then descriptionError"
+		></ng-container>
 	</div>
 	<div class="form-group">
 		<label for="price">Precio</label>
@@ -86,12 +63,10 @@
 				id="price"
 				class="form-control"
 				formControlName="price"
-				[class.is-invalid]="price?.touched && price?.invalid"
+				[class.is-invalid]="price?.invalid && price?.touched"
 				(input)="inputPriceEvent()"
 			/>
-			<div class="invalid-feedback" *ngIf="price?.touched && price?.invalid">
-				<div *ngIf="price?.errors['required']">El precio es obligatorio</div>
-			</div>
+			<ng-container *ngIf="price?.invalid && price?.touched; then priceError"></ng-container>
 		</div>
 	</div>
 	<div class="form-group">
@@ -135,3 +110,33 @@
 	</div>
 	<input type="submit" [disabled]="productForm.invalid" hidden />
 </form>
+<ng-template #idCategoryError>
+	<div class="invalid-feedback">
+		<div *ngIf="creating && idCategory?.errors?.required">La categoria es obligatoria.</div>
+	</div>
+</ng-template>
+<ng-template #nameError>
+	<div class="invalid-feedback">
+		<div *ngIf="name?.errors?.required">El nombre es obligatorio.</div>
+		<div *ngIf="name?.errors?.minlength">
+			{{ name?.errors?.minlength.actualLength }} caracteres de
+			{{ name?.errors?.minlength.requiredLength }} requeridos.
+		</div>
+		<div *ngIf="name?.errors?.maxlength">
+			El maximo de caracteres permitidos son {{ name?.errors?.maxlength.requiredLength }}
+		</div>
+	</div>
+</ng-template>
+<ng-template #descriptionError>
+	<div class="invalid-feedback" *ngIf="description?.touched && description?.invalid">
+		<div *ngIf="description?.errors?.maxlength">
+			El maximo de caracteres permitidos son
+			{{ description?.errors?.maxlength.requiredLength }}
+		</div>
+	</div>
+</ng-template>
+<ng-template #priceError>
+	<div class="invalid-feedback" *ngIf="price?.touched && price?.invalid">
+		<div *ngIf="price?.errors?.required">El precio es obligatorio</div>
+	</div>
+</ng-template>

@@ -9,25 +9,9 @@
 			placeholder="Deben ser al menos 3 caracteres"
 			name="name"
 			formControlName="name"
-			[class.is-invalid]="name?.touched && name?.invalid"
+			[class.is-invalid]="name?.invalid && name?.touched"
 		/>
-		<div class="invalid-feedback" *ngIf="name?.touched && name?.invalid">
-			<div *ngIf="name?.errors['required']">El nombre es obligatorio.</div>
-			<div *ngIf="name?.errors['minlength']">
-				{{
-					name?.errors['minlength'].actualLength +
-						' caracteres de ' +
-						name?.errors['minlength'].requiredLength +
-						' requeridos.'
-				}}
-			</div>
-			<div *ngIf="name?.errors['maxlength']">
-				{{
-					'El maximo de caracteres permitidos son ' +
-						name?.errors['maxlength'].requiredLength
-				}}
-			</div>
-		</div>
+		<ng-container *ngIf="name?.invalid && name?.touched; then nameError"></ng-container>
 	</div>
 	<div class="form-group">
 		<label for="priceByUnit">Precio/Unidad</label>
@@ -38,11 +22,11 @@
 			id="priceByUnit"
 			class="form-control"
 			formControlName="priceByUnit"
-			[class.is-invalid]="priceByUnit?.touched && priceByUnit?.invalid"
+			[class.is-invalid]="priceByUnit?.invalid && priceByUnit?.touched"
 		/>
-		<div class="invalid-feedback" *ngIf="priceByUnit?.touched && priceByUnit?.invalid">
-			El precio por unidad es obligatorio.
-		</div>
+		<ng-container
+			*ngIf="priceByUnit?.invalid && priceByUnit?.touched; then priceByUnitError"
+		></ng-container>
 	</div>
 	<div class="form-group">
 		<label for="amount">Cantidad</label>
@@ -53,10 +37,26 @@
 			id="amount"
 			class="form-control"
 			formControlName="amount"
-			[class.is-invalid]="amount?.touched && amount?.invalid"
+			[class.is-invalid]="amount?.invalid && amount?.touched"
 		/>
-		<div class="invalid-feedback" *ngIf="amount?.touched && amount?.invalid">
-			La cantidad es obligatoria.
-		</div>
+		<ng-container *ngIf="amount?.invalid && amount?.touched; then amountError"></ng-container>
 	</div>
 </form>
+<ng-template #nameError>
+	<div class="invalid-feedback">
+		<div *ngIf="name?.errors?.required">El nombre es obligatorio.</div>
+		<div *ngIf="name?.errors?.minlength">
+			{{ name?.errors?.minlength.actualLength }} caracteres de
+			{{ name?.errors?.minlength.requiredLength }} requeridos.
+		</div>
+		<div *ngIf="name?.errors?.maxlength">
+			El maximo de caracteres permitidos son {{ name?.errors?.maxlength.requiredLength }}
+		</div>
+	</div>
+</ng-template>
+<ng-template #priceByUnitError>
+	<div class="invalid-feedback">El precio por unidad es obligatorio.</div>
+</ng-template>
+<ng-template #amountError>
+	<div class="invalid-feedback">La cantidad es obligatoria.</div>
+</ng-template>
