@@ -1,5 +1,5 @@
 <h1 align="center">Cash Register :moneybag:</h1>
-**<p align="right">V- 0.0.2</p>**
+<p align="right">V- 0.0.2</p>
 
 This is a personal project, it consists of a web page where companies can be registered and each one has functions to be managed itself.
 
