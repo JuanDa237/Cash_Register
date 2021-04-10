@@ -71,7 +71,7 @@ export class ClientsFormComponent implements OnInit {
 	}
 
 	get address() {
-		return this.clientForm.get('adress');
+		return this.clientForm.get('address');
 	}
 
 	get phoneNumber() {

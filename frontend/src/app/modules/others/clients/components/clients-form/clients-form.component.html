@@ -22,7 +22,11 @@
 			class="form-control"
 			name="address"
 			formControlName="address"
+			[class.is-invalid]="address?.invalid && address?.touched"
 		/>
+		<ng-container
+			*ngIf="address?.invalid && address?.touched; then addressError"
+		></ng-container>
 	</div>
 	<div class="form-group">
 		<label for="phoneNumber">Telefono</label>
@@ -33,7 +37,11 @@
 			class="form-control"
 			name="phoneNumber"
 			formControlName="phoneNumber"
+			[class.is-invalid]="phoneNumber?.invalid && phoneNumber?.touched"
 		/>
+		<ng-container
+			*ngIf="phoneNumber?.invalid && phoneNumber?.touched; then phoneNumberError"
+		></ng-container>
 	</div>
 </form>
 <ng-template #nameError>
@@ -45,6 +53,21 @@
 		</div>
 		<div *ngIf="name?.errors?.maxlength">
 			El maximo de caracteres permitidos son {{ name?.errors?.maxlength.requiredLength }}
+		</div>
+	</div>
+</ng-template>
+<ng-template #addressError>
+	<div class="invalid-feedback">
+		<div *ngIf="address?.errors?.maxlength">
+			El maximo de caracteres permitidos son {{ address?.errors?.maxlength.requiredLength }}
+		</div>
+	</div>
+</ng-template>
+<ng-template #phoneNumberError>
+	<div class="invalid-feedback">
+		<div *ngIf="phoneNumber?.errors?.maxlength">
+			El maximo de caracteres permitidos son
+			{{ phoneNumber?.errors?.maxlength.requiredLength }}
 		</div>
 	</div>
 </ng-template>
