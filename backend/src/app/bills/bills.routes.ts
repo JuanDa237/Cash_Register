@@ -13,7 +13,7 @@ class BillsRoutes {
 		this.router.get(
 			'/bills/:since/:until',
 			[authJwt.isAdministrator],
-			billsControllers.listBillsInInterval
+			billsControllers.getBillsInInterval
 		);
 		this.router.get(
 			'/bills/year',
