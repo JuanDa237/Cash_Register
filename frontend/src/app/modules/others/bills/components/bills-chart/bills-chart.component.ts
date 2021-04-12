@@ -45,10 +45,10 @@ export class BillsChartComponent implements AfterViewInit {
 		this.billsService.getBillsInYear().subscribe(
 			(response) => {
 				for (var i = 0; i < response.length; i++) {
-					this.totalInMonths[Number(response[i].creationDate) - 1] += response[i].total;
+					this.totalInMonths[Number(response[i].createdAt) - 1] += response[i].total;
 
 					if (response[i].homeDelivery)
-						this.homeDeliverysInMonths[Number(response[i].creationDate) - 1]++;
+						this.homeDeliverysInMonths[Number(response[i].createdAt) - 1]++;
 				}
 
 				this.redererChart();

@@ -28,7 +28,7 @@ export class ClientsFormComponent implements OnInit {
 			]),
 			address: new FormControl('', Validators.maxLength(30)),
 			phoneNumber: new FormControl('', Validators.maxLength(30)),
-			creationDate: new FormControl('')
+			createdAt: new FormControl('')
 		});
 		this.idForm = '';
 
@@ -56,7 +56,7 @@ export class ClientsFormComponent implements OnInit {
 			name: client.name,
 			address: client.address,
 			phoneNumber: client.phoneNumber,
-			creationDate: client.creationDate
+			createdAt: client.createdAt
 		});
 	}
 
@@ -78,7 +78,7 @@ export class ClientsFormComponent implements OnInit {
 		return this.clientForm.get('phoneNumber');
 	}
 
-	get creationDate() {
-		return this.clientForm.get('creationDate');
+	get createdAt() {
+		return this.clientForm.get('createdAt');
 	}
 }

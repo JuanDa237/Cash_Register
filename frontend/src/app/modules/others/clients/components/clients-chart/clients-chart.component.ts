@@ -50,9 +50,9 @@ export class ClientsChartComponent implements AfterViewInit {
 			(response: Array<any>) => {
 				for (var i = 0; i < response.length; i++) {
 					if (response[i].active == 0) {
-						this.totalExClients[Number(response[i].creationDate) - 1]++;
+						this.totalExClients[Number(response[i].createdAt) - 1]++;
 					} else if (response[i].active == 1) {
-						this.totalNewClients[Number(response[i].creationDate) - 1]++;
+						this.totalNewClients[Number(response[i].createdAt) - 1]++;
 					}
 				}
 

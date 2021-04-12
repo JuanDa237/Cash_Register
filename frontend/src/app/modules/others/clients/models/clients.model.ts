@@ -3,7 +3,7 @@ export interface Client {
 	name: string;
 	address: string;
 	phoneNumber: string;
-	creationDate: string;
+	createdAt: string;
 }
 
 export function createEmptyClient(): Client {
@@ -12,6 +12,6 @@ export function createEmptyClient(): Client {
 		name: '',
 		address: '',
 		phoneNumber: '',
-		creationDate: ''
+		createdAt: ''
 	} as Client;
 }

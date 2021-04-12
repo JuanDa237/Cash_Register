@@ -13,14 +13,14 @@ class CompaniesControllers {
 	// Get
 	public async getCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT id, name, image, billMessage, homeDeliveries FROM companies WHERE visible = true AND active = true;'
+			'SELECT id, name, image, billMessage, homeDeliveries FROM company WHERE visible = true AND active = true;'
 		);
 		return response.status(200).json(companies);
 	}
 
 	public async getAllCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT id, name, image, billMessage, homeDeliveries, visible FROM companies WHERE active = true;'
+			'SELECT id, name, image, billMessage, homeDeliveries, visible FROM company WHERE active = true;'
 		);
 		return response.status(200).json(companies);
 	}
@@ -31,7 +31,7 @@ class CompaniesControllers {
 		const company: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, image, billMessage, homeDeliveries, visible FROM companies WHERE id = ? AND active = true;',
+			'SELECT name, image, billMessage, homeDeliveries, visible FROM company WHERE id = ? AND active = true;',
 			[request.params.id]
 		);
 
@@ -49,7 +49,7 @@ class CompaniesControllers {
 			[fieldname: string]: Express.Multer.File;
 		};
 
-		const newCompany = await (await pool).query('INSERT INTO companies SET ?', [
+		const newCompany = await (await pool).query('INSERT INTO company SET ?', [
 			{
 				name,
 				billMessage,
@@ -80,7 +80,7 @@ class CompaniesControllers {
 		const oldCompany: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, billMessage, image, visible FROM companies WHERE id = ? AND active = true;',
+			'SELECT name, billMessage, image, visible FROM company WHERE id = ? AND active = true;',
 			[idCompany]
 		);
 
@@ -95,7 +95,7 @@ class CompaniesControllers {
 			const imagePath: string =
 				typeof image != 'undefined' ? String(image.path) : oldCompany[0].image;
 
-			await (await pool).query('UPDATE companies SET ? WHERE id = ?', [
+			await (await pool).query('UPDATE company SET ? WHERE id = ?', [
 				{
 					name: typeof name != 'undefined' ? name : oldCompany[0].name,
 					billMessage:
@@ -124,7 +124,7 @@ class CompaniesControllers {
 		const { id } = request.params;
 
 		const company: Company = (
-			await (await pool).query('SELECT image FROM companies WHERE id = ?', [id])
+			await (await pool).query('SELECT image FROM company WHERE id = ?', [id])
 		)[0];
 
 		if (typeof company != 'undefined') {
@@ -135,7 +135,7 @@ class CompaniesControllers {
 
 			await (
 				await pool
-			).query('UPDATE companies SET active = false, visible = false WHERE id = ?', [id]);
+			).query('UPDATE company SET active = false, visible = false WHERE id = ?', [id]);
 
 			// Delete all company users with admin role
 			await (await pool).query(

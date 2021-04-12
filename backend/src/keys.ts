@@ -3,7 +3,7 @@ export default {
 		host: 'localhost',
 		user: 'cashier',
 		password: 'cashier321',
-		database: 'cashRegisterDatabase'
+		database: 'cashRegisterDB'
 	},
 	initialData: {
 		company: {

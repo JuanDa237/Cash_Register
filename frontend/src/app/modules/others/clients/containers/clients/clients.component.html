@@ -37,7 +37,7 @@
 			<td class="align-middle">{{ client.name }}</td>
 			<td class="align-middle">{{ client.address }}</td>
 			<td class="align-middle">{{ client.phoneNumber }}</td>
-			<td class="align-middle">{{ client.creationDate }}</td>
+			<td class="align-middle">{{ client.createdAt | date: 'dd/MM/yyyy' }}</td>
 			<td>
 				<div class="text-center">
 					<div class="btn-group">

@@ -21,7 +21,7 @@ class AuthControllers {
 				`SELECT u.id, u.name, u.password, r.name as role, c.name as company
 				FROM users u
 				INNER JOIN roles r ON u.idRole = r.id
-				INNER JOIN companies c ON u.idCompany = c.id
+				INNER JOIN company c ON u.idCompany = c.id
 				WHERE c.active = true AND BINARY u.username = ?`,
 				[username]
 			)
@@ -77,7 +77,7 @@ class AuthControllers {
 		}
 
 		const company: Company = (
-			await (await pool).query('SELECT name FROM companies WHERE active = true AND id = ?', [
+			await (await pool).query('SELECT name FROM company WHERE active = true AND id = ?', [
 				idCompany
 			])
 		)[0];

@@ -35,6 +35,9 @@ class BillsRoutes {
 
 		// Post
 		this.router.post('/bill', [authJwt.isCashier], billsControllers.createBill);
+
+		// Delete
+		this.router.delete('/bill/:id', [authJwt.isAdministrator], billsControllers.deleteBill);
 	}
 }
 

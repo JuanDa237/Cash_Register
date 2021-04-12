@@ -76,8 +76,6 @@ export class ClientsComponent implements OnInit {
 		var client: Client = this.formChild.getClientValues();
 
 		if (this.validateClient(client)) {
-			client.creationDate = this.actualDate();
-
 			this.clientsService.saveClient(client).subscribe(
 				(response) => {
 					client.id = response.id;
@@ -100,8 +98,6 @@ export class ClientsComponent implements OnInit {
 		var client: Client = this.formChild.getClientValues();
 
 		if (this.validateClient(client)) {
-			client.creationDate = this.actualDate();
-
 			this.clientsService.updateClient(client).subscribe(
 				(response) => {
 					const index: number = this.clients
@@ -151,10 +147,5 @@ export class ClientsComponent implements OnInit {
 
 	private validateClient(client: Client): boolean {
 		return client != null && client.name.trim() != '';
-	}
-
-	private actualDate(): string {
-		var today: string | null = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
-		return today != null ? today : '';
 	}
 }

@@ -19,7 +19,7 @@ class BillsControllers {
 		const bills: Bill[] = await (
 			await pool
 		).query(
-			"SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery FROM bills WHERE creationDate >= ? AND creationDate <= ? AND idCompany = ?",
+			'SELECT id, idClient, createdAt, total, homeDelivery FROM bills WHERE createdAt >= ? AND createdAt <= ? AND idCompany = ?',
 			[since, until, request.user.idCompany]
 		);
 
@@ -27,13 +27,11 @@ class BillsControllers {
 	}
 
 	public async listBillsInYear(request: Request, response: Response): Promise<Response> {
-		var year: number = new Date().getFullYear();
-
 		const bills: Bill[] = await (
 			await pool
 		).query(
-			"SELECT DATE_FORMAT(creationDate, '%m') AS creationDate, total, homeDelivery FROM bills WHERE creationDate >= '?-01-01' AND creationDate <= '?-12-31' AND idCompany = ?",
-			[year, year, request.user.idCompany]
+			'SELECT MONTH(createdAt) createdAt, total, homeDelivery FROM bills WHERE YEAR(createdAt) = YEAR(CURDATE()) AND idCompany = ?',
+			[request.user.idCompany]
 		);
 
 		return response.status(200).json(bills);
@@ -44,7 +42,7 @@ class BillsControllers {
 		const bills: Bill[] = await (
 			await pool
 		).query(
-			"SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery FROM bills WHERE idCompany = ?",
+			'SELECT id, idClient, createdAt, total, homeDelivery FROM bills WHERE idCompany = ?',
 			[request.user.idCompany]
 		);
 
@@ -66,7 +64,7 @@ class BillsControllers {
 		const bill: Bill[] = await (
 			await pool
 		).query(
-			"SELECT id, idClient, DATE_FORMAT(creationDate, '%d-%m-%Y') AS creationDate, total, homeDelivery FROM bills WHERE id = ? AND idCompany = ?",
+			'SELECT id, idClient, createdAt, total, homeDelivery FROM bills WHERE id = ? AND idCompany = ?',
 			[id, request.user.idCompany]
 		);
 
@@ -105,16 +103,19 @@ class BillsControllers {
 			delete request.body.homeDelivery;
 		} else if (typeof request.body.homeDelivery != 'undefined') {
 			// Company have homeDeliveries?
-			const company: Company[] = await (
-				await pool
-			).query('SELECT homeDeliveries FROM companies WHERE id = ? AND active = true;', [
-				idCompany
-			]);
+			const company: Company = (
+				await (
+					await pool
+				).query('SELECT homeDeliveries FROM company WHERE id = ? AND active = true;', [
+					idCompany
+				])
+			)[0];
 
-			if (!company[0].homeDeliveries)
+			if (!company.homeDeliveries) {
 				return response.status(409).json({
 					message: 'Home deliveries are disabled.'
 				});
+			}
 		}
 
 		const finalTotal = await billFunctions.getTotalOfBill(products, request.body.homeDelivery);
@@ -132,6 +133,11 @@ class BillsControllers {
 			id: newBill.insertId,
 			total: finalTotal
 		});
+	}
+
+	// Delete
+	public async deleteBill(request: Request, response: Response): Promise<Response> {
+		return response.status(200).json({ message: 'Bill deleted.' });
 	}
 }
 

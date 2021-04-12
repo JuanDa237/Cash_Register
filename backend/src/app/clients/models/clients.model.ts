@@ -1,9 +1,10 @@
 export interface Client {
 	idCompany: number;
-	id: number;
+	id?: number;
 	name: string;
 	address: string;
 	phoneNumber: string;
-	creationDate: string;
+	createdAt?: string;
+	updatedAt?: string;
 	active: boolean;
 }

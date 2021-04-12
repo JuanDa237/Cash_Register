@@ -11,14 +11,13 @@ export const multerConfigProducts: multer.Multer = multer({
 		destination: async (request, file, callback): Promise<void> => {
 			const idCompany: number = request.user.idCompany;
 
-			const companies: Company[] = await (
-				await pool
-			).query('SELECT name FROM companies WHERE id = ?', [idCompany]);
+			const company: Company = (
+				await (await pool).query('SELECT name FROM company WHERE id = ?', [idCompany])
+			)[0];
 
-			if (typeof companies == 'undefined' || typeof companies[0] == 'undefined')
-				callback(new Error('Company not found.'), '');
+			if (typeof company == 'undefined') callback(new Error('Company not found.'), '');
 
-			const dir: string = `uploads/${companies[0].name}/products`.replace(/ /g, '_');
+			const dir: string = `uploads/${company.name}/products`.replace(/ /g, '_');
 			const dirExists = await fs.pathExists(dir);
 
 			if (!dirExists) {

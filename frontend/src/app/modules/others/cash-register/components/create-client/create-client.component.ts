@@ -35,7 +35,7 @@ export class CreateClientComponent {
 		var client: Client = this.formChild.getClientValues();
 
 		if (await this.sweet.create('¿Estas seguro de crear el cliente?')) {
-			client.creationDate = this.actualDate();
+			client.createdAt = this.actualDate();
 
 			this.clientsService.saveClient(client).subscribe(
 				(response) => {

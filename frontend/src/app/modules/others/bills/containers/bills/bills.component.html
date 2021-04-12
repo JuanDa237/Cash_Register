@@ -16,7 +16,7 @@
 						</div>
 					</div>
 				</td>
-				<td class="align-middle">{{ bill.creationDate }}</td>
+				<td class="align-middle">{{ bill.createdAt | date: 'dd/MM/yyyy' }}</td>
 				<td class="align-middle text-center">{{ bill.total | number }}</td>
 				<td>
 					<div class="text-center">

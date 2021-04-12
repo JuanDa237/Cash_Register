@@ -118,7 +118,7 @@ export class ShoppingCartComponent implements OnInit {
 
 		var newBill: BillWithProducts = {
 			idClient: this.client.id,
-			creationDate: this.actualDate(),
+			createdAt: this.actualDate(),
 			total: this.total,
 			homeDelivery: this.homeDelivery != null ? this.homeDelivery : undefined,
 			products: new Array<ProductWithAmount>(0)
@@ -138,7 +138,7 @@ export class ShoppingCartComponent implements OnInit {
 				//  Do the bill view
 				const bill: Bill = {
 					id: 0,
-					creationDate: this.actualDate(),
+					createdAt: this.actualDate(),
 					idClient: 0,
 					total: this.total,
 					homeDelivery: this.homeDelivery != null ? this.homeDelivery : 0

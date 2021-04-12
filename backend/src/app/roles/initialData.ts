@@ -36,12 +36,12 @@ async function createRoles(): Promise<any> {
 }
 
 async function createFirstCompany(): Promise<any> {
-	const companies: Company[] = await (await pool).query('SELECT * FROM companies;');
+	const companies: Company[] = await (await pool).query('SELECT * FROM company;');
 
 	if (companies.length > 0) return;
 
 	try {
-		const newCompany: any = await (await pool).query('INSERT INTO companies SET ?', [
+		const newCompany: any = await (await pool).query('INSERT INTO company SET ?', [
 			keys.initialData.company
 		]);
 

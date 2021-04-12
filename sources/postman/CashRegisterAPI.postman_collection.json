@@ -1178,7 +1178,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    // Optional fields\n    //\"homeDelivery\": 0,\n    \"idClient\": 0,\n    \"creationDate\": \"\",\n    \"products\": [\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        },\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        }\n    ]\n}"
+									"raw": "{\n    // Optional fields\n    //\"homeDelivery\": 0,\n    \"idClient\": 0,\n    \"createdAt\": \"\",\n    \"products\": [\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        },\n        {\n            \"idProduct\": 0,\n            \"amount\": 0\n        }\n    ]\n}"
 								},
 								"url": {
 									"raw": "{{api}}bill",
@@ -1331,7 +1331,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\",\n    \"creationDate\": \"\"\n}"
+									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\",\n    \"createdAt\": \"\"\n}"
 								},
 								"url": {
 									"raw": "{{api}}client",
@@ -1363,7 +1363,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\",\n    \"creationDate\": \"\"\n}"
+									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\",\n    \"createdAt\": \"\"\n}"
 								},
 								"url": {
 									"raw": "{{api}}client/:id",

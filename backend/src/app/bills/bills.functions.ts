@@ -75,7 +75,7 @@ class BillFunctions {
 
 	private async createProductsInBill(productsInBill: ProductInBill[]): Promise<void> {
 		await productsInBill.forEach(async (productInBill) => {
-			(await pool).query('INSERT INTO productsInBills SET ?', [productInBill]);
+			await (await pool).query('INSERT INTO productsInBills SET ?', [productInBill]);
 		});
 	}
 

@@ -80,7 +80,7 @@ export class PrintPdfComponent {
 		var name: string = '';
 
 		if (typeof this.bill != 'undefined' && typeof this.client != 'undefined') {
-			name = `${this.client.name}_${this.bill.creationDate}`;
+			name = `${this.client.name}_${this.bill.createdAt}`;
 		} else {
 			const date: Date = new Date();
 
