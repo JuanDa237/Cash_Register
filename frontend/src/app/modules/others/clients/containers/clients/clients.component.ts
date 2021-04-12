@@ -78,6 +78,8 @@ export class ClientsComponent implements OnInit {
 			this.clientsService.saveClient(client).subscribe(
 				(response) => {
 					client.id = response.id;
+					client.createdAt = new Date().toString();
+					client.updatedAt = new Date().toString();
 					this.clients.push(client);
 
 					// Events
@@ -99,11 +101,14 @@ export class ClientsComponent implements OnInit {
 		if (this.validateClient(client)) {
 			this.clientsService.updateClient(client).subscribe(
 				(response) => {
+					client.updatedAt = new Date().toString();
+
 					const index: number = this.clients
 						.map((x) => {
 							return x.id;
 						})
 						.indexOf(client.id);
+
 					this.clients[index] = client;
 
 					// Events

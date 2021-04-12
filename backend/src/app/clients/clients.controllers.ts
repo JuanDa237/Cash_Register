@@ -23,7 +23,7 @@ class ClientsControllers {
 	// Get All List
 	public async listAllClients(request: Request, response: Response): Promise<Response> {
 		const clients: Client[] = await (await pool).query(
-			`SELECT id, name, address, phoneNumber, createdAt
+			`SELECT id, name, address, phoneNumber, createdAt, updatedAt
 			FROM client WHERE idCompany = ?`,
 			[request.user.idCompany]
 		);
@@ -33,7 +33,7 @@ class ClientsControllers {
 	// Get List
 	public async listClients(request: Request, response: Response): Promise<Response> {
 		const clients: Client[] = await (await pool).query(
-			`SELECT id, name, address, phoneNumber, createdAt
+			`SELECT id, name, address, phoneNumber, createdAt, updatedAt
 			FROM client WHERE active = true AND idCompany = ?`,
 			[request.user.idCompany]
 		);

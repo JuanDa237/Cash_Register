@@ -32,12 +32,12 @@
 	<app-loading colorClass="text-primary" size="10rem"></app-loading>
 </div>
 <div [hidden]="loading">
-	<app-table [columns]="['Nombre', 'Direccion', 'Telefono', 'Creado El', 'Acciones']">
+	<app-table [columns]="['Nombre', 'Direccion', 'Telefono', 'Modificado El', 'Acciones']">
 		<tr *ngFor="let client of clients">
 			<td class="align-middle">{{ client.name }}</td>
 			<td class="align-middle">{{ client.address }}</td>
 			<td class="align-middle">{{ client.phoneNumber }}</td>
-			<td class="align-middle">{{ client.createdAt | date: 'dd/MM/yyyy' }}</td>
+			<td class="align-middle">{{ client.updatedAt | date: 'dd/MM/yyyy' }}</td>
 			<td>
 				<div class="text-center">
 					<div class="btn-group">

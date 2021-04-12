@@ -4,6 +4,7 @@ export interface Client {
 	address: string;
 	phoneNumber: string;
 	createdAt: string;
+	updatedAt: string;
 }
 
 export function createEmptyClient(): Client {
@@ -12,6 +13,7 @@ export function createEmptyClient(): Client {
 		name: '',
 		address: '',
 		phoneNumber: '',
-		createdAt: ''
+		createdAt: '',
+		updatedAt: ''
 	} as Client;
 }
