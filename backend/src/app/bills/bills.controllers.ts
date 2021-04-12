@@ -4,8 +4,8 @@ import { Request, Response } from 'express';
 import pool from '../../database';
 
 // Models
-import { Bill } from './models';
-import { ProductInBill } from '../products/models';
+import { Bill, BillReq, billReqToBill, ProductId, productIdtoProductInBill } from './models';
+import { Product, ProductInBill } from '../products/models';
 
 // Functions
 import { billFunctions } from './bills.functions';
@@ -72,10 +72,7 @@ class BillsControllers {
 
 	// Post
 	public async createBill(request: Request, response: Response): Promise<Response> {
-		const { products } = request.body;
-		delete request.body.products;
-
-		var newBill: Bill = request.body;
+		var newBill: BillReq = request.body;
 		newBill.idCompany = request.user.idCompany;
 		newBill.total = 0;
 
@@ -91,19 +88,60 @@ class BillsControllers {
 				])
 			)[0];
 
-			if (!company.homeDelivery) {
+			if (company.homeDelivery) {
+				// Add homeDelivey to total
+				newBill.total += newBill.homeDelivery;
+			} else {
 				return response.status(409).json({
 					message: 'Home deliveries are disabled.'
 				});
 			}
 		}
 
-		newBill.total = await billFunctions.getTotalOfBill(products, newBill);
+		newBill.products = billFunctions.mergeDuplicates(newBill.products);
 
-		newBill.id = (await (await pool).query('INSERT INTO bill SET ?', [newBill])).insertId;
+		// Set total and Validate Products
+		for (var index = 0; index < newBill.products.length; index++) {
+			const product: Product = (
+				await (await pool).query(
+					`SELECT id, name, price FROM product
+					WHERE active = true AND idCompany = ? AND id = ?`,
+					[newBill.idCompany, newBill.products[index].idProduct]
+				)
+			)[0];
 
-		if (typeof newBill.id != 'undefined')
-			await billFunctions.doThingsNeededForNewBill(products, newBill.id, newBill.idCompany);
+			if (typeof product == 'undefined') {
+				newBill.products.splice(index);
+			} else {
+				// Add to total
+				newBill.total += newBill.products[index].amount * product.price;
+
+				// Save relation
+				newBill.products[index].idCompany = newBill.idCompany;
+				newBill.products[index].name = product.name;
+				newBill.products[index].price = product.price;
+			}
+		}
+
+		// Create bill
+		var finalBill = billReqToBill(newBill);
+		delete finalBill.active;
+		delete finalBill.createdAt;
+
+		newBill.id = (await (await pool).query('INSERT INTO bill SET ?', [finalBill])).insertId;
+
+		// Create productsInBill
+		if (newBill.id) {
+			for (var product of newBill.products) {
+				product.idBill = newBill.id;
+				await (await pool).query('INSERT INTO billsHasProducts SET ?', [
+					productIdtoProductInBill(product)
+				]);
+			}
+		}
+
+		// Update amount of ingredients
+		await billFunctions.updateAmountIngredients(newBill);
 
 		return response.status(200).json({
 			message: 'Saved bill.',

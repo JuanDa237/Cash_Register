@@ -1,116 +1,53 @@
 // Database
 import pool from '../../database';
+import { Ingredient, IngredientInProduct } from '../ingredients/models';
 
 // Models
-import { Product, ProductInBill } from '../products/models';
-import { Ingredient, IngredientInProduct } from '../ingredients/models';
-import { Bill } from './models';
-
-interface ProductWithAmount extends Product {
-	amount: number;
-}
-
-interface ProductIdWithAmount {
-	idProduct: number;
-	amount: number;
-}
+import { BillReq, ProductId } from './models';
 
 class BillFunctions {
-	public async getTotalOfBill(products: ProductIdWithAmount[], bill: Bill): Promise<number> {
-		var total: number = 0;
+	public mergeDuplicates(products: ProductId[]): ProductId[] {
+		var aux: any = {};
+		var merged: ProductId[] = [];
 
-		if (typeof bill.homeDelivery != 'undefined') total += bill.homeDelivery;
-
-		for (const productId of products) {
-			const product: Product = (
-				await (
-					await pool
-				).query(
-					'SELECT price FROM product WHERE active = true AND idCompany = ? AND id = ?',
-					[bill.idCompany, productId.idProduct]
-				)
-			)[0];
-
-			if (typeof product != 'undefined') {
-				total += productId.amount * product.price;
-			}
-		}
-
-		return total;
-	}
-
-	public async doThingsNeededForNewBill(
-		productsIdWithAmount: ProductIdWithAmount[],
-		billId: number,
-		idCompany: number
-	): Promise<void> {
-		var products: ProductWithAmount[] = new Array<ProductWithAmount>(0);
-		var productsInBill: ProductInBill[] = new Array<ProductInBill>(0);
-
-		for (const productIdWithAmount of productsIdWithAmount) {
-			// Get products
-			const product: ProductWithAmount[] = await (
-				await pool
-			).query(
-				'SELECT id, name, price FROM product WHERE id = ? AND active = true AND idCompany = ?',
-				[productIdWithAmount.idProduct, idCompany]
-			);
-			if (product.length <= 0) return;
-
-			product[0].amount = productIdWithAmount.amount;
-			products.push(product[0]);
-
-			// Do the relations
-			var newProductInBill: ProductInBill = {
-				idCompany,
-				idBill: billId,
-				name: product[0].name,
-				price: product[0].price,
-				amount: productIdWithAmount.amount
-			};
-			productsInBill.push(newProductInBill);
-		}
-
-		this.updateAmountIngredients(products, idCompany);
-		await this.createProductsInBill(productsInBill);
-	}
-
-	private async createProductsInBill(productsInBill: ProductInBill[]): Promise<void> {
-		await productsInBill.forEach(async (productInBill) => {
-			await (await pool).query('INSERT INTO billsHasProducts SET ?', [productInBill]);
+		products.map(function (product) {
+			aux[product.idProduct] = (aux[product.idProduct] || 0) + product.amount;
 		});
+
+		for (var key in aux) {
+			var product: ProductId = {
+				idProduct: parseInt(key),
+				amount: aux[key]
+			} as ProductId;
+
+			merged.push(product);
+		}
+
+		return merged;
 	}
 
-	private updateAmountIngredients(
-		productsWithAmount: ProductWithAmount[],
-		idCompany: number
-	): void {
-		productsWithAmount.forEach(async (productWithAmount) => {
-			const ingredientsInProduct: IngredientInProduct[] = await (
-				await pool
-			).query(
-				'SELECT idIngredient, spendingAmount FROM productsHasIngredients WHERE idProduct = ? AND idCompany = ?',
-				[productWithAmount.id, idCompany]
+	public async updateAmountIngredients(bill: BillReq): Promise<void> {
+		for (const product of bill.products) {
+			// Select relation
+			const ingredientsInProduct: IngredientInProduct[] = await (await pool).query(
+				`SELECT idIngredient FROM productsHasIngredients
+				WHERE active = true AND idCompany = ? AND idProduct = ?`,
+				[product.idCompany, product.idProduct]
 			);
 
-			ingredientsInProduct.forEach(async (ingredientInProduct) => {
-				let spendingAmount = ingredientInProduct.spendingAmount * productWithAmount.amount;
+			for (const ingredientInProduct of ingredientsInProduct) {
 				let idIngredient = ingredientInProduct.idIngredient;
 
-				const ingredient: Ingredient[] = await (
-					await pool
-				).query(
-					'SELECT amount FROM ingredient WHERE id = ? AND active = true AND idCompany = ?',
-					[idIngredient, idCompany]
+				// Update ingredient
+				await (await pool).query(
+					`UPDATE ingredient ing
+					INNER JOIN productsHasIngredients phi ON ing.id = phi.idIngredient
+					SET ing.amount = ing.amount - (phi.spendingAmount * ?)
+					WHERE ing.active = true AND ing.id = ?;`,
+					[product.amount, idIngredient]
 				);
-				let newAmount = ingredient[0].amount - spendingAmount;
-
-				await (await pool).query('UPDATE ingredient SET amount = ? WHERE id = ?', [
-					newAmount,
-					idIngredient
-				]);
-			});
-		});
+			}
+		}
 	}
 }
 
