@@ -18,7 +18,7 @@ class AuthControllers {
 		// Get user and verify if company is active
 		const user: SignInUser = (
 			await (await pool).query(
-				`SELECT u.id, u.name, u.password, r.name as role, c.name as company
+				`SELECT u.id, u.name, u.password, r.name as role, c.name AS company
 				FROM user u
 				INNER JOIN role r ON u.idRole = r.id
 				INNER JOIN company c ON u.idCompany = c.id

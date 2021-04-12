@@ -22,7 +22,7 @@ async function verifyToken(request: Request, response: Response, next: NextFunct
 
 		const user: AuthUser = (
 			await (await pool).query(
-				`SELECT u.id, u.username, r.name as role, u.idCompany, c.name as company
+				`SELECT u.id, u.username, r.name AS role, u.idCompany, c.name AS company
 				FROM user u
 				INNER JOIN role r ON u.idRole = r.id
 				INNER JOIN company c ON u.idCompany = c.id
