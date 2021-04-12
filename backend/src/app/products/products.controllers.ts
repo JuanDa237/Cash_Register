@@ -17,7 +17,7 @@ class ProductsController {
 	public async listAllProducts(request: Request, response: Response): Promise<Response> {
 		const products: Product[] = await (
 			await pool
-		).query('SELECT id, name, price, description, image FROM products WHERE idCompany = ?', [
+		).query('SELECT id, name, price, description, image FROM product WHERE idCompany = ?', [
 			request.user.idCompany
 		]);
 
@@ -30,7 +30,7 @@ class ProductsController {
 		const products: Product[] = await (
 			await pool
 		).query(
-			'SELECT id, name, price, description, image FROM products WHERE active = true AND idCompany = ?',
+			'SELECT id, name, price, description, image FROM product WHERE active = true AND idCompany = ?',
 			[request.user.idCompany]
 		);
 
@@ -44,7 +44,7 @@ class ProductsController {
 		const ingredientsInProduct: IngredientInProduct[] = await (
 			await pool
 		).query(
-			'SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE active = true AND idCompany = ?',
+			'SELECT id, idProduct, idIngredient, spendingAmount FROM productsHasIngredients WHERE active = true AND idCompany = ?',
 			[request.user.idCompany]
 		);
 
@@ -58,7 +58,7 @@ class ProductsController {
 		const product: Product[] = await (
 			await pool
 		).query(
-			'SELECT id, idCategory , name, price, description, image FROM products WHERE id = ? AND active = true AND idCompany = ?',
+			'SELECT id, idCategory , name, price, description, image FROM product WHERE id = ? AND active = true AND idCompany = ?',
 			[id, request.user.idCompany]
 		);
 
@@ -75,7 +75,7 @@ class ProductsController {
 		const ingredientsInProduct: IngredientInProduct[] = await (
 			await pool
 		).query(
-			'SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND active = true AND idCompany = ?',
+			'SELECT id, idProduct, idIngredient, spendingAmount FROM productsHasIngredients WHERE idProduct = ? AND active = true AND idCompany = ?',
 			[id, request.user.idCompany]
 		);
 
@@ -142,7 +142,7 @@ class ProductsController {
 					// Delete image
 					const oldProduct: Product[] = await (
 						await pool
-					).query('SELECT image FROM products WHERE id = ?', [idProduct]);
+					).query('SELECT image FROM product WHERE id = ?', [idProduct]);
 					const imagePath: string = String(
 						typeof image != 'undefined' ? image.path : oldProduct[0].image
 					);
@@ -182,7 +182,7 @@ class ProductsController {
 
 		const oldProduct: Product[] = await (
 			await pool
-		).query('SELECT image FROM products WHERE id = ? AND idCompany = ?', [
+		).query('SELECT image FROM product WHERE id = ? AND idCompany = ?', [
 			id,
 			request.user.idCompany
 		]);
@@ -195,10 +195,9 @@ class ProductsController {
 				} catch (error) {}
 			}
 
-			await (await pool).query(
-				'UPDATE products SET active = false, image = "" WHERE id = ?',
-				[id]
-			);
+			await (await pool).query('UPDATE product SET active = false, image = "" WHERE id = ?', [
+				id
+			]);
 
 			return response.status(200).json({ message: 'Product deleted successfully.' });
 		} else {

@@ -28,7 +28,7 @@ class BillFunctions {
 		for (const productIdWithAmount of productsIdWithAmount) {
 			const product: Product[] = await (
 				await pool
-			).query('SELECT price FROM products WHERE id = ? AND active = true', [
+			).query('SELECT price FROM product WHERE id = ? AND active = true', [
 				productIdWithAmount.idProduct
 			]);
 			if (product.length > 0) total += productIdWithAmount.amount * product[0].price;
@@ -50,7 +50,7 @@ class BillFunctions {
 			const product: ProductWithAmount[] = await (
 				await pool
 			).query(
-				'SELECT id, name, price FROM products WHERE id = ? AND active = true AND idCompany = ?',
+				'SELECT id, name, price FROM product WHERE id = ? AND active = true AND idCompany = ?',
 				[productIdWithAmount.idProduct, idCompany]
 			);
 			if (product.length <= 0) return;
@@ -75,7 +75,7 @@ class BillFunctions {
 
 	private async createProductsInBill(productsInBill: ProductInBill[]): Promise<void> {
 		await productsInBill.forEach(async (productInBill) => {
-			await (await pool).query('INSERT INTO productsInBills SET ?', [productInBill]);
+			await (await pool).query('INSERT INTO billsHasProducts SET ?', [productInBill]);
 		});
 	}
 
@@ -87,7 +87,7 @@ class BillFunctions {
 			const ingredientsInProduct: IngredientInProduct[] = await (
 				await pool
 			).query(
-				'SELECT idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND idCompany = ?',
+				'SELECT idIngredient, spendingAmount FROM productsHasIngredients WHERE idProduct = ? AND idCompany = ?',
 				[productWithAmount.id, idCompany]
 			);
 
@@ -98,12 +98,12 @@ class BillFunctions {
 				const ingredient: Ingredient[] = await (
 					await pool
 				).query(
-					'SELECT amount FROM ingredients WHERE id = ? AND active = true AND idCompany = ?',
+					'SELECT amount FROM ingredient WHERE id = ? AND active = true AND idCompany = ?',
 					[idIngredient, idCompany]
 				);
 				let newAmount = ingredient[0].amount - spendingAmount;
 
-				await (await pool).query('UPDATE ingredients SET amount = ? WHERE id = ?', [
+				await (await pool).query('UPDATE ingredient SET amount = ? WHERE id = ?', [
 					newAmount,
 					idIngredient
 				]);

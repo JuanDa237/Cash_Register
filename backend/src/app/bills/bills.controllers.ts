@@ -19,7 +19,7 @@ class BillsControllers {
 		const bills: Bill[] = await (
 			await pool
 		).query(
-			'SELECT id, idClient, createdAt, total, homeDelivery FROM bills WHERE createdAt >= ? AND createdAt <= ? AND idCompany = ?',
+			'SELECT id, idClient, createdAt, total, homeDelivery FROM bill WHERE createdAt >= ? AND createdAt <= ? AND idCompany = ?',
 			[since, until, request.user.idCompany]
 		);
 
@@ -30,7 +30,7 @@ class BillsControllers {
 		const bills: Bill[] = await (
 			await pool
 		).query(
-			'SELECT MONTH(createdAt) createdAt, total, homeDelivery FROM bills WHERE YEAR(createdAt) = YEAR(CURDATE()) AND idCompany = ?',
+			'SELECT MONTH(createdAt) createdAt, total, homeDelivery FROM bill WHERE YEAR(createdAt) = YEAR(CURDATE()) AND idCompany = ?',
 			[request.user.idCompany]
 		);
 
@@ -42,7 +42,7 @@ class BillsControllers {
 		const bills: Bill[] = await (
 			await pool
 		).query(
-			'SELECT id, idClient, createdAt, total, homeDelivery FROM bills WHERE idCompany = ?',
+			'SELECT id, idClient, createdAt, total, homeDelivery FROM bill WHERE idCompany = ?',
 			[request.user.idCompany]
 		);
 
@@ -52,7 +52,7 @@ class BillsControllers {
 	public async listProductsInBills(request: Request, response: Response): Promise<Response> {
 		const productsInBills: ProductInBill[] = await (
 			await pool
-		).query('SELECT * FROM productsInBills WHERE idCompany = ?', [request.user.idCompany]);
+		).query('SELECT * FROM billsHasProducts WHERE idCompany = ?', [request.user.idCompany]);
 
 		return response.status(200).json(productsInBills);
 	}
@@ -64,7 +64,7 @@ class BillsControllers {
 		const bill: Bill[] = await (
 			await pool
 		).query(
-			'SELECT id, idClient, createdAt, total, homeDelivery FROM bills WHERE id = ? AND idCompany = ?',
+			'SELECT id, idClient, createdAt, total, homeDelivery FROM bill WHERE id = ? AND idCompany = ?',
 			[id, request.user.idCompany]
 		);
 
@@ -80,7 +80,7 @@ class BillsControllers {
 
 		const productsInBill: ProductInBill[] = await (
 			await pool
-		).query('SELECT * FROM productsInBills WHERE idBill = ? AND idCompany = ?', [
+		).query('SELECT * FROM billsHasProducts WHERE idBill = ? AND idCompany = ?', [
 			id,
 			request.user.idCompany
 		]);
@@ -124,8 +124,7 @@ class BillsControllers {
 		bill.idCompany = idCompany;
 		bill.total = finalTotal;
 
-		console.log(bill);
-		const newBill: any = await (await pool).query('INSERT INTO bills SET ?', [bill]);
+		const newBill: any = await (await pool).query('INSERT INTO bill SET ?', [bill]);
 
 		await billFunctions.doThingsNeededForNewBill(products, newBill.insertId, idCompany);
 

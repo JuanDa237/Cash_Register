@@ -80,7 +80,7 @@ class CategoriesControllers {
 		if (status.affectedRows > 0) {
 			const productsInCategory: Product[] = await (
 				await pool
-			).query('SELECT id, image FROM products WHERE idCategory = ? AND active = true', [id]);
+			).query('SELECT id, image FROM product WHERE idCategory = ? AND active = true', [id]);
 
 			productsInCategory.forEach(async (product) => {
 				// Delete images
@@ -90,7 +90,7 @@ class CategoriesControllers {
 					} catch (error) {}
 				}
 
-				(await pool).query('UPDATE products SET active = false, image = "" WHERE id = ?', [
+				(await pool).query('UPDATE product SET active = false, image = "" WHERE id = ?', [
 					product.id
 				]);
 			});

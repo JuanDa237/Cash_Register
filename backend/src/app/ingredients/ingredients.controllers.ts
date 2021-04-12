@@ -12,7 +12,7 @@ class IngredientsControllers {
 		const ingredients: Ingredient[] = await (
 			await pool
 		).query(
-			'SELECT id, name, amount, priceByUnit FROM ingredients WHERE active = true AND idCompany = ?',
+			'SELECT id, name, amount, priceByUnit FROM ingredient WHERE active = true AND idCompany = ?',
 			[request.user.idCompany]
 		);
 		return response.status(200).json(ingredients);
@@ -25,7 +25,7 @@ class IngredientsControllers {
 		const ingredient: Ingredient[] = await (
 			await pool
 		).query(
-			'SELECT id, name, amount, priceByUnit FROM ingredients WHERE id = ? AND active = true AND idCompany = ?',
+			'SELECT id, name, amount, priceByUnit FROM ingredient WHERE id = ? AND active = true AND idCompany = ?',
 			[id, request.user.idCompany]
 		);
 
@@ -39,7 +39,7 @@ class IngredientsControllers {
 	// Post
 	public async createIngredient(request: Request, response: Response): Promise<Response> {
 		request.body.idCompany = request.user.idCompany;
-		const newIngredient: any = await (await pool).query('INSERT INTO ingredients SET ?', [
+		const newIngredient: any = await (await pool).query('INSERT INTO ingredient SET ?', [
 			request.body
 		]);
 
@@ -55,7 +55,7 @@ class IngredientsControllers {
 
 		const status: any = await (
 			await pool
-		).query('UPDATE ingredients SET ? WHERE id = ? AND idCompany = ?', [
+		).query('UPDATE ingredient SET ? WHERE id = ? AND idCompany = ?', [
 			request.body,
 			id,
 			request.user.idCompany
@@ -74,7 +74,7 @@ class IngredientsControllers {
 
 		const status: any = await (
 			await pool
-		).query('UPDATE ingredients SET active = false WHERE id = ? AND idCompany = ?', [
+		).query('UPDATE ingredient SET active = false WHERE id = ? AND idCompany = ?', [
 			id,
 			request.user.idCompany
 		]);

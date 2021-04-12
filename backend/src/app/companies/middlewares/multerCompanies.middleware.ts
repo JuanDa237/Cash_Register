@@ -14,8 +14,8 @@ export const multerConfigCompanies: multer.Multer = multer({
 			const dirExists = await fs.pathExists(dir);
 
 			if (!dirExists) {
-				return await fs.mkdir(dir, (error: Error) => {
-					callback(error, dir);
+				return await fs.mkdir(dir, { recursive: true }, (error: Error) => {
+					return callback(error, dir);
 				});
 			}
 

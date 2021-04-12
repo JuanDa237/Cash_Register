@@ -22,7 +22,7 @@ class ProductsFunctions {
 
 			const foundIngredient: Ingredient[] = await (
 				await pool
-			).query('SELECT name FROM ingredients WHERE id = ? AND idCompany = ?', [
+			).query('SELECT name FROM ingredient WHERE id = ? AND idCompany = ?', [
 				ingredient.idIngredient,
 				idCompany
 			]);
@@ -49,7 +49,7 @@ class ProductsFunctions {
 	public async hisProduct(idProduct: number, idCompany: number): Promise<boolean> {
 		const oldProduct: Product[] = await (
 			await pool
-		).query('SELECT name FROM products WHERE id = ? AND idCompany = ?', [idProduct, idCompany]);
+		).query('SELECT name FROM product WHERE id = ? AND idCompany = ?', [idProduct, idCompany]);
 
 		return typeof oldProduct[0] != 'undefined';
 	}
@@ -64,7 +64,7 @@ class ProductsFunctions {
 			image
 		};
 
-		const newProduct: any = await (await pool).query('INSERT INTO products SET ?', [product]);
+		const newProduct: any = await (await pool).query('INSERT INTO product SET ?', [product]);
 
 		var ingredientsInProduct: IngredientInProduct[] = JSON.parse(body.ingredients);
 
@@ -73,7 +73,7 @@ class ProductsFunctions {
 				ingredientInProduct.idCompany = idCompany;
 				ingredientInProduct.idProduct = newProduct.insertId;
 
-				await (await pool).query('INSERT INTO detailProductsIngredients SET ?', [
+				await (await pool).query('INSERT INTO productsHasIngredients SET ?', [
 					ingredientInProduct
 				]);
 			}
@@ -97,7 +97,7 @@ class ProductsFunctions {
 			image
 		};
 
-		(await pool).query('UPDATE products SET ? WHERE id = ?', [product, idProduct]);
+		(await pool).query('UPDATE product SET ? WHERE id = ?', [product, idProduct]);
 
 		const newIngredients: IngredientInProduct[] = JSON.parse(body.ingredients);
 
@@ -109,7 +109,7 @@ class ProductsFunctions {
 		const actualIngredients: IngredientInProduct[] = await (
 			await pool
 		).query(
-			'SELECT id, idProduct, idIngredient, spendingAmount FROM detailProductsIngredients WHERE idProduct = ? AND active = true AND idCompany = ?',
+			'SELECT id, idProduct, idIngredient, spendingAmount FROM productsHasIngredients WHERE idProduct = ? AND active = true AND idCompany = ?',
 			[idProduct, idCompany]
 		);
 
@@ -120,15 +120,14 @@ class ProductsFunctions {
 
 			if (index < 0) {
 				// Delete
-				(
-					await pool
-				).query('UPDATE detailProductsIngredients SET active = false WHERE id = ?', [
-					actualIngredient.id
-				]);
+				(await pool).query(
+					'UPDATE productsHasIngredients SET active = false WHERE id = ?',
+					[actualIngredient.id]
+				);
 			} else {
 				if (newIngredients[index].spendingAmount > 0) {
 					// Update
-					(await pool).query('UPDATE detailProductsIngredients SET ? WHERE id = ?', [
+					(await pool).query('UPDATE productsHasIngredients SET ? WHERE id = ?', [
 						newIngredients[index],
 						actualIngredient.id
 					]);
@@ -140,7 +139,7 @@ class ProductsFunctions {
 		for (const newIngredient of newIngredients) {
 			// Create
 			if (newIngredient.spendingAmount > 0) {
-				(await pool).query('INSERT INTO detailProductsIngredients SET ?', [newIngredient]);
+				(await pool).query('INSERT INTO productsHasIngredients SET ?', [newIngredient]);
 			}
 		}
 	}

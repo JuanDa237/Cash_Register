@@ -8,12 +8,12 @@ GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.company TO 'cashier'@'localhost';
 GRANT SELECT, INSERT ON cashRegisterDB.role TO 'cashier'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.user TO 'cashier'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.category TO 'cashier'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.products TO 'cashier'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.ingredients TO 'cashier'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.detailProductsIngredients TO 'cashier'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.clients TO 'cashier'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.bills TO 'cashier'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.productsInBills TO 'cashier'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.product TO 'cashier'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.ingredient TO 'cashier'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.productsHasIngredients TO 'cashier'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.client TO 'cashier'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.bill TO 'cashier'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.billsHasProducts TO 'cashier'@'localhost';
 
 -- Set password
 ALTER USER 'cashier'@'localhost' IDENTIFIED WITH mysql_native_password BY 'cashier321';
