@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 // Models
 import { Client } from '../../../clients/models';
@@ -43,26 +42,7 @@ export class BillsComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.getTodaysBills();
-	}
-
-	private getTodaysBills() {
-		var actualDate: string = this.actualDate();
-		this.billsService.getBillsInInterval(actualDate, actualDate).subscribe(
-			(res) => {
-				this.bills = res;
-
-				this.getClients();
-			},
-			(error) => {
-				throw new Error(error);
-			}
-		);
-	}
-
-	private actualDate(): string {
-		var today: string | null = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
-		return today != null ? today : '';
+		this.getClients();
 	}
 
 	private getClients() {

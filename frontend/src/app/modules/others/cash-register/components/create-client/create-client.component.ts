@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Sweet } from '@app/modules/others/app-common/libs';
 import { ClientsFormComponent } from '@app/modules/others/clients/components';
@@ -35,8 +34,6 @@ export class CreateClientComponent {
 		var client: Client = this.formChild.getClientValues();
 
 		if (await this.sweet.create('¿Estas seguro de crear el cliente?')) {
-			client.createdAt = this.actualDate();
-
 			this.clientsService.saveClient(client).subscribe(
 				(response) => {
 					client.id = response.id;
@@ -51,10 +48,5 @@ export class CreateClientComponent {
 			);
 		}
 		this.formChild.setClientValues(createEmptyClient());
-	}
-
-	private actualDate(): string {
-		var today: string | null = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
-		return today != null ? today : '';
 	}
 }

@@ -19,7 +19,7 @@ class BillsControllers {
 		const bills: Bill[] = await (
 			await pool
 		).query(
-			'SELECT id, idClient, createdAt, total, homeDelivery FROM bill WHERE createdAt >= ? AND createdAt <= ? AND idCompany = ?',
+			'SELECT id, idClient, createdAt, total, homeDelivery FROM bill WHERE DATE(createdAt) >= ? AND DATE(createdAt) <= ? AND idCompany = ?',
 			[since, until, request.user.idCompany]
 		);
 
@@ -97,6 +97,7 @@ class BillsControllers {
 		const idCompany: number = request.user.idCompany;
 		const { products } = request.body;
 
+		console.log(request.body);
 		delete request.body.products;
 
 		if (request.body.homeDelivery <= 0) {

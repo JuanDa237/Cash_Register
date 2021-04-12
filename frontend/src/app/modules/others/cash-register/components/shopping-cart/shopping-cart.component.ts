@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 // Services
 import { BillsService } from '@modules/others/bills/services';
@@ -118,7 +117,6 @@ export class ShoppingCartComponent implements OnInit {
 
 		var newBill: BillWithProducts = {
 			idClient: this.client.id,
-			createdAt: this.actualDate(),
 			total: this.total,
 			homeDelivery: this.homeDelivery != null ? this.homeDelivery : undefined,
 			products: new Array<ProductWithAmount>(0)
@@ -138,7 +136,6 @@ export class ShoppingCartComponent implements OnInit {
 				//  Do the bill view
 				const bill: Bill = {
 					id: 0,
-					createdAt: this.actualDate(),
 					idClient: 0,
 					total: this.total,
 					homeDelivery: this.homeDelivery != null ? this.homeDelivery : 0
@@ -166,11 +163,6 @@ export class ShoppingCartComponent implements OnInit {
 				throw new Error(error);
 			}
 		);
-	}
-
-	private actualDate(): string {
-		var today: string | null = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
-		return today != null ? today : '';
 	}
 
 	public refreshPageEvent(): void {

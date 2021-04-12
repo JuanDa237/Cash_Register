@@ -4,7 +4,7 @@ USE cashRegisterDB;
 CREATE TABLE company (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
-    image VARCHAR(100),
+    image VARCHAR(255),
     billMessage VARCHAR(255),
     homeDelivery BOOLEAN NOT NULL DEFAULT false,
     visible BOOLEAN NOT NULL DEFAULT false,
@@ -20,7 +20,7 @@ CREATE TABLE user (
     idCompany INT NOT NULL,
     idRole INT NOT NULL,
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(30) NOT NULL UNIQUE,
+    username VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     name VARCHAR(30) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true,
@@ -43,7 +43,7 @@ CREATE TABLE product (
     name VARCHAR(30) NOT NULL,
     price INT NOT NULL DEFAULT 0,
     description VARCHAR(255),
-	image VARCHAR(100),
+	image VARCHAR(255),
     active BOOLEAN NOT NULL DEFAULT true,
     CONSTRAINT fkCategoryProduct FOREIGN KEY (idCategory) REFERENCES category (id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fkCompanyProduct FOREIGN KEY (idCompany) REFERENCES company (id) ON DELETE CASCADE ON UPDATE CASCADE

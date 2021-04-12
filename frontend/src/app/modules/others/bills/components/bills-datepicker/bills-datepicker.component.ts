@@ -1,12 +1,12 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-bills-datepicker',
 	templateUrl: './bills-datepicker.component.html'
 })
-export class BillsDatepickerComponent {
+export class BillsDatepickerComponent implements OnInit {
 	public billForm: FormGroup;
 
 	@Output()
@@ -23,8 +23,14 @@ export class BillsDatepickerComponent {
 		});
 	}
 
+	ngOnInit() {
+		this.submitEvent();
+	}
+
 	public submitEvent(): void {
-		if (this.billForm.valid) this.dates.emit([this.since?.value, this.until?.value]);
+		if (this.billForm.valid) {
+			this.dates.emit([this.since?.value, this.until?.value]);
+		}
 	}
 
 	// Getters

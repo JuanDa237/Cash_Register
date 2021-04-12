@@ -1,7 +1,7 @@
 export interface Bill {
 	id: number;
 	idClient: number;
-	createdAt: string;
+	createdAt?: string;
 	total: number;
 	homeDelivery: number;
 }
@@ -19,7 +19,7 @@ export function createEmptyBill(): Bill {
 export interface BillWithProducts {
 	id?: number;
 	idClient: number;
-	createdAt: string;
+	createdAt?: string;
 	total?: number;
 	homeDelivery?: number;
 	products: ProductWithAmount[];

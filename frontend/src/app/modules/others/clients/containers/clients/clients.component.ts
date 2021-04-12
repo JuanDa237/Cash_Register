@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 // Models
 import { Client, createEmptyClient } from '../../models/index';
