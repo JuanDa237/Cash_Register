@@ -4,5 +4,5 @@ export interface Bill {
 	idClient: number;
 	total: number;
 	createdAt: string;
-	homeDelivery: number;
+	homeDelivery?: number;
 }

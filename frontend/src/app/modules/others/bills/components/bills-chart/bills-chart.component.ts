@@ -42,7 +42,7 @@ export class BillsChartComponent implements AfterViewInit {
 	}
 
 	private getDates(): void {
-		this.billsService.getBillsInYear().subscribe(
+		this.billsService.amountOfBillsInYear().subscribe(
 			(response) => {
 				for (var i = 0; i < response.length; i++) {
 					this.totalInMonths[Number(response[i].createdAt) - 1] += response[i].total;

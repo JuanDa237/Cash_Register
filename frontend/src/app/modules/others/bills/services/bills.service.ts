@@ -27,19 +27,8 @@ export class BillsService {
 		});
 	}
 
-	getBillsInYear(): Observable<Bill[]> {
+	amountOfBillsInYear(): Observable<Bill[]> {
 		return this.http.get<Bill[]>(this.apiUrl + 'bills/year', { headers: this.headers });
-	}
-
-	// Get List
-	getBills(): Observable<Bill[]> {
-		return this.http.get<Bill[]>(this.apiUrl + 'bills', { headers: this.headers });
-	}
-
-	getProductsInBills(): Observable<ProductInBill[]> {
-		return this.http.get<ProductInBill[]>(this.apiUrl + 'bills/products', {
-			headers: this.headers
-		});
 	}
 
 	// Get One

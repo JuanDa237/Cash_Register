@@ -4,6 +4,7 @@ import pool from '../../database';
 // Models
 import { Product, ProductInBill } from '../products/models';
 import { Ingredient, IngredientInProduct } from '../ingredients/models';
+import { Bill } from './models';
 
 interface ProductWithAmount extends Product {
 	amount: number;
@@ -15,23 +16,24 @@ interface ProductIdWithAmount {
 }
 
 class BillFunctions {
-	public async getTotalOfBill(
-		productsIdWithAmount: ProductIdWithAmount[],
-		homeDelivery?: number
-	): Promise<number> {
+	public async getTotalOfBill(products: ProductIdWithAmount[], bill: Bill): Promise<number> {
 		var total: number = 0;
 
-		if (typeof homeDelivery != 'undefined') {
-			total += homeDelivery;
-		}
+		if (typeof bill.homeDelivery != 'undefined') total += bill.homeDelivery;
 
-		for (const productIdWithAmount of productsIdWithAmount) {
-			const product: Product[] = await (
-				await pool
-			).query('SELECT price FROM product WHERE id = ? AND active = true', [
-				productIdWithAmount.idProduct
-			]);
-			if (product.length > 0) total += productIdWithAmount.amount * product[0].price;
+		for (const productId of products) {
+			const product: Product = (
+				await (
+					await pool
+				).query(
+					'SELECT price FROM product WHERE active = true AND idCompany = ? AND id = ?',
+					[bill.idCompany, productId.idProduct]
+				)
+			)[0];
+
+			if (typeof product != 'undefined') {
+				total += productId.amount * product.price;
+			}
 		}
 
 		return total;

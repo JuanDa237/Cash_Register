@@ -15,15 +15,13 @@ class BillsRoutes {
 			[authJwt.isAdministrator],
 			billsControllers.listBillsInInterval
 		);
-		this.router.get('/bills/year', [authJwt.isAdministrator], billsControllers.listBillsInYear);
+		this.router.get(
+			'/bills/year',
+			[authJwt.isAdministrator],
+			billsControllers.amountOfBillsInYear
+		);
 
 		// Get list
-		this.router.get('/bills', [authJwt.isAdministrator], billsControllers.listBills);
-		this.router.get(
-			'/bills/products',
-			[authJwt.isAdministrator],
-			billsControllers.listProductsInBills
-		);
 		this.router.get(
 			'/bill/products/:id',
 			[authJwt.isAdministrator],
