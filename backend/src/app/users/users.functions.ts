@@ -6,7 +6,7 @@ import { Company } from '../companies/models';
 
 class UsersFunctions {
 	public async getUserQuery(id: number, role: string): Promise<any> {
-		var user: any = (await (await pool).query('SELECT name FROM users WHERE id = ?', [id]))[0];
+		var user: any = (await (await pool).query('SELECT name FROM user WHERE id = ?', [id]))[0];
 		user.role = role;
 
 		return user;
@@ -16,7 +16,7 @@ class UsersFunctions {
 		const company: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, image, billMessage, homeDeliveries, visible FROM company WHERE id = ? AND active = true',
+			'SELECT name, image, billMessage, homeDelivery, visible FROM company WHERE id = ? AND active = true',
 			[idCompany]
 		);
 

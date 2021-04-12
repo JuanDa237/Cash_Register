@@ -3,7 +3,7 @@ export interface Company {
 	name: string;
 	image: string;
 	billMessage: string;
-	homeDeliveries: boolean;
+	homeDelivery: boolean;
 	visible: boolean;
 	active: boolean;
 }

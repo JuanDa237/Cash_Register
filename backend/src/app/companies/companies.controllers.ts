@@ -13,14 +13,14 @@ class CompaniesControllers {
 	// Get
 	public async getCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT id, name, image, billMessage, homeDeliveries FROM company WHERE visible = true AND active = true;'
+			'SELECT id, name, image, billMessage, homeDelivery FROM company WHERE visible = true AND active = true;'
 		);
 		return response.status(200).json(companies);
 	}
 
 	public async getAllCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT id, name, image, billMessage, homeDeliveries, visible FROM company WHERE active = true;'
+			'SELECT id, name, image, billMessage, homeDelivery, visible FROM company WHERE active = true;'
 		);
 		return response.status(200).json(companies);
 	}
@@ -31,7 +31,7 @@ class CompaniesControllers {
 		const company: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, image, billMessage, homeDeliveries, visible FROM company WHERE id = ? AND active = true;',
+			'SELECT name, image, billMessage, homeDelivery, visible FROM company WHERE id = ? AND active = true;',
 			[request.params.id]
 		);
 
@@ -44,7 +44,7 @@ class CompaniesControllers {
 
 	// Post
 	public async createCompany(request: Request, response: Response): Promise<Response> {
-		const { name, billMessage, homeDeliveries, visible } = request.body;
+		const { name, billMessage, homeDelivery, visible } = request.body;
 		const image = (request.file as unknown) as {
 			[fieldname: string]: Express.Multer.File;
 		};
@@ -54,7 +54,7 @@ class CompaniesControllers {
 				name,
 				billMessage,
 				visible: visible === 'true',
-				homeDeliveries: homeDeliveries === 'true',
+				homeDelivery: homeDelivery === 'true',
 				image: typeof image != 'undefined' ? image.path : '',
 				active: true
 			}
@@ -68,7 +68,7 @@ class CompaniesControllers {
 
 	// Update
 	public async updateCompany(request: Request, response: Response): Promise<Response> {
-		const { name, billMessage, homeDeliveries, visible } = request.body;
+		const { name, billMessage, homeDelivery, visible } = request.body;
 		const image = (request.file as unknown) as {
 			[fieldname: string]: Express.Multer.File;
 		};
@@ -102,10 +102,10 @@ class CompaniesControllers {
 						typeof billMessage != 'undefined' ? billMessage : oldCompany[0].billMessage,
 					visible:
 						typeof visible != undefined ? visible === 'true' : oldCompany[0].visible,
-					homeDeliveries:
-						typeof homeDeliveries != undefined
-							? homeDeliveries === 'true'
-							: oldCompany[0].homeDeliveries,
+					homeDelivery:
+						typeof homeDelivery != undefined
+							? homeDelivery === 'true'
+							: oldCompany[0].homeDelivery,
 					image: imagePath
 				},
 				idCompany
@@ -139,8 +139,8 @@ class CompaniesControllers {
 
 			// Delete all company users with admin role
 			await (await pool).query(
-				`UPDATE users u
-				INNER JOIN roles r ON u.idRole = r.id
+				`UPDATE user u
+				INNER JOIN role r ON u.idRole = r.id
 				SET u.active = false
 				WHERE idCompany = ? AND r.name = ?;`,
 				[id, Role.ADMIN]

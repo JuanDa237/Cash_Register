@@ -19,15 +19,15 @@ export async function createInitialData() {
 }
 
 async function createRoles(): Promise<any> {
-	const roles: IRole[] = await (await pool).query('SELECT * FROM roles;');
+	const roles: IRole[] = await (await pool).query('SELECT * FROM role;');
 
 	try {
 		if (roles.length > 0) return;
 
 		await Promise.all([
-			await (await pool).query(`INSERT INTO roles SET name = '${Role.CASHIER}'`),
-			await (await pool).query(`INSERT INTO roles SET name = '${Role.ADMIN}'`),
-			await (await pool).query(`INSERT INTO roles SET name = '${Role.SUPERADMIN}'`)
+			await (await pool).query(`INSERT INTO role SET name = '${Role.CASHIER}'`),
+			await (await pool).query(`INSERT INTO role SET name = '${Role.ADMIN}'`),
+			await (await pool).query(`INSERT INTO role SET name = '${Role.SUPERADMIN}'`)
 		]);
 		console.log('Roles created.');
 	} catch (error) {
@@ -46,7 +46,7 @@ async function createFirstCompany(): Promise<any> {
 		]);
 
 		const role: IRole[] = await (await pool).query(
-			`SELECT id FROM roles WHERE name = '${Role.SUPERADMIN}';`
+			`SELECT id FROM role WHERE name = '${Role.SUPERADMIN}';`
 		);
 
 		const newUser: User = {
@@ -57,7 +57,7 @@ async function createFirstCompany(): Promise<any> {
 			name: keys.initialData.user.name
 		};
 
-		await (await pool).query('INSERT INTO users SET ?', [newUser]);
+		await (await pool).query('INSERT INTO user SET ?', [newUser]);
 		console.log('Company and user created.');
 	} catch (error) {
 		console.error(error);

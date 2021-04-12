@@ -33,7 +33,7 @@ export class CompanyFormComponent implements OnInit {
 				Validators.maxLength(30)
 			]),
 			billMessage: new FormControl('', [Validators.maxLength(255)]),
-			homeDeliveries: new FormControl(false, [Validators.required]),
+			homeDelivery: new FormControl(false, [Validators.required]),
 			visible: new FormControl(false, [Validators.required]),
 			image: new FormControl(null)
 		});
@@ -68,7 +68,7 @@ export class CompanyFormComponent implements OnInit {
 			id: company.id,
 			name: company.name,
 			billMessage: company.billMessage,
-			homeDeliveries: company.homeDeliveries,
+			homeDelivery: company.homeDelivery,
 			visible: company.visible
 		});
 
@@ -100,8 +100,8 @@ export class CompanyFormComponent implements OnInit {
 		return this.companyForm.get('billMessage');
 	}
 
-	get homeDeliveries() {
-		return this.companyForm.get('homeDeliveries');
+	get homeDelivery() {
+		return this.companyForm.get('homeDelivery');
 	}
 
 	get visible() {

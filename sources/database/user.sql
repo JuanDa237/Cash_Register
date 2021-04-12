@@ -5,9 +5,9 @@ CREATE USER 'cashier'@'localhost' IDENTIFIED BY 'cashier321';
 
 -- Privileges
 GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.company TO 'cashier'@'localhost';
-GRANT SELECT, INSERT ON cashRegisterDB.roles TO 'cashier'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.users TO 'cashier'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.categories TO 'cashier'@'localhost';
+GRANT SELECT, INSERT ON cashRegisterDB.role TO 'cashier'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.user TO 'cashier'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.category TO 'cashier'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.products TO 'cashier'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.ingredients TO 'cashier'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON cashRegisterDB.detailProductsIngredients TO 'cashier'@'localhost';

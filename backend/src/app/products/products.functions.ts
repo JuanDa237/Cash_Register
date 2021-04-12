@@ -38,7 +38,7 @@ class ProductsFunctions {
 	public async validCategory(idCategory: number, idCompany: number): Promise<boolean> {
 		const category: Category[] = await (
 			await pool
-		).query('SELECT name FROM categories WHERE id = ? AND idCompany = ?', [
+		).query('SELECT name FROM category WHERE id = ? AND idCompany = ?', [
 			idCategory,
 			idCompany
 		]);

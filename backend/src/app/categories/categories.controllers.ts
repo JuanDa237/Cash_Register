@@ -14,7 +14,7 @@ class CategoriesControllers {
 	public async listCategories(request: Request, response: Response): Promise<Response> {
 		const categories: Category[] = await (
 			await pool
-		).query('SELECT id, name FROM categories WHERE active = true AND idCompany = ?', [
+		).query('SELECT id, name FROM category WHERE active = true AND idCompany = ?', [
 			request.user.idCompany
 		]);
 		return response.status(200).json(categories);
@@ -26,10 +26,10 @@ class CategoriesControllers {
 
 		const category: Category[] = await (
 			await pool
-		).query(
-			'SELECT id, name FROM categories WHERE id = ? AND active = true AND idCompany = ?;',
-			[id, request.user.idCompany]
-		);
+		).query('SELECT id, name FROM category WHERE id = ? AND active = true AND idCompany = ?;', [
+			id,
+			request.user.idCompany
+		]);
 
 		return response.status(200).json(category[0]);
 	}
@@ -37,7 +37,7 @@ class CategoriesControllers {
 	// Post
 	public async createCategory(request: Request, response: Response): Promise<Response> {
 		request.body.idCompany = request.user.idCompany;
-		const newCategory: any = await (await pool).query('INSERT INTO categories SET ?', [
+		const newCategory: any = await (await pool).query('INSERT INTO category SET ?', [
 			request.body
 		]);
 
@@ -53,7 +53,7 @@ class CategoriesControllers {
 
 		const status: any = await (
 			await pool
-		).query('UPDATE categories SET ? WHERE id = ? AND idCompany = ?', [
+		).query('UPDATE category SET ? WHERE id = ? AND idCompany = ?', [
 			request.body,
 			id,
 			request.user.idCompany
@@ -72,7 +72,7 @@ class CategoriesControllers {
 
 		const status: any = await (
 			await pool
-		).query('UPDATE categories SET active = false WHERE id = ? AND idCompany = ?', [
+		).query('UPDATE category SET active = false WHERE id = ? AND idCompany = ?', [
 			id,
 			request.user.idCompany
 		]);

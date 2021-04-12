@@ -19,8 +19,8 @@ class AuthControllers {
 		const user: SignInUser = (
 			await (await pool).query(
 				`SELECT u.id, u.name, u.password, r.name as role, c.name as company
-				FROM users u
-				INNER JOIN roles r ON u.idRole = r.id
+				FROM user u
+				INNER JOIN role r ON u.idRole = r.id
 				INNER JOIN company c ON u.idCompany = c.id
 				WHERE c.active = true AND BINARY u.username = ?`,
 				[username]
@@ -62,14 +62,14 @@ class AuthControllers {
 		// Validate username
 		const userWithUsername: User[] = await (
 			await pool
-		).query('SELECT id FROM users WHERE BINARY username = ?', [username]);
+		).query('SELECT id FROM user WHERE BINARY username = ?', [username]);
 
 		if (userWithUsername.length > 0) {
 			return response.status(401).json({ message: `Username '${username}' is in use.` });
 		}
 
 		const role: Role = (
-			await (await pool).query('SELECT id FROM roles WHERE name = ?', [ERole.ADMIN])
+			await (await pool).query('SELECT id FROM role WHERE name = ?', [ERole.ADMIN])
 		)[0];
 
 		if (typeof role == 'undefined') {
@@ -94,7 +94,7 @@ class AuthControllers {
 			name
 		};
 
-		const insertedNewUser: any = await (await pool).query('INSERT INTO users SET ?', [newUser]);
+		const insertedNewUser: any = await (await pool).query('INSERT INTO user SET ?', [newUser]);
 
 		return response.status(200).json({
 			message: 'Saved user.',
@@ -110,14 +110,14 @@ class AuthControllers {
 		// Validate username
 		const userWithUsername: User[] = await (
 			await pool
-		).query('SELECT id FROM users WHERE BINARY username = ?', [username]);
+		).query('SELECT id FROM user WHERE BINARY username = ?', [username]);
 
 		if (userWithUsername.length > 0) {
 			return response.status(401).json({ message: `Username '${username}' is in use.` });
 		}
 
 		const role: Role = (
-			await (await pool).query('SELECT id FROM roles WHERE name = ?', [ERole.CASHIER])
+			await (await pool).query('SELECT id FROM role WHERE name = ?', [ERole.CASHIER])
 		)[0];
 
 		if (typeof role == 'undefined') {
@@ -132,7 +132,7 @@ class AuthControllers {
 			name
 		};
 
-		const insertedNewUser: any = await (await pool).query('INSERT INTO users SET ?', [newUser]);
+		const insertedNewUser: any = await (await pool).query('INSERT INTO user SET ?', [newUser]);
 
 		return response.status(200).json({ message: 'Saved user.', id: insertedNewUser.insertId });
 	}

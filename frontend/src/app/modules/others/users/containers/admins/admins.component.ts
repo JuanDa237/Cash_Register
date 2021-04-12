@@ -75,7 +75,7 @@ export class AdminsComponent implements OnInit {
 
 					// Events
 					this.table.rerenderTable();
-					this.sweet.created('Se creo la categoria satisfactoriamente');
+					this.sweet.created('Se creo el administrador satisfactoriamente');
 				},
 				(error) => {
 					if (error.status == 401 && error.error.message != '') {

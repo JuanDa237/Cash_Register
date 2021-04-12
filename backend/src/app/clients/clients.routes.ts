@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { clientsControllers } from './clients.controllers';
 import { authJwt } from '../auth/middlewares/index';
 
-class CategoriesRoutes {
+class ClientsRoutes {
 	constructor(public router: Router = Router()) {
 		this.routes();
 	}
@@ -44,5 +44,5 @@ class CategoriesRoutes {
 	}
 }
 
-const categoriesRoutes = new CategoriesRoutes();
-export default categoriesRoutes.router;
+const clientsRoutes = new ClientsRoutes();
+export default clientsRoutes.router;

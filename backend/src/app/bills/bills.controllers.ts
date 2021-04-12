@@ -106,12 +106,12 @@ class BillsControllers {
 			const company: Company = (
 				await (
 					await pool
-				).query('SELECT homeDeliveries FROM company WHERE id = ? AND active = true;', [
+				).query('SELECT homeDelivery FROM company WHERE id = ? AND active = true;', [
 					idCompany
 				])
 			)[0];
 
-			if (!company.homeDeliveries) {
+			if (!company.homeDelivery) {
 				return response.status(409).json({
 					message: 'Home deliveries are disabled.'
 				});
@@ -124,6 +124,7 @@ class BillsControllers {
 		bill.idCompany = idCompany;
 		bill.total = finalTotal;
 
+		console.log(bill);
 		const newBill: any = await (await pool).query('INSERT INTO bills SET ?', [bill]);
 
 		await billFunctions.doThingsNeededForNewBill(products, newBill.insertId, idCompany);

@@ -34,8 +34,8 @@ class UsersController {
 	// Get List
 	public async getAdmins(request: Request, response: Response): Promise<Response> {
 		const admins: any = await (await pool).query(
-			`SELECT u.id, u.username, u.name, u.idCompany, c.name as company FROM users u
-			INNER JOIN roles r ON u.idRole = r.id
+			`SELECT u.id, u.username, u.name, u.idCompany, c.name as company FROM user u
+			INNER JOIN role r ON u.idRole = r.id
 			INNER JOIN company c ON u.idCompany = c.id
 			WHERE u.active = true AND r.name = ?`,
 			[Role.ADMIN]
@@ -46,8 +46,8 @@ class UsersController {
 
 	public async getCashiers(request: Request, response: Response): Promise<Response> {
 		const admins: any = await (await pool).query(
-			`SELECT u.id, u.username, u.name FROM users u
-			INNER JOIN roles r ON u.idRole = r.id
+			`SELECT u.id, u.username, u.name FROM user u
+			INNER JOIN role r ON u.idRole = r.id
 			WHERE u.active = true AND r.name = ? AND u.idCompany = ?`,
 			[Role.CASHIER, request.user.idCompany]
 		);
@@ -62,11 +62,11 @@ class UsersController {
 		var params: any[] = [];
 
 		if (request.user.role == Role.SUPERADMIN) {
-			query = 'UPDATE users SET ? WHERE id = ?';
+			query = 'UPDATE user SET ? WHERE id = ?';
 			params = [request.body, id];
 		} else if (request.user.role == Role.ADMIN) {
-			query = `UPDATE users u
-			INNER JOIN roles r ON u.idRole = r.id
+			query = `UPDATE user u
+			INNER JOIN role r ON u.idRole = r.id
 			INNER JOIN company c ON u.idCompany = c.id
 			SET u.username = ?, u.name = ?
 			WHERE u.id = ? AND r.name = ? AND c.id = ?`;
@@ -95,11 +95,11 @@ class UsersController {
 		var params: any[] = [];
 
 		if (request.user.role == Role.SUPERADMIN) {
-			query = 'UPDATE users SET active = false WHERE id = ?';
+			query = 'UPDATE user SET active = false WHERE id = ?';
 			params = [id];
 		} else if (request.user.role == Role.ADMIN) {
-			query = `UPDATE users u
-			INNER JOIN roles r ON u.idRole = r.id
+			query = `UPDATE user u
+			INNER JOIN role r ON u.idRole = r.id
 			INNER JOIN company c ON u.idCompany = c.id
 			SET u.active = false
 			WHERE u.id = ? AND r.name = ? AND c.id = ?`;
