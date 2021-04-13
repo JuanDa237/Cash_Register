@@ -21,15 +21,13 @@ class BillsRoutes {
 			billsControllers.amountOfBillsInYear
 		);
 
-		// Get list
+		// Get one
+		this.router.get('/bill/:id', [authJwt.isAdministrator], billsControllers.getBill);
 		this.router.get(
-			'/bill/products/:id',
+			'/bill/:id/products',
 			[authJwt.isAdministrator],
 			billsControllers.getProductsInBill
 		);
-
-		// Get one
-		this.router.get('/bill/:id', [authJwt.isAdministrator], billsControllers.getBill);
 
 		// Post
 		this.router.post('/bill', [authJwt.isCashier], billsControllers.createBill);

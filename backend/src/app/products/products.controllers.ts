@@ -13,42 +13,15 @@ import { IngredientInProduct } from '../ingredients/models';
 import { productsFunctions } from './products.functions';
 
 class ProductsController {
-	// Get All List
-	public async listAllProducts(request: Request, response: Response): Promise<Response> {
-		const products: Product[] = await (
-			await pool
-		).query('SELECT id, name, price, description, image FROM product WHERE idCompany = ?', [
-			request.user.idCompany
-		]);
-
-		return response.status(200).json(products);
-	}
-
 	// Get list
-
 	public async listProducts(request: Request, response: Response): Promise<Response> {
-		const products: Product[] = await (
-			await pool
-		).query(
-			'SELECT id, name, price, description, image FROM product WHERE active = true AND idCompany = ?',
+		const products: Product[] = await (await pool).query(
+			`SELECT id, name, price, description, image FROM product
+			WHERE active = true AND idCompany = ?`,
 			[request.user.idCompany]
 		);
 
 		return response.status(200).json(products);
-	}
-
-	public async listIngredientsInProducts(
-		request: Request,
-		response: Response
-	): Promise<Response> {
-		const ingredientsInProduct: IngredientInProduct[] = await (
-			await pool
-		).query(
-			'SELECT id, idProduct, idIngredient, spendingAmount FROM productsHasIngredients WHERE active = true AND idCompany = ?',
-			[request.user.idCompany]
-		);
-
-		return response.status(200).json(ingredientsInProduct);
 	}
 
 	// Get one

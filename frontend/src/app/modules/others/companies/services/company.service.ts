@@ -33,6 +33,10 @@ export class CompanyService {
 		return this.http.get<Company>(this.apiUrl + 'company/' + id, { headers: this.headers });
 	}
 
+	getCompanyForSuperAdmin(id: number): Observable<Company> {
+		return this.http.get<Company>(this.apiUrl + 'all/company/' + id, { headers: this.headers });
+	}
+
 	getMyCompany(): Observable<Company> {
 		return this.http.get<Company>(this.apiUrl + 'user/company', { headers: this.headers });
 	}

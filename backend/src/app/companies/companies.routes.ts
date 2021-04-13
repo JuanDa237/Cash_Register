@@ -20,6 +20,11 @@ class CompaniesRoutes {
 
 		// Get one
 		this.router.get('/company/:id', companiesControllers.getCompanyById);
+		this.router.get(
+			'/all/company/:id',
+			[authJwt.isSuperAdmin],
+			companiesControllers.companyByIdAsSuper
+		);
 
 		// Post
 		this.router.post(

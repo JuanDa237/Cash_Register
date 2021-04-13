@@ -80,16 +80,36 @@ class ClientsControllers {
 		delete client.createdAt;
 		delete client.updatedAt;
 
-		await (await pool).query('UPDATE client SET ? WHERE id = ?', [request.body, id]);
-		return response.status(200).json({ message: 'Client updated successfully.' });
+		const status: any = await (
+			await pool
+		).query('UPDATE client SET ? WHERE id = ? AND idCompany = ?', [
+			request.body,
+			id,
+			request.user.idCompany
+		]);
+
+		if (status.affectedRows > 0) {
+			return response.status(200).json({ message: 'Client updated successfully.' });
+		} else {
+			return response.status(404).json({ message: 'Client not found.' });
+		}
 	}
 
 	// Delete
 	public async deleteClient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		await (await pool).query('UPDATE client SET active = false WHERE id = ?', [id]);
-		return response.status(200).json({ message: 'Client deleted successfully.' });
+		const status: any = await (await pool).query(
+			`UPDATE client SET active = false
+			WHERE id = ? AND idCompany = ?`,
+			[id, request.user.idCompany]
+		);
+
+		if (status.affectedRows > 0) {
+			return response.status(200).json({ message: 'Client deleted successfully.' });
+		} else {
+			return response.status(404).json({ message: 'Client not found.' });
+		}
 	}
 }
 

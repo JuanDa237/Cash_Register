@@ -44,19 +44,20 @@ class Server {
 		// Cors policy configuration
 		this.app.use(cors());
 
-		// Morgan to see peticions in console
+		// See peticions in console
 		this.app.use(morgan('dev'));
 	}
 
 	private initialConfig(): void {
 		createInitialData();
-
-		// Public folder
-		this.app.use('/api/uploads', express.static('uploads'));
 	}
 
 	private routes(): void {
-		this.app.use('/', indexRoutes);
+		// Client
+		this.app.use('/', express.static('public'));
+
+		// Api
+		this.app.use('/api', indexRoutes);
 		this.app.use('/api', companiesRoutes);
 		this.app.use('/api', categoriesRoutes);
 		this.app.use('/api', productsRoutes);
@@ -65,6 +66,9 @@ class Server {
 		this.app.use('/api', clientsRoutes);
 		this.app.use('/api', usersRoutes);
 		this.app.use('/api/auth', authRoutes);
+
+		// Public folder
+		this.app.use('/api/uploads', express.static('uploads'));
 	}
 
 	public start(): void {

@@ -12,14 +12,14 @@ class IngredientsRoutes {
 		// Get list
 		this.router.get(
 			'/ingredients',
-			[authJwt.isCashier],
+			[authJwt.isAdministrator],
 			ingredientsControllers.listIngredients
 		);
 
 		// Get one
 		this.router.get(
 			'/ingredient/:id',
-			[authJwt.isCashier],
+			[authJwt.isAdministrator],
 			ingredientsControllers.getIngredient
 		);
 

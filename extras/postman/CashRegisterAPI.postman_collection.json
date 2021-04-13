@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "0e248061-2546-4511-b321-2986a7875274",
+		"_postman_id": "0b3f17d6-c00d-48fe-a78b-db033e5f8491",
 		"name": "CashRegisterAPI",
-		"description": "This is the api for the cash resgister app in Angular.",
+		"description": "This is the documentation for the Cash Register API.\n\nThe API contain a Bearer Token auth, this are the valid auth's:\n\nSuperAdmin: SuperAdmin\nAdmin: SuperAdmin or Admin\nCashier: SuperAdmin or Admin or Cashier",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -20,7 +20,7 @@
 							"host": ["localhost"],
 							"port": "3000"
 						},
-						"description": "Index route."
+						"description": "This is the route for the client side."
 					},
 					"response": []
 				}
@@ -39,20 +39,23 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{api}}uploads/:dir",
+									"raw": "{{api}}uploads/:path",
 									"host": ["{{api}}uploads"],
-									"path": [":dir"],
+									"path": [":path"],
 									"variable": [
 										{
-											"key": "dir",
-											"value": ""
+											"key": "path",
+											"value": "",
+											"description": "The path of the file"
 										}
 									]
-								}
+								},
+								"description": "This is the route for get images, or files the users uploaded."
 							},
 							"response": []
 						}
-					]
+					],
+					"description": "Public uploads folder."
 				},
 				{
 					"name": "/companies",
@@ -65,7 +68,8 @@
 								"url": {
 									"raw": "{{api}}companies",
 									"host": ["{{api}}companies"]
-								}
+								},
+								"description": "Get public companies"
 							},
 							"response": []
 						},
@@ -88,12 +92,37 @@
 									"raw": "{{api}}all/companies",
 									"host": ["{{api}}all"],
 									"path": ["companies"]
-								}
+								},
+								"description": "Get all active companies.\n\nToken is for: SuperAdmin"
 							},
 							"response": []
 						},
 						{
 							"name": "/company/:id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}company/:id",
+									"host": ["{{api}}company"],
+									"path": [":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Id company"
+										}
+									]
+								},
+								"description": "Get public info of a company."
+							},
+							"response": []
+						},
+						{
+							"name": "/all/company/:id",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -108,38 +137,18 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{api}}company",
-									"host": ["{{api}}company"]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/company/:id",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "DELETE",
-								"header": [],
-								"url": {
 									"raw": "{{api}}company/:id",
 									"host": ["{{api}}company"],
 									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
-											"value": ""
+											"value": "",
+											"description": "Id company"
 										}
 									]
-								}
+								},
+								"description": "Get all info of a company\n\nToken is for: SuperAdmin"
 							},
 							"response": []
 						},
@@ -191,7 +200,8 @@
 								"url": {
 									"raw": "{{api}}company",
 									"host": ["{{api}}company"]
-								}
+								},
+								"description": "Create a new company.\n\nToken is for: SuperAdmin"
 							},
 							"response": []
 						},
@@ -249,7 +259,8 @@
 									"raw": "{{api}}my/company",
 									"host": ["{{api}}my"],
 									"path": ["company"]
-								}
+								},
+								"description": "The admin can edit his company.\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -304,14 +315,53 @@
 									]
 								},
 								"url": {
-									"raw": "{{api}}my/company",
-									"host": ["{{api}}my"],
-									"path": ["company"]
-								}
+									"raw": "{{api}}company/:id",
+									"host": ["{{api}}company"],
+									"path": [":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Company id"
+										}
+									]
+								},
+								"description": "Edit some company.\n\nToken is for: SuperAdmin"
+							},
+							"response": []
+						},
+						{
+							"name": "/company/:id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api}}company/:id",
+									"host": ["{{api}}company"],
+									"path": [":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								},
+								"description": "Delete a company\n\nToken is for: SuperAdmin"
 							},
 							"response": []
 						}
 					],
+					"description": "Company and companies endpoints",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -350,7 +400,8 @@
 								"url": {
 									"raw": "{{api}}categories",
 									"host": ["{{api}}categories"]
-								}
+								},
+								"description": "Get company categories.\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -380,7 +431,8 @@
 											"description": "Category id"
 										}
 									]
-								}
+								},
+								"description": "Get a company category\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -412,7 +464,8 @@
 								"url": {
 									"raw": "{{api}}category",
 									"host": ["{{api}}category"]
-								}
+								},
+								"description": "Create a new category.\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -452,7 +505,8 @@
 											"description": "Category id"
 										}
 									]
-								}
+								},
+								"description": "Edit a category.\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -487,7 +541,7 @@
 							"response": []
 						}
 					],
-					"description": "Categories and category endpoint.",
+					"description": "Category and categories endpoints",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -509,66 +563,6 @@
 					"name": "/products",
 					"item": [
 						{
-							"name": "/ingredients & /ingredient",
-							"item": [
-								{
-									"name": "/products/ingredients",
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{token}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{api}}products/ingredients",
-											"host": ["{{api}}products"],
-											"path": ["ingredients"]
-										},
-										"description": "Get ingredients in products."
-									},
-									"response": []
-								},
-								{
-									"name": "/product/:id/ingredients",
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{token}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{api}}product/:id/ingredients",
-											"host": ["{{api}}product"],
-											"path": [":id", "ingredients"],
-											"variable": [
-												{
-													"key": "id",
-													"value": ""
-												}
-											]
-										},
-										"description": "Get ingredients in one product."
-									},
-									"response": []
-								}
-							],
-							"description": "Ingredients in product endpoint."
-						},
-						{
 							"name": "/products",
 							"request": {
 								"auth": {
@@ -586,31 +580,8 @@
 								"url": {
 									"raw": "{{api}}products",
 									"host": ["{{api}}products"]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/all/products",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
 								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api}}all/products",
-									"host": ["{{api}}all"],
-									"path": ["products"]
-								},
-								"description": "Get all products even the eliminated products."
+								"description": "Get company products\n\nToken is for: Cashier"
 							},
 							"response": []
 						},
@@ -640,7 +611,38 @@
 											"description": "Product id"
 										}
 									]
-								}
+								},
+								"description": "Get a company product\n\nToken is for: Admin"
+							},
+							"response": []
+						},
+						{
+							"name": "/product/:id/ingredients",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}product/:id/ingredients",
+									"host": ["{{api}}product"],
+									"path": [":id", "ingredients"],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								},
+								"description": "Get ingredients in one product.\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -697,7 +699,8 @@
 								"url": {
 									"raw": "{{api}}product",
 									"host": ["{{api}}product"]
-								}
+								},
+								"description": "Create a new product\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -762,7 +765,8 @@
 											"description": "Product id"
 										}
 									]
-								}
+								},
+								"description": "Update a product\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -792,12 +796,13 @@
 											"description": "Product id"
 										}
 									]
-								}
+								},
+								"description": "Delete a product.\n\nToken is for: Admin"
 							},
 							"response": []
 						}
 					],
-					"description": "Products and product endpoint.",
+					"description": "Product and products endpoints",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -836,7 +841,8 @@
 								"url": {
 									"raw": "{{api}}ingredients",
 									"host": ["{{api}}ingredients"]
-								}
+								},
+								"description": "Get company ingredients\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -866,7 +872,8 @@
 											"description": "Ingredient id"
 										}
 									]
-								}
+								},
+								"description": "Get company ingredient\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -898,7 +905,8 @@
 								"url": {
 									"raw": "{{api}}ingredient",
 									"host": ["{{api}}ingredient"]
-								}
+								},
+								"description": "Create a new ingredient\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -938,7 +946,8 @@
 											"description": "Ingredient id"
 										}
 									]
-								}
+								},
+								"description": "Update a ingredient\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -968,12 +977,13 @@
 											"description": "Ingredient id"
 										}
 									]
-								}
+								},
+								"description": "Delete a ingredient\n\nToken is for: Admin"
 							},
 							"response": []
 						}
 					],
-					"description": "Ingresients and ingredient endpoint.",
+					"description": "Ingredient and ingredients endpoints",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -994,58 +1004,6 @@
 				{
 					"name": "/bills",
 					"item": [
-						{
-							"name": "/bills",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api}}bills",
-									"host": ["{{api}}bills"]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/bill/:id",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api}}bill/:id",
-									"host": ["{{api}}bill"],
-									"path": [":id"],
-									"variable": [
-										{
-											"key": "id",
-											"value": "",
-											"description": "Bill id"
-										}
-									]
-								}
-							},
-							"response": []
-						},
 						{
 							"name": "/bills/:since/:until",
 							"request": {
@@ -1075,7 +1033,8 @@
 											"value": ""
 										}
 									]
-								}
+								},
+								"description": "Get company bills in a interval of time\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -1098,12 +1057,13 @@
 									"raw": "{{api}}bills/year",
 									"host": ["{{api}}bills"],
 									"path": ["year"]
-								}
+								},
+								"description": "Get information for do a chart\n\nToken is for: Admin"
 							},
 							"response": []
 						},
 						{
-							"name": "/bills/products",
+							"name": "/bill/:id",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1118,32 +1078,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{api}}bills/products",
-									"host": ["{{api}}bills"],
-									"path": ["products"]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/bill/products/:id",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api}}bill/products/:id",
+									"raw": "{{api}}bill/:id",
 									"host": ["{{api}}bill"],
-									"path": ["products", ":id"],
+									"path": [":id"],
 									"variable": [
 										{
 											"key": "id",
@@ -1151,7 +1088,39 @@
 											"description": "Bill id"
 										}
 									]
-								}
+								},
+								"description": "Get a company bill\n\nToken is for: Admin"
+							},
+							"response": []
+						},
+						{
+							"name": "/bill/:id/products/",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api}}bill/:id/products/",
+									"host": ["{{api}}bill"],
+									"path": [":id", "products", ""],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Bill id"
+										}
+									]
+								},
+								"description": "Get bill products\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -1183,12 +1152,44 @@
 								"url": {
 									"raw": "{{api}}bill",
 									"host": ["{{api}}bill"]
-								}
+								},
+								"description": "Create a new bill\n\nToken is for: Cashier"
+							},
+							"response": []
+						},
+						{
+							"name": "/bill/:id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api}}bill/:id",
+									"host": ["{{api}}bill"],
+									"path": [":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Bill id"
+										}
+									]
+								},
+								"description": "Delete a bill (If it was created in the same day).\n\nToken is for: Admin"
 							},
 							"response": []
 						}
 					],
-					"description": "Bills and bill endpoint.",
+					"description": "Bill and bills endpoints",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1227,7 +1228,8 @@
 								"url": {
 									"raw": "{{api}}clients",
 									"host": ["{{api}}clients"]
-								}
+								},
+								"description": "Get company clients.\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -1257,7 +1259,8 @@
 											"description": "Client id"
 										}
 									]
-								}
+								},
+								"description": "Get one client\n\nToken is for: Cashier"
 							},
 							"response": []
 						},
@@ -1280,7 +1283,8 @@
 									"raw": "{{api}}clients/year",
 									"host": ["{{api}}clients"],
 									"path": ["year"]
-								}
+								},
+								"description": "Information for a chart\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -1304,7 +1308,7 @@
 									"host": ["{{api}}all"],
 									"path": ["clients"]
 								},
-								"description": "Get all clients even the eliminated clients."
+								"description": "Get all clients even the eliminated clients.\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -1331,12 +1335,13 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\",\n    \"createdAt\": \"\"\n}"
+									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\"\n}"
 								},
 								"url": {
 									"raw": "{{api}}client",
 									"host": ["{{api}}client"]
-								}
+								},
+								"description": "Create a new client\n\nToken is for: Cashier"
 							},
 							"response": []
 						},
@@ -1363,7 +1368,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\",\n    \"createdAt\": \"\"\n}"
+									"raw": "{\n    \"name\": \"\",\n    \"address\": \"\",\n    \"phoneNumber\": \"\"\n}"
 								},
 								"url": {
 									"raw": "{{api}}client/:id",
@@ -1376,7 +1381,8 @@
 											"description": "Client id"
 										}
 									]
-								}
+								},
+								"description": "Update a client\n\nToken is for: Admin"
 							},
 							"response": []
 						},
@@ -1406,12 +1412,13 @@
 											"description": "Client id"
 										}
 									]
-								}
+								},
+								"description": "Delete a client\n\nToken is for: Admin"
 							},
 							"response": []
 						}
 					],
-					"description": "Clients and client endpoint.",
+					"description": "Client and clients endpoints",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1606,9 +1613,9 @@
 									"path": [":id"],
 									"variable": [
 										{
-											"description": "User id",
 											"key": "id",
-											"value": ""
+											"value": "",
+											"description": "User id"
 										}
 									]
 								}
@@ -1616,6 +1623,7 @@
 							"response": []
 						}
 					],
+					"description": "User and users endpoints",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1655,7 +1663,8 @@
 									"raw": "{{api}}auth/singIn",
 									"host": ["{{api}}auth"],
 									"path": ["singIn"]
-								}
+								},
+								"description": "Sing In as Superadmin, admin or cashier"
 							},
 							"response": []
 						},
@@ -1688,7 +1697,8 @@
 									"raw": "{{api}}auth/singUp/admin",
 									"host": ["{{api}}auth"],
 									"path": ["singUp", "admin"]
-								}
+								},
+								"description": "SuperAdmin can create an Admin.\n\nToken is for: SuperAdmin"
 							},
 							"response": []
 						},
@@ -1721,15 +1731,29 @@
 									"raw": "{{api}}auth/singUp/cashier",
 									"host": ["{{api}}auth"],
 									"path": ["singUp", "cashier"]
-								}
+								},
+								"description": "Admin can create a Cashier in his company\n\nToken is for: Admin"
 							},
 							"response": []
 						}
 					],
-					"description": "Authentication endpoint."
+					"description": "Authentication endpoints"
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}",
+							"host": ["{{api}}"]
+						},
+						"description": "This is the index route for the API."
+					},
+					"response": []
 				}
 			],
-			"description": "API folder."
+			"description": "API routes folder."
 		}
 	]
 }

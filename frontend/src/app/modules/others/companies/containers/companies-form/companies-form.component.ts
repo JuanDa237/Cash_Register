@@ -43,7 +43,7 @@ export class CompaniesFormComponent {
 		this.creating = id == null;
 
 		if (!this.creating) {
-			this.companyService.getCompany(id).subscribe(
+			this.companyService.getCompanyForSuperAdmin(id).subscribe(
 				(resolve) => {
 					this.company = resolve;
 					this.company.id = id;

@@ -9,10 +9,9 @@ import { Ingredient } from './models';
 class IngredientsControllers {
 	// Get list
 	public async listIngredients(request: Request, response: Response): Promise<Response> {
-		const ingredients: Ingredient[] = await (
-			await pool
-		).query(
-			'SELECT id, name, amount, priceByUnit FROM ingredient WHERE active = true AND idCompany = ?',
+		const ingredients: Ingredient[] = await (await pool).query(
+			`SELECT id, name, amount, priceByUnit FROM ingredient
+			WHERE active = true AND idCompany = ?`,
 			[request.user.idCompany]
 		);
 		return response.status(200).json(ingredients);
@@ -22,10 +21,9 @@ class IngredientsControllers {
 	public async getIngredient(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		const ingredient: Ingredient[] = await (
-			await pool
-		).query(
-			'SELECT id, name, amount, priceByUnit FROM ingredient WHERE id = ? AND active = true AND idCompany = ?',
+		const ingredient: Ingredient[] = await (await pool).query(
+			`SELECT id, name, amount, priceByUnit FROM ingredient
+			WHERE active = true AND id = ? AND idCompany = ?`,
 			[id, request.user.idCompany]
 		);
 

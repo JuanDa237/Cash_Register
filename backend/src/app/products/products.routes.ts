@@ -10,26 +10,14 @@ class ProductsRoutes {
 	}
 
 	routes(): void {
-		// Get All List
-		this.router.get(
-			'/all/products',
-			[authJwt.isAdministrator],
-			productsController.listAllProducts
-		);
-
 		// Get list
 		this.router.get('/products', [authJwt.isCashier], productsController.listProducts);
-		this.router.get(
-			'/products/ingredients',
-			[authJwt.isAdministrator],
-			productsController.listIngredientsInProducts
-		);
 
 		// Get one
 		this.router.get('/product/:id', [authJwt.isAdministrator], productsController.getProduct);
 		this.router.get(
 			'/product/:id/ingredients/',
-			[authJwt.isCashier],
+			[authJwt.isAdministrator],
 			productsController.getIngredientsInProduct
 		);
 

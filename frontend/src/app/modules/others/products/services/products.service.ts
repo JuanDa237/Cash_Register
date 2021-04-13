@@ -20,17 +20,6 @@ export class ProductsService {
 		this.apiUrl = environment.apiUrl;
 	}
 
-	// Get All List
-	getAllProducts(): Observable<Product[]> {
-		return this.http.get<Product[]>(this.apiUrl + 'all/products', { headers: this.headers });
-	}
-
-	getIngredientsInProducts(): Observable<IngredientInProduct[]> {
-		return this.http.get<IngredientInProduct[]>(this.apiUrl + 'products/ingredients', {
-			headers: this.headers
-		});
-	}
-
 	// Get List
 	getProducts(): Observable<Product[]> {
 		return this.http.get<Product[]>(this.apiUrl + 'products', { headers: this.headers });

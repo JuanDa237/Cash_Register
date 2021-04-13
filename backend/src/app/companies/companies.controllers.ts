@@ -13,25 +13,40 @@ class CompaniesControllers {
 	// Get
 	public async getCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT id, name, image, billMessage, homeDelivery FROM company WHERE visible = true AND active = true;'
+			`SELECT id, name, image, billMessage, homeDelivery
+			FROM company WHERE visible = true AND active = true`
 		);
 		return response.status(200).json(companies);
 	}
 
 	public async getAllCompanies(request: Request, response: Response): Promise<Response> {
 		const companies: Company[] = await (await pool).query(
-			'SELECT id, name, image, billMessage, homeDelivery, visible FROM company WHERE active = true;'
+			`SELECT id, name, image, billMessage, homeDelivery, visible
+			FROM company WHERE active = true`
 		);
 		return response.status(200).json(companies);
 	}
 
 	// Get one
 
+	public async companyByIdAsSuper(request: Request, response: Response): Promise<Response> {
+		const company: Company[] = await (await pool).query(
+			`SELECT name, image, billMessage, homeDelivery, visible
+			FROM company WHERE active = true AND id = ?`,
+			[request.params.id]
+		);
+
+		if (company.length > 0) {
+			return response.status(200).json(company[0]);
+		} else {
+			return response.status(404).json({ message: 'Not found.' });
+		}
+	}
+
 	public async getCompanyById(request: Request, response: Response): Promise<Response> {
-		const company: Company[] = await (
-			await pool
-		).query(
-			'SELECT name, image, billMessage, homeDelivery, visible FROM company WHERE id = ? AND active = true;',
+		const company: Company[] = await (await pool).query(
+			`SELECT name, image FROM company
+			WHERE visible = true && active = true && id = ?`,
 			[request.params.id]
 		);
 
@@ -80,7 +95,7 @@ class CompaniesControllers {
 		const oldCompany: Company[] = await (
 			await pool
 		).query(
-			'SELECT name, billMessage, image, visible FROM company WHERE id = ? AND active = true;',
+			'SELECT name, billMessage, image, visible FROM company WHERE active = true AND id = ?',
 			[idCompany]
 		);
 

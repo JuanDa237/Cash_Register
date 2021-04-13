@@ -9,7 +9,6 @@ import { ProductInBill } from '../products/models';
 
 // Functions
 import { billFunctions } from './bills.functions';
-import { IngredientInProduct } from '../ingredients/models';
 
 class BillsControllers {
 	// Get Interval

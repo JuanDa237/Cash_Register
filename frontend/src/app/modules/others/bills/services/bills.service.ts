@@ -38,7 +38,7 @@ export class BillsService {
 	}
 
 	getProductsInBill(id: number): Observable<ProductInBill[]> {
-		return this.http.get<ProductInBill[]>(this.apiUrl + 'bill/products/' + id, {
+		return this.http.get<ProductInBill[]>(this.apiUrl + `bill/${id}/products`, {
 			headers: this.headers
 		});
 	}
