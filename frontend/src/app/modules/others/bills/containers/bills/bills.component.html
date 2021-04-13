@@ -7,8 +7,9 @@
 		<app-loading colorClass="text-primary" size="10rem"></app-loading>
 	</div>
 	<div [hidden]="loading">
-		<app-table [columns]="['Cliente', 'Fecha', 'Total', 'Acciones']">
+		<app-table [columns]="['Numero Pedido', 'Cliente', 'Fecha', 'Total', 'Acciones']">
 			<tr *ngFor="let bill of bills; let i = index">
+				<td class="align-middle">{{ bill.idDay }}</td>
 				<td class="align-middle">
 					<div *ngFor="let client of clients">
 						<div *ngIf="client.id == bill.idClient">

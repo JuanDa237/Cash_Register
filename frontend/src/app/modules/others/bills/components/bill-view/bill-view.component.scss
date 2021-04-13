@@ -1,0 +1,19 @@
+.info {
+	p {
+		margin: 0;
+	}
+}
+
+.company-info {
+	display: flex;
+	height: 100%;
+	align-items: center;
+	img {
+		width: 60px;
+		height: 60px;
+	}
+	h4 {
+		margin-left: 0.5rem;
+		margin-bottom: 0;
+	}
+}

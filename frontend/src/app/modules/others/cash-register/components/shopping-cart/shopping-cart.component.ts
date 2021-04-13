@@ -139,7 +139,8 @@ export class ShoppingCartComponent implements OnInit {
 					idClient: 0,
 					total: response.bill.total,
 					idDay: response.bill.idDay,
-					homeDelivery: this.homeDelivery != null ? this.homeDelivery : 0
+					homeDelivery: this.homeDelivery != null ? this.homeDelivery : 0,
+					createdAt: new Date().toISOString()
 				};
 
 				var products: ProductInBill[] = new Array<ProductInBill>(0);

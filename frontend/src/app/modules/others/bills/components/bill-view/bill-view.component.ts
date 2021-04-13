@@ -16,7 +16,8 @@ import { UserDataService } from '@app/modules/main/navigation/services';
 
 @Component({
 	selector: 'app-bill-view',
-	templateUrl: './bill-view.component.html'
+	templateUrl: './bill-view.component.html',
+	styleUrls: ['./bill-view.component.scss']
 })
 export class BillViewComponent implements OnInit {
 	public company: Company;
@@ -54,7 +55,7 @@ export class BillViewComponent implements OnInit {
 
 	private viewMessages(): void {
 		for (const product of this.productsInBill) {
-			if (!this.messages && typeof product.message != 'undefined') {
+			if (!this.messages && product.message && product.message.trim() != '') {
 				this.messages = true;
 			}
 		}
