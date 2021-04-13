@@ -3,7 +3,7 @@
 
 This is a personal project, it consists of a web page where companies can be registered and each one has functions to be managed itself.
 
-[![Administrator Dashboard](https://raw.githubusercontent.com/JuanDa237/Cash_Register/main/sources/images/image.png 'Administrator Dashboard')][frontend]
+[![Administrator Dashboard](https://raw.githubusercontent.com/JuanDa237/Cash_Register/main/extras/images/image.png 'Administrator Dashboard')][frontend]
 
 ## Built With :bricks:
 
@@ -35,7 +35,7 @@ npm start
 
 [frontend]: https://github.com/JuanDa237/Cash_Register/tree/main/frontend
 [backend]: https://github.com/JuanDa237/Cash_Register/tree/main/backend
-[dbfiles]: https://github.com/JuanDa237/Cash_Register/tree/main/sources/database
+[dbfiles]: https://github.com/JuanDa237/Cash_Register/tree/main/extras/database
 [angular]: https://angular.io/cli
 [node.js]: https://nodejs.org/es/download/
 [mysql]: https://dev.mysql.com/downloads/mysql/
