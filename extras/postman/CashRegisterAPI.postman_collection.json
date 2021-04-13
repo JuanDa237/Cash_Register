@@ -10,7 +10,7 @@
 			"name": "/",
 			"item": [
 				{
-					"name": "http://localhost:3000",
+					"name": "url",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -20,7 +20,7 @@
 							"host": ["localhost"],
 							"port": "3000"
 						},
-						"description": "This is the route for the client side."
+						"description": "This is the url for the client side.\n\nExample:\nYou can change http://localhost:3000 for http://localhost:1234"
 					},
 					"response": []
 				}
@@ -1754,6 +1754,34 @@
 				}
 			],
 			"description": "API routes folder."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [""]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [""]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ce85e53b-2c55-4bac-897f-3576746ce355",
+			"key": "api",
+			"value": "http://localhost:3000/api"
+		},
+		{
+			"id": "9e865312-2a36-4b42-8af2-bb95936f8999",
+			"key": "token",
+			"value": ""
 		}
 	]
 }
