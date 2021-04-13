@@ -9,6 +9,7 @@ import { ProductInBill } from '../products/models';
 
 // Functions
 import { billFunctions } from './bills.functions';
+import { IngredientInProduct } from '../ingredients/models';
 
 class BillsControllers {
 	// Get Interval
@@ -97,23 +98,9 @@ class BillsControllers {
 
 		newBill.products = await billFunctions.createProductsInBill(newBill);
 
-		// Update amount of ingredients
 		await billFunctions.updateAmountIngredients(newBill);
 
-		// Get day index
-		newBill.idDay = (
-			await (await pool).query(
-				`SELECT
-					(SELECT (COUNT(*) + 1)
-					FROM bill b2
-					WHERE b2.createdAt >= DATE(b1.createdAt)
-					AND (b2.createdAt < DATE_ADD(DATE(b1.createdAt), INTERVAL 1 DAY)
-					AND b2.id < b1.id)) AS idDay
-				FROM bill b1
-				WHERE b1.id = ?`,
-				[newBill.id]
-			)
-		)[0].idDay;
+		newBill.idDay = await billFunctions.getIdDay(newBill.id);
 
 		return response.status(200).json({
 			message: 'Saved bill.',
@@ -127,7 +114,22 @@ class BillsControllers {
 
 	// Delete
 	public async deleteBill(request: Request, response: Response): Promise<Response> {
-		// Eliminar bill -> devolver los ingredientes
+		const id: number = Number(request.params.id);
+		const { idCompany } = request.user;
+
+		var date: string[] = new Date().toLocaleDateString().split('/');
+		var finalDate: string = `${date[2]}-${date[1]}-${date[0]}`;
+
+		const status: any = await (await pool).query(
+			`UPDATE bill SET active = false
+			WHERE id = ? AND idCompany = ?
+			AND DATE(createdAt) >= ? AND DATE(createdAt) <= ?`,
+			[id, idCompany, finalDate, finalDate]
+		);
+
+		if (status.affectedRows > 0) {
+			await billFunctions.addIngredients(id, idCompany);
+		}
 
 		return response.status(200).json({ message: 'Bill deleted.' });
 	}

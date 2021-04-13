@@ -48,6 +48,11 @@ export class BillsService {
 		let params = JSON.stringify(newBill);
 		return this.http.post<BillRes>(this.apiUrl + 'bill', params, { headers: this.headers });
 	}
+
+	// Delete
+	deleteBill(id: number): Observable<any> {
+		return this.http.delete(this.apiUrl + 'bill/' + id, { headers: this.headers });
+	}
 }
 
 interface BillRes {

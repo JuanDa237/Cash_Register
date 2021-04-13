@@ -8,7 +8,7 @@
 	</div>
 	<div [hidden]="loading">
 		<app-table [columns]="['Numero Pedido', 'Cliente', 'Fecha', 'Total', 'Acciones']">
-			<tr *ngFor="let bill of bills; let i = index">
+			<tr *ngFor="let bill of bills">
 				<td class="align-middle">{{ bill.idDay }}</td>
 				<td class="align-middle">
 					<div *ngFor="let client of clients">
@@ -24,11 +24,18 @@
 						<div class="btn-group">
 							<button
 								class="btn btn-info"
-								(click)="viewBill(i)"
+								(click)="viewBill(bill)"
 								data-toggle="modal"
 								data-target="#modalBills"
 							>
-								<i class="fas fa-eye" title="Mirar registro"></i>
+								<i class="far fa-eye" title="Mirar registro"></i>
+							</button>
+							<button
+								*ngIf="canDelete(bill.createdAt)"
+								class="btn btn-danger"
+								(click)="deleteBill(bill)"
+							>
+								<i class="far fa-trash-alt" title="Borrar registro"></i>
 							</button>
 						</div>
 					</div>

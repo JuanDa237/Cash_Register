@@ -4,7 +4,7 @@ import pool from '../../database';
 // Models
 import { BillReq, billReqToBill, ProductId, productIdtoProductInBill } from './models';
 import { IngredientInProduct } from '../ingredients/models';
-import { Product } from '../products/models';
+import { Product, ProductInBill } from '../products/models';
 import { Company } from '../companies/models';
 
 class BillFunctions {
@@ -96,6 +96,59 @@ class BillFunctions {
 					`UPDATE ingredient ing
 					INNER JOIN productsHasIngredients phi ON ing.id = phi.idIngredient
 					SET ing.amount = ing.amount - (phi.spendingAmount * ?)
+					WHERE ing.active = true AND ing.id = ?;`,
+					[product.amount, idIngredient]
+				);
+			}
+		}
+	}
+
+	public async getIdDay(id: number): Promise<number> {
+		return (
+			await (await pool).query(
+				`SELECT
+					(SELECT (COUNT(*) + 1)
+					FROM bill b2
+					WHERE b2.createdAt >= DATE(b1.createdAt)
+					AND (b2.createdAt < DATE_ADD(DATE(b1.createdAt), INTERVAL 1 DAY)
+					AND b2.id < b1.id)) AS idDay
+				FROM bill b1
+				WHERE b1.id = ?`,
+				[id]
+			)
+		)[0].idDay;
+	}
+
+	// For Delete
+
+	public async addIngredients(id: number, idCompany: number): Promise<void> {
+		// Add ingredients
+		const productsInBill: ProductInBill[] = await (await pool).query(
+			`SELECT bhp.name, bhp.price, bhp.amount
+			FROM billsHasProducts bhp
+			INNER JOIN bill b ON bhp.idBill = b.id
+			WHERE b.id = ? AND b.idCompany = ?`,
+			[id, idCompany]
+		);
+
+		for (const product of productsInBill) {
+			// Select relation
+			const ingredientsInProduct: IngredientInProduct[] = await (await pool).query(
+				`SELECT idIngredient FROM productsHasIngredients phs
+				INNER JOIN product p ON phs.idProduct = p.id
+				WHERE phs.active = true AND phs.idCompany = ?
+				AND p.name = ? AND p.price = ?`,
+				[idCompany, product.name, product.price]
+			);
+
+			for (const ingredientInProduct of ingredientsInProduct) {
+				let idIngredient = ingredientInProduct.idIngredient;
+
+				// Update ingredient
+				await (await pool).query(
+					`UPDATE ingredient ing
+					INNER JOIN productsHasIngredients phi ON ing.id = phi.idIngredient
+					SET ing.amount = ing.amount + (phi.spendingAmount * ?)
 					WHERE ing.active = true AND ing.id = ?;`,
 					[product.amount, idIngredient]
 				);
