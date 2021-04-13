@@ -17,7 +17,7 @@ async function verifyToken(request: Request, response: Response, next: NextFunct
 
 		const payload: Payload = jwt.verify(
 			token,
-			process.env.TOKEN_SECRET || keys.noEnv.TOKEN
+			process.env.TOKEN_SECRET || keys.TOKEN_SECRET
 		) as Payload;
 
 		const user: AuthUser = (

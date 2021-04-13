@@ -40,7 +40,7 @@ class AuthControllers {
 			{
 				id: user.id
 			},
-			process.env.TOKEN_SECRET || keys.noEnv.TOKEN,
+			process.env.TOKEN_SECRET || keys.TOKEN_SECRET,
 			{
 				expiresIn: 86400 // The token expires in 24 hours
 			}

@@ -35,7 +35,7 @@ class Server {
 	}
 
 	private configExpress(): void {
-		this.app.set('port', process.env.PORT || keys.noEnv.PORT);
+		this.app.set('port', process.env.PORT || keys.PORT);
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: false }));
 	}

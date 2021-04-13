@@ -1,26 +1,24 @@
 export default {
-	database: {
-		host: 'localhost',
-		user: 'cashier',
-		password: 'cashier321',
-		database: 'cashRegisterDB'
+	PORT: 3000,
+	DEV: true,
+	TOKEN_SECRET: 'JuAnDaViDgAvIrIACoRrEaNOTENV',
+	DB: {
+		DB: 'cashRegisterDB',
+		DB_HOST: 'localhost',
+		DB_USER: 'cashier',
+		DB_U_PASS: 'cashier321'
 	},
 	initialData: {
 		company: {
-			name: 'Nueva Empresa',
-			image: '',
-			billMessage: '',
+			name: 'AdminCo',
+			billMessage: 'Mensaje Prueba',
 			visible: false,
-			active: true
+			homeDelivery: true
 		},
 		user: {
 			name: 'Juan Gaviria',
 			username: 'juan',
-			password: 'contra'
+			password: 'AdminCo123'
 		}
-	},
-	noEnv: {
-		PORT: 3000,
-		TOKEN: 'JuAnDaViDgAvIrIACoRrEaNOTENV'
 	}
 };
