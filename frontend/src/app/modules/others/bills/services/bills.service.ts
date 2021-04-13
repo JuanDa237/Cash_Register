@@ -44,8 +44,17 @@ export class BillsService {
 	}
 
 	// Post
-	saveBill(newBill: BillWithProducts): Observable<any> {
+	saveBill(newBill: BillWithProducts): Observable<BillRes> {
 		let params = JSON.stringify(newBill);
-		return this.http.post(this.apiUrl + 'bill', params, { headers: this.headers });
+		return this.http.post<BillRes>(this.apiUrl + 'bill', params, { headers: this.headers });
 	}
+}
+
+interface BillRes {
+	message: string;
+	bill: {
+		id: number;
+		total: number;
+		idDay: number;
+	};
 }

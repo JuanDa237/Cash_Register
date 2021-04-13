@@ -7,6 +7,7 @@ export interface Bill {
 	total: number;
 	createdAt?: string;
 	homeDelivery?: number;
+	idDay?: number;
 	active?: boolean;
 }
 

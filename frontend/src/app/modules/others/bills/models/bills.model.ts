@@ -4,6 +4,7 @@ export interface Bill {
 	createdAt?: string;
 	total: number;
 	homeDelivery: number;
+	idDay?: number;
 }
 
 export function createEmptyBill(): Bill {

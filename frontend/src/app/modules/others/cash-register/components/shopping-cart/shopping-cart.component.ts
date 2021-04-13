@@ -135,9 +135,10 @@ export class ShoppingCartComponent implements OnInit {
 			(response) => {
 				//  Do the bill view
 				const bill: Bill = {
-					id: 0,
+					id: response.bill.id,
 					idClient: 0,
-					total: this.total,
+					total: response.bill.total,
+					idDay: response.bill.idDay,
 					homeDelivery: this.homeDelivery != null ? this.homeDelivery : 0
 				};
 
@@ -146,7 +147,7 @@ export class ShoppingCartComponent implements OnInit {
 				this.shoppingCart.forEach((product) => {
 					products.push({
 						id: 0,
-						idBill: 0,
+						idBill: bill.id,
 						name: product.product.name,
 						price: product.product.price,
 						amount: product.amount,

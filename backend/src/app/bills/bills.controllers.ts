@@ -16,7 +16,9 @@ class BillsControllers {
 		const { since, until } = request.params;
 
 		const bills: Bill[] = await (await pool).query(
-			`SELECT id, idClient, createdAt, total, homeDelivery FROM bill
+			`SELECT id, idClient, createdAt, total, homeDelivery,
+			ROW_NUMBER() OVER (PARTITION BY DATE(createdAt) ORDER BY createdAt) AS idDay
+			FROM bill
 			WHERE active = true AND DATE(createdAt) >= ? AND DATE(createdAt) <= ? AND idCompany = ?`,
 			[since, until, request.user.idCompany]
 		);
@@ -98,10 +100,28 @@ class BillsControllers {
 		// Update amount of ingredients
 		await billFunctions.updateAmountIngredients(newBill);
 
+		// Get day index
+		newBill.idDay = (
+			await (await pool).query(
+				`SELECT
+					(SELECT (COUNT(*) + 1)
+					FROM bill b2
+					WHERE b2.createdAt >= DATE(b1.createdAt)
+					AND (b2.createdAt < DATE_ADD(DATE(b1.createdAt), INTERVAL 1 DAY)
+					AND b2.id < b1.id)) AS idDay
+				FROM bill b1
+				WHERE b1.id = ?`,
+				[newBill.id]
+			)
+		)[0].idDay;
+
 		return response.status(200).json({
 			message: 'Saved bill.',
-			id: newBill.id,
-			total: newBill.total
+			bill: {
+				id: newBill.id,
+				total: newBill.total,
+				idDay: newBill.idDay
+			}
 		});
 	}
 
