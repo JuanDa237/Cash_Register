@@ -54,6 +54,8 @@ export class BillViewComponent implements OnInit {
 	}
 
 	private viewMessages(): void {
+		this.messages = false;
+
 		for (const product of this.productsInBill) {
 			if (!this.messages && product.message && product.message.trim() != '') {
 				this.messages = true;

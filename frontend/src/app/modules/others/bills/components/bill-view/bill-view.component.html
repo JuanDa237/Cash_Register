@@ -55,7 +55,11 @@
 				<tr *ngFor="let product of productsInBill">
 					<td>{{ product.name }}</td>
 					<td>{{ product.amount | number }}</td>
-					<td *ngIf="messages">{{ product.message }}</td>
+					<td *ngIf="messages">
+						<p>
+							{{ product.message }}
+						</p>
+					</td>
 					<td>{{ product.price * product.amount | number }}</td>
 				</tr>
 			</tbody>
