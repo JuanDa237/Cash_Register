@@ -35,6 +35,11 @@ export class PrintPdfComponent {
 
 		if (win != null) {
 			win.document.open();
+			win.document.write(`
+			<style>
+			body { width: 58mm }
+			</style>
+			`);
 			win.document.write(bill?.innerHTML || '');
 			win.document.close();
 			win.print();
