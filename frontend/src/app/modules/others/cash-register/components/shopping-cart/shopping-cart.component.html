@@ -65,7 +65,9 @@
 			</button>
 			<button
 				class="btn btn-success btn-sm-block"
-				[disabled]="client.name.length <= 0 || shoppingCart.length == 0"
+				[disabled]="
+					client.name.length <= 0 || shoppingCart.length == 0 || (cash && cash < total)
+				"
 				(click)="finishOrder()"
 				data-toggle="modal"
 				data-target="#modalBills"
