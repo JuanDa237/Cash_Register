@@ -5,6 +5,7 @@ export interface Bill {
 	total: number;
 	homeDelivery: number;
 	idDay?: number;
+	cash?: number;
 }
 
 export function createEmptyBill(): Bill {

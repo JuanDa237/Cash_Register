@@ -35,23 +35,10 @@ export class PrintPdfComponent {
 
 		if (win != null) {
 			win.document.open();
-			win.document.write(
-				'<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5winmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">'
-			);
 			win.document.write(bill?.innerHTML || '');
 			win.document.close();
 			win.print();
 		}
-
-		// Open pdf in frame to print
-		/*
-		var stringPdf = this.generatePdf().output('datauristring');
-		var iframe = "<iframe width='100%' height='100%' src='" + stringPdf + "'></iframe>";
-		var x = window.open();
-		x?.document.open();
-		x?.document.write(iframe);
-		x?.document.close();
-		*/
 	}
 
 	public async exportPdf(): Promise<void> {

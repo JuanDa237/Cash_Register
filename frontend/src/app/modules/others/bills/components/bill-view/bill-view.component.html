@@ -83,6 +83,18 @@
 					<td></td>
 					<td>{{ bill.total | number }}</td>
 				</tr>
+				<ng-container *ngIf="bill.cash && bill.cash > 0">
+					<tr class="mt-4">
+						<td>Efectivo</td>
+						<td></td>
+						<td>{{ bill.cash | number }}</td>
+					</tr>
+					<tr>
+						<td>Cambio</td>
+						<td></td>
+						<td>{{ bill.cash - bill.total | number }}</td>
+					</tr>
+				</ng-container>
 			</tfoot>
 		</table>
 	</div>

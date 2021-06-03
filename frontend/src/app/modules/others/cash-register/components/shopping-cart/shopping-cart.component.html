@@ -1,28 +1,6 @@
 <ng-container *ngIf="shoppingCart.length > 0; else noContent">
 	<div class="row mx-md-2" *ngIf="company.homeDelivery">
-		<div class="col-12 col-md-4 col-ld-2">
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<div class="input-group-text">
-						<input
-							type="checkbox"
-							[(ngModel)]="doHomeDelivery"
-							(change)="homeDeliveryChange()"
-						/>
-					</div>
-				</div>
-				<input
-					min="0"
-					step="1000"
-					type="number"
-					class="form-control"
-					[placeholder]="!doHomeDelivery ? 'Domicilio' : 'Precio Del Domicilo'"
-					[readonly]="!doHomeDelivery"
-					[(ngModel)]="homeDelivery"
-					(input)="actualizePrice()"
-				/>
-			</div>
-		</div>
+		<ng-container *ngTemplateOutlet="options"></ng-container>
 	</div>
 	<div class="row my-3 mx-md-2">
 		<table class="table table-striped table-bordered table-condensed">
@@ -31,10 +9,11 @@
 					<th>Nombre</th>
 					<th>Precio</th>
 					<th>Cantidad</th>
+					<th>Mensaje</th>
 					<th>Acciones</th>
 				</tr>
 			</thead>
-			<tbody *ngIf="shoppingCart.length >= 10">
+			<tfoot *ngIf="shoppingCart.length >= 10">
 				<tr>
 					<th>Nombre</th>
 					<th>Precio</th>
@@ -42,7 +21,7 @@
 					<th>Mensaje</th>
 					<th>Acciones</th>
 				</tr>
-			</tbody>
+			</tfoot>
 			<tbody>
 				<tr *ngFor="let productInCart of shoppingCart; let i = index">
 					<td>{{ productInCart.product.name }}</td>
@@ -96,6 +75,44 @@
 		</div>
 	</div>
 </ng-container>
+<ng-template #options>
+	<div class="col-12 col-md-6 mb-2">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<div class="input-group-text">
+					<input
+						type="checkbox"
+						[(ngModel)]="doHomeDelivery"
+						(change)="homeDeliveryChange()"
+					/>
+				</div>
+			</div>
+			<input
+				min="0"
+				step="1000"
+				type="number"
+				class="form-control"
+				[placeholder]="!doHomeDelivery ? 'Domicilio' : 'Precio Del Domicilo'"
+				[readonly]="!doHomeDelivery"
+				[(ngModel)]="homeDelivery"
+				(input)="actualizePrice()"
+			/>
+		</div>
+	</div>
+	<div class="col-12 col-md-6 mb-2">
+		<div class="form-group">
+			<input
+				min="0"
+				step="1000"
+				type="number"
+				class="form-control"
+				id="cash"
+				[(ngModel)]="cash"
+				placeholder="Efectivo"
+			/>
+		</div>
+	</div>
+</ng-template>
 <ng-template #noContent> Aun no tienes ningun producto seleccionado. </ng-template>
 <app-modal idModal="modalBills" title="Pedido Finalizado">
 	<div class="modal-body">

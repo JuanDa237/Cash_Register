@@ -27,6 +27,8 @@ export class ShoppingCartComponent implements OnInit {
 	public doHomeDelivery: boolean;
 	public homeDelivery: number | null;
 
+	public cash: number | null;
+
 	public company: Company;
 
 	@ViewChild(BillViewComponent)
@@ -45,6 +47,7 @@ export class ShoppingCartComponent implements OnInit {
 		this.total = 0;
 		this.doHomeDelivery = false;
 		this.homeDelivery = null;
+		this.cash = null;
 		this.company = createEmptyCompany();
 		this.client = createEmptyClient();
 		this.refreshPage = new EventEmitter<null>();
@@ -140,7 +143,8 @@ export class ShoppingCartComponent implements OnInit {
 					total: response.bill.total,
 					idDay: response.bill.idDay,
 					homeDelivery: this.homeDelivery != null ? this.homeDelivery : 0,
-					createdAt: new Date().toISOString()
+					createdAt: new Date().toISOString(),
+					cash: this.cash != null ? this.cash : 0
 				};
 
 				var products: ProductInBill[] = new Array<ProductInBill>(0);
