@@ -54,7 +54,7 @@ CREATE TABLE ingredient (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
     priceByUnit FLOAT NOT NULL,
-    amount INT NOT NULL,
+    amount FLOAT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true,
     CONSTRAINT fkCompanyIngredient FOREIGN KEY (idCompany) REFERENCES company (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -64,7 +64,7 @@ CREATE TABLE productsHasIngredients (
     idProduct INT NOT NULL,
     idIngredient INT NOT NULL,
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    spendingAmount INT NOT NULL,
+    spendingAmount FLOAT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT true,
     CONSTRAINT fkCompany FOREIGN KEY (idCompany) REFERENCES company (id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fkIngredient FOREIGN KEY (idIngredient) REFERENCES ingredient (id) ON DELETE CASCADE ON UPDATE CASCADE,
