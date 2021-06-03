@@ -152,4 +152,47 @@ export class IngredientsComponent implements OnInit {
 			this.formChild.setIngredientsValues(createEmptyIngredient());
 		else this.formChild.setIngredientsValues(ingredient);
 	}
+
+	// Download Ingredients
+
+	public downloadIngredients(): void {
+		var ele = document.createElement('a');
+		ele.style.display = 'none';
+
+		var date: string[] = new Date().toLocaleDateString().split('/');
+		var finalDate: string = `${date[0]}/${date[1]}/${date[2]}`;
+
+		var filename = `ingredientes_${finalDate}.csv`;
+
+		console.log(this.csvContent(), encodeURI(this.csvContent()));
+		ele.setAttribute(
+			'href',
+			'data:text/csv;charset=utf-8,' + encodeURIComponent(this.csvContent())
+		);
+		ele.setAttribute('download', filename);
+
+		document.body.appendChild(ele);
+		ele.click();
+		document.body.removeChild(ele);
+	}
+
+	private csvContent(): string {
+		var content = '';
+
+		var array = JSON.parse(JSON.stringify(this.ingredients));
+
+		for (var i = 0; i < array.length; i++) {
+			var line = '';
+
+			for (var index in array[i]) {
+				if (line != '') line += ',';
+
+				line += array[i][index];
+			}
+
+			content += line + '\r\n';
+		}
+
+		return content;
+	}
 }

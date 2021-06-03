@@ -1,11 +1,21 @@
-<button
-	class="btn btn-info btn-block mb-4"
-	data-toggle="modal"
-	data-target="#modalIngredients"
-	(click)="changeModal(null)"
->
-	<i class="fas fa-plus-circle" title="Crear ingrediente"></i> Crear Ingrediente
-</button>
+<div class="row">
+	<div class="col">
+		<div class="btn-group w-100">
+			<button
+				class="btn btn-primary"
+				data-toggle="modal"
+				data-target="#modalIngredients"
+				(click)="changeModal(null)"
+			>
+				<i class="fas fa-plus-circle" title="Crear ingrediente"></i> Crear Ingrediente
+			</button>
+			<button class="btn btn-info" (click)="downloadIngredients()">
+				<i class="fas fa-file-download" title="Descargar"></i> Descargar Ingredientes
+				Actuales
+			</button>
+		</div>
+	</div>
+</div>
 <app-modal
 	idModal="modalIngredients"
 	[title]="creating ? 'Crear Ingrediente' : 'Editar Ingrediente'"
