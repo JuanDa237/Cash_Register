@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 
 import keys from './keys';
 import { createInitialData } from './app/roles/initialData';
@@ -69,6 +70,11 @@ class Server {
 
 		// Public folder
 		this.app.use('/api/uploads', express.static('uploads'));
+
+		// Client Routes
+		this.app.use('*', (req, res) =>
+			res.sendFile(path.join(__dirname, '../public', 'index.html'))
+		);
 	}
 
 	public start(): void {
