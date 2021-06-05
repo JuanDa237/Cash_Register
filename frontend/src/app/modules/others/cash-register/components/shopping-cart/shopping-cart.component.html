@@ -118,12 +118,12 @@
 <ng-template #noContent> Aun no tienes ningun producto seleccionado. </ng-template>
 <app-modal idModal="modalBills" title="Pedido Finalizado">
 	<div class="modal-body">
-		<app-bill-view id="bill"></app-bill-view>
+		<app-bill-view billId="mainBill"></app-bill-view>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-info text-center" data-dismiss="modal" (click)="refreshPageEvent()">
 			Salir
 		</button>
-		<app-print-pdf elementId="bill" [client]="client"></app-print-pdf>
+		<app-print-bill elementId="mainBill"></app-print-bill>
 	</div>
 </app-modal>

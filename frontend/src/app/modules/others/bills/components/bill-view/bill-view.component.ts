@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { ClientsService } from '@app/modules/others/clients/services';
 import { Client, createEmptyClient } from '@app/modules/others/clients/models';
@@ -30,6 +30,12 @@ export class BillViewComponent implements OnInit {
 
 	public messages: boolean;
 
+	@Input()
+	public billId: string;
+
+	// Print Configs
+	public paperSize: string;
+
 	constructor(
 		private billsService: BillsService,
 		private clientsService: ClientsService,
@@ -42,6 +48,10 @@ export class BillViewComponent implements OnInit {
 		this.messages = false;
 
 		this.apiUrl = environment.apiUrl;
+
+		this.billId = '';
+
+		this.paperSize = '58mm';
 	}
 
 	ngOnInit(): void {

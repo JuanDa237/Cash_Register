@@ -1,23 +1,40 @@
-.info {
-	p {
-		margin: 0;
+.bill {
+	height: auto;
+	margin: auto;
+	font-size: 4mm;
+	font-family: sans-serif;
+	.header {
+		.company-info {
+			margin: 0 0 1.5mm 0;
+			.name {
+				margin: auto 0 auto 1.5mm;
+				h4 {
+					font-size: 6mm;
+					font-weight: bold;
+				}
+			}
+		}
+		.message {
+			border: solid black 0.5mm;
+			padding: 1mm;
+			white-space: pre-line;
+		}
 	}
 }
 
-.company-info {
-	display: flex;
-	height: 100%;
-	align-items: center;
-	img {
-		width: 60px;
-		height: 60px;
-	}
-	h4 {
-		margin-left: 0.5rem;
-		margin-bottom: 0;
-	}
+.img-size {
+	width: 20mm;
+	height: 20mm;
 }
 
-td {
-	word-break: break-word;
+.bill-table {
+	width: 100%;
+	margin: 1.5mm 0 1.5mm;
+	tbody {
+		tr {
+			td {
+				word-break: break-word;
+			}
+		}
+	}
 }

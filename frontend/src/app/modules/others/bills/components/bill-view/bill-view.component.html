@@ -1,104 +1,95 @@
-<div style="width: 58mm; height: auto; margin: auto; font-size: 4mm; font-family: serif">
-	<div>
-		<div style="display: grid; grid-template-columns: auto; margin-bottom: 1.5mm">
-			<img
-				[src]="apiUrl + company.image"
-				noImage
-				[alt]="company.name"
-				[title]="company.name"
-				style="width: 20mm; height: 20mm; grid-column: 1 / 2"
-			/>
-			<h4
-				style="
-					font-size: 6mm;
-					font-weight: 500;
-					grid-column: 2 / 2;
-					margin: auto 0 auto 1.5mm;
-				"
-			>
-				{{ company.name }}
-			</h4>
+<div [id]="billId" [style.width]="paperSize" class="bill">
+	<div class="header">
+		<div class="row company-info">
+			<div class="col-sm-auto p-0 img-size">
+				<img
+					class="img-size"
+					[alt]="company.name"
+					[title]="company.name"
+					[src]="apiUrl + company.image"
+					noImage
+				/>
+			</div>
+			<div class="col p-0 name">
+				<h4>{{ company.name }}</h4>
+			</div>
 		</div>
-		<p style="border: solid black 0.5mm; padding: 1mm; white-space: pre-line">
+		<p class="message">
 			{{ company.billMessage }}
 		</p>
 	</div>
-	<div style="display: grid; grid-template-columns: auto; width: 100%">
-		<div style="grid-column: 1 / 2"># {{ bill.idDay | number }}</div>
-		<div style="grid-column: 2 / 2; text-align: right">
+	<div class="row">
+		<div class="col"># {{ bill.idDay | number }}</div>
+		<div class="col-8 text-right">
 			{{ bill.createdAt | date: 'dd/MM/yyyy HH:mm' }}
 		</div>
 	</div>
-	<div style="text-align: right; font-weight: 500">
+	<div class="text-right font-weight-bold">
 		<span *ngIf="!bill.homeDelivery">Local</span>
 		<span *ngIf="bill.homeDelivery">Domicilio</span>
 	</div>
 	<div>
-		<p style="margin: 0">Nombre: {{ client.name }}</p>
-		<p style="margin: 0" *ngIf="client.address">Direccion: {{ client.address }}</p>
-		<p style="margin: 0" *ngIf="client.phoneNumber">Telefono: {{ client.phoneNumber }}</p>
+		<p class="m-0">Nombre: {{ client.name }}</p>
+		<p class="m-0" *ngIf="client.address">Direccion: {{ client.address }}</p>
+		<p class="m-0" *ngIf="client.phoneNumber">Telefono: {{ client.phoneNumber }}</p>
 	</div>
-	<div style="margin: 1.5mm 0 1.5mm">
-		<table style="width: 100%">
-			<thead>
-				<tr style="font-weight: 500">
-					<th style="text-align: left">Producto</th>
-					<th *ngIf="messages">Mensaje</th>
-					<th style="text-align: right">Cant</th>
-					<th style="text-align: right">Precio</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let product of productsInBill">
-					<td style="text-align: left">{{ product.name }}</td>
-					<td *ngIf="messages">
-						<p>
-							{{ product.message }}
-						</p>
-					</td>
-					<td style="text-align: right">{{ product.amount | number }}</td>
-					<td style="text-align: right; word-break: unset">
-						{{ product.price * product.amount | number }}
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<ng-container *ngIf="bill.homeDelivery">
-					<tr>
-						<td>Sub-Total</td>
-						<td></td>
-						<td style="text-align: right" colspan="2">
-							{{ bill.total - bill.homeDelivery | number }}
-						</td>
-					</tr>
-					<tr>
-						<td>Domicilio</td>
-						<td></td>
-						<td style="text-align: right" colspan="2">
-							{{ bill.homeDelivery | number }}
-						</td>
-					</tr>
-				</ng-container>
-				<tr style="font-weight: 500">
-					<td>Total</td>
+	<table class="bill-table">
+		<thead>
+			<tr>
+				<th>Producto</th>
+				<th *ngIf="messages">Mensaje</th>
+				<th class="text-center">Cant</th>
+				<th class="text-right">Precio</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let product of productsInBill">
+				<td>{{ product.name }}</td>
+				<td *ngIf="messages">
+					<p>{{ product.message }}</p>
+				</td>
+				<td class="text-center">{{ product.amount | number }}</td>
+				<td class="text-right">
+					{{ product.price * product.amount | number }}
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<ng-container *ngIf="bill.homeDelivery">
+				<tr>
+					<td>Sub-Total</td>
 					<td></td>
-					<td style="text-align: right" colspan="2">{{ bill.total | number }}</td>
+					<td class="text-right" colspan="2">
+						{{ bill.total - bill.homeDelivery | number }}
+					</td>
 				</tr>
-				<ng-container *ngIf="bill.cash && bill.cash > 0">
-					<tr class="mt-4">
-						<td>Efectivo</td>
-						<td></td>
-						<td style="text-align: right" colspan="2">{{ bill.cash | number }}</td>
-					</tr>
-					<tr>
-						<td style="font-weight: 500">Cambio</td>
-						<td></td>
-						<td style="text-align: right" colspan="2">
-							{{ bill.cash - bill.total | number }}
-						</td>
-					</tr>
-				</ng-container>
-			</tfoot>
-		</table>
-	</div>
+				<tr>
+					<td>Domicilio</td>
+					<td></td>
+					<td class="text-right" colspan="2">
+						{{ bill.homeDelivery | number }}
+					</td>
+				</tr>
+			</ng-container>
+			<tr class="font-weight-bold">
+				<td>Total</td>
+				<td></td>
+				<td class="text-right" colspan="2">{{ bill.total | number }}</td>
+			</tr>
+			<ng-container *ngIf="bill.cash && bill.cash > 0">
+				<tr class="mt-4">
+					<td>Efectivo</td>
+					<td></td>
+					<td class="text-right" colspan="2">{{ bill.cash | number }}</td>
+				</tr>
+				<tr class="font-weight-bold">
+					<td>Cambio</td>
+					<td></td>
+					<td class="text-right" colspan="2">
+						{{ bill.cash - bill.total | number }}
+					</td>
+				</tr>
+			</ng-container>
+		</tfoot>
+	</table>
 </div>

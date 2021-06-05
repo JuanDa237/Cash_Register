@@ -45,15 +45,11 @@
 	</div>
 	<app-modal idModal="modalBills" title="Registro">
 		<div class="modal-body">
-			<app-bill-view id="bill"></app-bill-view>
+			<app-bill-view billId="bill"></app-bill-view>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-			<app-print-pdf
-				elementId="bill"
-				[bill]="selectedBill"
-				[client]="selectedClient"
-			></app-print-pdf>
+			<app-print-bill elementId="bill"></app-print-bill>
 		</div>
 	</app-modal>
 </div>
