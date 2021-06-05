@@ -51,7 +51,8 @@ export class BillViewComponent implements OnInit {
 
 		this.billId = '';
 
-		this.paperSize = '58mm';
+		// 58mm - 2mm (Margin)
+		this.paperSize = '56mm';
 	}
 
 	ngOnInit(): void {

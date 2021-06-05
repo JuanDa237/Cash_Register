@@ -176,6 +176,7 @@ export class ShoppingCartComponent implements OnInit {
 		this.total = 0;
 		this.doHomeDelivery = false;
 		this.homeDelivery = null;
+		this.cash = null;
 
 		this.refreshPage.emit(null);
 	}

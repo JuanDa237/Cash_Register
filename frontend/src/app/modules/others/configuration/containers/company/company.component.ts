@@ -8,7 +8,8 @@ import { UserDataService } from '@app/modules/main/navigation/services';
 
 @Component({
 	selector: 'app-config-company',
-	templateUrl: './company.component.html'
+	templateUrl: './company.component.html',
+	styleUrls: ['./company.component.scss']
 })
 export class CompanyComponent implements OnInit {
 	public company: Company;

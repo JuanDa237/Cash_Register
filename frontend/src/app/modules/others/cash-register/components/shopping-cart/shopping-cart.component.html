@@ -6,11 +6,11 @@
 		<table class="table table-striped table-bordered table-condensed">
 			<thead>
 				<tr>
-					<th>Nombre</th>
-					<th>Precio</th>
-					<th>Cantidad</th>
-					<th>Mensaje</th>
-					<th>Acciones</th>
+					<th class="w-20">Nombre</th>
+					<th class="w-10">Precio</th>
+					<th class="w-20">Cantidad</th>
+					<th class="w-40">Mensaje</th>
+					<th class="w-10">Acciones</th>
 				</tr>
 			</thead>
 			<tfoot *ngIf="shoppingCart.length >= 10">
@@ -78,7 +78,7 @@
 	</div>
 </ng-container>
 <ng-template #options>
-	<div class="col-12 col-md-6 mb-2">
+	<div class="col-12 col-md-6 mb-2 pl-0">
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<div class="input-group-text">
@@ -101,7 +101,7 @@
 			/>
 		</div>
 	</div>
-	<div class="col-12 col-md-6 mb-2">
+	<div class="col-12 col-md-6 mb-2 pr-0">
 		<div class="form-group">
 			<input
 				min="0"
@@ -116,14 +116,44 @@
 	</div>
 </ng-template>
 <ng-template #noContent> Aun no tienes ningun producto seleccionado. </ng-template>
-<app-modal idModal="modalBills" title="Pedido Finalizado">
-	<div class="modal-body">
-		<app-bill-view billId="mainBill"></app-bill-view>
+<!-- Custom Modal For Events In Close -->
+<div
+	class="modal fade"
+	id="modalBills"
+	aria-labelledby="modalBillsTitleModalId"
+	tabindex="-1"
+	role="dialog"
+	aria-hidden="true"
+	data-backdrop="static"
+	data-keyboard="false"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalBillsTitleModalId">Pedido Finalizado</h5>
+				<button
+					type="button"
+					data-dismiss="modal"
+					class="close"
+					aria-label="Close"
+					(click)="refreshPageEvent()"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<app-bill-view billId="mainBill"></app-bill-view>
+			</div>
+			<div class="modal-footer">
+				<button
+					class="btn btn-info text-center"
+					data-dismiss="modal"
+					(click)="refreshPageEvent()"
+				>
+					Salir
+				</button>
+				<app-print-bill elementId="mainBill"></app-print-bill>
+			</div>
+		</div>
 	</div>
-	<div class="modal-footer">
-		<button class="btn btn-info text-center" data-dismiss="modal" (click)="refreshPageEvent()">
-			Salir
-		</button>
-		<app-print-bill elementId="mainBill"></app-print-bill>
-	</div>
-</app-modal>
+</div>
