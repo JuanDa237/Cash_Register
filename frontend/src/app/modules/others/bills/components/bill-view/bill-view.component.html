@@ -1,4 +1,4 @@
-<div [id]="billId" [style.width]="paperSize" class="bill">
+<div [id]="billId" class="bill" [ngClass]="'w-' + paperSize">
 	<div class="header">
 		<div class="row company-info">
 			<div class="col-sm-auto p-0 img-size">
@@ -33,7 +33,7 @@
 		<p class="m-0" *ngIf="client.address">Direccion: {{ client.address }}</p>
 		<p class="m-0" *ngIf="client.phoneNumber">Telefono: {{ client.phoneNumber }}</p>
 	</div>
-	<table class="bill-table">
+	<table class="bill-table" [ngClass]="{ 'messages-active': messages }">
 		<thead>
 			<tr>
 				<th>Producto</th>

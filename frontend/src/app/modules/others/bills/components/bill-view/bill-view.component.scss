@@ -1,7 +1,9 @@
-.bill {
+.bill.w-48mm {
+	// 48mm - 2mm (Margin)
+	width: 46mm;
 	height: auto;
 	margin: auto;
-	font-size: 4mm;
+	font-size: 3.5mm;
 	font-family: sans-serif;
 	.header {
 		.company-info {
@@ -9,7 +11,7 @@
 			.name {
 				margin: auto 0 auto 1.5mm;
 				h4 {
-					font-size: 6mm;
+					font-size: 5mm;
 					font-weight: bold;
 				}
 			}
@@ -20,20 +22,20 @@
 			white-space: pre-line;
 		}
 	}
-}
-
-.img-size {
-	width: 20mm;
-	height: 20mm;
-}
-
-.bill-table {
-	width: 100%;
-	margin: 1.5mm 0 1.5mm;
-	tbody {
-		tr {
-			td {
-				word-break: break-word;
+	.img-size {
+		width: 15mm;
+		height: 15mm;
+	}
+	.bill-table {
+		margin: 1.5mm 0 1.5mm;
+		&.messages-active {
+			font-size: 3.2mm;
+		}
+		tbody {
+			tr {
+				td {
+					word-break: break-word;
+				}
 			}
 		}
 	}
