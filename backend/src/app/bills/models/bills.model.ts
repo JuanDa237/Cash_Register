@@ -3,7 +3,8 @@ import { ProductInBill } from '../../products/models';
 export interface Bill {
 	id?: number;
 	idCompany: number;
-	idClient: number;
+	idClient?: number;
+	clientName?: string;
 	total: number;
 	createdAt?: string;
 	homeDelivery?: number;
@@ -24,6 +25,7 @@ export function billReqToBill(bill: BillReq): Bill {
 		id: bill.id,
 		idCompany: bill.idCompany,
 		idClient: bill.idClient,
+		clientName: bill.clientName,
 		total: bill.total,
 		createdAt: bill.createdAt,
 		homeDelivery: bill.homeDelivery,

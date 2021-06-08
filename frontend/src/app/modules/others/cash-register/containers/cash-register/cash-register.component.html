@@ -14,6 +14,9 @@
 				<div class="mt-2">
 					<app-view-client [client]="client"></app-view-client>
 				</div>
+				<button class="btn btn-info btn-block mb-2" (click)="refreshPage()">
+					Desmarcar
+				</button>
 				<app-create-client (newClient)="newClient($event)"></app-create-client>
 			</div>
 		</div>

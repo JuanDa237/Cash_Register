@@ -29,7 +29,7 @@
 		<span *ngIf="bill.homeDelivery">Domicilio</span>
 	</div>
 	<div>
-		<p class="m-0">Nombre: {{ client.name }}</p>
+		<p class="m-0">Nombre: {{ bill.clientName ? bill.clientName : client.name }}</p>
 		<p class="m-0" *ngIf="client.address">Direccion: {{ client.address }}</p>
 		<p class="m-0" *ngIf="client.phoneNumber">Telefono: {{ client.phoneNumber }}</p>
 	</div>

@@ -26,7 +26,7 @@ export class ClientsFormComponent implements OnInit {
 				Validators.minLength(3),
 				Validators.maxLength(30)
 			]),
-			address: new FormControl('', Validators.maxLength(30)),
+			address: new FormControl('', Validators.maxLength(255)),
 			phoneNumber: new FormControl('', Validators.maxLength(30)),
 			createdAt: new FormControl('')
 		});

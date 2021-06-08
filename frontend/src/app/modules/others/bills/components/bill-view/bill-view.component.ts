@@ -89,14 +89,16 @@ export class BillViewComponent implements OnInit {
 					}
 				);
 
-				this.clientsService.getClient(this.bill.idClient).subscribe(
-					(response) => {
-						this.client = response;
-					},
-					(error) => {
-						throw new Error(error);
-					}
-				);
+				if (this.bill.idClient) {
+					this.clientsService.getClient(this.bill.idClient).subscribe(
+						(response) => {
+							this.client = response;
+						},
+						(error) => {
+							throw new Error(error);
+						}
+					);
+				}
 			},
 			(error) => {
 				throw new Error(error);
@@ -104,7 +106,32 @@ export class BillViewComponent implements OnInit {
 		);
 	}
 
-	public viewBill2(bill: Bill, client: Client): void {
+	public viewBill2(bill: Bill): void {
+		this.bill = bill;
+
+		if (this.bill.idClient) {
+			this.clientsService.getClient(this.bill.idClient).subscribe(
+				(response) => {
+					this.client = response;
+				},
+				(error) => {
+					throw new Error(error);
+				}
+			);
+		}
+
+		this.billsService.getProductsInBill(this.bill.id).subscribe(
+			(response) => {
+				this.productsInBill = response;
+				this.viewMessages();
+			},
+			(error) => {
+				throw new Error(error);
+			}
+		);
+	}
+
+	public viewBill3(bill: Bill, client: Client): void {
 		this.bill = bill;
 		this.client = client;
 
@@ -119,7 +146,7 @@ export class BillViewComponent implements OnInit {
 		);
 	}
 
-	public viewBill3(bill: Bill, client: Client, products: ProductInBill[]): void {
+	public viewBill4(bill: Bill, client: Client, products: ProductInBill[]): void {
 		this.bill = bill;
 		this.client = client;
 		this.productsInBill = products;

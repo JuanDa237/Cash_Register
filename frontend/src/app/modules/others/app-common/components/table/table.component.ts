@@ -78,11 +78,15 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 	}
 
 	public rerenderTable() {
-		this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-			// Destroy the table first
-			dtInstance.destroy();
-			// Call the dtTrigger to rerender again
-			this.dtTrigger.next();
-		});
+		if (!this.dtElement.dtInstance) {
+			this.renderTable();
+		} else {
+			this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+				// Destroy the table first
+				dtInstance.destroy();
+				// Call the dtTrigger to rerender again
+				this.dtTrigger.next();
+			});
+		}
 	}
 }

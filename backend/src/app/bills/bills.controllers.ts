@@ -15,11 +15,15 @@ class BillsControllers {
 	public async getBillsInInterval(request: Request, response: Response): Promise<Response> {
 		const { since, until } = request.params;
 
-		const bills: Bill[] = await (await pool).query(
-			`SELECT id, idClient, createdAt, total, homeDelivery,
-			ROW_NUMBER() OVER (PARTITION BY DATE(createdAt) ORDER BY createdAt) AS idDay
-			FROM bill
-			WHERE active = true AND DATE(createdAt) >= ? AND DATE(createdAt) <= ? AND idCompany = ?`,
+		const bills: Bill[] = await (
+			await pool
+		).query(
+			`SELECT b.id, b.idClient, b.createdAt, b.total, b.homeDelivery,
+			IF(b.clientName IS NULL, c.name, b.clientName) AS clientName,
+			ROW_NUMBER() OVER (PARTITION BY DATE(b.createdAt) ORDER BY b.createdAt) AS idDay
+			FROM bill AS b
+			LEFT JOIN client AS c ON b.idClient = c.id
+			WHERE b.active = true AND DATE(b.createdAt) >= ? AND DATE(b.createdAt) <= ? AND b.idCompany = ?`,
 			[since, until, request.user.idCompany]
 		);
 
@@ -27,7 +31,9 @@ class BillsControllers {
 	}
 
 	public async amountOfBillsInYear(request: Request, response: Response): Promise<Response> {
-		const bills: Bill[] = await (await pool).query(
+		const bills: Bill[] = await (
+			await pool
+		).query(
 			`SELECT MONTH(createdAt) createdAt, total, homeDelivery FROM bill
 			WHERE active = true AND YEAR(createdAt) = YEAR(CURDATE()) AND idCompany = ?`,
 			[request.user.idCompany]
@@ -40,9 +46,13 @@ class BillsControllers {
 	public async getBill(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
 
-		const bill: Bill[] = await (await pool).query(
-			`SELECT id, idClient, createdAt, total, homeDelivery FROM bill
-			WHERE active = true AND id = ? AND idCompany = ?`,
+		const bill: Bill[] = await (
+			await pool
+		).query(
+			`SELECT b.id, b.idClient, IF(b.clientName IS NULL, c.name, b.clientName) AS clientName, b.createdAt, b.total, b.homeDelivery
+			FROM bill AS b
+			LEFT JOIN client AS c ON b.idClient = c.id
+			WHERE b.active = true AND b.id = ? AND b.idCompany = ?`,
 			[id, request.user.idCompany]
 		);
 
@@ -57,7 +67,9 @@ class BillsControllers {
 		const { id } = request.params;
 		const { idCompany } = request.user;
 
-		const productsInBill: ProductInBill[] = await (await pool).query(
+		const productsInBill: ProductInBill[] = await (
+			await pool
+		).query(
 			`SELECT bhp.id, bhp.name, bhp.price, bhp.amount
 			FROM billsHasProducts bhp
 			INNER JOIN bill b ON bhp.idBill = b.id
@@ -84,6 +96,15 @@ class BillsControllers {
 			return response.status(409).json({
 				message: 'Home deliveries are disabled.'
 			});
+		}
+
+		// Validate Client
+		if (newBill.idClient) {
+			delete newBill.clientName;
+		}
+
+		if (newBill.clientName) {
+			delete newBill.idClient;
 		}
 
 		newBill.products = await billFunctions.validateProducts(
@@ -119,7 +140,9 @@ class BillsControllers {
 		var date: string[] = new Date().toLocaleDateString().split('/');
 		var finalDate: string = `${date[2]}-${date[1]}-${date[0]}`;
 
-		const status: any = await (await pool).query(
+		const status: any = await (
+			await pool
+		).query(
 			`UPDATE bill SET active = false
 			WHERE id = ? AND idCompany = ?
 			AND DATE(createdAt) >= ? AND DATE(createdAt) <= ?`,

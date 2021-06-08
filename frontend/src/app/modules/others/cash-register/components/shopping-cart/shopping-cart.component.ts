@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnChanges,
+	OnInit,
+	Output,
+	ViewChild
+} from '@angular/core';
 
 // Services
 import { BillsService } from '@modules/others/bills/services';
@@ -20,7 +28,7 @@ import { UserDataService } from '@app/modules/main/navigation/services';
 	templateUrl: './shopping-cart.component.html',
 	styleUrls: ['./shopping-cart.component.scss']
 })
-export class ShoppingCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit, OnChanges {
 	public shoppingCart: ProductInCart[];
 	public total: number;
 
@@ -28,6 +36,7 @@ export class ShoppingCartComponent implements OnInit {
 	public homeDelivery: number | null;
 
 	public cash: number | null;
+	public clientName: string;
 
 	public company: Company;
 
@@ -48,6 +57,8 @@ export class ShoppingCartComponent implements OnInit {
 		this.doHomeDelivery = false;
 		this.homeDelivery = null;
 		this.cash = null;
+		this.clientName = '';
+
 		this.company = createEmptyCompany();
 		this.client = createEmptyClient();
 		this.refreshPage = new EventEmitter<null>();
@@ -56,6 +67,13 @@ export class ShoppingCartComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getCompany();
+	}
+
+	ngOnChanges(changes: any): void {
+		// Change client name when client changes
+		if (changes.client) {
+			this.clientName = changes.client.currentValue.name;
+		}
 	}
 
 	private getCompany(): void {
@@ -119,7 +137,8 @@ export class ShoppingCartComponent implements OnInit {
 		this.actualizePrice();
 
 		var newBill: BillWithProducts = {
-			idClient: this.client.id,
+			idClient: this.client.id != 0 ? this.client.id : undefined,
+			clientName: this.client.id == 0 ? this.clientName : undefined,
 			total: this.total,
 			homeDelivery: this.homeDelivery != null ? this.homeDelivery : undefined,
 			products: new Array<ProductWithAmount>(0)
@@ -134,12 +153,14 @@ export class ShoppingCartComponent implements OnInit {
 			}
 		});
 
+		console.log(newBill, this.client.id == 0 ? this.clientName : undefined);
 		this.billsService.saveBill(newBill).subscribe(
 			(response) => {
 				//  Do the bill view
 				const bill: Bill = {
 					id: response.bill.id,
-					idClient: 0,
+					idClient: newBill.idClient,
+					clientName: newBill.clientName,
 					total: response.bill.total,
 					idDay: response.bill.idDay,
 					homeDelivery: this.homeDelivery != null ? this.homeDelivery : 0,
@@ -160,7 +181,7 @@ export class ShoppingCartComponent implements OnInit {
 					} as ProductInBill);
 				});
 
-				this.billChild.viewBill3(bill, this.client, products);
+				this.billChild.viewBill4(bill, this.client, products);
 
 				this.sweet.created('Se creo el registro satisfactoriamente');
 			},

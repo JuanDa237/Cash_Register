@@ -10,13 +10,7 @@
 		<app-table [columns]="['Numero Pedido', 'Cliente', 'Fecha', 'Total', 'Acciones']">
 			<tr *ngFor="let bill of bills">
 				<td class="align-middle">{{ bill.idDay }}</td>
-				<td class="align-middle">
-					<div *ngFor="let client of clients">
-						<div *ngIf="client.id == bill.idClient">
-							{{ client.name }}
-						</div>
-					</div>
-				</td>
+				<td class="align-middle">{{ bill.clientName }}</td>
 				<td class="align-middle">{{ bill.createdAt | date: 'dd/MM/yyyy' }}</td>
 				<td class="align-middle text-center">{{ bill.total | number }}</td>
 				<td>

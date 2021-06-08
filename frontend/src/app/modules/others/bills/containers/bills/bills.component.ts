@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 // Models
-import { Client } from '../../../clients/models';
 import { Bill } from '../../models';
 
 // Services
-import { ClientsService } from '../../../clients/services';
 import { BillsService } from '../../services';
 
 // Components
@@ -17,12 +15,10 @@ import { Sweet } from '@app/modules/others/app-common/libs';
 	selector: 'app-bills',
 	templateUrl: './bills.component.html'
 })
-export class BillsComponent implements OnInit {
-	public clients: Client[];
+export class BillsComponent {
 	public bills: Bill[];
 
 	public selectedBill: Bill;
-	public selectedClient: Client;
 
 	public loading: boolean;
 
@@ -34,33 +30,13 @@ export class BillsComponent implements OnInit {
 
 	private sweet: Sweet;
 
-	constructor(private clientsService: ClientsService, private billsService: BillsService) {
-		this.clients = new Array<Client>(0);
+	constructor(private billsService: BillsService) {
 		this.bills = new Array<Bill>(0);
 
 		this.selectedBill = {} as Bill;
-		this.selectedClient = {} as Client;
 
 		this.loading = true;
 		this.sweet = new Sweet();
-	}
-
-	ngOnInit(): void {
-		this.getClients();
-	}
-
-	private getClients() {
-		this.clientsService.getAllClients().subscribe(
-			(response) => {
-				this.clients = response;
-				this.loading = false;
-
-				this.table.renderTable();
-			},
-			(error) => {
-				throw new Error(error);
-			}
-		);
 	}
 
 	// Methods for html
@@ -81,12 +57,6 @@ export class BillsComponent implements OnInit {
 	}
 
 	public viewBill(bill: Bill) {
-		this.bills.forEach((bill) => {
-			this.clients.forEach((client) => {
-				if (bill.idClient == client.id) this.selectedClient = client;
-			});
-		});
-
 		const index: number = this.bills
 			.map((x) => {
 				return x.id;
@@ -94,7 +64,7 @@ export class BillsComponent implements OnInit {
 			.indexOf(bill.id);
 
 		this.selectedBill = this.bills[index];
-		this.billChild.viewBill2(this.selectedBill, this.selectedClient);
+		this.billChild.viewBill2(this.selectedBill);
 	}
 
 	public async deleteBill(bill: Bill) {
@@ -108,7 +78,6 @@ export class BillsComponent implements OnInit {
 						.indexOf(bill.id);
 					this.bills.splice(index, 1);
 
-					console.log(response);
 					this.table.rerenderTable();
 					this.sweet.deleted('Se elimino el registro satisfactoriamente');
 				},

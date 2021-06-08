@@ -1,6 +1,7 @@
 export interface Bill {
 	id: number;
-	idClient: number;
+	idClient?: number;
+	clientName?: string;
 	createdAt?: string;
 	total: number;
 	homeDelivery: number;
@@ -20,7 +21,8 @@ export function createEmptyBill(): Bill {
 // For send data to api
 export interface BillWithProducts {
 	id?: number;
-	idClient: number;
+	idClient?: number;
+	clientName?: string;
 	createdAt?: string;
 	total?: number;
 	homeDelivery?: number;
